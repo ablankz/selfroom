@@ -1,0 +1,103 @@
+auth:
+  login:
+    post:
+      summary: jwtによるログイン
+      description: jwtによるログイン
+      security: []
+      tags: ["auth"]
+      requestBody:
+        description: 認証のためのデータ
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [login_id, password]
+              properties:
+                login_id: { type: string, default: "admin" }
+                password: { type: string, default: "admin" }
+      responses:
+        "200":
+          description: Success Operation
+          content:
+            application/json:
+              schema:
+                $ref: "../components/schemas/auth/jwt-token.yaml#/JwtToken"
+        "4XX":
+          $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+        "5XX":
+          $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+  logout:
+    post:
+      summary: ログアウト
+      description: ログアウト
+      tags: ["auth"]
+      responses:
+        "200":
+          description: Success Operation
+          content:
+            application/json:
+              schema:
+                $ref: "../components/schemas/no-data-success.yaml#/NoDataSuccess"
+        "4XX":
+          $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+        "5XX":
+          $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+  user:
+    post:
+      summary: 認証ユーザーの確認
+      description: 認証ユーザーの確認
+      tags: ["auth"]
+      responses:
+        "200":
+          description: Success Operation
+          content:
+            application/json:
+              schema:
+                $ref: "../components/schemas/auth/account.yaml#/Account"
+        "4XX":
+          $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+        "5XX":
+          $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+  refresh:
+    post:
+      summary: リフレッシュトークンの発行
+      description: リフレッシュトークンの発行
+      security: []
+      tags: ["auth"]
+      responses:
+        "200":
+          description: Success Operation
+          content:
+            application/json:
+              schema:
+                $ref: "../components/schemas/auth/jwt-token.yaml#/JwtToken"
+        "4XX":
+          $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+        "5XX":
+          $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+  providerLogin:
+    get:
+      summary: ソーシャルログインのためのリダイレクトurl取得
+      description: ソーシャルログインのためのリダイレクトurl取得
+      security: []
+      tags: ["auth"]
+      parameters: 
+        - name: provider
+          in: path 
+          description: プロバイダ名
+          required: true
+          schema:
+            type: string
+            enum: [line, google]
+      responses:
+        "200":
+          description: Success Operation
+          content:
+            application/json:
+              schema:
+                $ref: "../components/schemas/auth/redirect-url.yaml#/RedirectUrl"
+        "4XX":
+          $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+        "5XX":
+          $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"

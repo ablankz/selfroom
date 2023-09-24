@@ -1,0 +1,32 @@
+<?php
+
+namespace {{ namespace }};
+
+use App\Foundation\Model\SoftDelete\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class {{ class }} extends Model
+{
+    use HasFactory, SoftDeletes;
+
+    protected $table = 't_';
+    protected $primaryKey = '';
+
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var string[]
+     */
+    protected $fillable = [];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        't__pkey', 'is_deleted'
+    ];
+}

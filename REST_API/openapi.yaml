@@ -1,0 +1,157 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Selfroom API
+  description: |
+    # selfroomのwebAPI設計
+    ## REST API 設計レベル
+    - クライアント/サーバー
+      - とりあえずwebSocketなどの使用予定はないのでこれに準拠
+    - 階層化システム
+      - web, ap, dbは徹底。
+      - ただし今回は、リソースの問題上、階層化とまではいえないかも、、
+    - コードオンデマンド
+      - コンテンツサーバーによるので一旦無視
+    - 統一インタフェース
+      - リソースの識別
+        - できる限りこれは徹底する
+        - uriを見ただけで操作対象のリソースを識別できるようにする
+      - 表現を用いたリソース操作
+      - 自己記述メッセージ
+        - メッセージ内容が何であるかを記述するために`'Content-Type': 'application/json'`を付与したレスポンスを返す
+      - アプリケーション状態エンジンとしてのハイパーメディア(HAEOAS)
+        - 今回は準拠しない
+        - レスポンスに現在の状態を踏まえて関連するハイパーリンクも載せて返すことであるが、openなapiでもないため今回はパス
+    - ステートレス
+      - サーバーsessinoなどは使用せず、完全にステートレスなapiとする
+    - キャッシュ制御
+      - クライアントはキャッシュできるようにする
+    - 以上を踏まえて、今回作成するapiのREST API設計レベルはHATEOASの概念を無視した`level2`とする
+    ## 規定メソッド
+    - GET
+      - リソースの取得
+    - POST
+      - リソースの作成
+    - PUT
+      - リソースの更新
+      - REST APIではリソース名が決まっている場合の作成もこれに該当するが、今回は更新処理をすべてこのメソッドに当てる
+    - DELETE
+      - リソースの削除
+    - OPTIONS
+      - すべてリクエストの前に送られるようになっているが、laravelが勝手に処理をするため、フロントから明示的にこのメソッドは使わない
+    - その他のHEAD, TRACE, CONNECT等の定義はバックエンドでは行わない
+    ## URI設計
+    - 短くする
+    - 省略文字を利用しない
+    - すべて小文字
+    - 単語はハイフンでつなげる
+    - 単語は複数系を利用する
+    - パス上ではエンコードを必要とする文字を使わない（クエリパラメータは別）
+    - サーバー側のアーキテクチャは反映しない(システム依存の命名もやめる)
+    - リソースを特定するためのidなどは`クエリパラメータではなく、パスパラメータ`を使用で統一
+    - その他もクエリパラメータかパスパラメータかの使い分けは以下の判断基準で行う
+      - 一意なリソースを表すのに必要な場合はパスパラメータ
+      - 省略可能な場合はクエリパラメータ
+    ## リクエスト形式
+    - スネークケースであること以外に全体での決まりごとはなし
+    ## レスポンス形式
+    - データ構造
+      - エンベロープ（メタデータ)は付与しない(headerに含んでいるため）
+      - できる限りフラットなオブジェクトにする(データサイズの削減)
+      - ページネーションの実施については未定
+        - 以下参考にしたいサイト
+          - [令和時代のページネーションを考える (REST API編)](https://www.keisuke69.net/entry/2022/10/07/084131)
+          - [RESTful API のページネーションで考えるべきこと](https://qiita.com/utisam/items/0be34f4e813ffa93b533)
+      - プロパティ命名はスネークケースとする(一番可読性がいいらしい)
+      - 日付のフォーマットはRFC3339(W3C-DTF)
+        - `2023-09-24T17:00:00+09:00`のような形式
+        - これはインターネットで一番よく用いられているため
+      - 大きな数字(64bit整数)は文字列で返す
+        - javascriptで扱える演算可能な最大整数が`pow(2, 53)-1`であるため
+      - 以上を踏まえて以下のような同一の構造に固定する
+      ``` json
+      {
+        "success": boolean,
+        "data": array | object,
+        "code": number, # アプリケーションコード
+        "message": string, # アプリケーションコードによる簡易メッセージ
+        "validation_messages": array, # バリデーションのエラーチェックで引っかかった場合のみここにプロパティごとのメッセージが入る 
+      }
+      ```
+    - あまりないかもしれないがサービス閉塞時は`"503" + "Retry-After"`で返す
+      - 404ではなく通常は503
+      - Retry-Afterヘッダーにいつから再開か
+    - 1xx
+      - 今回、apiサーバー上では定義しない
+    - 2xx
+      - 基本的には200を返す
+      - ヘッダーのLocationに新しいリソースへのurlを含める201(Created)は多分使用しない。
+      - 非同期ジョブを受け付けたことを示す202(Accepted)は機会があればジョブをキューに流したときなどに返す。
+      - 204(No Content)は通常、deleteやputなど返すデータがないとき、これを
+    - 3xx
+      - apiサーバーなので定義しない
+    - 4xx
+      - リクエストのエラー
+      - 特定できないものは400、それ以外はそれぞれで定義されたエラーを返すが、フロント側はエラーの場合、ステータスコードではなく、body内のアプリケーション用のエラーコードを見るようにする
+      - 403(forbidden)でリソースはあるということが知らされてはいけないものに関しては認可エラーでも404(not found)を返す
+    - 5xx
+      - サーバー上のエラーもしくは予期しないエラー
+      - 基本的には定義するというよりphpの標準エラーや予期しないエラーで返る
+    ## 規定ヘッダー
+    - アプリケーション独自のヘッダーは今の所考えてない
+    ## 認証
+    - 基本的にはjwtによる認証
+    - lineとgoogleによるソーシャル認証もあるが、どちらにせよapi側は、認証方法に依らずjwtのトークンを返却
+    - モバイルアプリの場合はヘッダーに、webの場合はセキュリティによる問題からcookieのほうがいいかも...
+  contact:
+    name: Hayashi Kenta
+    email: hayaken3007@i.softbank.jp
+servers:
+  - url: http://api.selfroom.com:{port}
+    description: "開発環境"
+    variables:
+      port:
+        enum:
+          - "80"
+          - "443"
+        default: "80"
+tags:
+  - name: "auth"
+    description: 認証に関する操作
+  - name: "clients"
+    description: クライアントに関するCRUD
+paths:
+  /auth/login:
+    $ref: "./paths/auth.yaml#/auth/login"
+  /auth/logout:
+    $ref: "./paths/auth.yaml#/auth/logout"
+  /auth/user:
+    $ref: "./paths/auth.yaml#/auth/user"
+  /auth/refresh:
+    $ref: "./paths/auth.yaml#/auth/refresh"
+  /auth/{provider}:
+    $ref: "./paths/auth.yaml#/auth/providerLogin"
+  /clients:
+    $ref: "./paths/clients.yaml#/clients"
+  /clients/{client_id}:
+    $ref: "./paths/clients.yaml#/clients_{client_id}"
+components:
+  schemas:        
+    # EntityDataSuccess:
+    #   $ref: "./components/schemas/entity-data-success.yaml#/EntityDataSuccess"        
+    NoDataSuccess:
+      $ref: "./components/schemas/no-data-success.yaml#/NoDataSuccess"      
+    RequestError:
+      $ref: "./components/schemas/request-error.yaml#/RequestError"
+    ServerError:
+      $ref: "./components/schemas/server-error.yaml#/ServerError"
+  responses:
+    4XX-BadRequestResponse:
+      $ref: "./components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+    5XX-ServerErrorResponse:
+      $ref: "./components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+  securitySchemes:
+    JWT-Auth:
+      $ref: "./components/securitySchemas/jwt-auth.yaml#/JWT-Auth"
+security:
+  - JWT-Auth: []

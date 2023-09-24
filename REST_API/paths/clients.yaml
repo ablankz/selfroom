@@ -1,0 +1,49 @@
+clients:
+  get:
+    summary: クライアントの全取得
+    description: クライアントの全取得
+    security: []
+    tags: ["clients"]
+    responses:
+      "200":
+        description: Success Operation
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/clients/clients.yaml#/Clients"
+      "4XX":
+        $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+      "5XX":
+        $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+
+clients_{client_id}: 
+  get:
+    summary: クライアントの取得
+    description: クライアントの取得
+    schema: { type: integer }
+    parameters:
+      - $ref: '#/components/parameters/ClientId'
+    security: []
+    tags: ["clients"]
+    responses:
+      "200":
+        description: Success Operation
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/clients/client.yaml#/Client"
+      "4XX":
+        $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+      "5XX":
+        $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+
+
+components:
+  parameters:
+    ClientId:
+      name: client_id
+      in: path
+      description: クライアントID
+      required: true
+      schema:
+        type: integer

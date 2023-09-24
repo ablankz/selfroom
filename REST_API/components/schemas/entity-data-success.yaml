@@ -1,0 +1,19 @@
+EntityDataSuccess:
+  description: エンティティを含む成功データ
+  type: object
+  required: [success, data, code, message, validation_messages]
+  properties:
+    success: { type: boolean }
+    data:
+      type: object
+      example:
+        {
+          name: "admin",
+          email: test@admin.test,
+          address: "Japan",
+          tel: "XXX-XXXX-XXXX",
+          age: 20,
+        }
+    code: { type: integer }
+    message: { type: string }
+    validation_messages: { type: array, maximum: 0 }

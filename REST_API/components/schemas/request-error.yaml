@@ -1,0 +1,18 @@
+RequestError:
+  description: リクエストエラーデータ
+  type: object
+  required: [success, data, code, message, validation_messages]
+  properties:
+    success: { type: boolean, example: false }
+    data: { type: array, nullable: true, example: null }
+    code: { type: integer, example: 30 }
+    message: { type: string, example: "バリデーションエラーです" }
+    validation_messages:
+      type: array
+      items:
+        type: object
+        example:
+          {
+            name: ["15文字以内で入力してください"],
+            age: ["0より大きい数字を入力してください"],
+          }

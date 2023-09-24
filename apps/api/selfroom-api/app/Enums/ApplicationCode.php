@@ -1,0 +1,71 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Enums;
+
+use Symfony\Component\HttpFoundation\Response;
+
+use function Laravel\Prompts\select;
+
+enum ApplicationCode: int
+{
+  case Success = 0;
+  case System = 1;
+  case Validation = 2;
+  case Permission = 3;
+  case Unauthorized = 4;
+  case NotFound = 5;
+  case Unauthenticated = 6;
+  case PostTooLarge = 7;
+  case ThrottleRequests = 8;
+  case InvalidSignature = 9;
+  case StreamedResponse = 10;
+  case TokenMismatch = 11;
+  case MethodNotAllowed = 12;
+  case NotFoundModel = 13;
+  case TokenBlacklisted = 14;
+  case SocialLoginError = 15;
+
+  public function getText(): string
+  {
+    return match ($this) {
+      self::System => 'システム上の不具合がありました',
+      self::Validation => '入力情報に誤りがあります',
+      self::Permission => '許可されていないアクションです',
+      self::Unauthorized => '認証されていないユーザーです',
+      self::NotFound => '指定されたエンドポイントが見つかりません',
+      self::Unauthenticated => '認証に失敗しました',
+      self::PostTooLarge => '許可される最大サイズを超えたデータが送信されました',
+      self::ThrottleRequests => '短時間に複数のリクエストを受け付けました',
+      self::InvalidSignature => '署名の有効期限切れです',
+      self::StreamedResponse => 'ファイルのダウンロードに失敗しました',
+      self::TokenMismatch => 'csrfトークンが一致しません',
+      self::MethodNotAllowed => '指定のhttpメソッドはこのエンドポイントでサポートされていません',
+      self::NotFoundModel => '対象のモデルが見つかりません',
+      self::TokenBlacklisted => 'すでに削除されたトークンです',
+      self::SocialLoginError => 'ソーシャルログインに失敗しました',
+    };
+  }
+
+  public function getStatus(): int
+  {
+    return match ($this) {
+      self::System => Response::HTTP_INTERNAL_SERVER_ERROR,
+      self::Validation => Response::HTTP_BAD_REQUEST,
+      self::Permission => Response::HTTP_FORBIDDEN,
+      self::Unauthorized => Response::HTTP_FORBIDDEN,
+      self::NotFound => Response::HTTP_NOT_FOUND,
+      self::Unauthenticated => Response::HTTP_UNAUTHORIZED,
+      self::PostTooLarge => Response::HTTP_REQUEST_ENTITY_TOO_LARGE,
+      self::ThrottleRequests => Response::HTTP_TOO_MANY_REQUESTS,
+      self::InvalidSignature => Response::HTTP_FORBIDDEN,
+      self::StreamedResponse => Response::HTTP_BAD_REQUEST,
+      self::TokenMismatch => 419,
+      self::MethodNotAllowed => Response::HTTP_METHOD_NOT_ALLOWED,
+      self::NotFoundModel => Response::HTTP_NOT_FOUND,
+      self::TokenBlacklisted => Response::HTTP_BAD_REQUEST,
+      self::SocialLoginError => Response::HTTP_UNAUTHORIZED,
+    };
+  }
+}
