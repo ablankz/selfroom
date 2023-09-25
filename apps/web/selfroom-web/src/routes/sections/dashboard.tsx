@@ -17,25 +17,18 @@ export const dashboardRoutes = [
   {
     path: '',
     element: (
-      // <AuthGuard>
       <DashboardLayout>
         <Suspense fallback={<LoadingScreen />}>
           <Outlet />
         </Suspense>
       </DashboardLayout>
-      // </AuthGuard>
     ),
     children: [
       { element: <IndexPage />, index: true },
+      { path: 'career',  element: <IndexPage /> },
+      { path: 'overview', element: <RawApiPage /> },
+      { path: 'auth', element: <RawApiPage /> },
       { path: 'raw-api', element: <RawApiPage /> },
-      {
-        path: 'auth',
-        children: [],
-      },
-      {
-        path: 'entity',
-        children: [],
-      },
     ],
   },
 ];
