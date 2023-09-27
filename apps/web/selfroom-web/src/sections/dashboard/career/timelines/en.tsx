@@ -46,8 +46,8 @@ const TIMELINES: TimelineType[] = [
   {
     key: 4,
     title: 'first-year university student: Beginning of fall semester',
-    des: 'Started a project with a friend, and since I was to be in charge of infrastructure and backend with git, github for collaborative development and version control, I decided to learn db(postgresql), \
-    Minimum knowledge of network (security). Studied the development content of the c language in university lectures.',
+    des: "I started a project with a friend and studied git and github for collaborative development and version control, and also studied db (postgresql), network (security), and networking (security). \
+    Minimum knowledge of network (security). Studied the development content of the c language in university lectures.",
     time: '2021 Late September',
     color: 'info',
     icon: <Iconify icon="bi:git" width={24} />,
