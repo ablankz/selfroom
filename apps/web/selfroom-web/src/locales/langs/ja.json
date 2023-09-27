@@ -1,4 +1,6 @@
 {
+  "Japanese": "日本語",
+  "English": "英語",
   "portfolio": "ポートフォリオ",
   "introduction": "自己紹介",
   "career": "経歴",
@@ -8,8 +10,19 @@
   "application": "アプリケーション",
   "overview": "概要",
   "auth": "認証",
-  "row-api": "apiアクセス",
+  "raw-api": "apiアクセス",
   "chat": "チャット",
+  "Portfolio": "ポートフォリオ",
+  "Introduction": "自己紹介",
+  "Career": "経歴",
+  "Skill-Qualification": "スキル・資格",
+  "Work": "制作物",
+  "Link": "リンク",
+  "Application": "アプリケーション",
+  "Overview": "概要",
+  "Auth": "認証",
+  "RawApi": "APIアクセス",
+  "Chat": "チャット",
   "external": "外部リンク",
   "APIDesignDocument": "API設計書"
 }

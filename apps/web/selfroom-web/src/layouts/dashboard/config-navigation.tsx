@@ -86,7 +86,7 @@ export function useNavData() {
             icon: ICONS.auth,
           },
           {
-            title: t('row-api'),
+            title: t('raw-api'),
             path: paths.dashboard.rawApi,
             icon: ICONS.api,
           },

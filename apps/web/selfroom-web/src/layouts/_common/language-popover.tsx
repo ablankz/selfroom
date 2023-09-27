@@ -53,7 +53,7 @@ export default function LanguagePopover() {
           >
             <Iconify icon={option.icon} sx={{ borderRadius: 0.65, width: 28 }} />
 
-            {option.label}
+            {locales.t(option.label)}
           </MenuItem>
         ))}
       </CustomPopover>

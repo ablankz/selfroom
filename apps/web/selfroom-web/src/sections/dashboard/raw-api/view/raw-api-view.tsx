@@ -8,6 +8,7 @@ import { Request } from '../request/request';
 import { useState } from 'react';
 import { Response } from '../response/response';
 import { MethodKey } from '@/utils/axios';
+import { useLocales } from '@/locales';
 
 // ----------------------------------------------------------------------
 
@@ -45,14 +46,15 @@ export default function RawApiView() {
   const settings = useSettingsContext();
   const [requestQuery, setRequestQuery] = useState(defaultRequestQuery);
   const [loading, setLoading] = useState(false);
+  const { t } = useLocales();
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'xl'}>
       <CustomBreadcrumbs
-        heading="RawApi"
+        heading={t("RawApi")}
         links={[
-          { name: 'Dashboard', href: paths.dashboard.root },
-          { name: 'RawApi' },
+          { name: t('Application'), href: paths.dashboard.overview },
+          { name: t('RawApi') },
         ]}
         sx={{
           mb: { xs: 3, md: 5 },
