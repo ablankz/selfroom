@@ -1,0 +1,27 @@
+Partners:
+  description: パートナー複数データ
+  type: object
+  required: [success, data, code, message, validation_messages]
+  properties:
+    success: { type: boolean, example: true }
+    data:
+      type: array
+      items: 
+        type: object
+        required: [partner_id, name, address, email, site_url, tel, fax, charge, plan, is_open, created_at, updated_at]
+        properties:
+          partner_id: { type: integer, example: 200, readOnly: true }
+          name: { type: string, example: "株式会社 田辺" }
+          address: { type: string, example: "XXXXXXX  千葉県XX市X区X町XXX-X-X" }
+          email: { type: string, format: email, example: "fmurayama@example.com" }
+          site_url: { type: string, format: uri, example: "http://test-site.test" }
+          tel: { type: string, example: "XXX-XXXX-XXXX" }
+          fax: { type: string, example: "YYY-YYYY-YYYY" } 
+          charge: { type: string, example: "浜田 直子" }
+          plan: { type: string, enum: ["プレミアム", "スタンダード"], example: "プレミアム" }
+          is_open: { type: boolean, example: true }
+          created_at: { type: string, format: date, example: "2023-09-24T17:00:00+09:00" }
+          updated_at: { type: string, format: date, example: "2023-09-24T17:00:00+09:00" }
+    code: { type: integer, example: 0 }
+    message: { type: string, example: "OK" }
+    validation_messages: { type: array, maximum: 0, example: [] }

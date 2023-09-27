@@ -1,0 +1,18 @@
+Role:
+  description: ロールデータ
+  type: object
+  required: [success, data, code, message, validation_messages]
+  properties:
+    success: { type: boolean, example: true }
+    data:
+      type: object
+      required: [role_id, user_id, permission_id, created_at, updated_at]
+      properties:
+        role_id: { type: integer, example: 200, readOnly: true }
+        user_id: { type: integer, example: 50 }
+        permission_id: { type: integer, example: 5 }
+        created_at: { type: string, format: date, example: "2023-09-24T17:00:00+09:00" }
+        updated_at: { type: string, format: date, example: "2023-09-24T17:00:00+09:00" }
+    code: { type: integer, example: 0 }
+    message: { type: string, example: "OK" }
+    validation_messages: { type: array, maximum: 0, example: [] }

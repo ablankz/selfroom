@@ -42,19 +42,6 @@ import ErrorFallback from './ErrorFallback';
 // ----------------------------------------------------------------------
 
 export default function App() {
-  const charAt = `
-
-   ▒░░░▒    ▒▒▒▒▒      ▒▒▒        ▒▒▒▒     ▒▒
-  ▒     ▒  ▒▒   ▒▒   ▒▒   ▒▒    ▒▒    ▒▒   ▒▒
-  ▒▒▒▒▒▒   ▒▒   ▒▒  ▒▒     ▒▒  ▒▒          ▒▒▒▒ ▒▒
-  ▓        ▒▒██▒     ▒▒   ▒▒    ▒▒    ▒▒   ▒▒     ▒
-   ███ █   ▒▒          ▒▒▒        ▒▒▒▒     ▒▒     ▒
-           ▒▒        
-
-  `;
-
-  console.info(`%c${charAt}`, 'color: #2290DD');
-
   useScrollToTop();
 
   return (

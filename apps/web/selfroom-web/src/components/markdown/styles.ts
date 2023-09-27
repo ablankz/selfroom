@@ -8,12 +8,12 @@ const StyledMarkdown = styled('div')(({ theme }) => {
 
   return {
     // Text
-    h1: { margin: 0, ...theme.typography.h1 },
-    h2: { margin: 0, ...theme.typography.h2 },
-    h3: { margin: 0, ...theme.typography.h3 },
-    h4: { margin: 0, ...theme.typography.h4 },
-    h5: { margin: 0, ...theme.typography.h5 },
-    h6: { margin: 0, ...theme.typography.h6 },
+    h1: { margin: 0, marginTop: 18, marginBottom: 18, ...theme.typography.h1 },
+    h2: { margin: 0, marginTop: 14, marginBottom: 14, ...theme.typography.h2 },
+    h3: { margin: 0, marginTop: 10, marginBottom: 10, ...theme.typography.h3 },
+    h4: { margin: 0, marginTop: 8.5, marginBottom: 8.5, ...theme.typography.h4 },
+    h5: { margin: 0, marginTop: 5, marginBottom: 5, ...theme.typography.h5 },
+    h6: { margin: 0, marginTop: 3.5, marginBottom: 3.5, ...theme.typography.h6 },
     p: { margin: 0, ...theme.typography.body1 },
 
     br: {
@@ -92,14 +92,35 @@ const StyledMarkdown = styled('div')(({ theme }) => {
       '&.hljs': { padding: 0, backgroundColor: 'transparent' },
     },
 
+    '.inline-code': {
+      fontSize: 14,
+      borderRadius: 4,
+      // whiteSpace: 'pre',
+      padding: theme.spacing(0.2, 0.5),
+      color: theme.palette.warning[isLight ? 'darker' : 'lighter'],
+      backgroundColor: theme.palette.warning[isLight ? 'lighter' : 'darker'],
+      '&.hljs': { padding: 0, backgroundColor: 'transparent' },
+    },
+
+    '.capt': {
+      fontSize: 12,
+      textAlign: 'right',
+      width: '100%',
+      padding: theme.spacing(1.5, 2.5),
+      color: theme.palette.primary[isLight ? 'darker' : 'lighter'],
+      // backgroundColor: theme.palette.primary[isLight ? 'lighter' : 'darker'],
+    },
+
     // Table
     table: {
       width: '100%',
+      tableLayout: 'fixed',
       borderCollapse: 'collapse',
       border: `1px solid ${theme.palette.divider}`,
       'th, td': {
         padding: theme.spacing(1),
         border: `1px solid ${theme.palette.divider}`,
+        textAlign: 'center'
       },
       'tbody tr:nth-of-type(odd)': {
         backgroundColor: theme.palette.background.neutral,

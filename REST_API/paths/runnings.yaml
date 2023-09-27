@@ -1,0 +1,128 @@
+runnings:
+  get:
+    summary: ランニングの全取得
+    description: ランニングの全取得
+    security: []
+    tags: ["runnings"]
+    responses:
+      "200":
+        description: Success Operation
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/runnings/runnings.yaml#/Runnings"
+      "4XX":
+        $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+      "5XX":
+        $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+  post:
+    summary: ランニングの作成
+    description: ランニングの作成
+    security: []
+    tags: ["runnings"]
+    requestBody:
+      description: 登録データ
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schema/Running"
+    responses:
+      "200":
+        description: Success Operation
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/runnings/runnings.yaml#/Runnings"
+      "4XX":
+        $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+      "5XX":
+        $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+
+runnings_{running_id}:
+  get:
+    summary: ランニングの取得
+    description: ランニングの取得
+    schema: { type: integer }
+    parameters:
+      - $ref: "#/components/parameters/RunningId"
+    security: []
+    tags: ["runnings"]
+    responses:
+      "200":
+        description: Success Operation
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/runnings/running.yaml#/Running"
+      "4XX":
+        $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+      "5XX":
+        $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+  put:
+    summary: ランニングの更新
+    description: ランニングの更新
+    schema: { type: integer }
+    parameters:
+      - $ref: "#/components/parameters/RunningId"
+    requestBody:
+      description: 更新データ
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schema/Running"
+    security: []
+    tags: ["runnings"]
+    responses:
+      "200":
+        description: Success Operation
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/no-data-success.yaml#/NoDataSuccess"
+      "4XX":
+        $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+      "5XX":
+        $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+  delete:
+    summary: ランニングの削除
+    description: ランニングの削除
+    schema: { type: integer }
+    parameters:
+      - $ref: "#/components/parameters/RunningId"
+    security: []
+    tags: ["runnings"]
+    responses:
+      "200":
+        description: Success Operation
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/no-data-success.yaml#/NoDataSuccess"
+      "4XX":
+        $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+      "5XX":
+        $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+
+components:
+  parameters:
+    RunningId:
+      name: running_id
+      in: path
+      description: ランニングID
+      required: true
+      schema:
+        type: integer
+  schema:
+    Running:
+      description: ランニング送信データ
+      type: object
+      required: [user_id, start_distance, end_distance, start_picture_id, end_picture_id, ad_id]
+      properties:
+        user_id: { type: integer, default: 44 }
+        start_distance: { type: integer, default: 31588 }
+        end_distance: { type: integer, default: 31712 }
+        start_picture_id: { type: integer, default: 20 }
+        end_picture_id: { type: integer, default: 21 }
+        ad_id: { type: integer, default: 17 }

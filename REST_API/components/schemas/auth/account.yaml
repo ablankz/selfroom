@@ -6,8 +6,9 @@ Account:
     success: { type: boolean, example: true }
     data:
       type: object
-      required: [user_id, login_id, is_active, created_at, updated_at]
+      required: [account_id, user_id, login_id, is_active, created_at, updated_at]
       properties:
+        account_id: { type: integer, example: 100, readOnly: true } 
         user_id: { type: integer, example: 200, readOnly: true }
         login_id: { type: string, example: "admin", nullable: true }
         is_active: { type: boolean, example: true }

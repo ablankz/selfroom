@@ -1,0 +1,126 @@
+coupons:
+  get:
+    summary: クーポンの全取得
+    description: クーポンの全取得
+    security: []
+    tags: ["coupons"]
+    responses:
+      "200":
+        description: Success Operation
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/coupons/coupons.yaml#/Coupons"
+      "4XX":
+        $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+      "5XX":
+        $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+  post:
+    summary: クーポンの作成
+    description: クーポンの作成
+    security: []
+    tags: ["coupons"]
+    requestBody:
+      description: 登録データ
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schema/Coupon"
+    responses:
+      "200":
+        description: Success Operation
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/coupons/coupons.yaml#/Coupons"
+      "4XX":
+        $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+      "5XX":
+        $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+
+coupons_{coupon_id}:
+  get:
+    summary: クーポンの取得
+    description: クーポンの取得
+    schema: { type: integer }
+    parameters:
+      - $ref: "#/components/parameters/CouponId"
+    security: []
+    tags: ["coupons"]
+    responses:
+      "200":
+        description: Success Operation
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/coupons/coupon.yaml#/Coupon"
+      "4XX":
+        $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+      "5XX":
+        $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+  put:
+    summary: クーポンの更新
+    description: クーポンの更新
+    schema: { type: integer }
+    parameters:
+      - $ref: "#/components/parameters/CouponId"
+    requestBody:
+      description: 更新データ
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schema/Coupon"
+    security: []
+    tags: ["coupons"]
+    responses:
+      "200":
+        description: Success Operation
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/no-data-success.yaml#/NoDataSuccess"
+      "4XX":
+        $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+      "5XX":
+        $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+  delete:
+    summary: クーポンの削除
+    description: クーポンの削除
+    schema: { type: integer }
+    parameters:
+      - $ref: "#/components/parameters/CouponId"
+    security: []
+    tags: ["coupons"]
+    responses:
+      "200":
+        description: Success Operation
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/no-data-success.yaml#/NoDataSuccess"
+      "4XX":
+        $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+      "5XX":
+        $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+
+components:
+  parameters:
+    CouponId:
+      name: coupon_id
+      in: path
+      description: クーポンID
+      required: true
+      schema:
+        type: integer
+  schema:
+    Coupon:
+      description: クーポン送信データ
+      type: object
+      required: [name, produce, start_time, end_time, created_at, updated_at]
+      properties:
+        name: { type: string, example: "サービス開始記念" }
+        produce: { type: string, example: "マイカー" }
+        start_time: { type: string, example: "2011-06-25 14:28:42" }
+        end_time: { type: string, example: "2019-12-23 20:55:15" }

@@ -44,7 +44,7 @@ git clone https://github.com/ablankz/selfroom.git
 ## 初期化処理の実行
 
 ```bash
-cd selfroom-api && sudo chmod u+x init-project.sh && ./init-project.sh
+cd selfroom && sudo chmod u+x init-project.sh && ./init-project.sh
 ```
 
 ## Hosts ファイルの編集

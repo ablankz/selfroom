@@ -1,0 +1,126 @@
+mileages:
+  get:
+    summary: マイレージの全取得
+    description: マイレージの全取得
+    security: []
+    tags: ["mileages"]
+    responses:
+      "200":
+        description: Success Operation
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/mileages/mileages.yaml#/Mileages"
+      "4XX":
+        $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+      "5XX":
+        $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+  post:
+    summary: マイレージの作成
+    description: マイレージの作成
+    security: []
+    tags: ["mileages"]
+    requestBody:
+      description: 登録データ
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schema/Mileage"
+    responses:
+      "200":
+        description: Success Operation
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/mileages/mileages.yaml#/Mileages"
+      "4XX":
+        $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+      "5XX":
+        $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+
+mileages_{mileage_id}:
+  get:
+    summary: マイレージの取得
+    description: マイレージの取得
+    schema: { type: integer }
+    parameters:
+      - $ref: "#/components/parameters/MileageId"
+    security: []
+    tags: ["mileages"]
+    responses:
+      "200":
+        description: Success Operation
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/mileages/mileage.yaml#/Mileage"
+      "4XX":
+        $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+      "5XX":
+        $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+  put:
+    summary: マイレージの更新
+    description: マイレージの更新
+    schema: { type: integer }
+    parameters:
+      - $ref: "#/components/parameters/MileageId"
+    requestBody:
+      description: 更新データ
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schema/Mileage"
+    security: []
+    tags: ["mileages"]
+    responses:
+      "200":
+        description: Success Operation
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/no-data-success.yaml#/NoDataSuccess"
+      "4XX":
+        $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+      "5XX":
+        $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+  delete:
+    summary: マイレージの削除
+    description: マイレージの削除
+    schema: { type: integer }
+    parameters:
+      - $ref: "#/components/parameters/MileageId"
+    security: []
+    tags: ["mileages"]
+    responses:
+      "200":
+        description: Success Operation
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/no-data-success.yaml#/NoDataSuccess"
+      "4XX":
+        $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+      "5XX":
+        $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+
+components:
+  parameters:
+    MileageId:
+      name: mileage_id
+      in: path
+      description: マイレージID
+      required: true
+      schema:
+        type: integer
+  schema:
+    Mileage:
+      description: マイレージ送信データ
+      type: object
+      required: [user_id, start_distance, total_distance, picture_id]
+      properties:
+        user_id: { type: integer, default: 50 }
+        start_distance: { type: integer, default: 24120 }
+        total_distance: { type: integer, default: 24257 }
+        picture_id: { type: integer, default: 20 }

@@ -1,4 +1,6 @@
 {
+  "Japanese": "Japanese",
+  "English": "English",
   "portfolio": "portfolio",
   "introduction": "introduction",
   "career": "career",
@@ -8,8 +10,19 @@
   "application": "application",
   "overview": "overview",
   "auth": "auth",
-  "row-api": "row-api",
+  "raw-api": "raw-api",
   "chat": "chat",
+  "Portfolio": "Portfolio",
+  "Introduction": "Introduction",
+  "Career": "Career",
+  "Skill-Qualification": "Skill-Qualification",
+  "Work": "Work",
+  "Link": "Link",
+  "Application": "Application",
+  "Overview": "Overview",
+  "Auth": "Auth",
+  "RawApi": "RawApi",
+  "Chat": "Chat",
   "external": "external",
   "APIDesignDocument": "APIDesignDocument"
 }

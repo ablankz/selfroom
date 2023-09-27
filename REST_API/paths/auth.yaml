@@ -27,6 +27,36 @@ auth:
           $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
         "5XX":
           $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+  register:
+    post:
+      summary: ユーザーの新規登録
+      description: ユーザーの新規登録
+      security: []
+      tags: ["auth"]
+      requestBody:
+        description: 新規登録データ
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [login_id, password, password_confirmation, name]
+              properties:
+                login_id: { type: string, default: "admin@admin.admin" }
+                password: { type: string, default: "admintest" }
+                password_confirmation: { type: string, default: "admintest" }
+                name: { type: string, default: "管理者 ユーザー" }
+      responses:
+        "200":
+          description: Success Operation
+          content:
+            application/json:
+              schema:
+                $ref: "../components/schemas/auth/jwt-token.yaml#/JwtToken"
+        "4XX":
+          $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+        "5XX":
+          $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
   logout:
     post:
       summary: ログアウト

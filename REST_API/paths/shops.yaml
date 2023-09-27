@@ -1,0 +1,147 @@
+shops:
+  get:
+    summary: ショップの全取得
+    description: ショップの全取得
+    security: []
+    tags: ["shops"]
+    responses:
+      "200":
+        description: Success Operation
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/shops/shops.yaml#/Shops"
+      "4XX":
+        $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+      "5XX":
+        $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+  post:
+    summary: ショップの作成
+    description: ショップの作成
+    security: []
+    tags: ["shops"]
+    requestBody:
+      description: 登録データ
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schema/Shop"
+    responses:
+      "200":
+        description: Success Operation
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/shops/shops.yaml#/Shops"
+      "4XX":
+        $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+      "5XX":
+        $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+
+shops_{shop_id}:
+  get:
+    summary: ショップの取得
+    description: ショップの取得
+    schema: { type: integer }
+    parameters:
+      - $ref: "#/components/parameters/ShopId"
+    security: []
+    tags: ["shops"]
+    responses:
+      "200":
+        description: Success Operation
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/shops/shop.yaml#/Shop"
+      "4XX":
+        $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+      "5XX":
+        $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+  put:
+    summary: ショップの更新
+    description: ショップの更新
+    schema: { type: integer }
+    parameters:
+      - $ref: "#/components/parameters/ShopId"
+    requestBody:
+      description: 更新データ
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schema/Shop"
+    security: []
+    tags: ["shops"]
+    responses:
+      "200":
+        description: Success Operation
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/no-data-success.yaml#/NoDataSuccess"
+      "4XX":
+        $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+      "5XX":
+        $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+  delete:
+    summary: ショップの削除
+    description: ショップの削除
+    schema: { type: integer }
+    parameters:
+      - $ref: "#/components/parameters/ShopId"
+    security: []
+    tags: ["shops"]
+    responses:
+      "200":
+        description: Success Operation
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/no-data-success.yaml#/NoDataSuccess"
+      "4XX":
+        $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+      "5XX":
+        $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+
+components:
+  parameters:
+    ShopId:
+      name: shop_id
+      in: path
+      description: ショップID
+      required: true
+      schema:
+        type: integer
+  schema:
+    Shop:
+      description: ショップ送信データ
+      type: object
+      required:
+        [
+          name,
+          address,
+          email,
+          site_url,
+          tel,
+          fax,
+          charge,
+          plan,
+          is_open,
+        ]
+      properties:
+        name: { type: string, default: "管理者 ショップ" }
+        address: { type: string, default: "兵庫県神戸市111-111" }
+        email: { type: string, format: "email", default: "admintest@admin.com" }
+        site_url: { type: string, format: "uri", default: "http://test.com" }
+        tel: { type: string, default: "000-0000-0000" }
+        fax: { type: string, default: "111-1111-1111" }
+        charge: { type: string, default: "山田 太郎" }
+        plan:
+          {
+            type: string,
+            enum: ["スタンダード", "プレミアム"],
+            default: "スタンダード",
+          }
+        is_open: { type: boolean, default: true }

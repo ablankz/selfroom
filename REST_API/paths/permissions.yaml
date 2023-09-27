@@ -1,0 +1,123 @@
+permissions:
+  get:
+    summary: パーミッションの全取得
+    description: パーミッションの全取得
+    security: []
+    tags: ["permissions"]
+    responses:
+      "200":
+        description: Success Operation
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/permissions/permissions.yaml#/Permissions"
+      "4XX":
+        $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+      "5XX":
+        $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+  post:
+    summary: パーミッションの作成
+    description: パーミッションの作成
+    security: []
+    tags: ["permissions"]
+    requestBody:
+      description: 登録データ
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schema/Permission"
+    responses:
+      "200":
+        description: Success Operation
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/permissions/permissions.yaml#/Permissions"
+      "4XX":
+        $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+      "5XX":
+        $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+
+permissions_{permission_id}:
+  get:
+    summary: パーミッションの取得
+    description: パーミッションの取得
+    schema: { type: integer }
+    parameters:
+      - $ref: "#/components/parameters/PermissionId"
+    security: []
+    tags: ["permissions"]
+    responses:
+      "200":
+        description: Success Operation
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/permissions/permission.yaml#/Permission"
+      "4XX":
+        $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+      "5XX":
+        $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+  put:
+    summary: パーミッションの更新
+    description: パーミッションの更新
+    schema: { type: integer }
+    parameters:
+      - $ref: "#/components/parameters/PermissionId"
+    requestBody:
+      description: 更新データ
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schema/Permission"
+    security: []
+    tags: ["permissions"]
+    responses:
+      "200":
+        description: Success Operation
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/no-data-success.yaml#/NoDataSuccess"
+      "4XX":
+        $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+      "5XX":
+        $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+  delete:
+    summary: パーミッションの削除
+    description: パーミッションの削除
+    schema: { type: integer }
+    parameters:
+      - $ref: "#/components/parameters/PermissionId"
+    security: []
+    tags: ["permissions"]
+    responses:
+      "200":
+        description: Success Operation
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/no-data-success.yaml#/NoDataSuccess"
+      "4XX":
+        $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+      "5XX":
+        $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+
+components:
+  parameters:
+    PermissionId:
+      name: permission_id
+      in: path
+      description: パーミッションID
+      required: true
+      schema:
+        type: integer
+  schema:
+    Permission:
+      description: パーミッション送信データ
+      type: object
+      required: [name]
+      properties:
+        name: { type: string, default: "admin" }

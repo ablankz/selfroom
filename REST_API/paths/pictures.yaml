@@ -1,0 +1,124 @@
+pictures:
+  get:
+    summary: ピクチャーの全取得
+    description: ピクチャーの全取得
+    security: []
+    tags: ["pictures"]
+    responses:
+      "200":
+        description: Success Operation
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/pictures/pictures.yaml#/Pictures"
+      "4XX":
+        $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+      "5XX":
+        $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+  post:
+    summary: ピクチャーの作成
+    description: ピクチャーの作成
+    security: []
+    tags: ["pictures"]
+    requestBody:
+      description: 登録データ
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schema/Picture"
+    responses:
+      "200":
+        description: Success Operation
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/pictures/pictures.yaml#/Pictures"
+      "4XX":
+        $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+      "5XX":
+        $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+
+pictures_{picture_id}:
+  get:
+    summary: ピクチャーの取得
+    description: ピクチャーの取得
+    schema: { type: integer }
+    parameters:
+      - $ref: "#/components/parameters/PictureId"
+    security: []
+    tags: ["pictures"]
+    responses:
+      "200":
+        description: Success Operation
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/pictures/picture.yaml#/Picture"
+      "4XX":
+        $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+      "5XX":
+        $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+  put:
+    summary: ピクチャーの更新
+    description: ピクチャーの更新
+    schema: { type: integer }
+    parameters:
+      - $ref: "#/components/parameters/PictureId"
+    requestBody:
+      description: 更新データ
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schema/Picture"
+    security: []
+    tags: ["pictures"]
+    responses:
+      "200":
+        description: Success Operation
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/no-data-success.yaml#/NoDataSuccess"
+      "4XX":
+        $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+      "5XX":
+        $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+  delete:
+    summary: ピクチャーの削除
+    description: ピクチャーの削除
+    schema: { type: integer }
+    parameters:
+      - $ref: "#/components/parameters/PictureId"
+    security: []
+    tags: ["pictures"]
+    responses:
+      "200":
+        description: Success Operation
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/no-data-success.yaml#/NoDataSuccess"
+      "4XX":
+        $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+      "5XX":
+        $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+
+components:
+  parameters:
+    PictureId:
+      name: picture_id
+      in: path
+      description: ピクチャーID
+      required: true
+      schema:
+        type: integer
+  schema:
+    Picture:
+      description: ピクチャー送信データ
+      type: object
+      required: 
+        [s3_key]
+      properties:
+        s3_key: { type: string, default: "5da513f01621845c4d623256054dae747c84b950319edbd3d92146a8319119c7" }

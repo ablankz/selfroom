@@ -1,0 +1,24 @@
+Runnings:
+  description: ランニング複数データ
+  type: object
+  required: [success, data, code, message, validation_messages]
+  properties:
+    success: { type: boolean, example: true }
+    data:
+      type: array
+      items:
+        type: object
+        required: [running_id, user_id, start_distance, end_distance, start_picture_id, end_picture_id, ad_id, created_at, updated_at]
+        properties:
+          running_id: { type: integer, example: 200, readOnly: true }
+          user_id: { type: integer, example: 44 }
+          start_distance: { type: integer, example: 31588 }
+          end_distance: { type: integer, example: 31712 }
+          start_picture_id: { type: integer, example: 20 }
+          end_picture_id: { type: integer, example: 21 }
+          ad_id: { type: integer, example: 17 }
+          created_at: { type: string, format: date, example: "2023-09-24T17:00:00+09:00" }
+          updated_at: { type: string, format: date, example: "2023-09-24T17:00:00+09:00" }
+    code: { type: integer, example: 0 }
+    message: { type: string, example: "OK" }
+    validation_messages: { type: array, maximum: 0, example: [] }
