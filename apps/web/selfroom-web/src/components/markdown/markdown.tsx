@@ -26,6 +26,7 @@ export default function Markdown({ sx, ...other }: MarkdownProps) {
           rehypeRaw as any,
           rehypeHighlight,
         ]}
+        remarkPlugins={[remarkGfm]}
         components={components}
         {...other}
       />
