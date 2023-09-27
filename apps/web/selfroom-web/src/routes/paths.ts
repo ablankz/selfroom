@@ -1,17 +1,15 @@
-
-
-// ----------------------------------------------------------------------
-
-const ROOTS = {
-  DASHBOARD: '',
-};
-
 // ----------------------------------------------------------------------
 
 export const paths = {
   // DASHBOARD
   dashboard: {
     root: '/',
-    rawApi: `${ROOTS.DASHBOARD}/raw-api`,
+    career: '/career',
+    skill: '/skill',
+    work: '/work',
+    link: '/link',
+    overview: '/overview',
+    auth: '/auth',
+    rawApi: `/raw-api`,
   },
 };

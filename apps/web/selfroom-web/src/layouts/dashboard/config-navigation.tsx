@@ -5,6 +5,7 @@ import { paths } from '@/routes/paths';
 import { useLocales } from '@/locales';
 // components
 import SvgColor from '@/components/svg-color';
+import { HOST_OPENAPI } from '@/config-global';
 
 // ----------------------------------------------------------------------
 
@@ -20,8 +21,16 @@ const icon = (name: string) => (
 );
 
 const ICONS = {
-  app: icon('ic_app'),
+  introduction: icon('ic_introduction'),
+  career: icon('ic_career'),
+  skill: icon('ic_skill'),
+  work: icon('ic_work'),
+  link: icon('ic_link'),
+  auth: icon('ic_auth'),
+  overview: icon('ic_overview'),
   api: icon('ic_api'),
+  chat: icon('ic_chat'),
+  openapi: icon('ic_openapi'),
 };
 
 // ----------------------------------------------------------------------
@@ -34,30 +43,72 @@ export function useNavData() {
       // OVERVIEW
       // ----------------------------------------------------------------------
       {
-        subheader: t('overview'),
+        subheader: t('portfolio'),
         items: [
           {
-            title: t('app'),
+            title: t('introduction'),
             path: paths.dashboard.root,
-            icon: ICONS.app,
+            icon: ICONS.introduction,
+          },
+          {
+            title: t('career'),
+            path: paths.dashboard.career,
+            icon: ICONS.career,
+          },
+          {
+            title: t('skill-qualification'),
+            path: paths.dashboard.skill,
+            icon: ICONS.skill,
+          },
+          {
+            title: t('work'),
+            path: paths.dashboard.work,
+            icon: ICONS.work,
+          },
+          {
+            title: t('link'),
+            path: paths.dashboard.link,
+            icon: ICONS.link,
+          },
+        ],
+      },
+      {
+        subheader: t('application'),
+        items: [
+          {
+            title: t('overview'),
+            path: paths.dashboard.overview,
+            icon: ICONS.overview,
+          },
+          {
+            title: t('auth'),
+            path: paths.dashboard.auth,
+            icon: ICONS.auth,
           },
           {
             title: t('row-api'),
             path: paths.dashboard.rawApi,
             icon: ICONS.api,
           },
+          {
+            title: t('chat'),
+            path: paths.dashboard.rawApi,
+            icon: ICONS.chat,
+          },
         ],
       },
 
       // ----------------------------------------------------------------------
-      {
-        subheader: t('auth'),
-        items: [],
-      },
 
       {
-        subheader: t(t('entity')),
-        items: [],
+        subheader: t('external'),
+        items: [
+          {
+            title: t('APIDesignDocument'),
+            path: HOST_OPENAPI,
+            icon: ICONS.openapi,
+          },
+        ],
       },
     ],
     [t]
