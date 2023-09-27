@@ -45,7 +45,7 @@ const Logo = forwardRef<HTMLDivElement, LogoProps>(
         id="a50jZKemua"
         filterUnits="userSpaceOnUse"
         primitiveUnits="userSpaceOnUse"
-        color-interpolation-filters="sRGB">
+        colorInterpolationFilters="sRGB">
         <feMerge><feMergeNode in="SourceGraphic" /></feMerge>
       </filter>
       </defs>
