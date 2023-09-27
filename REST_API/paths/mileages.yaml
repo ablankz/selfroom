@@ -1,79 +1,79 @@
-clients:
+mileages:
   get:
-    summary: クライアントの全取得
-    description: クライアントの全取得
+    summary: マイレージの全取得
+    description: マイレージの全取得
     security: []
-    tags: ["clients"]
+    tags: ["mileages"]
     responses:
       "200":
         description: Success Operation
         content:
           application/json:
             schema:
-              $ref: "../components/schemas/clients/clients.yaml#/Clients"
+              $ref: "../components/schemas/mileages/mileages.yaml#/Mileages"
       "4XX":
         $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
       "5XX":
         $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
   post:
-    summary: クライアントの作成
-    description: クライアントの作成
+    summary: マイレージの作成
+    description: マイレージの作成
     security: []
-    tags: ["clients"]
+    tags: ["mileages"]
     requestBody:
       description: 登録データ
       required: true
       content:
         application/json:
           schema:
-            $ref: "#/components/schema/Client"
+            $ref: "#/components/schema/Mileage"
     responses:
       "200":
         description: Success Operation
         content:
           application/json:
             schema:
-              $ref: "../components/schemas/clients/clients.yaml#/Clients"
+              $ref: "../components/schemas/mileages/mileages.yaml#/Mileages"
       "4XX":
         $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
       "5XX":
         $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
 
-clients_{client_id}:
+mileages_{mileage_id}:
   get:
-    summary: クライアントの取得
-    description: クライアントの取得
+    summary: マイレージの取得
+    description: マイレージの取得
     schema: { type: integer }
     parameters:
-      - $ref: "#/components/parameters/ClientId"
+      - $ref: "#/components/parameters/MileageId"
     security: []
-    tags: ["clients"]
+    tags: ["mileages"]
     responses:
       "200":
         description: Success Operation
         content:
           application/json:
             schema:
-              $ref: "../components/schemas/clients/client.yaml#/Client"
+              $ref: "../components/schemas/mileages/mileage.yaml#/Mileage"
       "4XX":
         $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
       "5XX":
         $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
   put:
-    summary: クライアントの更新
-    description: クライアントの更新
+    summary: マイレージの更新
+    description: マイレージの更新
     schema: { type: integer }
     parameters:
-      - $ref: "#/components/parameters/ClientId"
+      - $ref: "#/components/parameters/MileageId"
     requestBody:
       description: 更新データ
       required: true
       content:
         application/json:
           schema:
-            $ref: "#/components/schema/Client"
+            $ref: "#/components/schema/Mileage"
     security: []
-    tags: ["clients"]
+    tags: ["mileages"]
     responses:
       "200":
         description: Success Operation
@@ -86,13 +86,13 @@ clients_{client_id}:
       "5XX":
         $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
   delete:
-    summary: クライアントの削除
-    description: クライアントの削除
+    summary: マイレージの削除
+    description: マイレージの削除
     schema: { type: integer }
     parameters:
-      - $ref: "#/components/parameters/ClientId"
+      - $ref: "#/components/parameters/MileageId"
     security: []
-    tags: ["clients"]
+    tags: ["mileages"]
     responses:
       "200":
         description: Success Operation
@@ -107,43 +107,20 @@ clients_{client_id}:
 
 components:
   parameters:
-    ClientId:
-      name: client_id
+    MileageId:
+      name: mileage_id
       in: path
-      description: クライアントID
+      description: マイレージID
       required: true
       schema:
         type: integer
   schema:
-    Client:
-      description: クライアント送信データ
+    Mileage:
+      description: マイレージ送信データ
       type: object
-      required:
-        [
-          name,
-          address,
-          email,
-          site_url,
-          tel,
-          fax,
-          charge,
-          plan,
-          design,
-          is_open,
-        ]
+      required: [user_id, start_distance, total_distance, picture_id]
       properties:
-        name: { type: string, default: "管理者 クライアント" }
-        address: { type: string, default: "兵庫県神戸市111-111" }
-        email: { type: string, format: "email", default: "admintest@admin.com" }
-        site_url: { type: string, format: "uri", default: "http://test.com" }
-        tel: { type: string, default: "000-0000-0000" }
-        fax: { type: string, default: "111-1111-1111" }
-        charge: { type: string, default: "山田 太郎" }
-        plan:
-          {
-            type: string,
-            enum: ["スタンダード", "プレミアム"],
-            default: "スタンダード",
-          }
-        design: { type: string, default: "未定" }
-        is_open: { type: boolean, default: true }
+        user_id: { type: integer, default: 50 }
+        start_distance: { type: integer, default: 24120 }
+        total_distance: { type: integer, default: 24257 }
+        picture_id: { type: integer, default: 20 }

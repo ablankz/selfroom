@@ -1,17 +1,18 @@
-Account:
-  description: アカウントデータ
+Mileage:
+  description: マイレージデータ
   type: object
   required: [success, data, code, message, validation_messages]
   properties:
     success: { type: boolean, example: true }
     data:
       type: object
-      required: [account_id, user_id, login_id, is_active, created_at, updated_at]
+      required: [mileage_id, user_id, start_distance, total_distance, picture_id, created_at, updated_at]
       properties:
-        account_id: { type: integer, example: 100, readOnly: true } 
-        user_id: { type: integer, example: 200, readOnly: true }
-        login_id: { type: string, example: "admin", nullable: true }
-        is_active: { type: boolean, example: true }
+        mileage_id: { type: integer, example: 200, readOnly: true }
+        user_id: { type: integer, example: 50 }
+        start_distance: { type: integer, example: 24120 }
+        total_distance: { type: integer, example: 24257 }
+        picture_id: { type: integer, example: 20 }
         created_at: { type: string, format: date, example: "2023-09-24T17:00:00+09:00" }
         updated_at: { type: string, format: date, example: "2023-09-24T17:00:00+09:00" }
     code: { type: integer, example: 0 }

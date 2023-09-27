@@ -120,9 +120,29 @@ tags:
     description: 認証に関する操作
   - name: "clients"
     description: クライアントに関するCRUD
+  - name: "shops"
+    description: ショップに関するCRUD
+  - name: "partners"
+    description: パートナーに関するCRUD
+  - name: "roles"
+    description: ロールに関するCRUD
+  - name: "mileages"
+    description: マイレージに関するCRUD
+  - name: "runnings"
+    description: ランニングに関するCRUD
+  - name: "pictures"
+    description: ピクチャーに関するCRUD
+  - name: "permissions"
+    description: パーミッションに関するCRUD
+  - name: "advertisements"
+    description: 広告に関するCRUD
+  - name: "coupons"
+    description: クーポンに関するCRUD
 paths:
   /auth/login:
     $ref: "./paths/auth.yaml#/auth/login"
+  /auth/register:
+    $ref: "./paths/auth.yaml#/auth/register"
   /auth/logout:
     $ref: "./paths/auth.yaml#/auth/logout"
   /auth/user:
@@ -135,6 +155,42 @@ paths:
     $ref: "./paths/clients.yaml#/clients"
   /clients/{client_id}:
     $ref: "./paths/clients.yaml#/clients_{client_id}"
+  /shops:
+    $ref: "./paths/shops.yaml#/shops"
+  /shops/{shop_id}:
+    $ref: "./paths/shops.yaml#/shops_{shop_id}"
+  /partners:
+    $ref: "./paths/partners.yaml#/partners"
+  /partners/{partner_id}:
+    $ref: "./paths/partners.yaml#/partners_{partner_id}"
+  /roles:
+    $ref: "./paths/roles.yaml#/roles"
+  /roles/{role_id}:
+    $ref: "./paths/roles.yaml#/roles_{role_id}"
+  /mileages:
+    $ref: "./paths/mileages.yaml#/mileages"
+  /mileages/{mileage_id}:
+    $ref: "./paths/mileages.yaml#/mileages_{mileage_id}"
+  /runnings:
+    $ref: "./paths/runnings.yaml#/runnings"
+  /runnings/{running_id}:
+    $ref: "./paths/runnings.yaml#/runnings_{running_id}"
+  /pictures:
+    $ref: "./paths/pictures.yaml#/pictures"
+  /pictures/{picture_id}:
+    $ref: "./paths/pictures.yaml#/pictures_{picture_id}"
+  /permissions:
+    $ref: "./paths/permissions.yaml#/permissions"
+  /permissions/{permission_id}:
+    $ref: "./paths/permissions.yaml#/permissions_{permission_id}"
+  /advertisements:
+    $ref: "./paths/advertisements.yaml#/advertisements"
+  /advertisements/{advertisement_id}:
+    $ref: "./paths/advertisements.yaml#/advertisements_{advertisement_id}"
+  /coupons:
+    $ref: "./paths/coupons.yaml#/coupons"
+  /coupons/{coupon_id}:
+    $ref: "./paths/coupons.yaml#/coupons_{coupon_id}"
 components:
   schemas:        
     # EntityDataSuccess:

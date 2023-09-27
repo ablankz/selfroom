@@ -1,79 +1,79 @@
-clients:
+roles:
   get:
-    summary: クライアントの全取得
-    description: クライアントの全取得
+    summary: ロールの全取得
+    description: ロールの全取得
     security: []
-    tags: ["clients"]
+    tags: ["roles"]
     responses:
       "200":
         description: Success Operation
         content:
           application/json:
             schema:
-              $ref: "../components/schemas/clients/clients.yaml#/Clients"
+              $ref: "../components/schemas/roles/roles.yaml#/Roles"
       "4XX":
         $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
       "5XX":
         $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
   post:
-    summary: クライアントの作成
-    description: クライアントの作成
+    summary: ロールの作成
+    description: ロールの作成
     security: []
-    tags: ["clients"]
+    tags: ["roles"]
     requestBody:
       description: 登録データ
       required: true
       content:
         application/json:
           schema:
-            $ref: "#/components/schema/Client"
+            $ref: "#/components/schema/Role"
     responses:
       "200":
         description: Success Operation
         content:
           application/json:
             schema:
-              $ref: "../components/schemas/clients/clients.yaml#/Clients"
+              $ref: "../components/schemas/roles/roles.yaml#/Roles"
       "4XX":
         $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
       "5XX":
         $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
 
-clients_{client_id}:
+roles_{role_id}:
   get:
-    summary: クライアントの取得
-    description: クライアントの取得
+    summary: ロールの取得
+    description: ロールの取得
     schema: { type: integer }
     parameters:
-      - $ref: "#/components/parameters/ClientId"
+      - $ref: "#/components/parameters/RoleId"
     security: []
-    tags: ["clients"]
+    tags: ["roles"]
     responses:
       "200":
         description: Success Operation
         content:
           application/json:
             schema:
-              $ref: "../components/schemas/clients/client.yaml#/Client"
+              $ref: "../components/schemas/roles/role.yaml#/Role"
       "4XX":
         $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
       "5XX":
         $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
   put:
-    summary: クライアントの更新
-    description: クライアントの更新
+    summary: ロールの更新
+    description: ロールの更新
     schema: { type: integer }
     parameters:
-      - $ref: "#/components/parameters/ClientId"
+      - $ref: "#/components/parameters/RoleId"
     requestBody:
       description: 更新データ
       required: true
       content:
         application/json:
           schema:
-            $ref: "#/components/schema/Client"
+            $ref: "#/components/schema/Role"
     security: []
-    tags: ["clients"]
+    tags: ["roles"]
     responses:
       "200":
         description: Success Operation
@@ -86,13 +86,13 @@ clients_{client_id}:
       "5XX":
         $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
   delete:
-    summary: クライアントの削除
-    description: クライアントの削除
+    summary: ロールの削除
+    description: ロールの削除
     schema: { type: integer }
     parameters:
-      - $ref: "#/components/parameters/ClientId"
+      - $ref: "#/components/parameters/RoleId"
     security: []
-    tags: ["clients"]
+    tags: ["roles"]
     responses:
       "200":
         description: Success Operation
@@ -107,43 +107,19 @@ clients_{client_id}:
 
 components:
   parameters:
-    ClientId:
-      name: client_id
+    RoleId:
+      name: role_id
       in: path
-      description: クライアントID
+      description: ロールID
       required: true
       schema:
         type: integer
   schema:
-    Client:
-      description: クライアント送信データ
+    Role:
+      description: ロール送信データ
       type: object
       required:
-        [
-          name,
-          address,
-          email,
-          site_url,
-          tel,
-          fax,
-          charge,
-          plan,
-          design,
-          is_open,
-        ]
+        [user_id, permission_id]
       properties:
-        name: { type: string, default: "管理者 クライアント" }
-        address: { type: string, default: "兵庫県神戸市111-111" }
-        email: { type: string, format: "email", default: "admintest@admin.com" }
-        site_url: { type: string, format: "uri", default: "http://test.com" }
-        tel: { type: string, default: "000-0000-0000" }
-        fax: { type: string, default: "111-1111-1111" }
-        charge: { type: string, default: "山田 太郎" }
-        plan:
-          {
-            type: string,
-            enum: ["スタンダード", "プレミアム"],
-            default: "スタンダード",
-          }
-        design: { type: string, default: "未定" }
-        is_open: { type: boolean, default: true }
+        user_id: { type: integer, default: 25 }
+        permission_id: { type: integer, default: 15 }

@@ -1,17 +1,15 @@
-Account:
-  description: アカウントデータ
+Permission:
+  description: パーミッションデータ
   type: object
   required: [success, data, code, message, validation_messages]
   properties:
     success: { type: boolean, example: true }
     data:
       type: object
-      required: [account_id, user_id, login_id, is_active, created_at, updated_at]
+      required: [permission_id, name, created_at, updated_at]
       properties:
-        account_id: { type: integer, example: 100, readOnly: true } 
-        user_id: { type: integer, example: 200, readOnly: true }
-        login_id: { type: string, example: "admin", nullable: true }
-        is_active: { type: boolean, example: true }
+        permission_id: { type: integer, example: 200, readOnly: true }
+        name: { type: string, example: "admin" }
         created_at: { type: string, format: date, example: "2023-09-24T17:00:00+09:00" }
         updated_at: { type: string, format: date, example: "2023-09-24T17:00:00+09:00" }
     code: { type: integer, example: 0 }
