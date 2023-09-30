@@ -5,7 +5,7 @@
   "introduction": "introduction",
   "career": "career",
   "skill-qualification": "skill-qualification",
-  "work": "work",
+  "works": "works",
   "link": "link",
   "application": "application",
   "overview": "overview",
@@ -16,7 +16,7 @@
   "Introduction": "Introduction",
   "Career": "Career",
   "Skill-Qualification": "Skill-Qualification",
-  "Work": "Work",
+  "Works": "Works",
   "Link": "Link",
   "Application": "Application",
   "Overview": "Overview",
@@ -24,5 +24,8 @@
   "RawApi": "RawApi",
   "Chat": "Chat",
   "external": "external",
-  "APIDesignDocument": "APIDesignDocument"
+  "APIDesignDocument": "APIDesignDocument",
+  "Failed to retrieve file": "Failed to retrieve file",
+  "works-description": "This is a list of projects and works that we have been involved in developing. Some of the projects I have worked on personally and others I have participated in as an assistant.",
+  "View More": "View More"
 }
