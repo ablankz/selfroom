@@ -1,0 +1,36 @@
+.scrollbar-none {
+  /*IE(Internet Explorer)・Microsoft Edgeへの対応*/
+  -ms-overflow-style: none;
+  /*Firefoxへの対応*/
+  scrollbar-width: none;
+}
+
+/*Google Chrome、Safariへの対応*/
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+.hover-scale {
+  -moz-transition: -moz-transform 0.5s linear;
+  -webkit-transition: -webkit-transform 0.5s linear;
+  -o-transition: -o-transform 0.5s linear;
+  -ms-transition: -ms-transform 0.5s linear;
+  transition: transform 0.5s linear;
+}
+
+.hover-scale-md:hover {
+  -webkit-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -o-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+.hover-scale-sm:hover {
+  -webkit-transform: scale(1.04);
+  -moz-transform: scale(1.04);
+  -o-transform: scale(1.04);
+  -ms-transform: scale(1.04);
+  transform: scale(1.04);
+}
+
