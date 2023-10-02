@@ -77,7 +77,7 @@ export default function CareerView() {
           mb: { xs: 3, md: 5 },
         }}
       />
-      <MainHaeder title='CAREER' description='works-description' />
+      <MainHaeder title='CAREER' description='career-description' />
       <Timeline
         position="alternate"
         sx={{
@@ -108,6 +108,7 @@ export default function CareerView() {
                     sx={{
                       p: 2,
                       bgcolor: (theme) => alpha(theme.palette.grey[500], 0.12),
+                      boxShadow: (theme) => theme.customShadows.primary
                     }}
                   >
                     <Typography variant="subtitle2">{item.title}</Typography>

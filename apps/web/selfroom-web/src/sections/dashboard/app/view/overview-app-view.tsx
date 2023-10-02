@@ -36,13 +36,22 @@ export default function OverviewAppView() {
   return (
     <Container maxWidth={settings.themeStretch ? false : 'xl'}>
       <CustomBreadcrumbs
-        heading={t("Overview")}
+        heading={t('Overview')}
         links={[{ name: t('Application') }]}
         sx={{
           mb: { xs: 3, md: 5 },
         }}
       />
-       <Container sx={{ width: '100%', boxShadow: 8, borderRadius: 4, py: 4, overflow: "visible", overflowWrap: "normal" }}>
+      <Container
+        sx={{
+          width: '100%',
+          boxShadow: (theme) => theme.customShadows.primary,
+          borderRadius: 4,
+          py: 4,
+          overflow: 'visible',
+          overflowWrap: 'normal',
+        }}
+      >
         <Markdown>{markdown}</Markdown>
       </Container>
     </Container>

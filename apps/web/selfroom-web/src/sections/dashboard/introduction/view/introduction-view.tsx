@@ -43,11 +43,11 @@ export default function IntroductionView() {
           mb: { xs: 3, md: 5 },
         }}
       />
-      <MainHaeder title='PROFILE' description='works-description' />
+      <MainHaeder title='PROFILE' description='profile-description' />
       <Container
         sx={{
           width: '100%',
-          boxShadow: 8,
+          boxShadow: (theme) => theme.customShadows.primary,
           borderRadius: 4,
           py: 4,
           overflowX: 'auto',

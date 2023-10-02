@@ -74,6 +74,7 @@ export const LinkCard = ({ items }: Props) => {
     <Card
       sx={{
         bgcolor: alpha('#ffffff', 0),
+        boxShadow: (theme) => theme.customShadows.info,
       }}
     >
       <ScrollProgress
@@ -133,7 +134,12 @@ export const LinkCard = ({ items }: Props) => {
                   }}
                 >
                   {isEmptyLink(e) || (
-                    <Card className='hover-scale hover-scale-sm'>
+                    <Card
+                      className="hover-scale hover-scale-sm"
+                      sx={{
+                        boxShadow: (theme) => theme.customShadows.primary,
+                      }}
+                    >
                       <Tooltip title={e.description}>
                         <CardActionArea onClick={() => handleClick(e)}>
                           <Stack
