@@ -5,106 +5,91 @@ import { useSettingsContext } from '@/components/settings';
 import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
 import { useLocales } from '@/locales';
 import { paths } from '@/routes/paths';
-import Timeline from '@mui/lab/Timeline';
-import TimelineDot from '@mui/lab/TimelineDot';
-import TimelineItem from '@mui/lab/TimelineItem';
-import TimelineContent from '@mui/lab/TimelineContent';
-import TimelineSeparator from '@mui/lab/TimelineSeparator';
-import TimelineConnector from '@mui/lab/TimelineConnector';
-import TimelineOppositeContent, {
-  timelineOppositeContentClasses,
-} from '@mui/lab/TimelineOppositeContent';
-import { Paper, Typography, alpha } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { useSnackbar } from '@/components/snackbar';
-
-type TimelineType = {
-  key: number;
-  title: string;
-  des: string;
-  time: string;
-  color?:
-    | 'primary'
-    | 'info'
-    | 'success'
-    | 'warning'
-    | 'error'
-    | 'inherit'
-    | 'grey'
-    | 'secondary';
-  icon: React.ReactElement;
-};
+import { Box } from '@mui/material';
+import MainHaeder from '../../_common/header/main-header';
+import { SkillBox } from '../skill-box';
+import { LanguageSkill } from '../language-skill';
 
 // ----------------------------------------------------------------------
 
 export default function SkillView() {
   const settings = useSettingsContext();
-  const { t, currentLang } = useLocales();
-  const [timelines, setTimelines] = useState<TimelineType[]>([]);
-  const { enqueueSnackbar } = useSnackbar();
-
-  useEffect(() => {
-    import(`../timelines/${currentLang.value}`)
-      .then((module) => {
-        if(!module.default) throw new Error;
-        setTimelines(module.default);
-      })
-      .catch((_) => {
-        setTimelines([]);
-        enqueueSnackbar({
-          message: `${t('Failed to retrieve file')}`,
-          variant: 'error',
-        });
-      });
-  }, [currentLang]);
+  const { t } = useLocales();
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'xl'}>
       <CustomBreadcrumbs
-        heading={t('Career')}
+        heading={t('Skill-Qualification')}
         links={[
           { name: t('Portfolio'), href: paths.dashboard.root },
-          { name: t('Career') },
+          { name: t('Skill-Qualification') },
         ]}
         sx={{
           mb: { xs: 3, md: 5 },
         }}
       />
-      <Timeline
-        position="alternate"
+      <MainHaeder title="SKILL" description="skill-description" />
+      <Container
         sx={{
-          [`& .${timelineOppositeContentClasses.root}`]: {
-            flex: {xs: 0.2, md: 1},
-          },
+          my: 3,
+          py: 4,
+          bgcolor: 'background.paper',
+          borderRadius: 0.8,
+          width: 1,
         }}
       >
-        {timelines.map((item) => (
-          <TimelineItem key={item.key}>
-            <TimelineOppositeContent>
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                {item.time}
-              </Typography>
-            </TimelineOppositeContent>
-            <TimelineSeparator>
-              <TimelineDot color={item.color}>{item.icon}</TimelineDot>
-              <TimelineConnector />
-            </TimelineSeparator>
-            <TimelineContent>
-              <Paper
-                sx={{
-                  p: 3,
-                  bgcolor: (theme) => alpha(theme.palette.grey[500], 0.12),
-                }}
-              >
-                <Typography variant="subtitle2">{item.title}</Typography>
-                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                  {item.des}
-                </Typography>
-              </Paper>
-            </TimelineContent>
-          </TimelineItem>
-        ))}
-      </Timeline>
+        <Box
+          gap={3}
+          display="grid"
+          gridTemplateColumns={{ xs: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }}
+          width={1}
+        >
+          <SkillBox
+            title="development"
+            categories={[
+              'System',
+              'Application',
+              'Web (front-end)',
+              'Web (back-end)',
+              'Embedded',
+            ]}
+            skillLevel={{
+              experience: [10, 40, 70, 90, 0],
+              knowledge: [40, 60, 75, 90, 20],
+              interest: [80, 100, 60, 20, 95],
+            }}
+            description="skill-development-description"
+          />
+          <SkillBox
+            title="infrastructure"
+            categories={['Server', 'Network', 'Security', 'Databse', 'Cloud']}
+            skillLevel={{
+              experience: [85, 50, 40, 60, 50],
+              knowledge: [72, 68, 40, 35, 72],
+              interest: [70, 70, 90, 82, 90],
+            }}
+            description="skill-infrastructure-description"
+          />
+          <SkillBox
+            title="Others"
+            categories={[
+              'Testing and Debugging',
+              'Design',
+              'Communication',
+              'English',
+              'Software Design',
+              'Development method',
+            ]}
+            skillLevel={{
+              experience: [10, 20, 30, 30, 60, 20],
+              knowledge: [5, 10, 10, 50, 60, 40],
+              interest: [40, 90, 70, 65, 60, 30],
+            }}
+            description="skill-others-description"
+          />
+        </Box>
+        <LanguageSkill />
+      </Container>
     </Container>
   );
 }
