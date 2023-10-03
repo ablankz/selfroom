@@ -1,4 +1,4 @@
-##### 使用したことのある言語
+##### Languages I have used
 ***
 <details class="card-details">
   <summary>PHP</summary>
@@ -52,7 +52,7 @@
   </div>
 </details>
 
-##### その他の技術
+##### Other Technologies
 ***
 <details class="card-details">
   <summary>Docker</summary>
@@ -116,7 +116,7 @@
   </div>
 </details>
 
-##### 今後使っていきたい言語・フレームワーク・技術
+##### Languages, frameworks, and technologies you would like to use in the future
 ***
 <details class="card-details">
   <summary>actix-web(rust)</summary>

@@ -1,16 +1,16 @@
-##### IT 系の資格
+##### IT qualifications
 
 ---
 
 <span class="error-text">I do not have any certifications that I am taking.</span>
 
-##### その他の資格
+##### Other Qualifications
 
 ---
 
 <span class="error-text">I do not have any certifications that I am taking.</span>
 
-##### 今後使っていきたい言語・フレームワーク・技術
+##### Qualifications you would like to obtain in the future
 
 ---
 <details class="card-details">

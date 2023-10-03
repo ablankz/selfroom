@@ -10,7 +10,7 @@
 
 <span class="error-text">取っている資格がありません</span>
 
-##### 今後使っていきたい言語・フレームワーク・技術
+##### 今後取得したい資格
 
 ---
 <details class="card-details">
