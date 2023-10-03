@@ -73,7 +73,7 @@ export const LanguageSkill = () => {
               backgroundPosition: '0% 100%',
             }}
           >
-            使用言語
+            {t('Technologies used')}
           </Typography>
         </MotionViewport>
       </Box>

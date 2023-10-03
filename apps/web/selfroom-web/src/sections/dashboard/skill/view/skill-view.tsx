@@ -9,6 +9,7 @@ import { Box } from '@mui/material';
 import MainHaeder from '../../_common/header/main-header';
 import { SkillBox } from '../skill-box';
 import { LanguageSkill } from '../language-skill';
+import { Qualification } from '../qualification';
 
 // ----------------------------------------------------------------------
 
@@ -89,6 +90,7 @@ export default function SkillView() {
           />
         </Box>
         <LanguageSkill />
+        <Qualification />
       </Container>
     </Container>
   );
