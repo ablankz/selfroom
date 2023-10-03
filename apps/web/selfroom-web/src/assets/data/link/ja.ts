@@ -37,13 +37,6 @@ const LINK_ITEMS: Link[] = [
   },
   {
     id: 4,
-    title: 'My Blog',
-    description: 'ブログ投稿サイト: SRBlog',
-    link: 'https://blog.selfroom.net',
-    svg: 'ic_blog',
-  },
-  {
-    id: 5,
     title: 'Scrapbox',
     description: '情報共有ツール Scrapbox',
     link: 'https://scrapbox.io/selfroom/',

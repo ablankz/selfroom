@@ -94,6 +94,8 @@ export const LinkCard = ({ items }: Props) => {
         className="scrollbar-none"
       >
         <Box
+          display='flex'
+          justifyContent='center'
           sx={{
             px: {
               xs: 3,
@@ -109,6 +111,7 @@ export const LinkCard = ({ items }: Props) => {
             container
             spacing={{ xs: 4, md: 20, lg: 16 }}
             alignItems="center"
+            gridTemplateColumns={{ xs: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }}
             justifyContent="center"
           >
             {!state.links.length ? (
@@ -133,7 +136,7 @@ export const LinkCard = ({ items }: Props) => {
                     }),
                   }}
                 >
-                  {isEmptyLink(e) || (
+                  {isEmptyLink(e) ? <></> : (
                     <Card
                       className="hover-scale hover-scale-sm"
                       sx={{
