@@ -10,10 +10,10 @@ const StyledMarkdown = styled('div')(({ theme }) => {
     // Text
     h1: { margin: 0, marginTop: 18, marginBottom: 18, ...theme.typography.h1 },
     h2: { margin: 0, marginTop: 14, marginBottom: 14, ...theme.typography.h2 },
-    h3: { margin: 0, marginTop: 10, marginBottom: 10, ...theme.typography.h3 },
-    h4: { margin: 0, marginTop: 8.5, marginBottom: 8.5, ...theme.typography.h4 },
-    h5: { margin: 0, marginTop: 5, marginBottom: 5, ...theme.typography.h5 },
-    h6: { margin: 0, marginTop: 3.5, marginBottom: 3.5, ...theme.typography.h6 },
+    h3: { margin: 0, marginTop: 12.0, marginBottom: 12.0, ...theme.typography.h3 },
+    h4: { margin: 0, marginTop: 10.5, marginBottom: 10.5, ...theme.typography.h4 },
+    h5: { margin: 0, marginTop: 8.5, marginBottom: 8.5, ...theme.typography.h5 },
+    h6: { margin: 0, marginTop: 5.5, marginBottom: 5.5, ...theme.typography.h6 },
     p: { margin: 0, ...theme.typography.body1 },
 
     br: {
@@ -100,6 +100,19 @@ const StyledMarkdown = styled('div')(({ theme }) => {
       color: theme.palette.warning[isLight ? 'darker' : 'lighter'],
       backgroundColor: theme.palette.warning[isLight ? 'lighter' : 'darker'],
       '&.hljs': { padding: 0, backgroundColor: 'transparent' },
+    },
+
+    '.error-text': {
+      color: theme.palette.error[isLight ? 'darker' : 'lighter']
+    },
+
+    '.card-details': {
+      cursor: 'pointer',
+      marginTop: 8, 
+      marginBottom: 8,
+      '& div': {
+        backgroundColor: theme.palette.grey[isLight ? 300 : 700],
+      },
     },
 
     '.capt': {
