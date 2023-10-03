@@ -107,7 +107,7 @@ info:
     name: Hayashi Kenta
     email: hayaken3007@i.softbank.jp
 servers:
-  - url: http://api.selfroom.com:{port}
+  - url: http://api.selfroom.net:{port}
     description: "開発環境"
     variables:
       port:

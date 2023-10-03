@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import { HOST_ASSET } from '@/config-global';
 import { useSnackbar } from '@/components/snackbar';
+import MainHaeder from '../../_common/header/main-header';
 
 // ----------------------------------------------------------------------
 
@@ -25,9 +26,9 @@ export default function IntroductionView() {
         setMarkdown(m.data);
       })
       .catch((_: AxiosError) => {
-        setMarkdown(`###### ${t(currentLang.label)}に対応したファイルが見つかりません`);
+        setMarkdown(``);
         enqueueSnackbar({
-          message: 'ファイルの取得に失敗しました',
+          message: `${t('Failed to retrieve file')}`,
           variant: 'error',
         });
       });
@@ -42,7 +43,17 @@ export default function IntroductionView() {
           mb: { xs: 3, md: 5 },
         }}
       />
-      <Container sx={{ width: '100%', boxShadow: 8, borderRadius: 4, py: 4, overflow: "visible", overflowWrap: "normal" }}>
+      <MainHaeder title='PROFILE' description='profile-description' />
+      <Container
+        sx={{
+          width: '100%',
+          boxShadow: (theme) => theme.customShadows.primary,
+          borderRadius: 4,
+          py: 4,
+          overflowX: 'auto',
+          overflowWrap: 'normal',
+        }}
+      >
         <Markdown>{markdown}</Markdown>
       </Container>
     </Container>

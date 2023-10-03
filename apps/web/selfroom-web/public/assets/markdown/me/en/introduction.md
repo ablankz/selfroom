@@ -16,6 +16,7 @@
 - I am a fan of adopting the latest technology, but I dislike black boxes, so I customize my own frameworks by using code reading, which is my forte, and overriding them myself
 - I usually study on udemy, books, qiita (mainly udemy)
 - Also, we are basically looking to dabble in a wide range of areas
+- I am currently working for [EPOCH-NET Inc.](https://www.epochworks.jp/) as a part-timer to gain practical experience!
 - In website development, it is as follows(Completely **self-judgmental**.)
 
 |  | backend | frontend | infrastructure | design |

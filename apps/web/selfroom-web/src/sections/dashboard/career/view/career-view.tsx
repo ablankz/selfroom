@@ -17,6 +17,13 @@ import TimelineOppositeContent, {
 import { Paper, Typography, alpha } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useSnackbar } from '@/components/snackbar';
+import {
+  MotionViewport,
+  varFade,
+  varZoom,
+} from '@/components/animate';
+import { m } from 'framer-motion';
+import MainHaeder from '../../_common/header/main-header';
 
 type TimelineType = {
   key: number;
@@ -44,14 +51,15 @@ export default function CareerView() {
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
-    import(`../timelines/${currentLang.value}`)
+    import(`../../../../assets/data/timelines/${currentLang.value}`)
       .then((module) => {
+        if (!module.default) throw new Error();
         setTimelines(module.default);
       })
       .catch((_) => {
         setTimelines([]);
         enqueueSnackbar({
-          message: 'ファイルの取得に失敗しました',
+          message: `${t('Failed to retrieve file')}`,
           variant: 'error',
         });
       });
@@ -69,37 +77,50 @@ export default function CareerView() {
           mb: { xs: 3, md: 5 },
         }}
       />
+      <MainHaeder title='CAREER' description='career-description' />
       <Timeline
         position="alternate"
         sx={{
           [`& .${timelineOppositeContentClasses.root}`]: {
-            flex: {xs: 0.2, md: 1},
+            flex: { xs: 0.2, md: 1 },
           },
         }}
       >
         {timelines.map((item) => (
-          <TimelineItem key={item.key}>
+          <TimelineItem key={item.key} className='hover-scale hover-scale-sm'>
             <TimelineOppositeContent>
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                {item.time}
-              </Typography>
+              <MotionViewport disableAnimatedMobile={false}>
+                <m.div variants={varFade().in}>
+                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                    {item.time}
+                  </Typography>
+                </m.div>
+              </MotionViewport>
             </TimelineOppositeContent>
             <TimelineSeparator>
               <TimelineDot color={item.color}>{item.icon}</TimelineDot>
               <TimelineConnector />
             </TimelineSeparator>
             <TimelineContent>
-              <Paper
-                sx={{
-                  p: 3,
-                  bgcolor: (theme) => alpha(theme.palette.grey[500], 0.12),
-                }}
-              >
-                <Typography variant="subtitle2">{item.title}</Typography>
-                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                  {item.des}
-                </Typography>
-              </Paper>
+              <MotionViewport disableAnimatedMobile={false}>
+                <m.div variants={varZoom().in}>
+                  <Paper
+                    sx={{
+                      p: 2,
+                      bgcolor: (theme) => alpha(theme.palette.grey[500], 0.12),
+                      boxShadow: (theme) => theme.customShadows.primary
+                    }}
+                  >
+                    <Typography variant="subtitle2">{item.title}</Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{ color: 'text.secondary' }}
+                    >
+                      {item.des}
+                    </Typography>
+                  </Paper>
+                </m.div>
+              </MotionViewport>
             </TimelineContent>
           </TimelineItem>
         ))}

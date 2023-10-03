@@ -9,6 +9,9 @@ import { LoadingScreen } from '@/components/loading-screen';
 
 const IndexPage = lazy(() => import('../../pages/dashboard/introduction'));
 const CareerPage = lazy(() => import('../../pages/dashboard/career'));
+const SkillPage = lazy(() => import('../../pages/dashboard/skill'));
+const WorksPage = lazy(() => import('../../pages/dashboard/works'));
+const LinkPage = lazy(() => import('../../pages/dashboard/link'));
 
 const OverviewPage = lazy(() => import('../../pages/dashboard/app'));
 const RawApiPage = lazy(() => import('../../pages/dashboard/raw-api'));
@@ -28,6 +31,9 @@ export const dashboardRoutes = [
     children: [
       { element: <IndexPage />, index: true },
       { path: 'career',  element: <CareerPage /> },
+      { path: 'skill',  element: <SkillPage /> },
+      { path: 'works',  element: <WorksPage /> },
+      { path: 'link',  element: <LinkPage /> },
       { path: 'overview', element: <OverviewPage /> },
       { path: 'auth', element: <RawApiPage /> },
       { path: 'raw-api', element: <RawApiPage /> },

@@ -24,7 +24,7 @@ const ICONS = {
   introduction: icon('ic_introduction'),
   career: icon('ic_career'),
   skill: icon('ic_skill'),
-  work: icon('ic_work'),
+  works: icon('ic_works'),
   link: icon('ic_link'),
   auth: icon('ic_auth'),
   overview: icon('ic_overview'),
@@ -61,9 +61,9 @@ export function useNavData() {
             icon: ICONS.skill,
           },
           {
-            title: t('work'),
-            path: paths.dashboard.work,
-            icon: ICONS.work,
+            title: t('works'),
+            path: paths.dashboard.works,
+            icon: ICONS.works,
           },
           {
             title: t('link'),

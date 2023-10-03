@@ -38,13 +38,15 @@ if [ ! -e .env ]; then
 fi
 
 sudo docker compose down --volumes --remove-orphans && \
-if [ ! -d ./apps/web/mycar-web/node_modules ]; then
-  mkdir ./apps/web/mycar-web/node_modules
+if [ ! -d ./apps/web/selfroom-web/node_modules ]; then
+  mkdir ./apps/web/selfroom-web/node_modules
 fi
-cd ./apps/api/mycar-api/ && api_env && composer update && php artisan key:generate && php artisan jwt:secret && cd ../../../ && \
+cd ./apps/api/selfroom-api/ && api_env && \
+sudo chmod -R a+w storage && sudo chmod -R a+w bootstrap/cache && \
+composer update && php artisan key:generate && php artisan jwt:secret && cd ../../../ && \
 sudo docker compose build && \
 sudo docker compose up -d && \
 sudo docker compose exec backend-server chown www-data storage/ -R && \
 sudo docker compose exec backend-server chown www-data bootstrap/cache -R && \
-sudo chmod a+x ./apps/api/mycar-api/container-artisan.sh && \
+sudo chmod a+x ./apps/api/selfroom-api/container-artisan.sh && \
 sudo docker compose exec api php artisan migrate:fresh --seed

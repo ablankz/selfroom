@@ -9,7 +9,7 @@ import { HEADER, NAV } from '../config-layout';
 
 // ----------------------------------------------------------------------
 
-const SPACING = 8;
+export const SPACING = 8;
 
 export default function Main({ children, sx, ...other }: BoxProps) {
   const settings = useSettingsContext();
@@ -49,7 +49,8 @@ export default function Main({ children, sx, ...other }: BoxProps) {
         minHeight: 1,
         display: 'flex',
         flexDirection: 'column',
-        py: `${HEADER.H_MOBILE + SPACING}px`,
+        pt: `${HEADER.H_MOBILE + SPACING}px`,
+        pb: `${SPACING}px`,
         ...(lgUp && {
           px: 2,
           py: `${HEADER.H_DESKTOP + SPACING}px`,

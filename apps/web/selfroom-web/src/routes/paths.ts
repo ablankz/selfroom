@@ -6,10 +6,12 @@ export const paths = {
     root: '/',
     career: '/career',
     skill: '/skill',
-    work: '/work',
+    works: '/works',
+    work: (name: string) => `/works/${name}`,
     link: '/link',
     overview: '/overview',
     auth: '/auth',
     rawApi: `/raw-api`,
+    chat: '/chat'
   },
 };
