@@ -1,6 +1,4 @@
-import { Endpoint } from '@/utils/axios';
-
-export const SHOP_ENDPOINTS: Endpoint = {
+export const SHOP_ENDPOINTS = {
   shops: {
     all: {
       urlKey: '/shops/',

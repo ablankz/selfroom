@@ -1,6 +1,4 @@
-import { Endpoint } from '@/utils/axios';
-
-export const AUTH_ENDPOINTS: Endpoint = {
+export const AUTH_ENDPOINTS = {
   auth: {
     login: {
       urlKey: '/auth/login',

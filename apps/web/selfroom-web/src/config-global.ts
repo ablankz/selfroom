@@ -9,4 +9,4 @@ export const HOST_OPENAPI = `http://${import.meta.env.VITE_OPENAPI_HOST}`;
 export const HOST_ASSET = `http://${import.meta.env.VITE_ASSET_HOST}`
 
 // ROOT PATH AFTER LOGIN SUCCESSFUL
-export const PATH_AFTER_LOGIN = paths.dashboard.root; // as '/dashboard'
+export const PATH_AFTER_LOGIN = paths.dashboard.chat; // as '/dashboard'

@@ -92,7 +92,7 @@ export function useNavData() {
           },
           {
             title: t('chat'),
-            path: paths.dashboard.rawApi,
+            path: paths.dashboard.chat,
             icon: ICONS.chat,
           },
         ],

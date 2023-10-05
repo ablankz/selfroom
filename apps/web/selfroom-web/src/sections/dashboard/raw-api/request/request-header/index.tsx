@@ -6,7 +6,7 @@ import { useResponsive } from '@/hooks/use-responsive';
 import { RequestHeaderRegister } from './request-header-register';
 import { RequestHeaderTable } from './request-header-table';
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
-import { endpointMatch } from '@/utils/axios';
+import { endpointMatch } from '@/utils/rawAxios';
 import { useSnackbar } from '@/components/snackbar';
 import { DEFAULT_HEADERS } from '@/constants/endpoint';
 

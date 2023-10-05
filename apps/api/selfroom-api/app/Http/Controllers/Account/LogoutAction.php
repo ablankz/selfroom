@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 
 final class LogoutAction extends Controller
 {
@@ -20,6 +21,9 @@ final class LogoutAction extends Controller
   {
     $this->authManager->guard('jwt')->logout();
 
-    return response()->success();
+    return response()->success()
+      ->cookie(Cookie::forget(
+        'token'
+      ));;
   }
 }

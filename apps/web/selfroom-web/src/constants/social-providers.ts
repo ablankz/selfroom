@@ -1,0 +1,1 @@
+export const SOCIAL_PROVIDERS = ['line', 'google'] as const;

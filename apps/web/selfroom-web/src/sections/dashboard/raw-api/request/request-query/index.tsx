@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { EndpointBase, MethodKey, endpointFilter } from '@/utils/axios';
+import { EndpointBase, MethodKey, endpointFilter } from '@/utils/rawAxios';
 import { RequestFilter } from '../request';
 import { RequestMethodSelector } from './request-method-selector';
 import { RequestCandidatesPanel } from './request-candidates-panel';

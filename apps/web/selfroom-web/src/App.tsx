@@ -40,6 +40,9 @@ import SnackbarProvider from '@/components/snackbar/snackbar-provider';
 import { SettingsProvider, SettingsDrawer } from '@/components/settings';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallback from './ErrorFallback';
+// auth
+import { AuthProvider, AuthConsumer } from '@/auth/context';
+import { ErrorHandleProvider } from './providers/ErrorHandleProvider';
 
 // ----------------------------------------------------------------------
 
@@ -59,15 +62,21 @@ export default function App() {
         }}
       >
         <ThemeProvider>
-          <MotionLazy>
-            <SnackbarProvider>
-              <SettingsDrawer />
-              <ProgressBar />
-              <ErrorBoundary FallbackComponent={ErrorFallback}>
-                <Router />
-              </ErrorBoundary>
-            </SnackbarProvider>
-          </MotionLazy>
+          <SnackbarProvider>
+            <MotionLazy>
+              <ErrorHandleProvider>
+                <AuthProvider>
+                  <SettingsDrawer />
+                  <ProgressBar />
+                  <ErrorBoundary FallbackComponent={ErrorFallback}>
+                    <AuthConsumer>
+                      <Router />
+                    </AuthConsumer>
+                  </ErrorBoundary>
+                </AuthProvider>
+              </ErrorHandleProvider>
+            </MotionLazy>
+          </SnackbarProvider>
         </ThemeProvider>
       </SettingsProvider>
     </LocalizationProvider>

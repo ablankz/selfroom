@@ -18,7 +18,7 @@ class OAuthRedirectAction extends Controller
     $redirectUrl = Socialite::driver($provider)->stateless()->with(['state' => 'selfroom-api'])->redirect()->getTargetUrl();
 
     return response()->success([
-      'redirect_url' => $redirectUrl,
+      'redirectUrl' => $redirectUrl,
     ]);
   }
 }

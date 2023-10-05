@@ -7,7 +7,7 @@ import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
 import { Request } from '../request/request';
 import { useState } from 'react';
 import { Response } from '../response/response';
-import { MethodKey } from '@/utils/axios';
+import { MethodKey } from '@/utils/rawAxios';
 import { useLocales } from '@/locales';
 
 // ----------------------------------------------------------------------

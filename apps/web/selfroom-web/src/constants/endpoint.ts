@@ -1,4 +1,3 @@
-import { Endpoint } from '@/utils/axios';
 import { CLIENT_ENDPOINTS } from './endpoint/client-endpoint';
 import { AUTH_ENDPOINTS } from './endpoint/auth-endpoint';
 import { SHOP_ENDPOINTS } from './endpoint/shop-endpoint';
@@ -9,7 +8,7 @@ export const DEFAULT_HEADERS: RequestHeader = {
   Authorization: 'Bearer {accessToken}'
 }
 
-export const ENDPOINTS: Endpoint = {
+export const ENDPOINTS = {
   ...CLIENT_ENDPOINTS,
   ...AUTH_ENDPOINTS,
   ...SHOP_ENDPOINTS,

@@ -9,10 +9,13 @@ import { RouterLink } from '@/routes/components';
 import { MotionContainer, varBounce } from '@/components/animate';
 import { FallbackProps } from 'react-error-boundary';
 import { Stack } from '@mui/material';
+import { useLocales } from '@/locales';
 
 // ----------------------------------------------------------------------
 
 export default function Page500({ error, resetErrorBoundary }: FallbackProps) {
+  const { t } = useLocales();
+
   return (
     <MotionContainer>
       <m.div variants={varBounce().in}>
@@ -23,7 +26,7 @@ export default function Page500({ error, resetErrorBoundary }: FallbackProps) {
 
       <m.div variants={varBounce().in}>
         <Typography sx={{ color: 'text.secondary' }}>
-          {error.message || 'There was an error, please try again later.'}
+          {error.message || t('There was an error, please try again later.')}
         </Typography>
       </m.div>
 
@@ -38,10 +41,10 @@ export default function Page500({ error, resetErrorBoundary }: FallbackProps) {
           size="large"
           variant="contained"
         >
-          Go to Home
+          {t('Go to Home')}
         </Button>
         <Button size="large" variant="outlined" onClick={resetErrorBoundary}>
-          Retry
+          {t('Retry')}
         </Button>
       </Stack>
     </MotionContainer>

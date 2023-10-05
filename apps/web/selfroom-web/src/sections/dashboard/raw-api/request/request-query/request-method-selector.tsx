@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import { RequestMethods } from '.';
 import { RequestFilter } from '../request';
-import { MethodKey } from '@/utils/axios';
+import { MethodKey } from '@/utils/rawAxios';
 
 type Props = {
   onFilterRole: (event: SelectChangeEvent<MethodKey>) => void;

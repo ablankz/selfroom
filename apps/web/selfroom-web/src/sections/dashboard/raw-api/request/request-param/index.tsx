@@ -6,7 +6,7 @@ import { useResponsive } from '@/hooks/use-responsive';
 import { RequestParamRegister } from './request-param-register';
 import { RequestParamTable } from './request-param-table';
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
-import { endpointMatch } from '@/utils/axios';
+import { endpointMatch } from '@/utils/rawAxios';
 import { useSnackbar } from '@/components/snackbar';
 
 type Props = {

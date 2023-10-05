@@ -21,7 +21,7 @@ final class LoginAction extends Controller
   {
     $guard = $this->authManager->guard('jwt');
     $token = $guard->attempt([
-      'login_id' => $request->get('login_id'),
+      'login_id' => $request->get('loginId'),
       'password' => $request->get('password'),
     ]);
 

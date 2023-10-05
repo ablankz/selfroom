@@ -8,10 +8,13 @@ import { RouterLink } from '@/routes/components';
 import { MotionContainer, varBounce } from '@/components/animate';
 // assets
 import { PageNotFoundIllustration } from '@/assets/illustrations';
+import { useLocales } from '@/locales';
 
 // ----------------------------------------------------------------------
 
 export default function NotFoundView() {
+  const { t } = useLocales();
+
   return (
     <MotionContainer>
       <m.div variants={varBounce().in}>
@@ -22,8 +25,9 @@ export default function NotFoundView() {
 
       <m.div variants={varBounce().in}>
         <Typography sx={{ color: 'text.secondary' }}>
-          Sorry, we couldn’t find the page you’re looking for. Perhaps you’ve mistyped the URL? Be
-          sure to check your spelling.
+          {t(
+            "Sorry, we couldn't find the page you're looking for. Perhaps you've mistyped the URL? Besure to check your spelling."
+          )}
         </Typography>
       </m.div>
 
@@ -37,7 +41,7 @@ export default function NotFoundView() {
       </m.div>
 
       <Button component={RouterLink} href="/" size="large" variant="contained">
-        Go to Home
+        {t('Go to Home')}
       </Button>
     </MotionContainer>
   );

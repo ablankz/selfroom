@@ -1,10 +1,11 @@
 import { Dispatch, ReactNode, SetStateAction, useEffect } from 'react';
 import { RequestQuery } from '../view/raw-api-view';
-import axios from '@/utils/axios';
+import axios from '@/utils/rawAxios';
 import { ResponseProps } from './response';
 import { isAxiosError } from 'axios';
 import prettyBytes from 'pretty-bytes';
 import { useSnackbar } from '@/components/snackbar';
+import { useAuthContext } from '@/auth/hooks';
 
 type Props = {
   children: ReactNode;
@@ -22,6 +23,7 @@ export const QueryContainer = ({
   setRes,
 }: Props) => {
   const { enqueueSnackbar } = useSnackbar();
+  const { initialize } = useAuthContext();
   useEffect(() => {
     if (requestQuery.dispatch) {
       (async () => {
@@ -84,13 +86,15 @@ export const QueryContainer = ({
               });
             }
             setRes(res);
-          });
+          })
 
         setRequestQuery((prev) => ({
           ...prev,
           dispatch: false,
         }));
         setLoading(false);
+        
+        await initialize();
       })();
     }
   }, [requestQuery.dispatch]);
