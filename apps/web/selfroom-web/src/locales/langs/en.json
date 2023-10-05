@@ -81,5 +81,6 @@
   "Go to Main Content": "Go to Main Content",
   "Logout failed": "Login failed",
   "Users who are not logged in will not be able to view this content": "Users who are not logged in will not be able to view this content",
-  "Please authenticate at the login screen and visit again": "Please authenticate at the login screen and visit again"
+  "Please authenticate at the login screen and visit again": "Please authenticate at the login screen and visit again",
+  "Go to login page": "Go to login page"
 }

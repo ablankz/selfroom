@@ -9,6 +9,7 @@ import { RouterLink } from '@/routes/components';
 import { MotionContainer, varBounce } from '@/components/animate';
 import { useLocales } from '@/locales';
 import { PATH_AFTER_LOGIN } from '@/config-global';
+import { paths } from '@/routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -35,8 +36,8 @@ export default function AuthOnly() {
         <ForbiddenIllustration sx={{ height: 260, my: { xs: 5, sm: 10 } }} />
       </m.div>
 
-      <Button component={RouterLink} href={PATH_AFTER_LOGIN} size="large" variant="contained">
-        {t('Go to Main Content')}
+      <Button component={RouterLink} href={paths.dashboard.auth} size="large" variant="contained">
+        {t('Go to login page')}
       </Button>
     </MotionContainer>
   );

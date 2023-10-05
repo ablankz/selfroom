@@ -81,5 +81,6 @@
   "Go to Main Content": "メインコンテンツへ",
   "Logout failed": "ログアウトに失敗しました",
   "Users who are not logged in will not be able to view this content": "ログインしていないユーザーは、このコンテンツを閲覧することができません。",
-  "Please authenticate at the login screen and visit again": "ログイン画面で認証を行ってから、再度アクセスしてください。"
+  "Please authenticate at the login screen and visit again": "ログイン画面で認証を行ってから、再度アクセスしてください。",
+  "Go to login page": "ログイン画面へ"
 }
