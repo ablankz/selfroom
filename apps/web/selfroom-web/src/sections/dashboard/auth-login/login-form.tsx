@@ -1,21 +1,28 @@
-import { useBoolean } from "@/hooks/use-boolean";
-import { useRouter, useSearchParams } from "@/routes/hooks";
-import { useState } from "react";
+import { useBoolean } from '@/hooks/use-boolean';
+import { useRouter, useSearchParams } from '@/routes/hooks';
+import { useState } from 'react';
 import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from "@hookform/resolvers/yup";
-import { PATH_AFTER_LOGIN } from "@/config-global";
-import { useAuthContext } from "@/auth/hooks";
-import { Alert, IconButton, InputAdornment, Link, Stack, Typography } from "@mui/material";
-import { RouterLink } from "@/routes/components";
-import { paths } from "@/routes/paths";
-import { RHFTextField } from "@/components/hook-form";
-import Iconify from "@/components/iconify";
-import LoadingButton from "@mui/lab/LoadingButton";
-import FormProvider from "@/components/hook-form/form-provider";
-import { useLocales } from "@/locales";
-import { AxiosError } from "axios";
-import { ErrorResponse } from "@/types/response/error-response";
+import { yupResolver } from '@hookform/resolvers/yup';
+import { PATH_AFTER_LOGIN } from '@/config-global';
+import { useAuthContext } from '@/auth/hooks';
+import {
+  Alert,
+  IconButton,
+  InputAdornment,
+  Link,
+  Stack,
+  Typography,
+} from '@mui/material';
+import { RouterLink } from '@/routes/components';
+import { paths } from '@/routes/paths';
+import { RHFTextField } from '@/components/hook-form';
+import Iconify from '@/components/iconify';
+import LoadingButton from '@mui/lab/LoadingButton';
+import FormProvider from '@/components/hook-form/form-provider';
+import { useLocales } from '@/locales';
+import { AxiosError } from 'axios';
+import { ErrorResponse } from '@/types/response/error-response';
 import { useSnackbar } from '@/components/snackbar';
 
 export const LoginForm = () => {
@@ -29,8 +36,8 @@ export const LoginForm = () => {
   const password = useBoolean();
 
   const LoginSchema = Yup.object().shape({
-    login_id: Yup.string().required('LoginId is required'),
-    password: Yup.string().required('Password is required'),
+    login_id: Yup.string().required(t('Login ID is required')),
+    password: Yup.string().required(t('Password is required')),
   });
 
   const defaultValues = {
@@ -50,18 +57,18 @@ export const LoginForm = () => {
   } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
-      await login?.(data.login_id, data.password)
-      .then(_ => {
+    await login?.(data.login_id, data.password)
+      .then((_) => {
         enqueueSnackbar({
-          variant: "success",
-          message: "ログインに成功しました"
+          variant: 'success',
+          message: t('Login successfully'),
         });
         router.push(returnTo || PATH_AFTER_LOGIN);
       })
       .catch((error: AxiosError<ErrorResponse>) => {
         reset();
-        setErrorMsg(error.response?.errorMessage || "");
-      })
+        setErrorMsg(error.response?.errorMessage || '');
+      });
   });
 
   const renderJaHead = (
@@ -71,7 +78,11 @@ export const LoginForm = () => {
       <Stack direction="row" spacing={0.5}>
         <Typography variant="body2">アカウントがない場合は</Typography>
 
-        <Link component={RouterLink} href={paths.dashboard.auth} variant="subtitle2">
+        <Link
+          component={RouterLink}
+          href={paths.dashboard.auth}
+          variant="subtitle2"
+        >
           こちらから
         </Link>
       </Stack>
@@ -85,7 +96,11 @@ export const LoginForm = () => {
       <Stack direction="row" spacing={0.5}>
         <Typography variant="body2">New user?</Typography>
 
-        <Link component={RouterLink} href={paths.dashboard.auth} variant="subtitle2">
+        <Link
+          component={RouterLink}
+          href={paths.dashboard.auth}
+          variant="subtitle2"
+        >
           Create an account
         </Link>
       </Stack>
@@ -96,17 +111,21 @@ export const LoginForm = () => {
     <Stack spacing={2.5}>
       {!!errorMsg && <Alert severity="error">{errorMsg}</Alert>}
 
-      <RHFTextField name="login_id" label={t("Login ID")} />
+      <RHFTextField name="login_id" label={t('Login ID')} />
 
       <RHFTextField
         name="password"
-        label={t("Password")}
+        label={t('Password')}
         type={password.value ? 'text' : 'password'}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
               <IconButton onClick={password.onToggle} edge="end">
-                <Iconify icon={password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
+                <Iconify
+                  icon={
+                    password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'
+                  }
+                />
               </IconButton>
             </InputAdornment>
           ),
@@ -121,7 +140,7 @@ export const LoginForm = () => {
         variant="contained"
         loading={isSubmitting}
       >
-        ログイン
+        {t('Login')}
       </LoadingButton>
     </Stack>
   );
