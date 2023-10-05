@@ -78,5 +78,8 @@
   "Please refer to your system administrator": "Please refer to your system administrator",
   "Authenticated users cannot view this page": "Authenticated users cannot view this page",
   "You can browse main content": "You can browse main content",
-  "Go to Main Content": "Go to Main Content"
+  "Go to Main Content": "Go to Main Content",
+  "Logout failed": "Login failed",
+  "Users who are not logged in will not be able to view this content": "Users who are not logged in will not be able to view this content",
+  "Please authenticate at the login screen and visit again": "Please authenticate at the login screen and visit again"
 }

@@ -19,6 +19,8 @@ import { useMockedUser } from '@/hooks/use-mocked-user';
 import { varHover } from '@/components/animate';
 import { useSnackbar } from '@/components/snackbar';
 import CustomPopover, { usePopover } from '@/components/custom-popover';
+import { useAuthContext } from '@/auth/hooks';
+import { useLocales } from '@/locales';
 
 // ----------------------------------------------------------------------
 
@@ -33,10 +35,11 @@ const OPTIONS = [
 
 export default function AccountPopover() {
   const router = useRouter();
+  const { t } = useLocales();
 
   const { user } = useMockedUser();
 
-  // const { logout } = useAuthContext();
+  const { logout } = useAuthContext();
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -44,12 +47,11 @@ export default function AccountPopover() {
 
   const handleLogout = async () => {
     try {
-      // await logout();
+      await logout();
       popover.onClose();
-      router.replace('/');
     } catch (error) {
       console.error(error);
-      enqueueSnackbar('Unable to logout!', { variant: 'error' });
+      enqueueSnackbar(t('Logout failed'), { variant: 'error' });
     }
   };
 

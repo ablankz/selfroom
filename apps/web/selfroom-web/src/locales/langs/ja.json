@@ -78,5 +78,8 @@
   "Please refer to your system administrator": "システム管理者にお問い合わせください。",
   "Authenticated users cannot view this page": "認証済みユーザーはこのページを閲覧できません",
   "You can browse main content": "他のメインコンテンツの閲覧が可能です",
-  "Go to Main Content": "メインコンテンツへ"
+  "Go to Main Content": "メインコンテンツへ",
+  "Logout failed": "ログアウトに失敗しました",
+  "Users who are not logged in will not be able to view this content": "ログインしていないユーザーは、このコンテンツを閲覧することができません。",
+  "Please authenticate at the login screen and visit again": "ログイン画面で認証を行ってから、再度アクセスしてください。"
 }
