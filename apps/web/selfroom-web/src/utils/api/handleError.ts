@@ -23,7 +23,7 @@ export const handleError = async (
   error?: ErrorResponse,
   errorHandling?: ErrorHandling
 ): Promise<string> => {
-  let message = 'Unexpected Error';
+  let message = 'An unexpected error has occurred';
   let handler = async (_: string) => {};
 
   if (!error) return message;
@@ -34,19 +34,18 @@ export const handleError = async (
     switch (errorType.level) {
       case RESPONSE_LEVEL.Logout:
         handler = errorHandling?.logoutForcibly || logoutForcibly;
-        message;
         break;
       case RESPONSE_LEVEL.Transition:
-        (errorHandling?.transitionToLogin || transitionToLogin)(message);
+        handler = errorHandling?.transitionToLogin || transitionToLogin;
         break;
       case RESPONSE_LEVEL.RequestRefreshToken:
-        (errorHandling?.requestRefreshToken || requestRefreshToken)(message);
+        handler = errorHandling?.requestRefreshToken || requestRefreshToken;
         break;
       case RESPONSE_LEVEL.Modal:
-        (errorHandling?.displayErrorModal || displayErrorModal)(message);
+        handler = errorHandling?.displayErrorModal || displayErrorModal;
         break;
       case RESPONSE_LEVEL.Toast:
-        (errorHandling?.displayErrorToast || displayErrorToast)(message);
+        handler = errorHandling?.displayErrorToast || displayErrorToast;
         break;
       case RESPONSE_LEVEL.None:
       default:
