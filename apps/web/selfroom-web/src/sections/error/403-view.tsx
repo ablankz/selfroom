@@ -7,10 +7,13 @@ import { ForbiddenIllustration } from '@/assets/illustrations';
 // components
 import { RouterLink } from '@/routes/components';
 import { MotionContainer, varBounce } from '@/components/animate';
+import { useLocales } from '@/locales';
 
 // ----------------------------------------------------------------------
 
 export default function View403() {
+  const { t } = useLocales();
+
   return (
     <MotionContainer>
       <m.div variants={varBounce().in}>
@@ -21,9 +24,9 @@ export default function View403() {
 
       <m.div variants={varBounce().in}>
         <Typography sx={{ color: 'text.secondary' }}>
-          The page you&apos;re trying access has restricted access.
+          {t("The page you're trying access has restricted access.")}
           <br />
-          Please refer to your system administrator
+          {t('Please refer to your system administrator')}
         </Typography>
       </m.div>
 
@@ -32,7 +35,7 @@ export default function View403() {
       </m.div>
 
       <Button component={RouterLink} href="/" size="large" variant="contained">
-        Go to Home
+        {t('Go to Home')}
       </Button>
     </MotionContainer>
   );
