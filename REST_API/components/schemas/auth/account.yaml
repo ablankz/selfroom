@@ -1,19 +1,19 @@
 Account:
   description: アカウントデータ
   type: object
-  required: [success, data, code, message, validation_messages]
+  required: [success, data, code, message, validationMessages]
   properties:
     success: { type: boolean, example: true }
     data:
       type: object
-      required: [account_id, user_id, login_id, is_active, created_at, updated_at]
+      required: [accountId, userId, loginId, isActive, createdAt, updatedAt]
       properties:
-        account_id: { type: integer, example: 100, readOnly: true } 
-        user_id: { type: integer, example: 200, readOnly: true }
-        login_id: { type: string, example: "admin", nullable: true }
-        is_active: { type: boolean, example: true }
-        created_at: { type: string, format: date, example: "2023-09-24T17:00:00+09:00" }
-        updated_at: { type: string, format: date, example: "2023-09-24T17:00:00+09:00" }
+        accountId: { type: integer, example: 100, readOnly: true } 
+        userId: { type: integer, example: 200, readOnly: true }
+        loginId: { type: string, example: "admin", nullable: true }
+        isActive: { type: boolean, example: true }
+        createdAt: { type: string, format: date, example: "2023-09-24T17:00:00+09:00" }
+        updatedAt: { type: string, format: date, example: "2023-09-24T17:00:00+09:00" }
     code: { type: integer, example: 0 }
     message: { type: string, example: "OK" }
     validation_messages: { type: array, maximum: 0, example: [] }

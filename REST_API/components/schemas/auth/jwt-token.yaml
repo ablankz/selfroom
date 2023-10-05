@@ -1,18 +1,17 @@
 JwtToken:
   description: jwtデータ
   type: object
-  required: [success, data, code, message, validation_messages]
+  required: [success, data, code, message, validationMessages]
   properties:
     success: { type: boolean, example: true }
     data:
       type: object
-      required: [access_token, token_type, expires_in]
+      required: [accessToken, expiresIn]
       properties:
-        access_token:
+        accessToken:
           type: string
           example: "xxxxxxxx"
-        token_type: { type: string, example: "bearer" }
-        expires_in: { type: integer, example: 3600 }
+        expiresIn: { type: integer, example: 3600 }
     code: { type: integer, example: 0 }
     message: { type: string, example: "OK" }
     validation_messages: { type: array, maximum: 0, example: [] }

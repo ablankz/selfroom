@@ -12,9 +12,9 @@ auth:
           application/json:
             schema:
               type: object
-              required: [login_id, password]
+              required: [loginId, password]
               properties:
-                login_id: { type: string, default: "admin" }
+                loginId: { type: string, default: "admin" }
                 password: { type: string, default: "admin" }
       responses:
         "200":
@@ -40,11 +40,11 @@ auth:
           application/json:
             schema:
               type: object
-              required: [login_id, password, password_confirmation, name]
+              required: [loginId, password, passwordConfirmation, name]
               properties:
-                login_id: { type: string, default: "admin@admin.admin" }
+                loginId: { type: string, default: "admin@admin.admin" }
                 password: { type: string, default: "admintest" }
-                password_confirmation: { type: string, default: "admintest" }
+                passwordConfirmation: { type: string, default: "admintest" }
                 name: { type: string, default: "管理者 ユーザー" }
       responses:
         "200":

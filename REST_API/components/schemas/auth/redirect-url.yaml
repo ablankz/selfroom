@@ -1,14 +1,14 @@
 RedirectUrl:
   description: リダイレクトurlデータ
   type: object
-  required: [success, data, code, message, validation_messages]
+  required: [success, data, code, message, validationMessages]
   properties:
     success: { type: boolean, example: true }
     data:
       type: object
-      required: [redirect_url]
+      required: [redirectUrl]
       properties:
-        redirect_url: { type: string, format: uri, example: "http://test-provider.com/redirect-uri" }
+        redirectUrl: { type: string, format: uri, example: "http://test-provider.com/redirect-uri" }
     code: { type: integer, example: 0 }
     message: { type: string, example: "OK" }
     validation_messages: { type: array, maximum: 0, example: [] }

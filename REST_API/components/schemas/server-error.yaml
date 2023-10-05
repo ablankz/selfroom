@@ -1,10 +1,10 @@
 ServerError:
   description: サーバーエラーデータ
   type: object
-  required: [success, data, code, message, validation_messages]
+  required: [success, data, code, message, validationMessages]
   properties:
     success: { type: boolean, example: false }
     data: { type: array, nullable: true, example: null }
     code: { type: integer, example: 10 }
     message: { type: string, example: "システム内でエラーが起こりました" }
-    validation_messages: { type: array, maximum: 0, example: [] }
+    validationMessages: { type: array, maximum: 0, example: [] }
