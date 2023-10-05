@@ -1,6 +1,5 @@
 import { useEffect, useCallback, useState } from 'react';
 // routes
-import { paths } from '@/routes/paths';
 import { useRouter } from '@/routes/hooks';
 //
 import { useAuthContext } from '../hooks';
