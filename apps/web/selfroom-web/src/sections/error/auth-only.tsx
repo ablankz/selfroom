@@ -8,7 +8,6 @@ import { ForbiddenIllustration } from '@/assets/illustrations';
 import { RouterLink } from '@/routes/components';
 import { MotionContainer, varBounce } from '@/components/animate';
 import { useLocales } from '@/locales';
-import { PATH_AFTER_LOGIN } from '@/config-global';
 import { paths } from '@/routes/paths';
 
 // ----------------------------------------------------------------------

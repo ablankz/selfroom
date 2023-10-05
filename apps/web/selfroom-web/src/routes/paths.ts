@@ -14,6 +14,6 @@ export const paths = {
     rawApi: `/raw-api`,
     chat: '/chat',
 
-    oauthCallback: '/oauth-callback',
   },
+  oauthCallback: '/oauth-callback',
 };
