@@ -1,6 +1,6 @@
 import { Dispatch, ReactNode, SetStateAction, useEffect } from 'react';
 import { RequestQuery } from '../view/raw-api-view';
-import axios from '@/utils/axios';
+import axios from '@/utils/rawAxios';
 import { ResponseProps } from './response';
 import { isAxiosError } from 'axios';
 import prettyBytes from 'pretty-bytes';

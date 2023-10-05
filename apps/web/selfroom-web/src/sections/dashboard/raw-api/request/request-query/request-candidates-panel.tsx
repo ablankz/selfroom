@@ -1,6 +1,6 @@
 import Scrollbar from '@/components/scrollbar';
 import SearchNotFound from '@/components/search-not-found';
-import { EndpointBase } from '@/utils/axios';
+import { EndpointBase } from '@/utils/rawAxios';
 import { Card, Stack, useTheme } from '@mui/material';
 import { m } from 'framer-motion';
 import { RequestCandidate } from './request-candidate';

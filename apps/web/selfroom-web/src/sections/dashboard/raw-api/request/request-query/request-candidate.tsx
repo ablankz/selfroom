@@ -6,7 +6,7 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import { EndpointBase } from '@/utils/axios';
+import { EndpointBase } from '@/utils/rawAxios';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
 import { RequestFilter } from '../request';

@@ -1,6 +1,6 @@
 import { Box, Card, Stack, Tab, Tabs } from '@mui/material';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { MethodKey } from '@/utils/axios';
+import { MethodKey } from '@/utils/rawAxios';
 import { RequestQuery } from './request-query';
 import {
   RequestBody as RequestBodyType,
