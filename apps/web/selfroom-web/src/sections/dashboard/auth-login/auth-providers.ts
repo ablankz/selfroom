@@ -28,13 +28,13 @@ export const AUTH_PROVIDERS: Propvider[] = [
     iconColor: '#06C755',
     iconWidth: 22,
     color: 'success',
-    label: 'Log in with LINE',
+    label: 'Login with LINE',
     jaLabel: 'LINEでログイン',
   },
   {
     value: 'google',
     icon: 'devicon:google',
-    label: 'Log in with Google',
+    label: 'Login with Google',
     jaLabel: 'Googleでログイン',
   },
 ];
