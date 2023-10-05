@@ -62,5 +62,21 @@
   "OR": "もしくは",
   "dont-handle-forgotten-password": "申し訳ございませんが、アカウントのパスワードを忘れた際の対応はしていません。",
   "Login ID": "ログインID",
-  "Password": "パスワード"
+  "Password": "パスワード",
+  "Login successfully": "ログインしました",
+  "An error has occurred on the server": "サーバー上でエラーが発生しました",
+  "Login failed": "ログインに失敗しました",
+  "An unexpected error has occurred": "予期しないエラーが発生しました",
+  "Login": "ログイン",
+  "Login ID is required": "ログインIDは必須項目です",
+  "Password is required": "パスワードは必須項目です",
+  "Sorry, we couldn't find the page you're looking for. Perhaps you've mistyped the URL? Besure to check your spelling.": "お探しのページは見つかりませんでした。おそらくURLの入力間違いではないでしょうか？スペルを確認してください。",
+  "Go to Home": "ホームへ戻る",
+  "There was an error, please try again later.": "エラーが発生しました。しばらく待ってからもう一度お試しください。",
+  "Retry": "リトライ",
+  "The page you're trying access has restricted access.": "アクセスしようとしているページにはアクセスが制限されています。",
+  "Please refer to your system administrator": "システム管理者にお問い合わせください。",
+  "Authenticated users cannot view this page": "認証済みユーザーはこのページを閲覧できません",
+  "You can browse main content": "他のメインコンテンツの閲覧が可能です",
+  "Go to Main Content": "メインコンテンツへ"
 }
