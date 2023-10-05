@@ -8,7 +8,7 @@ export type ApplicationResponse<T> = {
   validation_messages: ApplicationValidationMessages; // バリデーションでエラーがあったときのみ
 };
 
-​
+
 type ApiResponseType =
   (typeof API_RESPONSE_TYPES)[keyof typeof API_RESPONSE_TYPES];
 
