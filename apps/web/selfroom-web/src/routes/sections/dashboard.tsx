@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom';
 import DashboardLayout from '@/layouts/dashboard';
 // components
 import { LoadingScreen } from '@/components/loading-screen';
+import { AuthGuard, GuestGuard } from '@/auth/guard';
 
 // ----------------------------------------------------------------------
 
@@ -31,13 +32,34 @@ export const dashboardRoutes = [
     ),
     children: [
       { element: <IndexPage />, index: true },
-      { path: 'career',  element: <CareerPage /> },
-      { path: 'skill',  element: <SkillPage /> },
-      { path: 'works',  element: <WorksPage /> },
-      { path: 'link',  element: <LinkPage /> },
+      { path: 'career', element: <CareerPage /> },
+      { path: 'skill', element: <SkillPage /> },
+      { path: 'works', element: <WorksPage /> },
+      { path: 'link', element: <LinkPage /> },
       { path: 'overview', element: <OverviewPage /> },
-      { path: 'auth', element: <AuthLoginPage /> },
       { path: 'raw-api', element: <RawApiPage /> },
+      {
+        path: '',
+        element: (
+          <GuestGuard>
+            <Suspense fallback={<LoadingScreen />}>
+              <Outlet />
+            </Suspense>
+          </GuestGuard>
+        ),
+        children: [{ path: 'auth', element: <AuthLoginPage /> }],
+      },
+      {
+        path: '',
+        element: (
+          <AuthGuard>
+            <Suspense fallback={<LoadingScreen />}>
+              <Outlet />
+            </Suspense>
+          </AuthGuard>
+        ),
+        children: [],
+      },
     ],
   },
 ];
