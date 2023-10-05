@@ -36,12 +36,12 @@ export const LoginForm = () => {
   const password = useBoolean();
 
   const LoginSchema = Yup.object().shape({
-    login_id: Yup.string().required(t('Login ID is required')),
+    loginId: Yup.string().required(t('Login ID is required')),
     password: Yup.string().required(t('Password is required')),
   });
 
   const defaultValues = {
-    login_id: '',
+    loginId: '',
     password: '',
   };
 
@@ -57,7 +57,7 @@ export const LoginForm = () => {
   } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
-    await login?.(data.login_id, data.password)
+    await login?.(data.loginId, data.password)
       .then((_) => {
         enqueueSnackbar({
           variant: 'success',
@@ -111,7 +111,7 @@ export const LoginForm = () => {
     <Stack spacing={2.5}>
       {!!errorMsg && <Alert severity="error">{errorMsg}</Alert>}
 
-      <RHFTextField name="login_id" label={t('Login ID')} />
+      <RHFTextField name="loginId" label={t('Login ID')} />
 
       <RHFTextField
         name="password"

@@ -1,9 +1,9 @@
 import { ApplicationResponse } from '../application-response';
 
 export type AuthUserData = {
-  user_id: string;
+  userId: string;
   nickname: string;
-  profile_photo?: string;
+  profilePhoto?: string;
 };
 
 export type AuthUserResponse = ApplicationResponse<AuthUserData>;

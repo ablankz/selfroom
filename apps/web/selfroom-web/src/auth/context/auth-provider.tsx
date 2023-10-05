@@ -123,7 +123,7 @@ export function AuthProvider({ children }: Props) {
       password: string
     ): Promise<AxiosResponse<AuthUserResponse, any>> => {
       const data = {
-        login_id: loginId,
+        loginId,
         password,
       };
 
@@ -142,12 +142,12 @@ export function AuthProvider({ children }: Props) {
   // REGISTER
   const register = useCallback(
     async (
-      user_id: string,
+      userId: string,
       password: string,
       nickname: string
     ): Promise<AxiosResponse<AuthUserResponse, any>> => {
       const data = {
-        user_id,
+        userId,
         password,
         nickname,
       };
@@ -192,7 +192,7 @@ export function AuthProvider({ children }: Props) {
         .then((res) => {
           const returnTo = searchParams.get('returnTo') || PATH_AFTER_LOGIN;
           setCookie('loginReturnTo', returnTo);
-          window.location.href = res.data.data.redirect_url;
+          window.location.href = res.data.data.redirectUrl;
         });
     },
     []

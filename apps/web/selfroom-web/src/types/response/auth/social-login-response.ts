@@ -1,7 +1,7 @@
 import { ApplicationResponse } from '../application-response';
 
 type ResponseData = {
-  redirect_url: string;
+  redirectUrl: string;
 };
 
 export type SocialLoginResponse = ApplicationResponse<ResponseData>;

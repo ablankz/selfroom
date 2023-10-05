@@ -5,7 +5,7 @@ export type ApplicationResponse<T> = {
   data: T; // 成功ならnull以外、からのデータでも空配列で返却される
   code: ApiResponseType;
   message: string; // エラーコードごとのメッセージ
-  validation_messages: ApplicationValidationMessages; // バリデーションでエラーがあったときのみ
+  validationMessages: ApplicationValidationMessages; // バリデーションでエラーがあったときのみ
 };
 
 
