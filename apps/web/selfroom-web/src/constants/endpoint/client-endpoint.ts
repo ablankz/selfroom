@@ -1,6 +1,4 @@
-import { Endpoint } from '@/utils/axios';
-
-export const CLIENT_ENDPOINTS: Endpoint = {
+export const CLIENT_ENDPOINTS = {
   clients: {
     all: {
       urlKey: '/clients/',
