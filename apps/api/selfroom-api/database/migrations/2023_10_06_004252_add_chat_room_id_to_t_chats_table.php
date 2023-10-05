@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('password_reset_tokens', function (Blueprint $table) {
-            $table->string('email')->primary();
-            $table->string('token');
-            $table->timestamp('created_at')->nullable();
+        Schema::table('t_chats', function (Blueprint $table) {
+          $table->foreignUuid('chat_room_id')->references('chat_room_id')->on('t_chat_rooms')
+          ->constrained('t_chat_rooms')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -23,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('password_reset_tokens');
+        Schema::table('t_chats', function (Blueprint $table) {
+          $table->dropColumn('chat_room_id');
+        });
     }
 };
