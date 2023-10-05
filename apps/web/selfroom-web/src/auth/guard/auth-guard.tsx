@@ -26,9 +26,9 @@ export default function AuthGuard({ children }: Props) {
   useEffect(() => {
     check();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [check]);
 
-  if (auth)
+  if (!auth)
     return (
       <MinimamLayout>
         <AuthOnly />
