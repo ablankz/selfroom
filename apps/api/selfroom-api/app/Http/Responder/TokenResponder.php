@@ -14,9 +14,9 @@ class TokenResponder
     if (!$token) throw new ApplicationException(ApplicationCode::Unauthenticated);
 
     return response()->success([
-      'access_token' => $token,
-      // 'token_type' => 'bearer',
-      'expires_in' => $ttl
+      'accessToken' => $token,
+      // 'tokenType' => 'bearer',
+      'expiresIn' => $ttl
     ])->cookie(Cookie::make(
       'token',
       $token,
