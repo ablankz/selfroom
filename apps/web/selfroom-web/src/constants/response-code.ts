@@ -42,8 +42,8 @@ export const API_RESPONSE_HANDLING: MessageType = {
     level: RESPONSE_LEVEL.Toast,
   },
   [API_RESPONSE_TYPES.Unauthenticated]: {
-    message: "認証に失敗しました",
-    level: RESPONSE_LEVEL.Toast,
+    message: "認証エラーです",
+    level: RESPONSE_LEVEL.None,
   },
   [API_RESPONSE_TYPES.PostTooLarge]: {
     message: "許可される最大サイズを超えたデータが送信されました",
