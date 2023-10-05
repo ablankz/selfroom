@@ -1,6 +1,12 @@
 // ----------------------------------------------------------------------
 
-import { SocialProvider } from "@/types/social-provider";
+import {
+  AuthUserData,
+  AuthUserResponse,
+} from '@/types/response/auth/auth-user-response';
+import { EmptySuccessResponse } from '@/types/response/empty-success-reponse';
+import { SocialProvider } from '@/types/social-provider';
+import { AxiosResponse } from 'axios';
 
 export type ActionMapType<M extends { [index: string]: any }> = {
   [Key in keyof M]: M[Key] extends undefined
@@ -13,7 +19,7 @@ export type ActionMapType<M extends { [index: string]: any }> = {
       };
 };
 
-export type AuthUserType = null | Record<string, any>;
+export type AuthUserType = AuthUserData | null;
 
 export type AuthStateType = {
   status?: string;
@@ -21,25 +27,23 @@ export type AuthStateType = {
   user: AuthUserType;
 };
 
-// ----------------------------------------------------------------------
-
-type CanRemove = {
-  login?: (loginId: string, password: string) => Promise<void>;
-  register?: (
-    loginId: string,
-    password: string,
-    nickname: string,
-  ) => Promise<void>;
-};
-
-export type JWTContextType = CanRemove & {
+export type JWTContextType = {
   user: AuthUserType;
   method: string;
   loading: boolean;
   authenticated: boolean;
   unauthenticated: boolean;
-  login: (loginId: string, password: string) => Promise<void>;
-  register: (loginId: string, password: string, nickname: string) => Promise<void>;
-  logout: () => Promise<void>;
-  socialLogin: (provider: SocialProvider) => Promise<void>; 
+  initialize: () => Promise<AxiosResponse<AuthUserResponse>>;
+  login: (
+    loginId: string,
+    password: string
+  ) => Promise<AxiosResponse<AuthUserResponse, any>>;
+  register: (
+    loginId: string,
+    password: string,
+    nickname: string
+  ) => Promise<AxiosResponse<AuthUserResponse, any>>;
+  logout: () => Promise<AxiosResponse<EmptySuccessResponse, any>>;
+  socialLogin: (provider: SocialProvider) => Promise<void>;
+  socialCallback: () => Promise<AxiosResponse<AuthUserResponse, any>>;
 };
