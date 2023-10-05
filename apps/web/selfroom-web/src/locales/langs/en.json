@@ -57,5 +57,10 @@
   "Qualifications": "Qualifications",
   "Close": "Close",
   "Show all": "Show all",
-  "Technologies used": "Technologies used"
+  "Technologies used": "Technologies used",
+  "Authentication": "Authentication",
+  "OR": "OR",
+  "dont-handle-forgotten-password": "Sorry, we do not handle forgotten passwords for accounts.",
+  "Login ID": "Login ID",
+  "Password": "Password"
 }

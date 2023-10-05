@@ -57,5 +57,10 @@
   "Qualifications": "資格",
   "Close": "閉じる",
   "Show all": "すべて表示",
-  "Technologies used": "使用技術"
+  "Technologies used": "使用技術",
+  "Authentication": "認証",
+  "OR": "もしくは",
+  "dont-handle-forgotten-password": "申し訳ございませんが、アカウントのパスワードを忘れた際の対応はしていません。",
+  "Login ID": "ログインID",
+  "Password": "パスワード"
 }
