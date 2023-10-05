@@ -4,6 +4,8 @@ import { paths } from '@/routes/paths';
 import { useRouter } from '@/routes/hooks';
 //
 import { useAuthContext } from '../hooks';
+import MinimamLayout from '@/layouts/minimam-layout';
+import AuthOnly from '@/sections/error/auth-only';
 
 // ----------------------------------------------------------------------
 
@@ -14,34 +16,25 @@ type Props = {
 export default function AuthGuard({ children }: Props) {
   const router = useRouter();
 
-  const { authenticated, method } = useAuthContext();
+  const { authenticated } = useAuthContext();
 
-  const [checked, setChecked] = useState(false);
+  const [auth, setAuth] = useState(false);
 
   const check = useCallback(() => {
-    if (!authenticated) {
-      const searchParams = new URLSearchParams({
-        returnTo: window.location.pathname,
-      }).toString();
-
-      const loginPath = paths.dashboard.auth;
-
-      const href = `${loginPath}?${searchParams}`;
-
-      router.replace(href);
-    } else {
-      setChecked(true);
-    }
-  }, [authenticated, method, router]);
+    setAuth(authenticated);
+  }, [authenticated, router]);
 
   useEffect(() => {
     check();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!checked) {
-    return null;
-  }
+  if (auth)
+    return (
+      <MinimamLayout>
+        <AuthOnly />
+      </MinimamLayout>
+    );
 
   return <>{children}</>;
 }
