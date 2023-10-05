@@ -6,6 +6,7 @@ import { useSnackbar } from '@/components/snackbar';
 import { useAuthContext } from '@/auth/hooks';
 import { ErrorResponse } from '@/types/response/error-response';
 import { LoadingScreen } from '@/components/loading-screen';
+import { useLocales } from '@/locales';
 
 type Props = {
   children: ReactNode;
@@ -19,6 +20,7 @@ export const ErrorHandleProvider = ({ children }: Props) => {
   const [isLoadingInitially, setIsLoadingInitially] = useState(true);
   const { enqueueSnackbar } = useSnackbar();
   const { logout } = useAuthContext();
+  const { t } = useLocales();
 
   // 強制ログアウト
   const logoutForcibly = async (_: string) => {
@@ -64,7 +66,7 @@ export const ErrorHandleProvider = ({ children }: Props) => {
   const displayErrorToast = async (message: string) => {
     enqueueSnackbar({
       variant: 'error',
-      message,
+      message: t(message),
     });
   };
 

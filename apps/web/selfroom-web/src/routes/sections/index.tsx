@@ -28,9 +28,6 @@ export default function Router() {
     //   ),
     // },
 
-    // // Auth routes
-    // ...authRoutes,
-
     // // Dashboard routes
     ...dashboardRoutes,
 
