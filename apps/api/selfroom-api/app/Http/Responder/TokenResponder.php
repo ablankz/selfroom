@@ -5,6 +5,7 @@ namespace App\Http\Responder;
 use App\Enums\ApplicationCode;
 use App\Exceptions\ApplicationException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Cookie;
 
 class TokenResponder
 {
@@ -14,8 +15,18 @@ class TokenResponder
 
     return response()->success([
       'access_token' => $token,
-      'token_type' => 'bearer',
+      // 'token_type' => 'bearer',
       'expires_in' => $ttl
-    ]);
+    ])->cookie(Cookie::make(
+      'token',
+      $token,
+      config('jwt.refresh_ttl'),  // minutes
+      '/',                        // path
+      config('sesssion.domain'),   // domain
+      config('sesssion.secure'),   // secure
+      true,                       // httpOnly
+      false,                      // raw
+      'lax'                       // samesite
+    ));
   }
 }
