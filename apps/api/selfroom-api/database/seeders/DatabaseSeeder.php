@@ -19,6 +19,11 @@ class DatabaseSeeder extends Seeder
       $this->call(AccountSeeder::class);
       $this->call(ChatRoomSeeder::class);
       $this->call(ChatSeeder::class);
+      $this->call(AdminRoleSeeder::class);
+      $this->call(ChatRoomSeeder::class);
+      $this->call(FavoriteRoomSeeder::class);
+      $this->call(FollowSeeder::class);
+      $this->call(VisitHistorySeeder::class);
     }
   }
 }
