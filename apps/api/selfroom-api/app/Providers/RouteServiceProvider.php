@@ -29,6 +29,8 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         Route::pattern('id', '[0-9]+');
+        Route::pattern('uuid', '([0-9a-f]{8})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{12})');
+        Route::pattern('ulid', '[0-9a-hjkmnp-zA-HJKMNP-Z]{26}');
 
         $this->routes(function () {
             Route::middleware('api')
