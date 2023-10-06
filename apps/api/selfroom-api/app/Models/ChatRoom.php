@@ -61,7 +61,7 @@ class ChatRoom extends Model
     public function visitors(): BelongsToMany
     {
       return $this->belongsToMany(ChatRoom::class, 't_visit_histories', 'chat_room_id', 'user_id')
-        ->withPivot('visited');
+        ->withPivot('visited_at', 'left_at');
     }
 
     public function categories(): BelongsToMany
