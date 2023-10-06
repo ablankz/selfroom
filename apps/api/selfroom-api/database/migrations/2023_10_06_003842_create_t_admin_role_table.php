@@ -19,8 +19,8 @@ return new class extends Migration
     Schema::table('t_admin_role', function (Blueprint $table) {
       $table->foreignUuid('admin_id')->references('admin_id')->on('t_admins')
         ->constrained('t_admins')->onUpdate('cascade')->onDelete('cascade');
-      $table->foreignId('role_id')->references('role_id')->on('t_roles')
-        ->constrained('t_roles')->onUpdate('cascade')->onDelete('cascade');
+      $table->foreignId('role_id')->references('role_id')->on('m_roles')
+        ->constrained('m_roles')->onUpdate('cascade')->onDelete('cascade');
       $table->timestamp('granted_at');
 
       $table->primary('t_admin_role_pkey');

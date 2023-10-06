@@ -17,7 +17,7 @@ return new class extends Migration
         });
 
         Schema::table('m_room_categories', function (Blueprint $table) {
-            $table->bigIncrements('room_category_id');
+            $table->bigIncrements('room_category_id')->unique();
             
             $table->string('name')->comment('カテゴリー名');
 

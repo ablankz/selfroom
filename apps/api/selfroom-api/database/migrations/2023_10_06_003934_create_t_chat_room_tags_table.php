@@ -20,8 +20,8 @@ return new class extends Migration
 
       $table->foreignUuid('chat_room_id')->references('chat_room_id')->on('t_chat_rooms')
         ->constrained('t_chat_rooms')->onUpdate('cascade')->onDelete('cascade');
-      $table->foreignId('room_category_id')->references('room_category_id')->on('t_room_categories')
-        ->constrained('t_room_categories')->onUpdate('cascade')->onDelete('cascade');
+      $table->foreignId('room_category_id')->references('room_category_id')->on('m_room_categories')
+        ->constrained('m_room_categories')->onUpdate('cascade')->onDelete('cascade');
 
       $table->primary('t_chat_room_tags_pkey');
       $table->unique(['chat_room_id', 'room_category_id']);

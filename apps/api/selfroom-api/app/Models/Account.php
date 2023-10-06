@@ -12,7 +12,7 @@ class Account extends Authenticatable implements JWTSubject
 {
   use HasFactory, Notifiable;
 
-  protected $table = 't_accounts';
+  protected $table = 'm_accounts';
   protected $primaryKey = 'account_id';
 
   /**
@@ -35,7 +35,7 @@ class Account extends Authenticatable implements JWTSubject
    * @var array<int, string>
    */
   protected $hidden = [
-    't_accounts_pkey', 'password', 'login_id', 'provider_id', 'provider_name',
+    'm_accounts_pkey', 'password', 'login_id', 'provider_id', 'provider_name',
   ];
 
   /**
