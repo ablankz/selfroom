@@ -7,15 +7,17 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
-    public function run(): void
-    {
-        $this->call(DummySeeder::class);
-        $this->call(ClientSeeder::class);
-        $this->call(AccountSeeder::class);
-        $this->call(ShopSeeder::class);
-        $this->call(PartnerSeeder::class);
+  /**
+   * Seed the application's database.
+   */
+  public function run(): void
+  {
+    if (config('app.debug')) {
+      $this->call(DummySeeder::class);
+      $this->call(ClientSeeder::class);
+      $this->call(AccountSeeder::class);
+      $this->call(ShopSeeder::class);
+      $this->call(PartnerSeeder::class);
     }
+  }
 }
