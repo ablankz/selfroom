@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\Account;
 
-use App\Enums\ApplicationCode;
 use App\Exceptions\ApplicationException;
 use App\Http\Controllers\Controller;
-use App\Http\Responder\TokenResponder;
-use App\Usecases\Account\CreateAccountOnProvider;
 use App\Usecases\Account\GetAccountOnProvider;
+use App\Usecases\User\CreateUserOnProvider;
 use Exception;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\JsonResponse;
@@ -20,7 +18,7 @@ class OAuthHandleCallbackAction extends Controller
   private $getter;
   private $creater;
 
-  public function __construct(AuthManager $authManager, GetAccountOnProvider $getter, CreateAccountOnProvider $creater)
+  public function __construct(AuthManager $authManager, GetAccountOnProvider $getter, CreateUserOnProvider $creater)
   {
     $this->authManager = $authManager;
     $this->getter = $getter;
@@ -40,18 +38,21 @@ class OAuthHandleCallbackAction extends Controller
       return redirect(config('app.frontend_url') . '/oauth-callback?state=error');
     }
 
-    try{
+    try {
       $providerId = $socialUser->getId();
-  
+
       try {
         $user = $this->getter->handle($providerId, $provider);
       } catch (ApplicationException) {
-        $user = $this->creater->handle($providerId, $provider);
+        // ユーザーが作成されていない場合
+        $nickname = (($socialUser->getNickname() ?? $socialUser->getName()) ?? 'unknown');
+        $profile_photo_path = $socialUser->getAvatar() ?? null;
+        $user = $this->creater->handle($providerId, $provider, $nickname, $profile_photo_path);
       }
-  
+
       $guard = $this->authManager->guard('jwt');
       $token = $guard->login($user);
-  
+
       return redirect(config('app.frontend_url') . '/oauth-callback?state=success')
         ->cookie(Cookie::make(
           'token',
@@ -64,14 +65,14 @@ class OAuthHandleCallbackAction extends Controller
           false,                      // raw
           'lax'                       // samesite
         ));
-  
+
       // トークンの発行
       //   return $responder(
       //     $token,
       //     $guard->factory()->getTTL() * 60
       //   );
       // }
-    }catch(\Throwable){
+    } catch (\Throwable) {
       return redirect(config('app.frontend_url') . '/auth/oauth-callback?state=system-error');
     }
   }
