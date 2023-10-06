@@ -16,7 +16,7 @@ class AccountFactory extends Factory
    */
   public function definition(): array
   {
-    $notAdmin = $this->faker->randomElement(range(0, 10));
+    $notAdmin = $this->faker->numberBetween(0, 10);
     return [
       'user_id' => $notAdmin ? \App\Models\User::inRandomOrder()->first()->user_id : null,
       'admin_id' => $notAdmin ? null : \App\Models\Admin::inRandomOrder()->first()->admin_id,
