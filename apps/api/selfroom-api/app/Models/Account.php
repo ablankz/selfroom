@@ -25,6 +25,8 @@ class Account extends Authenticatable implements JWTSubject
     'password',
     'provider_id',
     'provider_name',
+    'user_id',
+    'admin_id'
   ];
 
   /**
