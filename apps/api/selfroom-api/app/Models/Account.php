@@ -2,18 +2,18 @@
 
 namespace App\Models;
 
-use App\Foundation\Model\SoftDelete\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class Account extends Authenticatable implements JWTSubject
 {
-  use HasFactory, Notifiable, SoftDeletes;
+  use HasFactory, Notifiable;
 
   protected $table = 't_accounts';
-  protected $primaryKey = 'user_id';
+  protected $primaryKey = 'account_id';
 
   /**
    * The attributes that are mass assignable.
@@ -25,7 +25,6 @@ class Account extends Authenticatable implements JWTSubject
     'password',
     'provider_id',
     'provider_name',
-    'is_active',
   ];
 
   /**
@@ -34,7 +33,7 @@ class Account extends Authenticatable implements JWTSubject
    * @var array<int, string>
    */
   protected $hidden = [
-    't_accounts_pkey', 'password', 'is_deleted', 'provider_id', 'provider_name',
+    't_accounts_pkey', 'password', 'login_id', 'provider_id', 'provider_name',
   ];
 
   /**
@@ -54,5 +53,15 @@ class Account extends Authenticatable implements JWTSubject
   public function getJWTCustomClaims(): array
   {
     return [];
+  }
+
+  public function user(): BelongsTo
+  {
+    return $this->belongsTo(User::class, 'user_id', 'user_id');
+  }
+
+  public function admin(): BelongsTo
+  {
+    return $this->belongsTo(User::class, 'admin_id', 'admin_id');
   }
 }
