@@ -2,16 +2,16 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class ClientSeeder extends Seeder
+class InitialDataSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        \App\Models\Client::factory(50)->create();
+      $this->call(InitialRoleSeeder::class);
+      $this->call(InitialRoomCategorySeeder::class);
     }
 }
