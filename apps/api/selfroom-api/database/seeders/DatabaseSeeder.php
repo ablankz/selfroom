@@ -11,6 +11,7 @@ class DatabaseSeeder extends Seeder
    */
   public function run(): void
   {
+    $this->call(InitialDataSeeder::class);
     if (config('app.debug')) {
       $this->call(DummyAcountSeeder::class);
       $this->call(UserSeeder::class);
