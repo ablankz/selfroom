@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,8 +12,12 @@ class DatabaseSeeder extends Seeder
   public function run(): void
   {
     if (config('app.debug')) {
-      $this->call(DummySeeder::class);
+      $this->call(DummyAcountSeeder::class);
+      $this->call(UserSeeder::class);
+      $this->call(AdminSeeder::class);
       $this->call(AccountSeeder::class);
+      $this->call(ChatRoomSeeder::class);
+      $this->call(ChatSeeder::class);
     }
   }
 }
