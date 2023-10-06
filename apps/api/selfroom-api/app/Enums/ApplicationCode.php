@@ -6,8 +6,6 @@ namespace App\Enums;
 
 use Symfony\Component\HttpFoundation\Response;
 
-use function Laravel\Prompts\select;
-
 enum ApplicationCode: int
 {
   case Success = 0;
