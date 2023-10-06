@@ -58,10 +58,10 @@ class User extends Model
       ->withPivot('added_at');
   }
 
-  public function visitRooms(): BelongsToMany
+  public function visitedRooms(): BelongsToMany
   {
     return $this->belongsToMany(ChatRoom::class, 't_visit_histories', 'user_id', 'chat_room_id')
-      ->withPivot('visited_at');
+      ->withPivot('visited_at', 'left_at');
   }
 
   public function followees(): BelongsToMany
