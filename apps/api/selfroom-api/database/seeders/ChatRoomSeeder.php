@@ -4,13 +4,13 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class AccountSeeder extends Seeder
+class ChatRoomSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-      \App\Models\Account::factory(80)->create();
+      \App\Models\ChatRoom::factory(50)->create();
     }
 }
