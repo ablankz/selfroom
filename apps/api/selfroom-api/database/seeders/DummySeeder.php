@@ -16,7 +16,6 @@ class DummySeeder extends Seeder
       [
         'login_id' => 'admin',
         'password' => app('hash')->make('admin'),
-        'is_active' => true
       ]
     );
   }
