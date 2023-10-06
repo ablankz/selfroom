@@ -24,10 +24,14 @@ enum ApplicationCode: int
   case NotFoundModel = 13;
   case TokenBlacklisted = 14;
   case SocialLoginError = 15;
+  case ModelConflict = 16;
+  case GuestGuard = 17;
+  case UserOnly = 18;
 
   public function getText(): string
   {
     return match ($this) {
+      self::Success => 'OK',
       self::System => 'システム上の不具合がありました',
       self::Validation => '入力情報に誤りがあります',
       self::Permission => '許可されていないアクションです',
@@ -43,6 +47,9 @@ enum ApplicationCode: int
       self::NotFoundModel => '対象のモデルが見つかりません',
       self::TokenBlacklisted => 'すでに削除されたトークンです',
       self::SocialLoginError => 'ソーシャルログインに失敗しました',
+      self::ModelConflict => 'すでに存在するモデルです',
+      self::GuestGuard => 'ログイン済みのユーザーです',
+      self::UserOnly => '一般ユーザーのみ許可されているアクションです'
     };
   }
 
@@ -64,6 +71,9 @@ enum ApplicationCode: int
       self::NotFoundModel => Response::HTTP_NOT_FOUND,
       self::TokenBlacklisted => Response::HTTP_BAD_REQUEST,
       self::SocialLoginError => Response::HTTP_UNAUTHORIZED,
+      self::ModelConflict => Response::HTTP_CONFLICT,
+      self::GuestGuard => Response::HTTP_FORBIDDEN,
+      self::UserOnly => Response::HTTP_FORBIDDEN
     };
   }
 }
