@@ -21,7 +21,7 @@ return new class extends Migration
         ->constrained('t_users')->onUpdate('cascade')->onDelete('cascade');
       $table->foreignUuid('followee_id')->nullable()->comment('フォローされる側')->references('user_id')->on('t_users')
         ->constrained('t_users')->onUpdate('set null')->onDelete('set null');
-      $table->timestamp('created_at');
+      $table->timestamp('followed_at');
 
 
       $table->primary('t_follows_pkey');

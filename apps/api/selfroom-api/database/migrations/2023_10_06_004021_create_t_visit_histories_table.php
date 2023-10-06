@@ -21,7 +21,7 @@ return new class extends Migration
         ->constrained('t_users')->onUpdate('cascade')->onDelete('cascade');
       $table->foreignUuid('chat_room_id')->nullable()->references('chat_room_id')->on('t_chat_rooms')
         ->constrained('t_chat_rooms')->onUpdate('set null')->onDelete('set null');
-      $table->timestamp('created_at');
+      $table->timestamp('visited_at');
 
       $table->primary('t_visit_histories_pkey');
       $table->unique(['user_id', 'chat_room_id']);
