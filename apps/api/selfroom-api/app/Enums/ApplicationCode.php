@@ -27,6 +27,7 @@ enum ApplicationCode: int
   case ModelConflict = 16;
   case GuestGuard = 17;
   case UserOnly = 18;
+  case ThrottleLoginRequests = 19;
 
   public function getText(): string
   {
@@ -49,7 +50,8 @@ enum ApplicationCode: int
       self::SocialLoginError => 'ソーシャルログインに失敗しました',
       self::ModelConflict => 'すでに存在するモデルです',
       self::GuestGuard => 'ログイン済みのユーザーです',
-      self::UserOnly => '一般ユーザーのみ許可されているアクションです'
+      self::UserOnly => '一般ユーザーのみ許可されているアクションです',
+      self::ThrottleLoginRequests => '複数回ログインの試行に失敗しました'
     };
   }
 
@@ -73,7 +75,8 @@ enum ApplicationCode: int
       self::SocialLoginError => Response::HTTP_UNAUTHORIZED,
       self::ModelConflict => Response::HTTP_CONFLICT,
       self::GuestGuard => Response::HTTP_FORBIDDEN,
-      self::UserOnly => Response::HTTP_FORBIDDEN
+      self::UserOnly => Response::HTTP_FORBIDDEN,
+      self::ThrottleLoginRequests => Response::HTTP_TOO_MANY_REQUESTS,
     };
   }
 }
