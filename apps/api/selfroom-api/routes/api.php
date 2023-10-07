@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\App;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +22,7 @@ Route::prefix('auth')->group(function () {
   // ソーシャルログイン
   Route::get('{provider}', \App\Http\Controllers\Account\OAuthRedirectAction::class)
     ->where('provider', '(google)|(line)')->middleware('guest:jwt');
-  Route::get('/{provider}/callback', App\Http\Controllers\Account\OAuthHandleCallbackAction::class)
+  Route::get('/{provider}/callback', \App\Http\Controllers\Account\OAuthHandleCallbackAction::class)
     ->where('provider', '(google)|(line)');
 });
 
