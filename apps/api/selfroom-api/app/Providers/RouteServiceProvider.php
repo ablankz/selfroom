@@ -5,7 +5,6 @@ namespace App\Providers;
 use App\Constants\ThrottleSettings;
 use App\Enums\ApplicationCode;
 use App\Exceptions\ApplicationAttributeException;
-use App\Exceptions\ApplicationException;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
