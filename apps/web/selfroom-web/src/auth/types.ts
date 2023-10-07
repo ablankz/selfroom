@@ -46,4 +46,5 @@ export type JWTContextType = {
   logout: () => Promise<AxiosResponse<EmptySuccessResponse, any>>;
   socialLogin: (provider: SocialProvider) => Promise<void>;
   socialCallback: () => Promise<AxiosResponse<AuthUserResponse, any>>;
+  reset: () => void;
 };

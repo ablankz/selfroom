@@ -184,6 +184,12 @@ export function AuthProvider({ children }: Props) {
       });
   }, []);
 
+  const reset = useCallback(() => {
+    dispatch({
+      type: Types.LOGOUT,
+    });
+  }, []);
+
   // SOCIAL LOGIN
   const socialLogin = useCallback(
     async (provider: SocialProvider): Promise<void> => {
@@ -226,8 +232,19 @@ export function AuthProvider({ children }: Props) {
       logout,
       socialLogin,
       socialCallback,
+      reset,
     }),
-    [initialize, login, logout, register, socialLogin, socialCallback, state.user, status]
+    [
+      initialize,
+      login,
+      logout,
+      register,
+      socialLogin,
+      socialCallback,
+      reset,
+      state.user,
+      status,
+    ]
   );
 
   console.log(memoizedValue.user, memoizedValue.authenticated);
