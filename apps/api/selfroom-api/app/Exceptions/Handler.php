@@ -26,7 +26,7 @@ class Handler extends ExceptionHandler
 {
   protected $dontReport = [
     ApplicationException::class,
-    ApplicationValidationException::class
+    ApplicationAttributeException::class
   ];
 
   /**
@@ -49,7 +49,7 @@ class Handler extends ExceptionHandler
       $e instanceof BackedEnumCaseNotFoundException => new ApplicationException(ApplicationCode::NotFound),
       $e instanceof NotFoundHttpException => new ApplicationException(ApplicationCode::NotFound),
       $e instanceof SuspiciousOperationException => new ApplicationException(ApplicationCode::NotFound),
-      $e instanceof AuthenticationException => new ApplicationException(ApplicationCode::Unauthenticated),
+      $e instanceof AuthenticationException => new ApplicationException(ApplicationCode::Unauthorized),
       $e instanceof AuthorizationException => new ApplicationException(ApplicationCode::Unauthorized),
       $e instanceof UnauthorizedException => new ApplicationException(ApplicationCode::Unauthorized),
       $e instanceof AccessDeniedHttpException => new ApplicationException(ApplicationCode::Unauthorized),
@@ -78,7 +78,7 @@ class Handler extends ExceptionHandler
     } else {
       $e = $this->mapException($exception);
 
-      $headers = $this->isHttpException($e) ? $e->getHeaders() : [];
+      $headers = $this->isApplicationException($e) ? $e->getHeaders() : [];
 
       if (method_exists($e, 'render') && $response = $e->render($request)) {
         return Router::toResponse($request, $response);
@@ -95,10 +95,21 @@ class Handler extends ExceptionHandler
       }
 
       return match (true) {
-        $e instanceof ApplicationValidationException => response()->error($e, $e->getApplicationCode(), $headers, $e->getValidationMsg()),
+        $e instanceof ApplicationAttributeException => response()->error($e, $e->getApplicationCode(), $headers, $e->getValidationMsg()),
         $e instanceof ApplicationBaseException => response()->error($e, $e->getApplicationCode(), $headers),
         default => response()->error($e, ApplicationCode::System, $headers),
       };
     }
   }
+
+    /**
+     * Determine if the given exception is an HTTP exception.
+     *
+     * @param  \Throwable  $e
+     * @return bool
+     */
+    protected function isApplicationException(Throwable $e)
+    {
+        return $e instanceof ApplicationBaseException;
+    }
 }
