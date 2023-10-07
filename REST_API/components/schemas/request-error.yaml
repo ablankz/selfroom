@@ -1,13 +1,13 @@
 RequestError:
   description: リクエストエラーデータ
   type: object
-  required: [success, data, code, message, validationMessages]
+  required: [success, data, code, message, errorAttributes]
   properties:
     success: { type: boolean, example: false }
     data: { type: array, nullable: true, example: null }
     code: { type: integer, example: 30 }
     message: { type: string, example: "バリデーションエラーです" }
-    validationMessages:
+    errorAttributes:
       type: array
       items:
         type: object
