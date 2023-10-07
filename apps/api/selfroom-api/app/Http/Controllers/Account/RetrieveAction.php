@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
+use App\Usecases\Admin\FindAdmin;
 use App\Usecases\User\FindUser;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\JsonResponse;
@@ -14,10 +15,11 @@ class RetrieveAction extends Controller
   private $userFind;
   private $adminFind;
 
-  public function __construct(AuthManager $authManager, FindUser $userFind)
+  public function __construct(AuthManager $authManager, FindUser $userFind, FindAdmin $adminFind)
   {
     $this->authManager = $authManager;
     $this->userFind = $userFind;
+    $this->adminFind = $adminFind;
   }
 
   public function __invoke(Request $request): JsonResponse
