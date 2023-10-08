@@ -30,6 +30,8 @@ enum ApplicationCode: int
   case ThrottleLoginRequests = 19;
   case FailedUpload = 20;
   case AuthNotFound = 21;
+  case RefreshTokenExpired = 22;
+  case AlreadyLogout = 23;
 
   public function getText(): string
   {
@@ -56,6 +58,8 @@ enum ApplicationCode: int
       self::ThrottleLoginRequests => '複数回ログインの試行に失敗しました',
       self::FailedUpload => 'ファイルのアップロードに失敗しました',
       self::AuthNotFound => '認証ユーザーが見つかりません',
+      self::RefreshTokenExpired => 'リフレッシュトークンの有効期限が切れています',
+      self::AlreadyLogout => 'すでにログアウト済みです',
     };
   }
 
@@ -82,7 +86,9 @@ enum ApplicationCode: int
       self::UserOnly => Response::HTTP_FORBIDDEN,
       self::ThrottleLoginRequests => Response::HTTP_TOO_MANY_REQUESTS,
       self::FailedUpload => Response::HTTP_INTERNAL_SERVER_ERROR,
-      self::AuthNotFound => Response::HTTP_NOT_FOUND
+      self::AuthNotFound => Response::HTTP_NOT_FOUND,
+      self::RefreshTokenExpired => Response::HTTP_FORBIDDEN,
+      self::AlreadyLogout => Response::HTTP_FORBIDDEN
     };
   }
 }
