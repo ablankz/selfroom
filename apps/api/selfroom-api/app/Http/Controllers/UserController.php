@@ -6,6 +6,7 @@ use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -44,23 +45,23 @@ class UserController extends Controller
     ));
   }
 
-  public function update(UpdateUserRequest $request, string $id): JsonResponse
+  public function update(UpdateUserRequest $request): JsonResponse
   {
     return response()->success(app()->call(
       [$this->service, 'update'],
       [
-        'user_id' => $id,
+        'user_id' => $request->user()->user_id,
         'nickname' => $request->get('nickname'),
         'profile_photo_url' => $request->file('profilePhotoUrl'),
       ]
     ));
   }
 
-  public function delete(string $id): JsonResponse
+  public function delete(Request $request): JsonResponse
   {
     return response()->success(app()->call(
       [$this->service, 'delete'],
-      ['user_id' => $id]
+      ['user_id' => $request->user()->user_id]
     ));
   }
 }
