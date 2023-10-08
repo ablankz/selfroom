@@ -7,7 +7,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class AccountResource extends JsonResource
 {
-  public static $wrap = '';
   /**
    * Transform the resource into an array.
    *
@@ -24,5 +23,10 @@ class AccountResource extends JsonResource
       'createdAt' => $this->created_at,
       'updatedAt' => $this->updated_at,
     ];
+  }
+
+  public function boot(): void
+  {
+    JsonResource::withoutWrapping();
   }
 }

@@ -3,11 +3,11 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class RoleResourceCollection extends ResourceCollection
 {
-  public static $wrap = '';
   /**
    * Transform the resource collection into an array.
    *
@@ -18,5 +18,10 @@ class RoleResourceCollection extends ResourceCollection
     return $this->resource->map(function ($value) {
       return new RoleResource($value);
     })->all();
+  }
+
+  public function boot(): void
+  {
+    JsonResource::withoutWrapping();
   }
 }

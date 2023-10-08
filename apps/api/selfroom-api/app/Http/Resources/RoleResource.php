@@ -7,7 +7,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class RoleResource extends JsonResource
 {
-  public static $wrap = '';
   /**
    * Transform the resource into an array.
    *
@@ -19,5 +18,10 @@ class RoleResource extends JsonResource
       'roleId' => $this->role_id,
       'name' => $this->name,
     ];
+  }
+
+  public function boot(): void
+  {
+    JsonResource::withoutWrapping();
   }
 }
