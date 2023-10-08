@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Enums\Role\AdminRole;
 use App\Http\Requests\ApiRequest;
 use App\Rules\SingleByteCharRule;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rules\Password;
 
 class StoreAdminRequest extends ApiRequest
@@ -13,7 +15,7 @@ class StoreAdminRequest extends ApiRequest
    */
   public function authorize(): bool
   {
-    return true;
+    return Gate::check(AdminRole::Create->value);
   }
 
   /**
