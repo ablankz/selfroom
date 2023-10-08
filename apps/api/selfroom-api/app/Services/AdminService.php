@@ -56,7 +56,7 @@ class AdminService
     string $nickname,
     UploadedFile | null $profile_photo_url
   ) {
-    $current = request()->user()->profile_photo_url;
+    $current = request()->user()->user?->profile_photo_url;
 
     if ($profile_photo_url) {
       try {
