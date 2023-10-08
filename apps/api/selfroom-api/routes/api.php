@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\App;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,15 +28,15 @@ Route::prefix('auth')->group(function () {
 Route::prefix('users')->group(function () {
   Route::get('{uuid}', [\App\Http\Controllers\UserController::class, 'find']);
   Route::get('', [\App\Http\Controllers\UserController::class, 'get']);
-  Route::post('', [\App\Http\Controllers\UserController::class, 'create'])->middleware('guest:jwt');
-  Route::put('', [\App\Http\Controllers\UserController::class, 'update'])->middleware('auth:jwt');
-  Route::delete('', [\App\Http\Controllers\UserController::class, 'delete'])->middleware('auth:jwt');
+  Route::post('', [\App\Http\Controllers\UserController::class, 'create'])->middleware(['guest:jwt']);
+  Route::put('', [\App\Http\Controllers\UserController::class, 'update'])->middleware(['auth:jwt', 'user:jwt']);
+  Route::delete('', [\App\Http\Controllers\UserController::class, 'delete'])->middleware(['auth:jwt', 'user:jwt']);
 });
 
 Route::prefix('admins')->group(function () {
-  Route::get('{uuid}', [\App\Http\Controllers\AdminController::class, 'find']);
-  Route::get('', [\App\Http\Controllers\AdminController::class, 'get']);
-  Route::post('', [\App\Http\Controllers\AdminController::class, 'create'])->middleware(['auth:jwt']);
-  Route::put('', [\App\Http\Controllers\AdminController::class, 'update'])->middleware('auth:jwt');
-  Route::delete('', [\App\Http\Controllers\AdminController::class, 'delete'])->middleware('auth:jwt');
+  Route::get('{uuid}', [\App\Http\Controllers\AdminController::class, 'find'])->middleware(['auth:jwt', 'admin:jwt']);
+  Route::get('', [\App\Http\Controllers\AdminController::class, 'get'])->middleware(['auth:jwt', 'admin:jwt']);
+  Route::post('', [\App\Http\Controllers\AdminController::class, 'create'])->middleware(['auth:jwt', 'admin:jwt']);
+  Route::put('', [\App\Http\Controllers\AdminController::class, 'update'])->middleware(['auth:jwt', 'admin:jwt']);
+  Route::delete('', [\App\Http\Controllers\AdminController::class, 'delete'])->middleware(['auth:jwt', 'admin:jwt']);
 });
