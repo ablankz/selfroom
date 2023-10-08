@@ -1,7 +1,5 @@
-import { User } from '@/types/user';
+import { User, Admin, SimpleAdmin, SimpleRole } from '@/types/entity';
 import { ApplicationResponse } from '../application-response';
-import { RoleData } from '../role/role-response';
-import { Admin, SimpleAdminData } from '@/types/admin';
 
 export type AuthUserData = {
   userId?: string;
@@ -12,8 +10,8 @@ export type AuthUserData = {
   favoriteRoomNum?: number;
   followNum?: number;
   followerNum?: number;
-  permissions?: RoleData[];
-  createdBy?: SimpleAdminData | null;
+  permissions?: SimpleRole[];
+  createdBy?: SimpleAdmin | null;
   createdAt: string;
   updatedAt: string;
 };

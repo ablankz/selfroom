@@ -21,7 +21,7 @@ class AdminResource extends JsonResource
       'adminId' => $this->admin_id,
       'nickname' => $this->nickname,
       'profilePhotoUrl' => $this->profile_photo_url,
-      'permissions' => $roles ? new SimplifiedRoleResourceCollection($roles) : null,
+      'permissions' => $roles ? new SimplifiedRoleResourceCollection($roles) : [],
       'createdBy' => $myAdmin ? new SimplifiedAdminResource($myAdmin) : null,
       'createdAt' => $this->created_at,
       'updatedAt' => $this->updated_at,
