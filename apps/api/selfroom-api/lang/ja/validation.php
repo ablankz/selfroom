@@ -164,7 +164,7 @@ return [
       'loginId' => 'ログインID',
       'password' => 'パスワード',
       'nickname' => 'ニックネーム',
-      'profilePhotoUrl' => 'プロフィール写真'
+      'profilePhoto' => 'プロフィール写真'
     ],
 
 ];

@@ -44,7 +44,7 @@ class UserController extends Controller
         'login_id' => $request->get('loginId'),
         'raw_password' => $request->get('password'),
         'nickname' => $request->get('nickname'),
-        'profile_photo_url' => $request->file('profilePhotoUrl'),
+        'profile_photo_url' => $request->file('profilePhoto'),
       ]
     );
     $guard = $this->authManager->guard('jwt');
@@ -73,7 +73,7 @@ class UserController extends Controller
       [
         'user_id' => $request->user()->user_id,
         'nickname' => $request->get('nickname'),
-        'profile_photo_url' => $request->file('profilePhotoUrl'),
+        'profile_photo_url' => $request->file('profilePhoto'),
       ]
     ));
   }

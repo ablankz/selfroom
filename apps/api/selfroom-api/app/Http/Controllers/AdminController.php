@@ -42,7 +42,7 @@ class AdminController extends Controller
         'login_id' => $request->get('loginId'),
         'raw_password' => $request->get('password'),
         'nickname' => $request->get('nickname'),
-        'profile_photo_url' => $request->file('profilePhotoUrl'),
+        'profile_photo_url' => $request->file('profilePhoto'),
       ]
     ));
   }
@@ -54,7 +54,7 @@ class AdminController extends Controller
       [
         'admin_id' => $request->user()->admin_id,
         'nickname' => $request->get('nickname'),
-        'profile_photo_url' => $request->file('profilePhotoUrl'),
+        'profile_photo_url' => $request->file('profilePhoto'),
       ]
     ));
   }

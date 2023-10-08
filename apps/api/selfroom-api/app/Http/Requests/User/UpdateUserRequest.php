@@ -23,7 +23,7 @@ class UpdateUserRequest extends ApiRequest
   {
     return [
       'nickname' => ['required', 'string'],
-      'profilePhotoUrl' => ['file', 'max:10240', 'mimes:jpg,jpeg,png,gif'],
+      'profilePhoto' => ['file', 'max:10240', 'mimes:jpg,jpeg,png,gif'],
     ];
   }
 }

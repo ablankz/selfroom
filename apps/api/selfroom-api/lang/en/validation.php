@@ -185,7 +185,7 @@ return [
       'loginId' => 'Login ID',
       'password' => 'Passsword',
       'nickname' => 'Nickname',
-      'profilePhotoUrl' => 'Profile photo',
+      'profilePhoto' => 'Profile photo',
     ],
 
 ];

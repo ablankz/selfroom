@@ -26,7 +26,7 @@ class StoreAdminRequest extends ApiRequest
   public function validationData()
   {
     return [
-      ...$this->only(['nickname', 'profilePhotoUrl', 'loginId', 'password']),
+      ...$this->only(['nickname', 'profilePhoto', 'loginId', 'password']),
       'password_confirmation' => $this->get('confirmPassword')
     ];
   }
@@ -41,7 +41,7 @@ class StoreAdminRequest extends ApiRequest
     $passRule = new Password(8);
     return [
       'nickname' => ['required', 'string'],
-      'profilePhotoUrl' => ['file', 'max:10240', 'mimes:jpg,jpeg,png,gif'],
+      'profilePhoto' => ['file', 'max:10240', 'mimes:jpg,jpeg,png,gif'],
       'loginId' => ['required', 'string', 'unique:App\Models\Account,login_id', new SingleByteCharRule],
       'password' => ['required', 'string', $passRule->symbols()->numbers(), 'confirmed'],
     ];
