@@ -24,8 +24,8 @@ final class RefreshTokenAction extends Controller
     $guard = $this->authManager->guard('jwt');
     try {
       $token = $guard->refresh();
-    } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
-      throw new ApplicationException(ApplicationCode::Unauthorized);
+    } catch (\Throwable $e) {
+      throw new ApplicationException(ApplicationCode::RefreshTokenExpired);
     }
 
     return $responder(

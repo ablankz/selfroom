@@ -72,7 +72,6 @@ final class LoginAction extends Controller
       $this->calculateRemainingAttempts($this->throttleKey($request), ThrottleSettings::LOGIN_MAX_ATTEMPTS, $seconds),
       $seconds
     );
-    logger($headers);
     throw new ApplicationAttributeException(ApplicationCode::ThrottleLoginRequests, $errors, null, $headers);
   }
 
