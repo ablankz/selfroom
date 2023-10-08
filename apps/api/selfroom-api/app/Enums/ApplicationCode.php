@@ -29,6 +29,7 @@ enum ApplicationCode: int
   case UserOnly = 18;
   case ThrottleLoginRequests = 19;
   case FailedUpload = 20;
+  case AuthNotFound = 21;
 
   public function getText(): string
   {
@@ -53,7 +54,8 @@ enum ApplicationCode: int
       self::GuestGuard => 'ログイン済みのユーザーです',
       self::UserOnly => '一般ユーザーのみ許可されているアクションです',
       self::ThrottleLoginRequests => '複数回ログインの試行に失敗しました',
-      self::FailedUpload => 'ファイルのアップロードに失敗しました'
+      self::FailedUpload => 'ファイルのアップロードに失敗しました',
+      self::AuthNotFound => '認証ユーザーが見つかりません',
     };
   }
 
@@ -79,7 +81,8 @@ enum ApplicationCode: int
       self::GuestGuard => Response::HTTP_FORBIDDEN,
       self::UserOnly => Response::HTTP_FORBIDDEN,
       self::ThrottleLoginRequests => Response::HTTP_TOO_MANY_REQUESTS,
-      self::FailedUpload => Response::HTTP_INTERNAL_SERVER_ERROR
+      self::FailedUpload => Response::HTTP_INTERNAL_SERVER_ERROR,
+      self::AuthNotFound => Response::HTTP_NOT_FOUND
     };
   }
 }
