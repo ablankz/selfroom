@@ -43,6 +43,7 @@ class Admin extends Model
   public function roles(): BelongsToMany
   {
     return $this->belongsToMany(Role::class, 't_admin_role', 'admin_id', 'role_id')
+      ->as('permission')
       ->withPivot('granted_at');
   }
 }

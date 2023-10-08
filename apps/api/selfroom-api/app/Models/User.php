@@ -44,7 +44,7 @@ class User extends Model
 
   public function chats(): HasMany
   {
-      return $this->hasMany(Chat::class, 'user_id', 'suer_id');
+    return $this->hasMany(Chat::class, 'user_id', 'suer_id');
   }
 
   public function currentRoom(): BelongsTo
@@ -55,24 +55,28 @@ class User extends Model
   public function favoriteRooms(): BelongsToMany
   {
     return $this->belongsToMany(ChatRoom::class, 't_favorite_chat_rooms', 'user_id', 'chat_room_id')
+      ->as('favorite')
       ->withPivot('added_at');
   }
 
   public function visitedRooms(): BelongsToMany
   {
     return $this->belongsToMany(ChatRoom::class, 't_visit_histories', 'user_id', 'chat_room_id')
+      ->as('history')
       ->withPivot('visited_at', 'left_at');
   }
 
   public function followees(): BelongsToMany
   {
     return $this->belongsToMany(User::class, 't_follows', 'follower_id', 'followee_id')
+      ->as('follow')
       ->withPivot('followed_at');
   }
 
   public function followers(): BelongsToMany
   {
     return $this->belongsToMany(User::class, 't_follows', 'followee_id', 'follower_id')
+      ->as('follow')
       ->withPivot('followed_at');
   }
 }

@@ -8,35 +8,36 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Role extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    protected $table = 'm_roles';
-    protected $primaryKey = 'role_id';
+  protected $table = 'm_roles';
+  protected $primaryKey = 'role_id';
 
-    const CREATED_AT = null;
-    const UPDATED_AT = null;
+  const CREATED_AT = null;
+  const UPDATED_AT = null;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var string[]
-     */
-    protected $fillable = [
-        'name',
-    ];
+  /**
+   * The attributes that are mass assignable.
+   *
+   * @var string[]
+   */
+  protected $fillable = [
+    'name',
+  ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'm_roles_pkey',
-    ];
+  /**
+   * The attributes that should be hidden for serialization.
+   *
+   * @var array
+   */
+  protected $hidden = [
+    'm_roles_pkey',
+  ];
 
-    public function admins(): BelongsToMany
-    {
-      return $this->belongsToMany(Admin::class, 't_admin_role', 'role_id', 'admin_id')
-        ->withPivot('granted_at');
-    }
+  public function admins(): BelongsToMany
+  {
+    return $this->belongsToMany(Admin::class, 't_admin_role', 'role_id', 'admin_id')
+      ->as('permission')
+      ->withPivot('granted_at');
+  }
 }
