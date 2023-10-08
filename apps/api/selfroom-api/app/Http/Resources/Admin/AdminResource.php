@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Admin;
 
+use App\Http\Resources\Role\SimplifiedRoleResourceCollection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class SimplifiedAdminResource extends JsonResource
+class AdminResource extends JsonResource
 {
   /**
    * Transform the resource into an array.
@@ -18,8 +19,8 @@ class SimplifiedAdminResource extends JsonResource
       'adminId' => $this->admin_id,
       'nickname' => $this->nickname,
       'profilePhotoUrl' => $this->profile_photo_url,
-      'permissions' => new RoleResourceCollection($this->roles),
-      'createdBy' => $this->created_by,
+      'permissions' => new SimplifiedRoleResourceCollection($this->roles),
+      'createdBy' => $this->myAdmin ? new SimplifiedAdminResource($this->myAdmin) : null,
       'createdAt' => $this->created_at,
       'updatedAt' => $this->updated_at,
     ];

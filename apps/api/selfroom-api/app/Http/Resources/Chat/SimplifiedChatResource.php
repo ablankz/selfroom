@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Chat;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class RoleResource extends JsonResource
+class SimplifiedChatResource extends JsonResource
 {
   /**
    * Transform the resource into an array.
@@ -15,8 +15,12 @@ class RoleResource extends JsonResource
   public function toArray(Request $request): array
   {
     return [
-      'roleId' => $this->role_id,
-      'name' => $this->name,
+      'chatId' => $this->chat_id,
+      'userId' => $this->user_id,
+      'chatRoomId' => $this->chat_room_id,
+      'content' => $this->content,
+      'createdAt' => $this->created_at,
+      'updatedAt' => $this->updated_at,
     ];
   }
 

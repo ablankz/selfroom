@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\ChatRoom;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserResource extends JsonResource
+class ChatRoomResource extends JsonResource
 {
   /**
    * Transform the resource into an array.
@@ -15,13 +15,11 @@ class UserResource extends JsonResource
   public function toArray(Request $request): array
   {
     return [
-      'userId' => $this->user_id,
-      'nickname' => $this->nickname,
-      'profilePhotoUrl' => $this->profile_photo_url,
-      'followerNum' => $this->follower_num,
-      'followNum' => $this->follow_num,
-      'favoriteRoomNum' => $this->favorite_room_num,
-      'currentChatRoom' => $this->current_chat_room,
+      'chatRoomId' => $this->chat_room_id,
+      'name' => $this->name,
+      'userNum' => $this->user_num,
+      'coverPhotoUrl' => $this->cover_photo_url,
+      'hasKey' => !is_null($this->room_key),
       'createdAt' => $this->created_at,
       'updatedAt' => $this->updated_at,
     ];

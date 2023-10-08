@@ -3,7 +3,7 @@
 namespace App\Usecases\User;
 
 use App\Enums\ApplicationCode;
-use App\Http\Resources\UserResource;
+use App\Http\Resources\User\UserResource;
 use App\Models\User;
 use App\Usecases\Usecase;
 

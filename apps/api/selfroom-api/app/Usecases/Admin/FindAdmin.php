@@ -3,7 +3,7 @@
 namespace App\Usecases\Admin;
 
 use App\Enums\ApplicationCode;
-use App\Http\Resources\AdminResource;
+use App\Http\Resources\Admin\AdminResource;
 use App\Models\Admin;
 use App\Usecases\Usecase;
 

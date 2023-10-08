@@ -3,8 +3,7 @@
 namespace App\Usecases\Admin;
 
 use App\Constants\AdminPermissions;
-use App\Enums\Role\AdminRole;
-use App\Http\Resources\AdminResource;
+use App\Http\Resources\Admin\AdminResource;
 use App\Models\Account;
 use App\Models\Admin;
 use App\Models\Role;

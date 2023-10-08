@@ -2,7 +2,7 @@
 
 namespace App\Usecases\User;
 
-use App\Http\Resources\UserResource;
+use App\Http\Resources\User\UserResource;
 use App\Models\Account;
 use App\Models\User;
 use App\Usecases\Usecase;

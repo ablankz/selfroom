@@ -3,7 +3,7 @@
 namespace App\Usecases\Account;
 
 use App\Enums\ApplicationCode;
-use App\Http\Resources\AccountResource;
+use App\Http\Resources\Account\AccountResource;
 use App\Models\Account;
 use App\Usecases\Usecase;
 

@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Chat;
 
+use App\Http\Resources\ChatRoom\SimplifiedChatRoomResource;
+use App\Http\Resources\User\SimplifiedUserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AccountResource extends JsonResource
+class ChatResource extends JsonResource
 {
   /**
    * Transform the resource into an array.
@@ -14,12 +16,11 @@ class AccountResource extends JsonResource
    */
   public function toArray(Request $request): array
   {
-    $user = $this->user;
-    $admin = $this->admin;
     return [
-      'accountId' => $this->account_id,
-      'userId' => $user ? new UserResource($user) : null,
-      'adminId' => $admin ? new AdminResource($admin) : null,
+      'chatId' => $this->chat_id,
+      'user' => new SimplifiedUserResource($this->user),
+      'chatRoom' => new SimplifiedChatRoomResource($this->room),
+      'content' => $this->content,
       'createdAt' => $this->created_at,
       'updatedAt' => $this->updated_at,
     ];
