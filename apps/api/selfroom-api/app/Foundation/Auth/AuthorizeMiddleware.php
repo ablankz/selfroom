@@ -11,8 +11,14 @@ use Illuminate\Database\Eloquent\Model;
 class AuthorizeMiddleware extends Authorize
 {
   public $resolve = [
-    'chatRoomId' => \App\Models\ChatRoom::class,
-    'chatId' => \App\Models\Chat::class
+    'chatRoomId' => [
+      'model' => \App\Models\ChatRoom::class,
+      'key' => 'chat_room_id'
+    ],
+    'chatId' => [
+      'model' => \App\Models\Chat::class,
+      'key' => 'chat_id'
+    ]
   ];
 
   /**
@@ -34,7 +40,10 @@ class AuthorizeMiddleware extends Authorize
       $rf = false;
       foreach ($this->resolve as $alias => $model) {
         if ($alias == $id) {
-          $modelInstance[] = $this->createModel($model);
+          $ident = $request->route($id, null) ?? ((preg_match("/^['\"](.*)['\"]$/", trim($alias), $matches)) ? $matches[1] : null);
+          $createdModel = $this->createModel($model['model']);
+          $instance = $createdModel->newQuery()->where($model['key'], $ident)->first();
+          $modelInstance[] = $instance;
           $rf = true;
         }
       }
