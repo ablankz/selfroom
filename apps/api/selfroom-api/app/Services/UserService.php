@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Constants\StorageSettings;
 use App\Enums\ApplicationCode;
 use App\Exceptions\ApplicationLoggerException;
+use App\Http\Resources\User\SimplifiedUserResourceCollection;
+use App\Http\Resources\User\UserResource;
 use App\Usecases\User\CreateUser;
 use App\Usecases\User\DeleteUser;
 use App\Usecases\User\FindUser;
@@ -18,12 +20,12 @@ class UserService
 {
   public function find(FindUser $usecase, string $user_id)
   {
-    return $usecase->handle($user_id);
+    return new UserResource($usecase->handle($user_id));
   }
 
   public function get(GetUsers $usecase)
   {
-    return $usecase->handle();
+    return new SimplifiedUserResourceCollection($usecase->handle());
   }
 
   public function create(

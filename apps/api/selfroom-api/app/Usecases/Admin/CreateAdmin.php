@@ -3,7 +3,6 @@
 namespace App\Usecases\Admin;
 
 use App\Constants\AdminPermissions;
-use App\Http\Resources\Admin\AdminResource;
 use App\Models\Account;
 use App\Models\Admin;
 use App\Models\Role;
@@ -52,7 +51,7 @@ class CreateAdmin extends Usecase
     });
 
     return [
-      'data' => new AdminResource($data),
+      'data' => $data,
       'code' => self::SUCCESS,
     ];
   }

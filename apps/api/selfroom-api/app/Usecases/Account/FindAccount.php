@@ -3,7 +3,6 @@
 namespace App\Usecases\Account;
 
 use App\Enums\ApplicationCode;
-use App\Http\Resources\Account\AccountResource;
 use App\Models\Account;
 use App\Usecases\Usecase;
 
@@ -22,7 +21,7 @@ class FindAccount extends Usecase
     }
 
     return [
-      'data' => new AccountResource($ret),
+      'data' => $ret,
       'code' => self::SUCCESS
     ];
   }

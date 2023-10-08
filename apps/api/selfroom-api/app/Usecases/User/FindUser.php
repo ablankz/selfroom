@@ -22,7 +22,7 @@ class FindUser extends Usecase
     }
 
     return [
-      'data' => new UserResource($ret),
+      'data' => $ret,
       'code' => self::SUCCESS
     ];
   }

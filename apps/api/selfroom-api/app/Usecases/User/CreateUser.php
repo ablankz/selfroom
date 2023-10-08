@@ -29,7 +29,7 @@ class CreateUser extends Usecase
             'profile_photo_url' => $profile_photo_url
           ]
         );
-        Account::create(
+        $account = Account::create(
           [
             'login_id' => $login_id,
             'password' => app('hash')->make($raw_password),
@@ -37,14 +37,14 @@ class CreateUser extends Usecase
           ]
         );
 
-        return $user;
+        return $account;
       } catch (\Throwable) {
         DB::rollBack();
       }
     });
 
     return [
-      'data' => new UserResource($data),
+      'data' => $data,
       'code' => self::SUCCESS,
     ];
   }

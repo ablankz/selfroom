@@ -2,6 +2,7 @@
 
 namespace App\Usecases\User;
 
+use App\Http\Resources\User\SimplifiedUserResourceCollection;
 use App\Models\User;
 use App\Usecases\Usecase;
 
@@ -13,7 +14,7 @@ class GetUsers extends Usecase
     $ret = User::all();
 
     return [
-      'data' => $ret,
+      'data' => new SimplifiedUserResourceCollection($ret),
       'code' => self::SUCCESS
     ];
   }

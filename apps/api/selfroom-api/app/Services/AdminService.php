@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Constants\StorageSettings;
 use App\Enums\ApplicationCode;
 use App\Exceptions\ApplicationLoggerException;
+use App\Http\Resources\Admin\AdminResource;
+use App\Http\Resources\Admin\SimplifiedAdminResourceCollection;
 use App\Usecases\Admin\CreateAdmin;
 use App\Usecases\Admin\DeleteAdmin;
 use App\Usecases\Admin\FindAdmin;
@@ -18,12 +20,12 @@ class AdminService
 {
   public function find(FindAdmin $usecase, string $admin_id)
   {
-    return $usecase->handle($admin_id);
+    return new AdminResource($usecase->handle($admin_id));
   }
 
   public function get(GetAdmins $usecase)
   {
-    return $usecase->handle();
+    return new SimplifiedAdminResourceCollection($usecase->handle());
   }
 
   public function create(
@@ -43,13 +45,13 @@ class AdminService
     } else {
       $imgPath = null;
     }
-    return $usecase->handle(
+    return new AdminResource($usecase->handle(
       $created_by,
       $login_id,
       $raw_password,
       $nickname,
       $imgPath
-    );
+    ));
   }
 
   public function update(

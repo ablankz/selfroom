@@ -3,7 +3,6 @@
 namespace App\Usecases\Admin;
 
 use App\Enums\ApplicationCode;
-use App\Http\Resources\Admin\AdminResource;
 use App\Models\Admin;
 use App\Usecases\Usecase;
 
@@ -22,7 +21,7 @@ class FindAdmin extends Usecase
     }
 
     return [
-      'data' => new AdminResource($ret),
+      'data' => $ret,
       'code' => self::SUCCESS
     ];
   }
