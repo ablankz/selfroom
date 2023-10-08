@@ -14,7 +14,7 @@ return [
     */
 
   'defaults' => [
-    'guard' => 'web',
+    'guard' => 'jwt',
     'passwords' => 'users',
   ],
 
@@ -38,7 +38,7 @@ return [
   'guards' => [
     'web' => [
       'driver' => 'session',
-      'provider' => 'users',
+      'provider' => 'accounts',
     ],
     'jwt' => [
       'driver' => 'jwt',
@@ -64,10 +64,6 @@ return [
     */
 
   'providers' => [
-    'users' => [
-      'driver' => 'eloquent',
-      'model' => App\Models\User::class,
-    ],
     'accounts' => [
       'driver' => 'app',
       'model' => App\Models\Account::class
