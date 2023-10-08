@@ -22,7 +22,7 @@ class UpdateUserRequest extends ApiRequest
   public function rules(): array
   {
     return [
-      'name' => ['required', 'string'],
+      'nickname' => ['required', 'string'],
       'profilePhotoUrl' => ['file', 'max:10240', 'mimes:jpg,jpeg,png,gif'],
     ];
   }

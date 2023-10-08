@@ -3,6 +3,7 @@
 namespace App\Http\Requests\User;
 
 use App\Http\Requests\ApiRequest;
+use App\Rules\SingleByteCharRule;
 use Illuminate\Validation\Rules\Password;
 
 class StoreUserRequest extends ApiRequest
@@ -23,7 +24,7 @@ class StoreUserRequest extends ApiRequest
   public function validationData()
   {
     return [
-      ...$this->only(['name', 'profilePhotoUrl', 'loginId', 'password']),
+      ...$this->only(['nickname', 'profilePhotoUrl', 'loginId', 'password']),
       'password_confirmation' => $this->get('confirmPassword')
     ];
   }
@@ -36,9 +37,9 @@ class StoreUserRequest extends ApiRequest
   public function rules(): array
   {
     return [
-      'name' => ['required', 'string'],
+      'nickname' => ['required', 'string'],
       'profilePhotoUrl' => ['file', 'max:10240', 'mimes:jpg,jpeg,png,gif'],
-      'loginId' => ['required', 'string', 'unique:App\Models\Account,login_id'],
+      'loginId' => ['required', 'string', 'unique:App\Models\Account,login_id', new SingleByteCharRule],
       'password' => ['required', 'string', new Password(6), 'confirmed'],
     ];
   }
