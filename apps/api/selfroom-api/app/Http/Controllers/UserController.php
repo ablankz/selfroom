@@ -21,11 +21,11 @@ class UserController extends Controller
     $this->authManager = $authManager;
   }
 
-  public function find(string $uuid): JsonResponse
+  public function find(string $userId): JsonResponse
   {
     return response()->success(app()->call(
       [$this->service, 'find'],
-      ['user_id' => $uuid]
+      ['user_id' => $userId]
     ));
   }
 

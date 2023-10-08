@@ -18,11 +18,11 @@ class AdminController extends Controller
     $this->service = $service;
   }
 
-  public function find(ViewAdminRequest $request, string $uuid): JsonResponse
+  public function find(ViewAdminRequest $request, string $adminId): JsonResponse
   {
     return response()->success(app()->call(
       [$this->service, 'find'],
-      ['admin_id' => $uuid]
+      ['admin_id' => $adminId]
     ));
   }
 

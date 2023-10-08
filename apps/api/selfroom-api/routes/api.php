@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\ChatRoom;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,7 +28,7 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::prefix('users')->group(function () {
-  Route::get('{uuid}', [\App\Http\Controllers\UserController::class, 'find']);
+  Route::get('{userId}', [\App\Http\Controllers\UserController::class, 'find']);
   Route::get('', [\App\Http\Controllers\UserController::class, 'get']);
   Route::post('', [\App\Http\Controllers\UserController::class, 'create'])->middleware(['guest:jwt']);
   Route::put('', [\App\Http\Controllers\UserController::class, 'update'])->middleware(['auth:jwt', 'user:jwt']);
@@ -34,7 +36,7 @@ Route::prefix('users')->group(function () {
 });
 
 Route::prefix('admins')->group(function () {
-  Route::get('{uuid}', [\App\Http\Controllers\AdminController::class, 'find'])->middleware(['auth:jwt', 'admin:jwt']);
+  Route::get('{adminId}', [\App\Http\Controllers\AdminController::class, 'find'])->middleware(['auth:jwt', 'admin:jwt']);
   Route::get('', [\App\Http\Controllers\AdminController::class, 'get'])->middleware(['auth:jwt', 'admin:jwt']);
   Route::post('', [\App\Http\Controllers\AdminController::class, 'create'])->middleware(['auth:jwt', 'admin:jwt']);
   Route::put('', [\App\Http\Controllers\AdminController::class, 'update'])->middleware(['auth:jwt', 'admin:jwt']);
@@ -42,20 +44,24 @@ Route::prefix('admins')->group(function () {
 });
 
 Route::prefix('room-categories')->group(function () {
-  Route::get('{id}', [\App\Http\Controllers\RoomCategoryController::class, 'find']);
+  Route::get('{roomCategoryId}', [\App\Http\Controllers\RoomCategoryController::class, 'find']);
   Route::get('', [\App\Http\Controllers\RoomCategoryController::class, 'get']);
   Route::post('', [\App\Http\Controllers\RoomCategoryController::class, 'create'])->middleware(['auth:jwt', 'admin:jwt']);
-  Route::put('{id}', [\App\Http\Controllers\RoomCategoryController::class, 'update'])->middleware(['auth:jwt', 'admin:jwt']);
-  Route::delete('{id}', [\App\Http\Controllers\RoomCategoryController::class, 'delete'])->middleware(['auth:jwt', 'admin:jwt']);
+  Route::put('{roomCategoryId}', [\App\Http\Controllers\RoomCategoryController::class, 'update'])->middleware(['auth:jwt', 'admin:jwt']);
+  Route::delete('{roomCategoryId}', [\App\Http\Controllers\RoomCategoryController::class, 'delete'])->middleware(['auth:jwt', 'admin:jwt']);
 });
 
 Route::prefix('roles')->group(function () {
-  Route::get('{id}', [\App\Http\Controllers\RoleController::class, 'find'])->middleware(['auth:jwt', 'admin:jwt']);
+  Route::get('{roleId}', [\App\Http\Controllers\RoleController::class, 'find'])->middleware(['auth:jwt', 'admin:jwt']);
   Route::get('', [\App\Http\Controllers\RoleController::class, 'get'])->middleware(['auth:jwt', 'admin:jwt']);
 });
 
 Route::prefix('chat-rooms')->group(function () {
-  Route::get('{id}', [\App\Http\Controllers\ChatRoomController::class, 'find'])->middleware(['auth:jwt', 'user:jwt']);
+  Route::get('{chatRoomId}', [\App\Http\Controllers\ChatRoomController::class, 'find'])->middleware(['auth:jwt', 'user:jwt']);
   Route::get('', [\App\Http\Controllers\ChatRoomController::class, 'get'])->middleware(['auth:jwt', 'user:jwt']);
   Route::post('', [\App\Http\Controllers\ChatRoomController::class, 'create'])->middleware(['auth:jwt', 'user:jwt']);
+  Route::prefix('{chatRoomId}/chats')->group(function () {
+      Route::get('', [\App\Http\Controllers\ChatController::class, 'get'])->middleware(['auth:jwt', 'user:jwt', 'can:viewChat,chatRoomId']);
+      Route::get('{chatId}', [\App\Http\Controllers\ChatController::class, 'find'])->middleware(['auth:jwt', 'user:jwt', 'can:viewChat,chatRoomId']);
+  });
 });

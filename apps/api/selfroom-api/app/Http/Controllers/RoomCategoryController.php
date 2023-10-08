@@ -17,11 +17,11 @@ class RoomCategoryController extends Controller
     $this->service = $service;
   }
 
-  public function find(int $id): JsonResponse
+  public function find(int $roomCategoryId): JsonResponse
   {
     return response()->success(app()->call(
       [$this->service, 'find'],
-      ['room_category_id' => $id]
+      ['room_category_id' => $roomCategoryId]
     ));
   }
 
@@ -42,23 +42,23 @@ class RoomCategoryController extends Controller
     ));
   }
 
-  public function update(UpdateRoomCategoryRequest $request, int $id): JsonResponse
+  public function update(UpdateRoomCategoryRequest $request, int $roomCategoryId): JsonResponse
   {
     return response()->success(app()->call(
       [$this->service, 'update'],
       [
-        'room_category_id' => $id,
+        'room_category_id' => $roomCategoryId,
         'name' => $request->get('name'),
       ]
     ));
   }
 
-  public function delete(DeleteRoomCategoryRequest $request, int $id): JsonResponse
+  public function delete(DeleteRoomCategoryRequest $request, int $roomCategoryId): JsonResponse
   {
     return response()->success(app()->call(
       [$this->service, 'delete'],
       [
-        'room_category_id' => $id,
+        'room_category_id' => $roomCategoryId,
       ]
     ));
   }

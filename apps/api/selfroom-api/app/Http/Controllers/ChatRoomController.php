@@ -15,11 +15,11 @@ class ChatRoomController extends Controller
     $this->service = $service;
   }
 
-  public function find(string $uuid): JsonResponse
+  public function find(string $chatRoomId): JsonResponse
   {
     return response()->success(app()->call(
       [$this->service, 'find'],
-      ['chat_room_id' => $uuid]
+      ['chat_room_id' => $chatRoomId]
     ));
   }
 

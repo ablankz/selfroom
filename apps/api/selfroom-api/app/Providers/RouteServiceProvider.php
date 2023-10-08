@@ -40,9 +40,16 @@ class RouteServiceProvider extends ServiceProvider
         ->by($request->user()?->id ?: $request->ip());
     });
 
-    Route::pattern('id', '[0-9]+');
-    Route::pattern('uuid', '([0-9a-f]{8})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{12})');
-    Route::pattern('ulid', '[0-9a-hjkmnp-zA-HJKMNP-Z]{26}');
+    $idPattern = '[0-9]+';
+    $ulidPattern = '([0-9a-f]{8})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{12})';
+    $uuidPattern = '[0-9a-hjkmnp-zA-HJKMNP-Z]{26}';
+
+    Route::pattern('userId', $ulidPattern);
+    Route::pattern('adminId', $ulidPattern);
+    Route::pattern('roomCategoryId', $idPattern);
+    Route::pattern('roleId', $idPattern);
+    Route::pattern('chatRoomId', $ulidPattern);
+    Route::pattern('chatId', $uuidPattern);
 
     $this->routes(function () {
       Route::middleware('api')

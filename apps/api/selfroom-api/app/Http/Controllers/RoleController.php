@@ -15,11 +15,11 @@ class RoleController extends Controller
     $this->service = $service;
   }
 
-  public function find(ViewRoleRequest $request, int $id): JsonResponse
+  public function find(ViewRoleRequest $request, int $roleId): JsonResponse
   {
     return response()->success(app()->call(
       [$this->service, 'find'],
-      ['role_id' => $id]
+      ['role_id' => $roleId]
     ));
   }
 
