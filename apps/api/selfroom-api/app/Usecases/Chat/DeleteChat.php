@@ -11,9 +11,10 @@ class DeleteChat extends Usecase
   public const NOT_FOUND = ApplicationCode::NotFoundModel;
 
   public function run(
-    string $id
+    string $id,
+    string $chat_room_id
   ) {
-    $ret = Chat::where('chat_id', $id)->delete();
+    $ret = Chat::where('chat_id', $id)->where('chat_room_id', $chat_room_id)->delete();
 
     if (!$ret) {
       return [

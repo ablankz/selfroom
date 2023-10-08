@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\ChatRoom;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -68,3 +66,22 @@ Route::prefix('chat-rooms')->group(function () {
       Route::delete('{chatId}', [\App\Http\Controllers\ChatController::class, 'delete'])->middleware(['auth:jwt', 'user:jwt', 'can:delete,chatId,chatRoomId']);
   });
 });
+
+// adminへroleの付与・剥奪
+
+// roomの作成時にタグ付与する記述の追加
+
+// user/chatroom間の入室・退室に関するcrud
+// - historyに保存
+// - roomのinUserを変更
+// - userのcurrentRoomを変更
+
+// user/cahrroom間のfavoriteに関するcrud
+
+// user/user間のfollowに関するcrud
+
+// リスト関連の絞り込みやオーダーなど
+
+// リスト関連のページネーション、カーソルページネーション
+
+// websocket

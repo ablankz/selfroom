@@ -12,12 +12,12 @@ use App\Usecases\Chat\UpdateChat;
 
 class ChatService
 {
-  public function find(FindChat $usecase, string $chat_id)
+  public function find(FindChat $usecase, string $chat_id, string $chat_room_id)
   {
     return new ChatResource($usecase->handle($chat_id));
   }
 
-  public function get(GetChats $usecase)
+  public function get(GetChats $usecase, string $chat_room_id)
   {
     return new ChatResourceCollection($usecase->handle());
   }
@@ -38,7 +38,8 @@ class ChatService
   public function update(
     UpdateChat $usecase,
     string $chat_id,
-    string $content
+    string $content,
+    string $chat_room_id
   ) {
     return $usecase->handle(
       $chat_id,
@@ -47,7 +48,7 @@ class ChatService
   }
 
 
-  public function delete(DeleteChat $usecase, string $chat_id)
+  public function delete(DeleteChat $usecase, string $chat_id, string $chat_room_id)
   {
     return $usecase->handle($chat_id);
   }

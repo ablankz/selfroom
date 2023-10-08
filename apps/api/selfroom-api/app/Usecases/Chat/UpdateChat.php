@@ -12,9 +12,12 @@ class UpdateChat extends Usecase
 
   public function run(
     string $id,
+    string $chat_room_id,
     string $content
   ) {
-    $ret = Chat::where('chat_id', $id)->update([
+    $ret = Chat::where('chat_id', $id)
+    ->where('chat_room_id', $chat_room_id)
+    ->update([
       'content' => $content
     ]);
 

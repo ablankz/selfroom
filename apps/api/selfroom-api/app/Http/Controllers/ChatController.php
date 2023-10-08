@@ -20,14 +20,20 @@ class ChatController extends Controller
   {
     return response()->success(app()->call(
       [$this->service, 'find'],
-      ['chat_id' => $chatId]
+      [
+        'chat_id' => $chatId,
+        'chat_room_id' => $chatRoomId,
+      ]
     ));
   }
 
   public function get(string $chatRoomId): JsonResponse
   {
     return response()->success(app()->call(
-      [$this->service, 'get']
+      [$this->service, 'get'],
+      [
+        'chat_room_id' => $chatRoomId,
+      ]
     ));
   }
 
@@ -49,6 +55,7 @@ class ChatController extends Controller
       [$this->service, 'update'],
       [
         'chat_id' => $chatId,
+        'chat_room_id' => $chatRoomId,
         'content' => $request->get('content'),
       ]
     ));
@@ -60,6 +67,7 @@ class ChatController extends Controller
       [$this->service, 'delete'],
       [
         'chat_id' => $chatId,
+        'chat_room_id' => $chatRoomId,
       ]
     ));
   }

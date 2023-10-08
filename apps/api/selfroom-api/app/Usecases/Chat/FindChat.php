@@ -10,10 +10,9 @@ class FindChat extends Usecase
 {
   public const NOT_FOUND = ApplicationCode::NotFoundModel;
 
-  public function run(string $id)
+  public function run(string $id, string $chat_room_id)
   {
-    $ret = Chat::find($id);
-    logger($id);
+    $ret = Chat::where('chat_room_id', $chat_room_id)->where('chat_id', $id)->first();
 
     if (is_null($ret)) {
       return [
