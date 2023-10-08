@@ -19,7 +19,7 @@ export const ErrorHandleProvider = ({ children }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingInitially, setIsLoadingInitially] = useState(true);
   const { enqueueSnackbar } = useSnackbar();
-  const { logout, reset } = useAuthContext();
+  const { logout, reset, initialize } = useAuthContext();
   const { t, currentLang } = useLocales();
 
   // 強制ログアウト
@@ -45,12 +45,14 @@ export const ErrorHandleProvider = ({ children }: Props) => {
       .then((_) => {
         // 同時送信のレスポンスの返却の確認が難しいため、setTimeoutより時間をあけて行っている.
         // なおこの時間はaccessTokenの有効期限内であれば、どれだけ長くてもいいはず。ただこの時間だけloading時間が長い。
-        setTimeout(() => {
+        setTimeout(async () => {
+          await initialize();
           setIsLoading(false);
           isRefreshingAccessToken.current = false;
         }, REFRESH_SECOND * 1000);
       })
-      .catch((_) => {
+      .catch(async (_) => {
+        await initialize();
         setIsLoading(false);
         setTimeout(() => {
           isRefreshingAccessToken.current = false;
