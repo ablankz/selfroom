@@ -11,9 +11,9 @@ export const AUTH_ENDPOINTS = {
       },
     },
     me: {
-      urlKey: '/auth/user',
+      urlKey: '/auth/me',
       method: 'POST',
-      url: '/auth/user',
+      url: '/auth/me',
       comment: '認証ユーザーの取得',
     },
     logout: {
