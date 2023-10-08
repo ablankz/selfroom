@@ -8,9 +8,9 @@ use App\Enums\Role\CategoryRole;
 use App\Enums\Role\ChatRole;
 use App\Enums\Role\ChatRoomRole;
 
-if (!function_exists('get_all_roles')) {
+if (!function_exists('get_all_role_names')) {
 
-  function get_all_roles(): array
+  function get_all_role_names(): array
   {
     $roles = [
       ...AccountRole::cases(),
@@ -22,5 +22,19 @@ if (!function_exists('get_all_roles')) {
     return array_map(function($role){
       return $role->value;
     }, $roles);
+  }
+}
+
+if (!function_exists('get_all_roles')) {
+
+  function get_all_roles(): array
+  {
+    return [
+      ...AccountRole::cases(),
+      ...CategoryRole::cases(),
+      ...ChatRole::cases(),
+      ...ChatRoomRole::cases(),
+      ...AdminRole::cases(),
+    ];
   }
 }
