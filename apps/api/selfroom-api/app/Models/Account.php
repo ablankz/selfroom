@@ -64,6 +64,6 @@ class Account extends Authenticatable implements JWTSubject
 
   public function admin(): BelongsTo
   {
-    return $this->belongsTo(User::class, 'admin_id', 'admin_id');
+    return $this->belongsTo(Admin::class, 'admin_id', 'admin_id');
   }
 }

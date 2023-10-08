@@ -28,6 +28,7 @@ class AdminService
 
   public function create(
     CreateAdmin $usecase,
+    string $created_by,
     string $login_id,
     string $raw_passsword,
     string $nickname,
@@ -43,6 +44,7 @@ class AdminService
       $imgPath = null;
     }
     return $usecase->handle(
+      $created_by,
       $login_id,
       $raw_passsword,
       $nickname,
