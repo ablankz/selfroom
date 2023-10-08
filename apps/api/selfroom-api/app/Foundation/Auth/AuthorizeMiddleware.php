@@ -11,7 +11,8 @@ use Illuminate\Database\Eloquent\Model;
 class AuthorizeMiddleware extends Authorize
 {
   public $resolve = [
-    'chatRoomId' => \App\Models\ChatRoom::class
+    'chatRoomId' => \App\Models\ChatRoom::class,
+    'chatId' => \App\Models\Chat::class
   ];
 
   /**
@@ -37,7 +38,7 @@ class AuthorizeMiddleware extends Authorize
           $rf = true;
         }
       }
-      if(!$rf) $modelInstance[] = $id;
+      if (!$rf) $modelInstance[] = $id;
       else $rf = false;
     }
     if ($this->gate->denies($ability, $this->getGateArguments($request, $modelInstance))) {
