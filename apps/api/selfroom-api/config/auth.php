@@ -69,7 +69,7 @@ return [
       'model' => App\Models\User::class,
     ],
     'accounts' => [
-      'driver' => 'eloquent',
+      'driver' => 'app',
       'model' => App\Models\Account::class
     ]
 
