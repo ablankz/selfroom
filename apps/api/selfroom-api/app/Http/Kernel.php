@@ -62,7 +62,7 @@ class Kernel extends HttpKernel
     'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
     'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
     'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
-    'can' => \Illuminate\Auth\Middleware\Authorize::class,
+    'can' => \App\Foundation\Auth\AuthorizeMiddleware::class,
     'guest' => \App\Http\Middleware\GuestGuard::class,
     'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
     'precognitive' => \Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests::class,
