@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Account;
 
+use App\Enums\ApplicationCode;
+use App\Exceptions\ApplicationException;
 use App\Http\Controllers\Controller;
-use App\Usecases\Admin\FindAdmin;
-use App\Usecases\User\FindUser;
+use App\Http\Resources\AdminResource;
+use App\Http\Resources\UserResource;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -12,23 +14,21 @@ use Illuminate\Http\Request;
 class RetrieveAction extends Controller
 {
   private $authManager;
-  private $userFind;
-  private $adminFind;
 
-  public function __construct(AuthManager $authManager, FindUser $userFind, FindAdmin $adminFind)
+  public function __construct(AuthManager $authManager)
   {
     $this->authManager = $authManager;
-    $this->userFind = $userFind;
-    $this->adminFind = $adminFind;
   }
 
   public function __invoke(Request $request): JsonResponse
   {
     $user = $this->authManager->guard('jwt')->user();
     if($user->admin_id){
-      return response()->success($this->adminFind->handle($user->admin_id));
+      if(!$user->admin) throw new ApplicationException(ApplicationCode::AuthNotFound);
+      return response()->success(new AdminResource($user->admin));
     }else{
-      return response()->success($this->userFind->handle($user->user_id));
+      if(!$user->user) throw new ApplicationException(ApplicationCode::AuthNotFound);
+      return response()->success(new UserResource($user->user));
     }
   }
 }
