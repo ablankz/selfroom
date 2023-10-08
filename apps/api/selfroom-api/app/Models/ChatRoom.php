@@ -16,8 +16,6 @@ class ChatRoom extends Model
   protected $table = 't_chat_rooms';
   protected $primaryKey = 'chat_room_id';
 
-  const UPDATED_AT = null;
-
   /**
    * The attributes that are mass assignable.
    *

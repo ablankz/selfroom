@@ -9,7 +9,7 @@ class CreateChatRoom extends Usecase
 {
   public function run(
     string $name,
-    string $cover_photo_url,
+    string $cover_photo_url = null,
     string $room_key = null
   ) {
     $data = ChatRoom::create(
