@@ -15,10 +15,9 @@ class ApplicationUserProvider extends EloquentUserProvider
   public function retrieveById($identifier)
   {
     $model = $this->createModel();
-
     return $this->newModelQuery($model)
-      ->with(['user', 'admin'])
-      ->where($model->getAuthIdentifierName(), $identifier)
-      ->first();
+    ->with(['user', 'admin.roles', 'admin.myAdmin'])
+    ->where($model->getAuthIdentifierName(), $identifier)
+    ->first();
   }
 }
