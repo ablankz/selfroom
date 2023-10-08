@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Http\Resources\Chat\ChatResource;
-use App\Http\Resources\Chat\SimplifiedChatResourceCollection;
+use App\Http\Resources\Chat\ChatResourceCollection;
 use App\Usecases\Chat\CreateChat;
 use App\Usecases\Chat\DeleteChat;
 use App\Usecases\Chat\FindChat;
@@ -19,7 +19,7 @@ class ChatService
 
   public function get(GetChats $usecase)
   {
-    return new SimplifiedChatResourceCollection($usecase->handle());
+    return new ChatResourceCollection($usecase->handle());
   }
 
   public function create(

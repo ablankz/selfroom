@@ -10,7 +10,7 @@ class GetChats extends Usecase
 {
   public function run()
   {
-    $ret = Chat::all();
+    $ret = Chat::with(['user', 'room'])->get();
 
     return [
       'data' => $ret,
