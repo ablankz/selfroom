@@ -40,3 +40,11 @@ Route::prefix('admins')->group(function () {
   Route::put('', [\App\Http\Controllers\AdminController::class, 'update'])->middleware(['auth:jwt', 'admin:jwt']);
   Route::delete('', [\App\Http\Controllers\AdminController::class, 'delete'])->middleware(['auth:jwt', 'admin:jwt']);
 });
+
+Route::prefix('room-categories')->group(function () {
+  Route::get('{id}', [\App\Http\Controllers\RoomCategoryController::class, 'find']);
+  Route::get('', [\App\Http\Controllers\RoomCategoryController::class, 'get']);
+  Route::post('', [\App\Http\Controllers\RoomCategoryController::class, 'create'])->middleware(['auth:jwt', 'admin:jwt']);
+  Route::put('{id}', [\App\Http\Controllers\RoomCategoryController::class, 'update'])->middleware(['auth:jwt', 'admin:jwt']);
+  Route::delete('{id}', [\App\Http\Controllers\RoomCategoryController::class, 'delete'])->middleware(['auth:jwt', 'admin:jwt']);
+});
