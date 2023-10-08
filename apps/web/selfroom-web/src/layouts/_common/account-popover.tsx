@@ -128,7 +128,7 @@ export default function AccountPopover() {
           sx={{ width: 200, p: 0 }}
         >
           <MenuItem
-            onClick={() => router.push(paths.dashboard.auth)}
+            onClick={() => handleClickItem(paths.dashboard.auth)}
             sx={{ m: 1, fontWeight: 'fontWeightBold', color: 'info.main' }}
           >
             {t('Login')}
