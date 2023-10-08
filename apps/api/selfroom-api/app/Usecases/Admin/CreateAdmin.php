@@ -2,6 +2,7 @@
 
 namespace App\Usecases\Admin;
 
+use App\Constants\AdminPermissions;
 use App\Enums\Role\AdminRole;
 use App\Http\Resources\AdminResource;
 use App\Models\Account;
@@ -13,12 +14,14 @@ use Illuminate\Support\Facades\DB;
 class CreateAdmin extends Usecase
 {
   public function run(
+    string $created_by,
     string $login_id,
     string $raw_passsword,
     string $nickname,
     string $profile_photo_url = null,
   ) {
     $data = DB::transaction(function () use (
+      $created_by,
       $login_id,
       $raw_passsword,
       $nickname,
@@ -27,6 +30,7 @@ class CreateAdmin extends Usecase
       try {
         $admin = Admin::create(
           [
+            'created_by' => $created_by,
             'nickname' => $nickname,
             'profile_photo_url' => $profile_photo_url
           ]
@@ -38,8 +42,10 @@ class CreateAdmin extends Usecase
             'admin_id' => $admin->admin_id,
           ]
         );
-        $role = Role::where('name', AdminRole::View->value)->first();
-        $account->roles()->attach($role->role_id, ['granted_at' => now()]);
+        foreach(AdminPermissions::DEFAULT_ADMIN_ROLE as $role){
+          $role = Role::where('name', $role->value)->first();
+          $account->roles()->attach($role->role_id, ['granted_at' => now()]);
+        }
         return $admin;
       } catch (\Throwable) {
         DB::rollBack();

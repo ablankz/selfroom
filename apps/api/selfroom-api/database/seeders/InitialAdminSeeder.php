@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Enums\Role\AdminRole;
+use App\Constants\AdminPermissions;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -16,8 +16,8 @@ class InitialAdminSeeder extends Seeder
     $this->create();
   }
 
-  private function create(
-  ): void {
+  private function create(): void
+  {
     DB::transaction(function () {
       try {
         $admin = \App\Models\Admin::create(
@@ -33,10 +33,10 @@ class InitialAdminSeeder extends Seeder
             'admin_id' => $admin->admin_id,
           ]
         );
-        $role = \App\Models\Role::where('name', AdminRole::ManageRole->value)->first();
-        $admin->roles()->attach($role->role_id, ['granted_at' => now()]);
-        $role = \App\Models\Role::where('name', AdminRole::Create->value)->first();
-        $admin->roles()->attach($role->role_id, ['granted_at' => now()]);
+        foreach (AdminPermissions::DEFAULT_INITIAL_ADMIN_ROLE as $role) {
+          $role = \App\Models\Role::where('name', $role->value)->first();
+          $admin->roles()->attach($role->role_id, ['granted_at' => now()]);
+        }
       } catch (\Throwable) {
         DB::rollBack();
       }

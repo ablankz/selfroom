@@ -2,6 +2,7 @@
 
 namespace App\Usecases\Admin;
 
+use App\Constants\AdminPermissions;
 use App\Enums\Role\AdminRole;
 use App\Http\Resources\AdminResource;
 use App\Models\Account;
@@ -38,8 +39,10 @@ class CreateAdminOnProvider extends Usecase
             'admin_id' => $admin->admin_id,
           ]
         );
-        $role = Role::where('name', AdminRole::View->value)->first();
-        $account->roles()->attach($role->role_id, ['granted_at' => now()]);
+        foreach(AdminPermissions::DEFAULT_ADMIN_ROLE as $role){
+          $role = Role::where('name', $role->value)->first();
+          $account->roles()->attach($role->role_id, ['granted_at' => now()]);
+        }
         return $admin;
       } catch (\Throwable) {
         DB::rollBack();

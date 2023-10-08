@@ -20,11 +20,14 @@ class AdminRoleSeeder extends Seeder
    */
   public function run(): void
   {
-    $models = \App\Models\Admin::inRandomOrder()->get();
+    $initialAdminAccount = \App\Models\Account::where('login_id', env('INITIAL_ADMIN_ID'))->first();
+    $models = \App\Models\Admin::whereNot('admin_id', $initialAdminAccount->admin_id)->inRandomOrder()->get();
+    $adminView = \App\Models\Role::where('name', AdminRole::View->value)->first();
 
     foreach ($models as $model) {
       $attach = $this->faker->numberBetween(1, 3);
-      $targets = \App\Models\Role::inRandomOrder()->whereNotIn('name', [AdminRole::ManageRole->value, AdminRole::Create->value])->get();
+      $model->roles()->attach($adminView->role_id, ['granted_at' => $this->faker->dateTime]);
+      $targets = \App\Models\Role::inRandomOrder()->whereNotIn('name', [AdminRole::ManageRole->value, AdminRole::Create->value, AdminRole::View->value])->get();
       foreach ($targets as $i => $target) {
         if ($i === $attach) break;
         $model->roles()->attach($target->role_id, ['granted_at' => $this->faker->dateTime]);
