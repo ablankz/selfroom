@@ -2,6 +2,7 @@
 
 namespace App\Usecases\User;
 
+use App\Http\Resources\UserResource;
 use App\Models\Account;
 use App\Models\User;
 use App\Usecases\Usecase;
@@ -28,20 +29,21 @@ class CreateUserOnProvider extends Usecase
             'profile_photo_url' => $profile_photo_url
           ]
         );
-        return Account::create(
+        Account::create(
           [
             'provider_id' => $provider_id,
             'provider_name' => $provider_name,
             'user_id' => $user->user_id,
           ]
         );
+        return $user;
       } catch (\Throwable) {
         DB::rollBack();
       }
     });
 
     return [
-      'data' => $data,
+      'data' => new UserResource($data),
       'code' => self::SUCCESS,
     ];
   }

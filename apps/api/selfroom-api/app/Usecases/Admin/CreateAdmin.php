@@ -3,6 +3,7 @@
 namespace App\Usecases\Admin;
 
 use App\Enums\Role\AdminRole;
+use App\Http\Resources\AdminResource;
 use App\Models\Account;
 use App\Models\Admin;
 use App\Models\Role;
@@ -15,7 +16,7 @@ class CreateAdmin extends Usecase
     string $login_id,
     string $raw_passsword,
     string $nickname,
-    string $profile_photo_url,
+    string $profile_photo_url = null,
   ) {
     $data = DB::transaction(function () use (
       $login_id,
@@ -37,16 +38,16 @@ class CreateAdmin extends Usecase
             'admin_id' => $admin->admin_id,
           ]
         );
-        $role = Role::where('name', AdminRole::View)->first();
+        $role = Role::where('name', AdminRole::View->value)->first();
         $account->roles()->attach($role->role_id, ['granted_at' => now()]);
-        return $account;
+        return $admin;
       } catch (\Throwable) {
         DB::rollBack();
       }
     });
 
     return [
-      'data' => $data,
+      'data' => new AdminResource($data),
       'code' => self::SUCCESS,
     ];
   }
