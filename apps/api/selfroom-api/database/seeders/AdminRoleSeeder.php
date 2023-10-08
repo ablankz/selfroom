@@ -24,7 +24,7 @@ class AdminRoleSeeder extends Seeder
 
     foreach ($models as $model) {
       $attach = $this->faker->numberBetween(1, 3);
-      $targets = \App\Models\Role::inRandomOrder()->whereNot('name', AdminRole::ManageRole->value)->get();
+      $targets = \App\Models\Role::inRandomOrder()->whereNotIn('name', [AdminRole::ManageRole->value, AdminRole::Create->value])->get();
       foreach ($targets as $i => $target) {
         if ($i === $attach) break;
         $model->roles()->attach($target->role_id, ['granted_at' => $this->faker->dateTime]);

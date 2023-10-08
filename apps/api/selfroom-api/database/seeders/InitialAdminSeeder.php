@@ -35,6 +35,8 @@ class InitialAdminSeeder extends Seeder
         );
         $role = \App\Models\Role::where('name', AdminRole::ManageRole->value)->first();
         $admin->roles()->attach($role->role_id, ['granted_at' => now()]);
+        $role = \App\Models\Role::where('name', AdminRole::Create->value)->first();
+        $admin->roles()->attach($role->role_id, ['granted_at' => now()]);
       } catch (\Throwable) {
         DB::rollBack();
       }
