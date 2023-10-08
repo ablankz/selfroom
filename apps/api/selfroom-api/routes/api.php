@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\App;
 
 Route::prefix('auth')->group(function () {
   Route::post('login', \App\Http\Controllers\Account\LoginAction::class)->middleware('guest:jwt');
-  Route::post('user', \App\Http\Controllers\Account\RetrieveAction::class)->middleware('auth:jwt');
+  Route::post('me', \App\Http\Controllers\Account\RetrieveAction::class)->middleware('auth:jwt');
   Route::post('logout', \App\Http\Controllers\Account\LogoutAction::class)->middleware('auth:jwt');
   Route::post('refresh', \App\Http\Controllers\Account\RefreshTokenAction::class);
   // ソーシャルログイン
@@ -32,4 +32,12 @@ Route::prefix('users')->group(function () {
   Route::post('', [\App\Http\Controllers\UserController::class, 'create'])->middleware('guest:jwt');
   Route::put('', [\App\Http\Controllers\UserController::class, 'update'])->middleware('auth:jwt');
   Route::delete('', [\App\Http\Controllers\UserController::class, 'delete'])->middleware('auth:jwt');
+});
+
+Route::prefix('admins')->group(function () {
+  Route::get('{uuid}', [\App\Http\Controllers\AdminController::class, 'find']);
+  Route::get('', [\App\Http\Controllers\AdminController::class, 'get']);
+  Route::post('', [\App\Http\Controllers\AdminController::class, 'create'])->middleware(['auth:jwt']);
+  Route::put('', [\App\Http\Controllers\AdminController::class, 'update'])->middleware('auth:jwt');
+  Route::delete('', [\App\Http\Controllers\AdminController::class, 'delete'])->middleware('auth:jwt');
 });
