@@ -2,17 +2,23 @@
 
 namespace App\Services;
 
+use App\Constants\StorageSettings;
+use App\Enums\ApplicationCode;
+use App\Exceptions\ApplicationLoggerException;
 use App\Usecases\Admin\CreateAdmin;
 use App\Usecases\Admin\DeleteAdmin;
 use App\Usecases\Admin\FindAdmin;
 use App\Usecases\Admin\GetAdmins;
 use App\Usecases\Admin\UpdateAdmin;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
+use Psr\Log\LogLevel;
 
 class AdminService
 {
-  public function find(FindAdmin $usecase, string $adminId)
+  public function find(FindAdmin $usecase, string $admin_id)
   {
-    return $usecase->handle($adminId);
+    return $usecase->handle($admin_id);
   }
 
   public function get(GetAdmins $usecase)
@@ -21,35 +27,59 @@ class AdminService
   }
 
   public function create(
-    CreateAdmin $usecase, 
+    CreateAdmin $usecase,
     string $login_id,
     string $raw_passsword,
     string $nickname,
-    string $profile_photo_url,
-  ){
+    UploadedFile | null $profile_photo_url,
+  ) {
+    if ($profile_photo_url) {
+      try {
+        $imgPath = $profile_photo_url->store(StorageSettings::ADMIN_PROFILE_STORAGE);
+      } catch (\Throwable) {
+        throw new ApplicationLoggerException(ApplicationCode::FailedUpload, LogLevel::ALERT, "ファイルのアップロードに失敗");
+      }
+    } else {
+      $imgPath = null;
+    }
     return $usecase->handle(
       $login_id,
       $raw_passsword,
       $nickname,
-      $profile_photo_url
+      $imgPath
     );
   }
 
   public function update(
     UpdateAdmin $usecase,
-    string $adminId,
+    string $admin_id,
     string $nickname,
-    string $profile_photo_url
+    UploadedFile | null $profile_photo_url
   ) {
+    $current = request()->user()->profile_photo_url;
+
+    if ($profile_photo_url) {
+      try {
+        $imgPath = $profile_photo_url->store(StorageSettings::ADMIN_PROFILE_STORAGE);
+      } catch (\Throwable) {
+        throw new ApplicationLoggerException(ApplicationCode::System, LogLevel::ALERT, "ファイルのアップロードに失敗");
+      }
+      if ($current) {
+        Storage::delete($current);
+      }
+    } else {
+      $imgPath = $current;
+    }
     return $usecase->handle(
-      $adminId,
+      $admin_id,
       $nickname,
-      $profile_photo_url
+      $imgPath
     );
   }
 
-  public function delete(DeleteAdmin $usecase, string $adminId)
+
+  public function delete(DeleteAdmin $usecase, string $admin_id)
   {
-    return $usecase->handle($adminId);
+    return $usecase->handle($admin_id);
   }
 }

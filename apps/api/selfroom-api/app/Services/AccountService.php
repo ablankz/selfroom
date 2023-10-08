@@ -8,9 +8,9 @@ use App\Usecases\Account\GetAccounts;
 
 class AccountService
 {
-  public function find(FindAccount $usecase, string $accountId)
+  public function find(FindAccount $usecase, string $account_id)
   {
-    return $usecase->handle($accountId);
+    return $usecase->handle($account_id);
   }
 
   public function get(GetAccounts $usecase)
@@ -18,8 +18,8 @@ class AccountService
     return $usecase->handle();
   }
 
-  public function delete(DeleteAccount $usecase, string $accountId)
+  public function delete(DeleteAccount $usecase, string $account_id)
   {
-    return $usecase->handle($accountId);
+    return $usecase->handle($account_id);
   }
 }
