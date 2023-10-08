@@ -23,11 +23,11 @@ class RetrieveAction extends Controller
   public function __invoke(Request $request): JsonResponse
   {
     $user = $this->authManager->guard('jwt')->user();
-    if($user->admin_id){
-      if(!$user->admin) throw new ApplicationException(ApplicationCode::AuthNotFound);
+    if ($user->admin_id) {
+      if (!$user->admin) throw new ApplicationException(ApplicationCode::AuthNotFound);
       return response()->success(new AdminResource($user->admin));
-    }else{
-      if(!$user->user) throw new ApplicationException(ApplicationCode::AuthNotFound);
+    } else {
+      if (!$user->user) throw new ApplicationException(ApplicationCode::AuthNotFound);
       return response()->success(new UserResource($user->user));
     }
   }
