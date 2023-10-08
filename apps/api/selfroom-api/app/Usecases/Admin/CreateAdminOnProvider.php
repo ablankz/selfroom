@@ -32,7 +32,7 @@ class CreateAdminOnProvider extends Usecase
             'profile_photo_url' => $profile_photo_url
           ]
         );
-        $account = Account::create(
+        Account::create(
           [
             'provider_id' => $provider_id,
             'provider_name' => $provider_name,
@@ -41,7 +41,7 @@ class CreateAdminOnProvider extends Usecase
         );
         foreach(AdminPermissions::DEFAULT_ADMIN_ROLE as $role){
           $role = Role::where('name', $role->value)->first();
-          $account->roles()->attach($role->role_id, ['granted_at' => now()]);
+          $admin->roles()->attach($role->role_id, ['granted_at' => now()]);
         }
         return $admin;
       } catch (\Throwable) {

@@ -30,7 +30,7 @@ class AdminService
     CreateAdmin $usecase,
     string $created_by,
     string $login_id,
-    string $raw_passsword,
+    string $raw_password,
     string $nickname,
     UploadedFile | null $profile_photo_url,
   ) {
@@ -46,7 +46,7 @@ class AdminService
     return $usecase->handle(
       $created_by,
       $login_id,
-      $raw_passsword,
+      $raw_password,
       $nickname,
       $imgPath
     );

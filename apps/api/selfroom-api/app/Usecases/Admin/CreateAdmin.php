@@ -16,14 +16,14 @@ class CreateAdmin extends Usecase
   public function run(
     string $created_by,
     string $login_id,
-    string $raw_passsword,
+    string $raw_password,
     string $nickname,
     string $profile_photo_url = null,
   ) {
     $data = DB::transaction(function () use (
       $created_by,
       $login_id,
-      $raw_passsword,
+      $raw_password,
       $nickname,
       $profile_photo_url,
     ) {
@@ -35,16 +35,16 @@ class CreateAdmin extends Usecase
             'profile_photo_url' => $profile_photo_url
           ]
         );
-        $account = Account::create(
+        Account::create(
           [
             'login_id' => $login_id,
-            'password' => app('hash')->make($raw_passsword),
+            'password' => app('hash')->make($raw_password),
             'admin_id' => $admin->admin_id,
           ]
         );
         foreach(AdminPermissions::DEFAULT_ADMIN_ROLE as $role){
           $role = Role::where('name', $role->value)->first();
-          $account->roles()->attach($role->role_id, ['granted_at' => now()]);
+          $admin->roles()->attach($role->role_id, ['granted_at' => now()]);
         }
         return $admin;
       } catch (\Throwable) {
