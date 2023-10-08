@@ -95,7 +95,7 @@ class Handler extends ExceptionHandler
       }
 
       return match (true) {
-        $e instanceof ApplicationAttributeException => response()->error($e, $e->getApplicationCode(), $headers, $e->getValidationMsg()),
+        $e instanceof ApplicationAttributeException => response()->error($e, $e->getApplicationCode(), $headers, $e->getErrorAttributes()),
         $e instanceof ApplicationBaseException => response()->error($e, $e->getApplicationCode(), $headers),
         default => response()->error($e, ApplicationCode::System, $headers),
       };

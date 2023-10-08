@@ -22,7 +22,7 @@ class ApplicationAttributeException extends ApplicationBaseException
     parent::__construct($applicationCode, $previous, $headers, $code);
   }
 
-  public function getValidationMsg(): array
+  public function getErrorAttributes(): array
   {
     return $this->errorAttributes;
   }
