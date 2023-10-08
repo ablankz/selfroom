@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\ChatRoom;
 
+use App\Http\Resources\RoomCategory\SimplifiedRoomCategoryResourceCollection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,11 +15,13 @@ class ChatRoomResource extends JsonResource
    */
   public function toArray(Request $request): array
   {
+    $categories = $this->categories;
     return [
       'chatRoomId' => $this->chat_room_id,
       'name' => $this->name,
       'userNum' => $this->user_num,
       'coverPhotoUrl' => $this->cover_photo_url,
+      'categories' => $categories ? new SimplifiedRoomCategoryResourceCollection($categories) : [],
       'hasKey' => !is_null($this->room_key),
       'createdAt' => $this->created_at,
       'updatedAt' => $this->updated_at,
