@@ -151,6 +151,7 @@ return [
     'url' => 'The :attribute field must be a valid URL.',
     'ulid' => 'The :attribute field must be a valid ULID.',
     'uuid' => 'The :attribute field must be a valid UUID.',
+    'single-char' => 'The :attribute must be one-byte characters.',
 
     /*
     |--------------------------------------------------------------------------
@@ -181,7 +182,10 @@ return [
     */
 
     'attributes' => [
-      'loginId' => 'Login ID'
+      'loginId' => 'Login ID',
+      'password' => 'Passsword',
+      'nickname' => 'Nickname',
+      'profilePhotoUrl' => 'Profile photo',
     ],
 
 ];
