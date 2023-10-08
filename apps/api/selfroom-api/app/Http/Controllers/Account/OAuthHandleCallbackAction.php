@@ -73,7 +73,7 @@ class OAuthHandleCallbackAction extends Controller
       //   );
       // }
     } catch (\Throwable) {
-      return redirect(config('app.frontend_url') . '/auth/oauth-callback?state=system-error');
+      return redirect(config('app.frontend_url') . '/oauth-callback?state=system-error');
     }
   }
 }
