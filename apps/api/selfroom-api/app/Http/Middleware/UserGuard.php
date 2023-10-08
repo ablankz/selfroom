@@ -22,7 +22,7 @@ class UserGuard
     $guards = empty($guards) ? [null] : $guards;
 
     foreach ($guards as $guard) {
-      if (Auth::guard($guard)->user()->admin_id) {
+      if (Auth::guard($guard)->user()->admin) {
         throw new ApplicationException(ApplicationCode::UserOnly);
       }
     }

@@ -21,7 +21,7 @@ class AdminGuard
     $guards = empty($guards) ? [null] : $guards;
 
     foreach ($guards as $guard) {
-      if (Auth::guard($guard)->user()->user_id) {
+      if (Auth::guard($guard)->user()->user) {
         throw new ApplicationException(ApplicationCode::Permission);
       }
     }
