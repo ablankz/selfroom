@@ -7,7 +7,6 @@ use App\Exceptions\ApplicationException;
 use App\Exceptions\ApplicationAttributeException;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Foundation\Precognition;
 
 class ApiRequest extends FormRequest
 {
