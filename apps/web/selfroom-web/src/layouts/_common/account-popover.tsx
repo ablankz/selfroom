@@ -35,13 +35,10 @@ const OPTIONS = [
 
 export default function AccountPopover() {
   const router = useRouter();
-  const { t } = useLocales();
 
   const { user } = useMockedUser();
 
   const { logout } = useAuthContext();
-
-  const { enqueueSnackbar } = useSnackbar();
 
   const popover = usePopover();
 
@@ -50,8 +47,7 @@ export default function AccountPopover() {
       await logout();
       popover.onClose();
     } catch (error) {
-      console.error(error);
-      enqueueSnackbar(t('Logout failed'), { variant: 'error' });
+      popover.onClose();
     }
   };
 
