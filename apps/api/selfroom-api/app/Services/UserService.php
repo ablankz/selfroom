@@ -29,7 +29,7 @@ class UserService
   public function create(
     CreateUser $usecase,
     string $login_id,
-    string $raw_passsword,
+    string $raw_password,
     string $nickname,
     UploadedFile | null $profile_photo_url,
   ) {
@@ -44,7 +44,7 @@ class UserService
     }
     return $usecase->handle(
       $login_id,
-      $raw_passsword,
+      $raw_password,
       $nickname,
       $imgPath
     );
