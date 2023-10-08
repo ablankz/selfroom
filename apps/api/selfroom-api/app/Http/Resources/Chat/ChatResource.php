@@ -16,10 +16,12 @@ class ChatResource extends JsonResource
    */
   public function toArray(Request $request): array
   {
+    $user = $this->user;
+    $room = $this->room;
     return [
       'chatId' => $this->chat_id,
-      'user' => new SimplifiedUserResource($this->user),
-      'chatRoom' => new SimplifiedChatRoomResource($this->room),
+      'user' => $user ? new SimplifiedUserResource($user) : null,
+      'chatRoom' => $room ? new SimplifiedChatRoomResource($room) : null,
       'content' => $this->content,
       'createdAt' => $this->created_at,
       'updatedAt' => $this->updated_at,

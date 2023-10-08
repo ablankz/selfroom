@@ -15,7 +15,7 @@ class UserResource extends JsonResource
    */
   public function toArray(Request $request): array
   {
-    $chat_room = $this->currentRoom;
+    $currentRoom = $this->currentRoom;
     return [
       'userId' => $this->user_id,
       'nickname' => $this->nickname,
@@ -23,7 +23,7 @@ class UserResource extends JsonResource
       'followerNum' => $this->follower_num,
       'followNum' => $this->follow_num,
       'favoriteRoomNum' => $this->favorite_room_num,
-      'currentChatRoom' => $chat_room ? new SimplifiedChatRoomResource($this->currentRoom) : null,
+      'currentChatRoom' => $currentRoom ? new SimplifiedChatRoomResource($currentRoom) : null,
       'createdAt' => $this->created_at,
       'updatedAt' => $this->updated_at,
     ];

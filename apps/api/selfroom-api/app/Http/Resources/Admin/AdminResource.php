@@ -15,12 +15,14 @@ class AdminResource extends JsonResource
    */
   public function toArray(Request $request): array
   {
+    $roles = $this->roles;
+    $myAdmin = $this->myAdmin;
     return [
       'adminId' => $this->admin_id,
       'nickname' => $this->nickname,
       'profilePhotoUrl' => $this->profile_photo_url,
-      'permissions' => new SimplifiedRoleResourceCollection($this->roles),
-      'createdBy' => $this->myAdmin ? new SimplifiedAdminResource($this->myAdmin) : null,
+      'permissions' => $roles ? new SimplifiedRoleResourceCollection($roles) : null,
+      'createdBy' => $myAdmin ? new SimplifiedAdminResource($myAdmin) : null,
       'createdAt' => $this->created_at,
       'updatedAt' => $this->updated_at,
     ];
