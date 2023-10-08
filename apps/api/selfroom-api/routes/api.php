@@ -53,3 +53,9 @@ Route::prefix('roles')->group(function () {
   Route::get('{id}', [\App\Http\Controllers\RoleController::class, 'find'])->middleware(['auth:jwt', 'admin:jwt']);
   Route::get('', [\App\Http\Controllers\RoleController::class, 'get'])->middleware(['auth:jwt', 'admin:jwt']);
 });
+
+Route::prefix('chat-rooms')->group(function () {
+  Route::get('{id}', [\App\Http\Controllers\ChatRoomController::class, 'find'])->middleware(['auth:jwt', 'user:jwt']);
+  Route::get('', [\App\Http\Controllers\ChatRoomController::class, 'get'])->middleware(['auth:jwt', 'user:jwt']);
+  Route::post('', [\App\Http\Controllers\ChatRoomController::class, 'create'])->middleware(['auth:jwt', 'user:jwt']);
+});
