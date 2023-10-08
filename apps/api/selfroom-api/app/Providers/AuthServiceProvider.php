@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Foundation\Auth\ApplicationUserProvider;
+use App\Models\Account;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -33,5 +35,19 @@ class AuthServiceProvider extends ServiceProvider
         );
       }
     );
+
+    foreach(get_all_roles() as $role){
+      Gate::define($role->value,function(Account $account) use($role)
+      {
+        $admin = $account->admin;
+        if(!$admin) return true;
+        foreach($admin->roles as $ac_role){
+          if($ac_role->name === $role->value) {
+            return false;
+          }
+        }
+        return true;
+      });
+    }
   }
 }
