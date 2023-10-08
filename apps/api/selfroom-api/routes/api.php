@@ -26,10 +26,10 @@ Route::prefix('auth')->group(function () {
     ->where('provider', '(google)|(line)');
 });
 
-// Route::prefix('clients')->group(function () {
-//   Route::get('{id}', [\App\Http\Controllers\ClientController::class, 'find']);
-//   Route::get('', [\App\Http\Controllers\ClientController::class, 'findAll']);
-//   Route::post('', [\App\Http\Controllers\ClientController::class, 'create']);
-//   Route::put('{id}', [\App\Http\Controllers\ClientController::class, 'update']);
-//   Route::delete('{id}', [\App\Http\Controllers\ClientController::class, 'delete']);
-// });
+Route::prefix('users')->group(function () {
+  Route::get('{uuid}', [\App\Http\Controllers\UserController::class, 'find']);
+  Route::get('', [\App\Http\Controllers\UserController::class, 'get']);
+  Route::post('', [\App\Http\Controllers\UserController::class, 'create'])->middleware('guest:jwt');
+  Route::put('', [\App\Http\Controllers\UserController::class, 'update'])->middleware('auth:jwt');
+  Route::delete('', [\App\Http\Controllers\UserController::class, 'delete'])->middleware('auth:jwt');
+});

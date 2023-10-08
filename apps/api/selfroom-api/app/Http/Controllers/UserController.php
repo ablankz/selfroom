@@ -17,11 +17,11 @@ class UserController extends Controller
     $this->service = $service;
   }
 
-  public function find(string $id): JsonResponse
+  public function find(string $uuid): JsonResponse
   {
     return response()->success(app()->call(
       [$this->service, 'find'],
-      ['user_id' => $id]
+      ['user_id' => $uuid]
     ));
   }
 
