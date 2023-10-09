@@ -23,7 +23,16 @@ class GrantRoles extends Usecase
         'code' => self::NOT_FOUND
       ];
     }
-    $ret = $admin->roles()->syncWithoutDetaching($role_ids);
+    $now = now();
+    $roles = [];
+
+    foreach($role_ids as $ids){
+      $roles[$ids] = [
+        'granted_at' => $now
+      ];
+    }
+    
+    $ret = $admin->roles()->syncWithoutDetaching($roles);
 
     return [
       'data' => $ret,
