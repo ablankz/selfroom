@@ -39,6 +39,11 @@ Route::prefix('admins')->group(function () {
   Route::post('', [\App\Http\Controllers\AdminController::class, 'create'])->middleware(['auth:jwt', 'admin:jwt']);
   Route::put('', [\App\Http\Controllers\AdminController::class, 'update'])->middleware(['auth:jwt', 'admin:jwt']);
   Route::delete('', [\App\Http\Controllers\AdminController::class, 'delete'])->middleware(['auth:jwt', 'admin:jwt']);
+  Route::prefix('{adminId}/permissions')->group(function () {
+    Route::post('', [\App\Http\Controllers\AdminRoleController::class, 'grant'])->middleware(['auth:jwt', 'admin:jwt']);
+    Route::delete('', [\App\Http\Controllers\AdminRoleController::class, 'revoke'])->middleware(['auth:jwt', 'admin:jwt']);
+    Route::delete('all', [\App\Http\Controllers\AdminRoleController::class, 'revokeAll'])->middleware(['auth:jwt', 'admin:jwt']);
+  });
 });
 
 Route::prefix('room-categories')->group(function () {
@@ -59,11 +64,11 @@ Route::prefix('chat-rooms')->group(function () {
   Route::get('', [\App\Http\Controllers\ChatRoomController::class, 'get'])->middleware(['auth:jwt', 'user:jwt']);
   Route::post('', [\App\Http\Controllers\ChatRoomController::class, 'create'])->middleware(['auth:jwt', 'user:jwt']);
   Route::prefix('{chatRoomId}/chats')->group(function () {
-      Route::get('', [\App\Http\Controllers\ChatController::class, 'get'])->middleware(['auth:jwt', 'user:jwt', 'can:viewAny,App\Models\Chat,chatRoomId']);
-      Route::get('{chatId}', [\App\Http\Controllers\ChatController::class, 'find'])->middleware(['auth:jwt', 'user:jwt', 'can:view,chatId,chatRoomId']);
-      Route::post('', [\App\Http\Controllers\ChatController::class, 'create'])->middleware(['auth:jwt', 'user:jwt', 'can:create,App\Models\Chat,chatRoomId']);
-      Route::put('{chatId}', [\App\Http\Controllers\ChatController::class, 'update'])->middleware(['auth:jwt', 'user:jwt', 'can:update,chatId,chatRoomId']);
-      Route::delete('{chatId}', [\App\Http\Controllers\ChatController::class, 'delete'])->middleware(['auth:jwt', 'user:jwt', 'can:delete,chatId,chatRoomId']);
+    Route::get('', [\App\Http\Controllers\ChatController::class, 'get'])->middleware(['auth:jwt', 'user:jwt', 'can:viewAny,App\Models\Chat,chatRoomId']);
+    Route::get('{chatId}', [\App\Http\Controllers\ChatController::class, 'find'])->middleware(['auth:jwt', 'user:jwt', 'can:view,chatId,chatRoomId']);
+    Route::post('', [\App\Http\Controllers\ChatController::class, 'create'])->middleware(['auth:jwt', 'user:jwt', 'can:create,App\Models\Chat,chatRoomId']);
+    Route::put('{chatId}', [\App\Http\Controllers\ChatController::class, 'update'])->middleware(['auth:jwt', 'user:jwt', 'can:update,chatId,chatRoomId']);
+    Route::delete('{chatId}', [\App\Http\Controllers\ChatController::class, 'delete'])->middleware(['auth:jwt', 'user:jwt', 'can:delete,chatId,chatRoomId']);
   });
 });
 
