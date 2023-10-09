@@ -38,6 +38,6 @@ class Role extends Model
   {
     return $this->belongsToMany(Admin::class, 't_admin_role', 'role_id', 'admin_id')
       ->as('permission')
-      ->withPivot('granted_at');
+      ->withPivot(['granted_at', 'granted_by']);
   }
 }

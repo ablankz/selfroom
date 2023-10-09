@@ -13,8 +13,9 @@ class GrantRoles extends Usecase
   /**
    * @param string $admin_id
    * @param int[] $role_ids
+   * @param string $grant_admin_id
    */
-  public function run(string $admin_id, array $role_ids)
+  public function run(string $admin_id, array $role_ids, string $grant_admin_id)
   {
     $admin = Admin::find($admin_id);
 
@@ -28,10 +29,11 @@ class GrantRoles extends Usecase
 
     foreach($role_ids as $ids){
       $roles[$ids] = [
-        'granted_at' => $now
+        'granted_at' => $now,
+        'granted_by' => $grant_admin_id
       ];
     }
-    
+
     $ret = $admin->roles()->syncWithoutDetaching($roles);
 
     return [

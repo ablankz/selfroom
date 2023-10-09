@@ -23,7 +23,8 @@ class AdminRoleController extends Controller
       [$this->service, 'grant'],
       [
         'admin_id' => $adminId,
-        'role_ids' => $request->get('roles')
+        'role_ids' => $request->get('roles'),
+        'grant_admin_id' => $request->user()->admin_id
       ]
     ));
   }

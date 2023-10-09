@@ -21,6 +21,8 @@ return new class extends Migration
         ->constrained('t_admins')->onUpdate('cascade')->onDelete('cascade');
       $table->foreignId('role_id')->references('role_id')->on('m_roles')
         ->constrained('m_roles')->onUpdate('cascade')->onDelete('cascade');
+      $table->foreignUuid('granted_by')->nullable()->references('admin_id')->on('t_admins')
+        ->constrained('t_admins')->onUpdate('set null')->onDelete('set null');
       $table->timestamp('granted_at');
 
       $table->primary('t_admin_role_pkey');
