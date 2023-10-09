@@ -28,6 +28,7 @@ class ChatRoomService
   public function create(
     CreateChatRoom $usecase,
     string $name,
+    array $categories,
     UploadedFile $cover_photo_url = null,
     string $room_key = null
   ) {
@@ -43,6 +44,7 @@ class ChatRoomService
 
     return new ChatRoomResource($usecase->handle(
       $name,
+      $categories,
       $imgPath,
       $room_key
     ));

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\ChatRoom;
 
+use App\Constants\RoomTags;
 use App\Http\Requests\ApiRequest;
 
 class StoreChatRoomRequest extends ApiRequest
@@ -23,6 +24,8 @@ class StoreChatRoomRequest extends ApiRequest
   {
     return [
       'name' => ['required', 'string'],
+      'categories' => ['required', 'array', 'min:'. RoomTags::ROOM_MIN_TAGS, 'max:' . RoomTags::ROOM_MAX_TAGS ],
+      'categories.*' => ['numeric', 'integer', 'exists:App\Models\RoomCategories,room_category_id'],
       'coverPhoto' => ['file', 'max:10240', 'mimes:jpg,jpeg,png,gif'],
       'roomKey' => ['string']
     ];

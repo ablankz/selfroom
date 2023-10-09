@@ -36,6 +36,7 @@ class ChatRoomController extends Controller
       [$this->service, 'create'],
       [
         'name' => $request->get('name'),
+        'categories' => $request->get('categories'),
         'cover_photo_url' => $request->file('coverPhoto'),
         'room_key' => $request->get('roomKey')
       ]
