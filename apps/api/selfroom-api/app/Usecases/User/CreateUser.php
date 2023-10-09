@@ -38,8 +38,9 @@ class CreateUser extends Usecase
         );
 
         return $account;
-      } catch (\Throwable) {
+      } catch (\Throwable $e) {
         DB::rollBack();
+        throw $e;
       }
     });
 

@@ -45,8 +45,9 @@ class CreateAdmin extends Usecase
           $admin->roles()->attach($role->role_id, ['granted_at' => now()]);
         }
         return $admin;
-      } catch (\Throwable) {
+      } catch (\Throwable $e) {
         DB::rollBack();
+        throw $e;
       }
     });
 

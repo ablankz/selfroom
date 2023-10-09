@@ -27,8 +27,9 @@ class CreateChat extends Usecase
           'updated_at' => now()
         ]);
         return $data;
-      } catch (\Throwable) {
+      } catch (\Throwable $e) {
         DB::rollBack();
+        throw $e;
       }
     });
     return [
