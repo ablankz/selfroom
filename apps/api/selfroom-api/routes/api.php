@@ -18,7 +18,6 @@ Route::prefix('auth')->group(function () {
   Route::post('me', \App\Http\Controllers\Account\RetrieveAction::class)->middleware('auth:jwt');
   Route::post('logout', \App\Http\Controllers\Account\LogoutAction::class)->middleware('auth:jwt');
   Route::post('refresh', \App\Http\Controllers\Account\RefreshTokenAction::class);
-  // ソーシャルログイン
   Route::get('{provider}', \App\Http\Controllers\Account\OAuthRedirectAction::class)
     ->where('provider', '(google)|(line)')->middleware('guest:jwt');
   Route::get('/{provider}/callback', \App\Http\Controllers\Account\OAuthHandleCallbackAction::class)
@@ -70,18 +69,11 @@ Route::prefix('chat-rooms')->group(function () {
     Route::put('{chatId}', [\App\Http\Controllers\ChatController::class, 'update'])->middleware(['auth:jwt', 'user:jwt', 'can:update,chatId,chatRoomId']);
     Route::delete('{chatId}', [\App\Http\Controllers\ChatController::class, 'delete'])->middleware(['auth:jwt', 'user:jwt', 'can:delete,chatId,chatRoomId']);
   });
+  Route::post('in/{chatRoomId}', [\App\Http\Controllers\RoomVisitController::class, 'in'])->middleware(['auth:jwt', 'user:jwt']);
+  Route::post('out', [\App\Http\Controllers\RoomVisitController::class, 'out'])->middleware(['auth:jwt', 'user:jwt']);
 });
 
-// adminへroleの付与・剥奪
-
-// roomの作成時にタグ付与する記述の追加
-
-// user/chatroom間の入室・退室に関するcrud
-// - historyに保存
-// - roomのinUserを変更
-// - userのcurrentRoomを変更
-
-// user/cahrroom間のfavoriteに関するcrud
+// user/chatroom間のfavoriteに関するcrud
 
 // user/user間のfollowに関するcrud
 
