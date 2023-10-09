@@ -21,8 +21,7 @@ class ChatPolicy
    */
   public function view(Account $account, Chat $chat, ChatRoom $chatRoom): bool
   {
-    return $this->isCurrentChatRoom($account, $chatRoom)
-      && $this->belongChatRoom($chatRoom, $chat);
+    return $this->isCurrentChatRoom($account, $chatRoom);
   }
 
   /**
@@ -39,7 +38,6 @@ class ChatPolicy
   public function update(Account $account, Chat $chat, ChatRoom $chatRoom): bool
   {
     return $this->isCurrentChatRoom($account, $chatRoom)
-      && $this->belongChatRoom($chatRoom, $chat)
       && $this->isChatOwner($account, $chat);
   }
 
@@ -49,7 +47,6 @@ class ChatPolicy
   public function delete(Account $account, Chat $chat, ChatRoom $chatRoom): bool
   {
     return $this->isCurrentChatRoom($account, $chatRoom)
-      && $this->belongChatRoom($chatRoom, $chat)
       && $this->isChatOwner($account, $chat);
   }
 
@@ -57,11 +54,6 @@ class ChatPolicy
   {
     return $account->user->current_chat_room_id
       && $account->user->current_chat_room_id === $chatRoom->chat_room_id;
-  }
-
-  private function belongChatRoom(ChatRoom $chatRoom, Chat $chat): bool
-  {
-    return $chatRoom->chat_room_id === $chat->chat_room_id;
   }
 
   private function isChatOwner(Account $account, Chat $chat): bool
