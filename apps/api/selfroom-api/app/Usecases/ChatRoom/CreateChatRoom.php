@@ -29,8 +29,9 @@ class CreateChatRoom extends Usecase
             'room_key' => $room_key ? app('hash')->make($room_key) : null,
           ]
         );
-        foreach($categories as $category){
-          $data->categories()->sync($category);
+        $uniCategories = array_unique($categories);
+        foreach($uniCategories as $category){
+          $data->categories()->attach($category);
         }
         return $data;
       }catch(\Throwable $e){
