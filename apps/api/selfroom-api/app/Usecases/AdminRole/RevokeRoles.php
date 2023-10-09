@@ -6,14 +6,15 @@ use App\Enums\ApplicationCode;
 use App\Models\Admin;
 use App\Usecases\Usecase;
 
-class RevocationRolesOnAdmin extends Usecase
+class RevokeRoles extends Usecase
 {
   public const NOT_FOUND = ApplicationCode::NotFoundModel;
 
   /**
    * @param string $admin_id
+   * @param int[] $role_ids
    */
-  public function run(string $admin_id)
+  public function run(string $admin_id, array $role_ids)
   {
     $admin = Admin::find($admin_id);
 
@@ -23,7 +24,7 @@ class RevocationRolesOnAdmin extends Usecase
       ];
     }
 
-    $ret = $admin->roles()->detach();
+    $ret = $admin->roles()->detach($role_ids);
 
     return [
       'data' => $ret,
