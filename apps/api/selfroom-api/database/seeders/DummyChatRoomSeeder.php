@@ -19,13 +19,12 @@ class DummyChatRoomSeeder extends Seeder
    */
   public function run(): void
   {
-    $room = \App\Models\ChatRoom::create(
+    \App\Models\ChatRoom::create(
       [
         'name' => 'ダミーチャット部屋',
         'cover_photo_url' => null,
         'room_key' => app('hash')->make('dummy'),
       ]
     );
-    $room->categories()->attach([1, 2, 3]);
   }
 }
