@@ -19,8 +19,12 @@ abstract class Usecase
       try {
         $ret = $this->run(...$args);
       } catch (\Throwable $e) {
-        if ($e instanceof ApplicationBaseException) throw $e;
-        else throw new ApplicationLoggerException(self::DB_ERROR, LogLevel::CRITICAL, 'Sqlクエリエラー発生');
+        if (config('app.debug')) {
+          throw $e;
+        } else {
+          if ($e instanceof ApplicationBaseException) throw $e;
+          else throw new ApplicationLoggerException(self::DB_ERROR, LogLevel::CRITICAL, 'Sqlクエリエラー発生');
+        }
       }
       switch ($ret['code']) {
         case ApplicationCode::Success:
