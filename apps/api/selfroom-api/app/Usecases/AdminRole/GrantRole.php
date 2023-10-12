@@ -27,17 +27,25 @@ class GrantRoles extends Usecase
     $now = now();
     $roles = [];
 
-    foreach($role_ids as $ids){
+    foreach ($role_ids as $ids) {
       $roles[$ids] = [
         'granted_at' => $now,
         'granted_by' => $grant_admin_id
       ];
     }
 
-    $ret = $admin->roles()->syncWithoutDetaching($roles);
+    $current = $admin->roles->pluck('role_id')->toArray();
+    $iter = 0;
+
+    foreach($roles as $id => $role){
+      if(!(in_array($id, $current))){
+        $admin->roles()->attach($id, $role);
+        $iter++;
+      }
+    }
 
     return [
-      'data' => $ret,
+      'data' => $iter,
       'code' => self::SUCCESS
     ];
   }
