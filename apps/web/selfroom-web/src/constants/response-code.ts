@@ -121,4 +121,8 @@ export const API_RESPONSE_HANDLING: MessageType = {
     message: 'すでに削除されているデータです',
     level: RESPONSE_LEVEL.None,
   },
+  [API_RESPONSE_TYPES.NotMatchKey]: {
+    message: 'キーに誤りがあります',
+    level: RESPONSE_LEVEL.Toast,
+  },
 } as const;

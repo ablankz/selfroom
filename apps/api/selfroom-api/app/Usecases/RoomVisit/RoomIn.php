@@ -12,7 +12,7 @@ class RoomIn extends Usecase
 {
   public const NOT_FOUND = ApplicationCode::NotFoundModel;
   public const ALREADY_EXIST = ApplicationCode::ModelConflict;
-  public const ROOM_KEY_NOMATCH = ApplicationCode::Permission;
+  public const ROOM_KEY_NOMATCH = ApplicationCode::NotMatchKey;
 
   public function run(string $user_id, string $chat_room_id, string $keyword = null)
   {
@@ -32,7 +32,7 @@ class RoomIn extends Usecase
     }
 
     if(!(is_null($chat_room->room_key))){
-      if(is_null($keyword) || app()->make('hash')->check($keyword, $chat_room->room_key)){
+      if(is_null($keyword) || !(app()->make('hash')->check($keyword, $chat_room->room_key))){
         return [
           'code' => self::ROOM_KEY_NOMATCH
         ];

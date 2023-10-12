@@ -26,4 +26,5 @@ export const API_RESPONSE_TYPES = {
   AlreadyLogout: 23,
   SqlQueryError: 24,
   AlreadyNotExist: 25,
+  NotMatchKey: 26
 } as const;

@@ -34,6 +34,7 @@ enum ApplicationCode: int
   case AlreadyLogout = 23;
   case SqlQueryError = 24;
   case AlreadyNotExist = 25;
+  case NotMatchKey = 26;
 
   public function getText(): string
   {
@@ -63,7 +64,8 @@ enum ApplicationCode: int
       self::RefreshTokenExpired => 'リフレッシュトークンの有効期限が切れています',
       self::AlreadyLogout => 'すでにログアウト済みです',
       self::SqlQueryError => 'データベース上でエラーが発生しました',
-      self::AlreadyNotExist => 'すでに削除されているデータです'
+      self::AlreadyNotExist => 'すでに削除されているデータです',
+      self::NotMatchKey => 'キーに誤りがあります'
     };
   }
 
@@ -95,6 +97,7 @@ enum ApplicationCode: int
       self::AlreadyLogout => Response::HTTP_FORBIDDEN,
       self::SqlQueryError => Response::HTTP_INTERNAL_SERVER_ERROR,
       self::AlreadyNotExist => Response::HTTP_NOT_FOUND,
+      self::NotMatchKey => Response::HTTP_FORBIDDEN
     };
   }
 }
