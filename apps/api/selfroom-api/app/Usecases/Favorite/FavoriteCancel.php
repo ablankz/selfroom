@@ -44,7 +44,7 @@ class FavoriteCancel extends Usecase
       ];
 
     return [
-      'data' => $data,
+      'data' => [],
       'code' => self::SUCCESS
     ];
   }

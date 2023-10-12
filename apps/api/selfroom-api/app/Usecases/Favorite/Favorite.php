@@ -3,6 +3,7 @@
 namespace App\Usecases\Favorite;
 
 use App\Enums\ApplicationCode;
+use App\Exceptions\ApplicationInternalException;
 use App\Models\ChatRoom;
 use App\Models\User;
 use App\Usecases\Usecase;
@@ -29,7 +30,7 @@ class Favorite extends Usecase
         $ret = $user->favoriteRooms()->syncWithoutDetaching([$chat_room->chat_room_id => [
           'added_at' => now()
         ]]);
-        if (empty($ret['attached'])) return 0;
+        if (empty($ret['attached'])) throw new ApplicationInternalException;
         $chat_room->favor_num++;
         $chat_room->save();
         $user->favorite_room_num++;
@@ -37,6 +38,7 @@ class Favorite extends Usecase
         return 1;
       } catch (\Throwable $e) {
         DB::rollBack();
+        if($e instanceof ApplicationInternalException) return 0;
         throw $e;
       }
     });
