@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Model
 {
-  use HasFactory, SoftDeletes, HasUuids;
+  use HasFactory, HasUuids;
 
   protected $table = 't_users';
   protected $primaryKey = 'user_id';
@@ -34,7 +34,7 @@ class User extends Model
    * @var array
    */
   protected $hidden = [
-    't_users_pkey', 'deleted_at'
+    't_users_pkey'
   ];
 
   public function account(): HasOne
