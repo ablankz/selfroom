@@ -12,8 +12,9 @@ class RoomIn extends Usecase
 {
   public const NOT_FOUND = ApplicationCode::NotFoundModel;
   public const ALREADY_EXIST = ApplicationCode::ModelConflict;
+  public const ROOM_KEY_NOMATCH = ApplicationCode::Permission;
 
-  public function run(string $user_id, string $chat_room_id)
+  public function run(string $user_id, string $chat_room_id, string $keyword = null)
   {
     $user = User::find($user_id);
     $chat_room = ChatRoom::find($chat_room_id);
@@ -28,6 +29,14 @@ class RoomIn extends Usecase
       return [
         'code' => self::ALREADY_EXIST
       ];
+    }
+
+    if(!(is_null($chat_room->room_key))){
+      if(is_null($keyword) || app()->make('hash')->check($keyword, $chat_room->room_key)){
+        return [
+          'code' => self::ROOM_KEY_NOMATCH
+        ];
+      }
     }
 
     DB::transaction(function () use ($user, $chat_room) {
