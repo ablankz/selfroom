@@ -36,13 +36,12 @@ class AuthServiceProvider extends ServiceProvider
       }
     );
 
-    foreach(get_all_roles() as $role){
-      Gate::define($role->value,function(Account $account) use($role)
-      {
+    foreach (get_all_roles() as $role) {
+      Gate::define($role->value, function (Account $account) use ($role) {
         $admin = $account->admin;
-        if(!$admin) return false;
-        foreach($admin->roles as $ac_role){
-          if($ac_role->name === $role->value) {
+        if (!$admin) return false;
+        foreach ($admin->roles as $ac_role) {
+          if ($ac_role->name === $role->value) {
             return true;
           }
         }
