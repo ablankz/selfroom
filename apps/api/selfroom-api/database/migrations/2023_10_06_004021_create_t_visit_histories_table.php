@@ -25,7 +25,6 @@ return new class extends Migration
       $table->timestamp('left_at')->nullable();
 
       $table->primary('t_visit_histories_pkey');
-      $table->unique(['user_id', 'chat_room_id']);
     });
   }
 
