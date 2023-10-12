@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('name')->comment('チャットルーム名');
             $table->string('cover_photo_url')->nullable()->comment('写真のパス');
             $table->integer('user_num')->default(0)->comment('現在ユーザーが何人いるか');
+            $table->integer('favor_num')->default(0)->comment('お気に入りユーザー数');
             $table->string('room_key')->nullable()->comment('ルームキー');
             $table->softDeletes();
             $table->timestamps();

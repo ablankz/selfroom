@@ -1,18 +1,21 @@
-import { Admin, User } from ".";
+import { SimpleChatRoom, SimpleRoomCategory, SimpleUser } from ".";
 
 export type Chat = {
-  accountId: number;
-  user: User | null;
-  admin: Admin | null;
+  chatId: string;
+  user: SimpleUser | null;
+  chatRoom: SimpleChatRoom | null;
+  content: string;
+  categories: SimpleRoomCategory[];
   createdAt: string;
   updatedAt: string;
 };
 
 
 export type SimpleChat = {
-  accountId: number;
-  user: string | null;
-  admin: string | null;
+  chatId: string;
+  userId: string | null;
+  chatRoomId: string | null;
+  content: string;
   createdAt: string;
   updatedAt: string;
 }

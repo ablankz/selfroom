@@ -1,20 +1,24 @@
-import { SimpleRoomCategory, SimpleUser } from ".";
+import { SimpleRoomCategory } from ".";
 
 export type ChatRoom = {
-  chatId: string;
-  user: SimpleUser | null;
-  chatRoom: SimpleChatRoom | null;
-  content: string;
+  chatRoomId: string;
+  name: string;
+  userNum: number;
+  favorNum: number;
+  coverPhotoUrl: string;
   categories: SimpleRoomCategory[];
+  hasKey: boolean;
   createdAt: string;
   updatedAt: string;
 };
 
 export type SimpleChatRoom = {
-  chatId: string;
-  userId: string | null;
-  chatRoomId: string | null;
-  content: string;
+  chatRoomId: string;
+  name: string;
+  userNum: number;
+  favorNum: number;
+  coverPhotoUrl: string;
+  hasKey: boolean;
   createdAt: string;
   updatedAt: string;
 };

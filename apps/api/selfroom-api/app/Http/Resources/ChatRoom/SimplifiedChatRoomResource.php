@@ -18,6 +18,7 @@ class SimplifiedChatRoomResource extends JsonResource
       'chatRoomId' => $this->chat_room_id,
       'name' => $this->name,
       'userNum' => $this->user_num,
+      'favorNum' => $this->favor_num,
       'coverPhotoUrl' => $this->cover_photo_url,
       'hasKey' => !is_null($this->room_key),
       'createdAt' => $this->created_at,
