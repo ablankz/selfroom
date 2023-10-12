@@ -24,4 +24,6 @@ export const API_RESPONSE_TYPES = {
   AuthNotFound: 21,
   RefreshTokenExpired: 22,
   AlreadyLogout: 23,
+  SqlQueryError: 24,
+  AlreadyNotExist: 25,
 } as const;

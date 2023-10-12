@@ -33,6 +33,7 @@ enum ApplicationCode: int
   case RefreshTokenExpired = 22;
   case AlreadyLogout = 23;
   case SqlQueryError = 24;
+  case AlreadyNotExist = 25;
 
   public function getText(): string
   {
@@ -61,7 +62,8 @@ enum ApplicationCode: int
       self::AuthNotFound => '認証ユーザーが見つかりません',
       self::RefreshTokenExpired => 'リフレッシュトークンの有効期限が切れています',
       self::AlreadyLogout => 'すでにログアウト済みです',
-      self::SqlQueryError => 'データベース上でエラーが発生しました'
+      self::SqlQueryError => 'データベース上でエラーが発生しました',
+      self::AlreadyNotExist => 'すでに削除されているデータです'
     };
   }
 
@@ -91,7 +93,8 @@ enum ApplicationCode: int
       self::AuthNotFound => Response::HTTP_NOT_FOUND,
       self::RefreshTokenExpired => Response::HTTP_FORBIDDEN,
       self::AlreadyLogout => Response::HTTP_FORBIDDEN,
-      self::SqlQueryError => Response::HTTP_INTERNAL_SERVER_ERROR
+      self::SqlQueryError => Response::HTTP_INTERNAL_SERVER_ERROR,
+      self::AlreadyNotExist => Response::HTTP_NOT_FOUND,
     };
   }
 }

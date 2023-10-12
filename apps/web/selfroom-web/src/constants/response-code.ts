@@ -113,4 +113,12 @@ export const API_RESPONSE_HANDLING: MessageType = {
     message: 'すでにログアウト済みです',
     level: RESPONSE_LEVEL.Transition,
   },
+  [API_RESPONSE_TYPES.SqlQueryError]: {
+    message: 'データベース上でエラーが発生しました',
+    level: RESPONSE_LEVEL.None,
+  },
+  [API_RESPONSE_TYPES.AlreadyNotExist]: {
+    message: 'すでに削除されているデータです',
+    level: RESPONSE_LEVEL.None,
+  },
 } as const;
