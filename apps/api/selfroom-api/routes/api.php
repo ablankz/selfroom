@@ -81,10 +81,6 @@ Route::prefix('chat-rooms')->group(function () {
   });
 });
 
-// user/chatroom間のfavoriteに関するcrud
-
-// user/user間のfollowに関するcrud
-
 // リスト関連の絞り込みやオーダーなど
 
 // リスト関連のページネーション、カーソルページネーション
