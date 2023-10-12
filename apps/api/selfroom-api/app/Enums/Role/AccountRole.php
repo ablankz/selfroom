@@ -6,5 +6,6 @@ namespace App\Enums\Role;
 
 enum AccountRole: string
 {
+  case View = "ACCOUNT_VIEW";
   case Delete = "ACCOUNT_DELETE";
 }

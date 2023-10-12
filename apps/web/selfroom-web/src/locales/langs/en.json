@@ -111,5 +111,11 @@
   "TV & VOD": "TV & VOD",
   "Reading book": "Reading book",
   "Film & Stage": "Film & Stage",
-  "Other": "Other"
+  "Other": "Other",
+  "failed-copy": "Clipboard not supported",
+  "copied": "Copied successfully",
+  "Logout": "Logout",
+  "Setting": "Setting",
+  "Profile": "Profile",
+  "Updated certification information": "Updated certification information"
 }

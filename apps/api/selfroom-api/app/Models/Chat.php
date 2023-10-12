@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Chat extends Model
 {
-    use HasFactory, SoftDeletes, HasUlids;
+    use HasFactory, HasUlids;
 
     protected $table = 't_chats';
     protected $primaryKey = 'chat_id';
@@ -32,7 +32,7 @@ class Chat extends Model
      * @var array
      */
     protected $hidden = [
-        't_chats_pkey', 'deleted_at'
+        't_chats_pkey'
     ];
 
     public function room(): BelongsTo

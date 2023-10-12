@@ -19,8 +19,8 @@ export const ErrorHandleProvider = ({ children }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingInitially, setIsLoadingInitially] = useState(true);
   const { enqueueSnackbar } = useSnackbar();
-  const { logout } = useAuthContext();
-  const { t } = useLocales();
+  const { logout, reset, initialize } = useAuthContext();
+  const { t, currentLang } = useLocales();
 
   // 強制ログアウト
   const logoutForcibly = async (_: string) => {
@@ -30,7 +30,7 @@ export const ErrorHandleProvider = ({ children }: Props) => {
   // ログイン画面へ遷移する
   // あくまでフロント側のログアウト処理のみで、サーバ側へのログアウトリクエストは行わない
   const transitionToLogin = async (_: string) => {
-    // setIsResettingCurrentUser(true);
+    reset();
     setIsLoading(false);
   };
 
@@ -41,20 +41,22 @@ export const ErrorHandleProvider = ({ children }: Props) => {
     isRefreshingAccessToken.current = true;
     setIsLoading(true);
     axios
-      .get('auth/refresh-token')
-      .then((res) => {
-        // リクエスト後の処理
-        // console.log('画面のリロード');
-        // window.location.reload();
-        // リロードするか、同時に送信したリクエストのレスポンスが届いたことを確認した後、以下のコードを実行するか
+      .post('auth/refresh')
+      .then((_) => {
         // 同時送信のレスポンスの返却の確認が難しいため、setTimeoutより時間をあけて行っている.
         // なおこの時間はaccessTokenの有効期限内であれば、どれだけ長くてもいいはず。ただこの時間だけloading時間が長い。
-        setTimeout(() => {
+        setTimeout(async () => {
+          await initialize();
           setIsLoading(false);
+          enqueueSnackbar({
+            message: t('Updated certification information'),
+            variant: 'success',
+          });
           isRefreshingAccessToken.current = false;
         }, REFRESH_SECOND * 1000);
       })
-      .catch((error) => {
+      .catch(async (_) => {
+        await initialize();
         setIsLoading(false);
         setTimeout(() => {
           isRefreshingAccessToken.current = false;
@@ -100,6 +102,10 @@ export const ErrorHandleProvider = ({ children }: Props) => {
       axios.interceptors.response.eject(responseInterceptors);
     };
   }, []);
+
+  useEffect(() => {
+    axios.defaults.headers.common['X-Sr-Language'] = currentLang.value;
+  }, [currentLang.value]);
 
   if (isLoadingInitially) return null;
   if (isLoading) return <LoadingScreen />;

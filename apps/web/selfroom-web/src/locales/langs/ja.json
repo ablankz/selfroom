@@ -111,5 +111,11 @@
   "TV & VOD": "TV・VOD",
   "Reading book": "読書",
   "Film & Stage": "映画・舞台",
-  "Other": "その他"
+  "Other": "その他",
+  "failed-copy": "クリップボードがサポートされていません",
+  "copied": "コピーしました",
+  "Logout": "ログアウト",
+  "Setting": "設定",
+  "Profile": "プロフィール",
+  "Updated certification information": "認証情報を更新しました"
 }

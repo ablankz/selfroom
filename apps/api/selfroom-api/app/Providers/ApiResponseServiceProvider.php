@@ -34,8 +34,8 @@ class ApiResponseServiceProvider extends ServiceProvider
         'success'  => true,
         'data' => $data,
         'code' => ApplicationCode::Success,
-        'message' => "OK",
-        'validationMessages' => [], // バリデーション用
+        'message' => __("response.". ApplicationCode::Success->getText()),
+        'errorAttributes' => [], // エラー用
       ], $statusCode);
     });
 
@@ -45,8 +45,8 @@ class ApiResponseServiceProvider extends ServiceProvider
         'success'  => false,
         'data' => null,
         'code' => $errorCode->value,
-        'message' => $errorCode->getText(),
-        'validationMessages' => $errors, // バリデーション用
+        'message' => __("response.{$errorCode->getText()}"),
+        'errorAttributes' => $errors, // エラー用
         '_debugMessage' => $e->getMessage(),
         '_exception' => get_class($e),
         '_file' => $e->getFile(),
@@ -57,7 +57,7 @@ class ApiResponseServiceProvider extends ServiceProvider
         'data' => null,
         'code' => $errorCode->value,
         'message' => $errorCode->getText(),
-        'validationMessages' => $errors // バリデーション用
+        'errorAttributes' => $errors // エラー用
       ];
       return response()->json(
         $data,

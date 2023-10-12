@@ -1,7 +1,7 @@
 EntityDataSuccess:
   description: エンティティを含む成功データ
   type: object
-  required: [success, data, code, message, validationMessages]
+  required: [success, data, code, message, errorAttributes]
   properties:
     success: { type: boolean }
     data:
@@ -16,4 +16,4 @@ EntityDataSuccess:
         }
     code: { type: integer }
     message: { type: string }
-    validationMessages: { type: array, maximum: 0 }
+    errorAttributes: { type: array, maximum: 0 }

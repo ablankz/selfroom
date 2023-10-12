@@ -4,10 +4,9 @@ namespace App\Http\Requests;
 
 use App\Enums\ApplicationCode;
 use App\Exceptions\ApplicationException;
-use App\Exceptions\ApplicationValidationException;
+use App\Exceptions\ApplicationAttributeException;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Foundation\Precognition;
 
 class ApiRequest extends FormRequest
 {
@@ -98,7 +97,7 @@ class ApiRequest extends FormRequest
   public function failedValidation(Validator $validator)
   {
     $errors = $validator->errors()->toArray();
-    throw new ApplicationValidationException(ApplicationCode::Validation, $errors);
+    throw new ApplicationAttributeException(ApplicationCode::Validation, $errors);
   }
 
   /**

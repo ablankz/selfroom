@@ -64,8 +64,8 @@ export default function App() {
         <ThemeProvider>
           <SnackbarProvider>
             <MotionLazy>
-              <ErrorHandleProvider>
-                <AuthProvider>
+              <AuthProvider>
+                <ErrorHandleProvider>
                   <SettingsDrawer />
                   <ProgressBar />
                   <ErrorBoundary FallbackComponent={ErrorFallback}>
@@ -73,8 +73,8 @@ export default function App() {
                       <Router />
                     </AuthConsumer>
                   </ErrorBoundary>
-                </AuthProvider>
-              </ErrorHandleProvider>
+                </ErrorHandleProvider>
+              </AuthProvider>
             </MotionLazy>
           </SnackbarProvider>
         </ThemeProvider>

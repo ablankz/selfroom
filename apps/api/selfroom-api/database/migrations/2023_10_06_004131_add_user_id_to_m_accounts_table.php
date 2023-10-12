@@ -13,9 +13,9 @@ return new class extends Migration
   {
     Schema::table('m_accounts', function (Blueprint $table) {
       $table->foreignUuid('user_id')->nullable()->references('user_id')->on('t_users')
-        ->constrained('t_users')->onUpdate('set null')->onDelete('set null');
+        ->constrained('t_users')->onUpdate('cascade')->onDelete('cascade');
       $table->foreignUuid('admin_id')->nullable()->references('admin_id')->on('t_admins')
-        ->constrained('t_admins')->onUpdate('set null')->onDelete('set null');
+        ->constrained('t_admins')->onUpdate('cascade')->onDelete('cascade');
     });
   }
 

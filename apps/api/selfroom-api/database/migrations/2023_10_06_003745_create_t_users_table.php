@@ -24,7 +24,6 @@ return new class extends Migration
             $table->bigInteger('follower_num')->default(0)->comment('このユーザーをフォローをしている人数');
             $table->bigInteger('follow_num')->default(0)->comment('このユーザーがフォローしている人数');
             $table->integer('favorite_room_num')->default(0)->comment('お気に入りのチャットルーム数');
-            $table->softDeletes();
             $table->timestamps();
 
             $table->primary('t_users_pkey');

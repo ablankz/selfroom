@@ -17,4 +17,14 @@ export const API_RESPONSE_TYPES = {
   TokenBlacklisted: 14,
   SocialLoginError: 15,
   ModelConflict: 16,
+  GuestGuard: 17,
+  UserOnly: 18,
+  ThrottleLoginRequests: 19,
+  FailedUpload: 20,
+  AuthNotFound: 21,
+  RefreshTokenExpired: 22,
+  AlreadyLogout: 23,
+  SqlQueryError: 24,
+  AlreadyNotExist: 25,
+  NotMatchKey: 26
 } as const;

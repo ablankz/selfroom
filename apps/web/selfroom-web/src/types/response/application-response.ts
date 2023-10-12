@@ -5,13 +5,13 @@ export type ApplicationResponse<T> = {
   data: T; // 成功ならnull以外、からのデータでも空配列で返却される
   code: ApiResponseType;
   message: string; // エラーコードごとのメッセージ
-  validationMessages: ApplicationValidationMessages; // バリデーションでエラーがあったときのみ
+  errorAttributes: ApplicationErrorAttributes; // バリデーションでエラーがあったときのみ
 };
 
 
 type ApiResponseType =
   (typeof API_RESPONSE_TYPES)[keyof typeof API_RESPONSE_TYPES];
 
-type ApplicationValidationMessages = {
-  [key: string]: string[];
+type ApplicationErrorAttributes = {
+  [key: string]: number | string | (string | number)[];
 }[];

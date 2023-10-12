@@ -11,7 +11,7 @@ class InitialRoleSeeder extends Seeder
    */
   public function run(): void
   {
-    foreach (get_all_roles() as $role) {
+    foreach (get_all_role_names() as $role) {
       \App\Models\Role::create(
         [
           'name' => $role,

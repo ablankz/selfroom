@@ -75,7 +75,7 @@ info:
         "data": array | object,
         "code": number, # アプリケーションコード
         "message": string, # アプリケーションコードによる簡易メッセージ
-        "validationMessages": array, # バリデーションのエラーチェックで引っかかった場合のみここにプロパティごとのメッセージが入る 
+        "errorAttributes": array, 
       }
       ```
     - あまりないかもしれないがサービス閉塞時は`"503" + "Retry-After"`で返す

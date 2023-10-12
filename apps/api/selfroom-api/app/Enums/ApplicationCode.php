@@ -24,10 +24,22 @@ enum ApplicationCode: int
   case NotFoundModel = 13;
   case TokenBlacklisted = 14;
   case SocialLoginError = 15;
+  case ModelConflict = 16;
+  case GuestGuard = 17;
+  case UserOnly = 18;
+  case ThrottleLoginRequests = 19;
+  case FailedUpload = 20;
+  case AuthNotFound = 21;
+  case RefreshTokenExpired = 22;
+  case AlreadyLogout = 23;
+  case SqlQueryError = 24;
+  case AlreadyNotExist = 25;
+  case NotMatchKey = 26;
 
   public function getText(): string
   {
     return match ($this) {
+      self::Success => 'OK',
       self::System => 'システム上の不具合がありました',
       self::Validation => '入力情報に誤りがあります',
       self::Permission => '許可されていないアクションです',
@@ -43,6 +55,17 @@ enum ApplicationCode: int
       self::NotFoundModel => '対象のモデルが見つかりません',
       self::TokenBlacklisted => 'すでに削除されたトークンです',
       self::SocialLoginError => 'ソーシャルログインに失敗しました',
+      self::ModelConflict => 'すでに存在するモデルです',
+      self::GuestGuard => 'ログイン済みのユーザーです',
+      self::UserOnly => '一般ユーザーのみ許可されているアクションです',
+      self::ThrottleLoginRequests => '複数回ログインの試行に失敗しました',
+      self::FailedUpload => 'ファイルのアップロードに失敗しました',
+      self::AuthNotFound => '認証ユーザーが見つかりません',
+      self::RefreshTokenExpired => 'リフレッシュトークンの有効期限が切れています',
+      self::AlreadyLogout => 'すでにログアウト済みです',
+      self::SqlQueryError => 'データベース上でエラーが発生しました',
+      self::AlreadyNotExist => 'すでに削除されているデータです',
+      self::NotMatchKey => 'キーに誤りがあります'
     };
   }
 
@@ -64,6 +87,17 @@ enum ApplicationCode: int
       self::NotFoundModel => Response::HTTP_NOT_FOUND,
       self::TokenBlacklisted => Response::HTTP_BAD_REQUEST,
       self::SocialLoginError => Response::HTTP_UNAUTHORIZED,
+      self::ModelConflict => Response::HTTP_CONFLICT,
+      self::GuestGuard => Response::HTTP_FORBIDDEN,
+      self::UserOnly => Response::HTTP_FORBIDDEN,
+      self::ThrottleLoginRequests => Response::HTTP_TOO_MANY_REQUESTS,
+      self::FailedUpload => Response::HTTP_INTERNAL_SERVER_ERROR,
+      self::AuthNotFound => Response::HTTP_NOT_FOUND,
+      self::RefreshTokenExpired => Response::HTTP_FORBIDDEN,
+      self::AlreadyLogout => Response::HTTP_FORBIDDEN,
+      self::SqlQueryError => Response::HTTP_INTERNAL_SERVER_ERROR,
+      self::AlreadyNotExist => Response::HTTP_NOT_FOUND,
+      self::NotMatchKey => Response::HTTP_FORBIDDEN
     };
   }
 }

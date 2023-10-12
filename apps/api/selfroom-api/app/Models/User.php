@@ -9,11 +9,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Model
 {
-  use HasFactory, SoftDeletes, HasUuids;
+  use HasFactory, HasUuids;
 
   protected $table = 't_users';
   protected $primaryKey = 'user_id';
@@ -34,7 +33,7 @@ class User extends Model
    * @var array
    */
   protected $hidden = [
-    't_users_pkey', 'deleted_at'
+    't_users_pkey'
   ];
 
   public function account(): HasOne
@@ -44,7 +43,7 @@ class User extends Model
 
   public function chats(): HasMany
   {
-      return $this->hasMany(Chat::class, 'user_id', 'suer_id');
+    return $this->hasMany(Chat::class, 'user_id', 'suer_id');
   }
 
   public function currentRoom(): BelongsTo
@@ -55,24 +54,28 @@ class User extends Model
   public function favoriteRooms(): BelongsToMany
   {
     return $this->belongsToMany(ChatRoom::class, 't_favorite_chat_rooms', 'user_id', 'chat_room_id')
+      ->as('favorite')
       ->withPivot('added_at');
   }
 
   public function visitedRooms(): BelongsToMany
   {
     return $this->belongsToMany(ChatRoom::class, 't_visit_histories', 'user_id', 'chat_room_id')
-      ->withPivot('visited_at', 'left_at');
+      ->as('history')
+      ->withPivot(['visited_at', 'left_at']);
   }
 
   public function followees(): BelongsToMany
   {
     return $this->belongsToMany(User::class, 't_follows', 'follower_id', 'followee_id')
+      ->as('follow')
       ->withPivot('followed_at');
   }
 
   public function followers(): BelongsToMany
   {
     return $this->belongsToMany(User::class, 't_follows', 'followee_id', 'follower_id')
+      ->as('follow')
       ->withPivot('followed_at');
   }
 }

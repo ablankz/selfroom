@@ -13,5 +13,6 @@ class InitialDataSeeder extends Seeder
     {
       $this->call(InitialRoleSeeder::class);
       $this->call(InitialRoomCategorySeeder::class);
+      $this->call(InitialAdminSeeder::class);
     }
 }
