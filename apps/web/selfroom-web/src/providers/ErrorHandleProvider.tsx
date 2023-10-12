@@ -48,6 +48,10 @@ export const ErrorHandleProvider = ({ children }: Props) => {
         setTimeout(async () => {
           await initialize();
           setIsLoading(false);
+          enqueueSnackbar({
+            message: t('Updated certification information'),
+            variant: 'success',
+          });
           isRefreshingAccessToken.current = false;
         }, REFRESH_SECOND * 1000);
       })
