@@ -13,7 +13,8 @@ class DatabaseSeeder extends Seeder
   {
     $this->call(InitialDataSeeder::class);
     if (config('app.debug')) {
-      $this->call(DummyAcountSeeder::class);
+      $this->call(DummyDataSeeder::class);
+      
       $this->call(UserSeeder::class);
       $this->call(AdminSeeder::class);
       $this->call(AccountSeeder::class);
