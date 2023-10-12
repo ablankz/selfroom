@@ -18,12 +18,12 @@ class DeleteUser extends Usecase
       $user = User::with(['followers', 'followees', 'favoriteRooms', 'currentRoom'])->where('user_id', $id)->first();
       $user->followers->each(function($follower){
         $follower->update([
-          'followees' => $follower->followees - 1
+          'followees' => $follower->follow_num - 1
         ]);
       });
       $user->followees->each(function($followee){
         $followee->update([
-          'followers' => $followee->followers - 1
+          'followers' => $followee->follower_num - 1
         ]);
       });
       $user->favoriteRooms->each(function($room){

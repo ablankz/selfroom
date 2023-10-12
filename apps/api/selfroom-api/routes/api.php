@@ -30,6 +30,10 @@ Route::prefix('users')->group(function () {
   Route::post('', [\App\Http\Controllers\UserController::class, 'create'])->middleware(['guest:jwt']);
   Route::put('', [\App\Http\Controllers\UserController::class, 'update'])->middleware(['auth:jwt', 'user:jwt']);
   Route::delete('', [\App\Http\Controllers\UserController::class, 'delete'])->middleware(['auth:jwt', 'user:jwt']);
+  Route::prefix('{userId}')->group(function () {
+    Route::post('follows', [\App\Http\Controllers\FollowController::class, 'add'])->middleware(['auth:jwt', 'user:jwt']);
+    Route::delete('follows', [\App\Http\Controllers\FollowController::class, 'cancel'])->middleware(['auth:jwt', 'user:jwt']);
+  });
 });
 
 Route::prefix('admins')->group(function () {
