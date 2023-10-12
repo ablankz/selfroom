@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 class RoomOut extends Usecase
 {
   public const NOT_FOUND = ApplicationCode::NotFoundModel;
-  public const ALREADY_EXIST = ApplicationCode::ModelConflict;
+  public const ALREADY_NOT_EXIST = ApplicationCode::AlreadyNotExist;
 
   public function run(string $user_id)
   {
@@ -25,8 +25,7 @@ class RoomOut extends Usecase
 
     if (is_null($user->current_chat_room_id)) {
       return [
-        'data' => [],
-        'code' => self::SUCCESS
+        'code' => self::ALREADY_NOT_EXIST
       ];
     }
 
