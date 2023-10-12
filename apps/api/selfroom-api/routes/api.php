@@ -71,6 +71,10 @@ Route::prefix('chat-rooms')->group(function () {
   });
   Route::post('in/{chatRoomId}', [\App\Http\Controllers\RoomVisitController::class, 'in'])->middleware(['auth:jwt', 'user:jwt']);
   Route::post('out', [\App\Http\Controllers\RoomVisitController::class, 'out'])->middleware(['auth:jwt', 'user:jwt']);
+  Route::prefix('{chatRoomId}')->group(function () {
+    Route::post('favorites', [\App\Http\Controllers\FavoriteController::class, 'add'])->middleware(['auth:jwt', 'user:jwt']);
+    Route::delete('favorites', [\App\Http\Controllers\FavoriteController::class, 'cancel'])->middleware(['auth:jwt', 'user:jwt']);
+  });
 });
 
 // user/chatroom間のfavoriteに関するcrud
