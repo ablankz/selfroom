@@ -24,7 +24,6 @@ return new class extends Migration
             $table->integer('user_num')->default(0)->comment('現在ユーザーが何人いるか');
             $table->integer('favor_num')->default(0)->comment('お気に入りユーザー数');
             $table->string('room_key')->nullable()->comment('ルームキー');
-            $table->softDeletes();
             $table->timestamps();
 
             $table->primary('t_chat_rooms_pkey');

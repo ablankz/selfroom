@@ -22,7 +22,6 @@ return new class extends Migration
       $table->foreignUuid('user_id')->nullable()->references('user_id')->on('t_users')
         ->constrained('t_users')->onUpdate('set null')->onDelete('set null');
       $table->string('content')->comment('コメント内容');
-      $table->softDeletes();
       $table->timestamps();
 
       $table->primary('t_chats_pkey');

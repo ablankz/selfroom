@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ChatRoom extends Model
 {
-  use HasFactory, SoftDeletes, HasUuids;
+  use HasFactory, HasUuids;
 
   protected $table = 't_chat_rooms';
   protected $primaryKey = 'chat_room_id';
@@ -37,7 +37,7 @@ class ChatRoom extends Model
    * @var array
    */
   protected $hidden = [
-    't_chat_rooms_pkey', 'deleted_at', 'room_key'
+    't_chat_rooms_pkey', 'room_key'
   ];
 
   public function chats(): HasMany
