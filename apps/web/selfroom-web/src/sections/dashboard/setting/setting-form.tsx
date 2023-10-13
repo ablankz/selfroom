@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
@@ -19,17 +19,22 @@ import FormProvider, {
 } from '@/components/hook-form';
 import { useAuthContext } from '@/auth/hooks';
 import { useLocales } from '@/locales';
+import {
+  UserUpdateRequest,
+  useUserUpdateQuery,
+} from '@/api/users/useUserUpdateQuery';
+import { formErrorHandle } from '@/utils/errorHandle/formErrorHandle';
+import { ErrorResponse } from '@/types/response/error-response';
+import { AxiosError } from 'axios';
+import { useUserDeleteQuery } from '@/api/users/useUserDeleteQuery';
 
 // ----------------------------------------------------------------------
-
-type FormValues = {
-  nickname: string;
-  profilePhoto: any;
-};
 
 export default function SettingForm() {
   const { enqueueSnackbar } = useSnackbar();
   const { t } = useLocales();
+  const { mutate, status, error } = useUserUpdateQuery();
+  // const { mutate: deleteMutate, status: deleteStatus } = useUserDeleteQuery();
 
   const { user } = useAuthContext();
 
@@ -38,7 +43,7 @@ export default function SettingForm() {
     profilePhoto: Yup.mixed<any>().nullable(),
   });
 
-  const defaultValues: FormValues = {
+  const defaultValues: UserUpdateRequest = {
     nickname: user?.nickname || '',
     profilePhoto: user?.profilePhotoUrl || null,
   };
@@ -50,33 +55,35 @@ export default function SettingForm() {
 
   const {
     setValue,
+    setError,
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
-    // await axi?.(
-    //   data.loginId,
-    //   data.password,
-    //   data.confirmPassword,
-    //   data.nickname
-    // )
-    //   .then((_) => {
-    //     enqueueSnackbar({
-    //       variant: 'success',
-    //       message: t('Register successfully'),
-    //     });
-    //     router.push(returnTo || PATH_AFTER_LOGIN);
-    //   })
-    //   .catch((error: AxiosError<ErrorResponse>) => {
-    //     error.response?.data;
-    //     setValue('password', defaultValues.password);
-    //     setValue('confirmPassword', defaultValues.confirmPassword);
-    //     setErrorMsg(t(error.response?.errorMessage || ''));
-    //     error.response &&
-    //       formErrorHandle<FormValues>(error.response.data, setError);
-    //   });
+    const formData = new FormData();
+    formData.append("nickname", data.nickname || "");
+    if (typeof data.profilePhoto !== "string" && !!data.profilePhoto) {
+      formData.append("profilePhoto", data.profilePhoto);
+    }
+    mutate(formData);
   });
+
+  useEffect(() => {
+    if (status === 'error' && error instanceof AxiosError) {
+      error.response?.data &&
+        formErrorHandle(error.response.data as ErrorResponse, setError);
+      enqueueSnackbar({
+        variant: 'error',
+        message: t('Register successfully'),
+      });
+    } else if (status === 'success') {
+      enqueueSnackbar({
+        variant: 'success',
+        message: t('Register successfully'),
+      });
+    }
+  }, [status]);
 
   const handleDrop = useCallback(
     (acceptedFiles: File[]) => {
