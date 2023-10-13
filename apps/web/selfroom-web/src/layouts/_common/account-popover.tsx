@@ -16,6 +16,7 @@ import CustomPopover, { usePopover } from '@/components/custom-popover';
 import { useAuthContext } from '@/auth/hooks';
 import { useLocales } from '@/locales';
 import { paths } from '@/routes/paths';
+import { useSnackbar } from '@/components/snackbar';
 
 // ----------------------------------------------------------------------
 
@@ -36,14 +37,23 @@ export default function AccountPopover() {
   const router = useRouter();
   const { t } = useLocales();
   const { logout, user } = useAuthContext();
+  const { enqueueSnackbar } = useSnackbar();
   const popover = usePopover();
 
   const handleLogout = async () => {
     try {
       await logout();
+      enqueueSnackbar({
+        message: t('Logout successfully'),
+        variant: 'success',
+      });
       popover.onClose();
     } catch (error) {
       popover.onClose();
+      enqueueSnackbar({
+        message: t('Logout failed'),
+        variant: 'error',
+      });
     }
   };
 
@@ -94,7 +104,11 @@ export default function AccountPopover() {
               {user.nickname}
             </Typography>
 
-            <Typography variant="body2" sx={{ color: user.userId ? 'text.secondary' : 'primary.main' }} noWrap>
+            <Typography
+              variant="body2"
+              sx={{ color: user.userId ? 'text.secondary' : 'primary.main' }}
+              noWrap
+            >
               {user.userId ? `${user.userId}` : `${user.adminId}`}
             </Typography>
           </Box>
@@ -105,7 +119,13 @@ export default function AccountPopover() {
             {OPTIONS.map((option) => (
               <MenuItem
                 key={option.label}
-                onClick={() => handleClickItem(option.linkTo(user.userId ? `${user.userId}` : `${user.adminId}`))}
+                onClick={() =>
+                  handleClickItem(
+                    option.linkTo(
+                      user.userId ? `${user.userId}` : `${user.adminId}`
+                    )
+                  )
+                }
               >
                 {t(option.label)}
               </MenuItem>
