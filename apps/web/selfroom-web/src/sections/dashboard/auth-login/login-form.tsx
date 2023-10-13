@@ -98,7 +98,7 @@ export const LoginForm = () => {
 
         <Link
           component={RouterLink}
-          href={paths.dashboard.auth}
+          href={paths.dashboard.register}
           variant="subtitle2"
         >
           Create an account

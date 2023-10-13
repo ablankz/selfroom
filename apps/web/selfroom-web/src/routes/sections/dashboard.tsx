@@ -51,6 +51,7 @@ export const dashboardRoutes = [
         ),
         children: [
           { path: 'auth', element: <AuthLoginPage /> },
+          { path: 'register', element: <AuthLoginPage /> },
         ],
       },
       {
