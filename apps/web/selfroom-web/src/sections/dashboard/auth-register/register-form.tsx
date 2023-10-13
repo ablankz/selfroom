@@ -26,6 +26,13 @@ import { ErrorResponse } from '@/types/response/error-response';
 import { useSnackbar } from '@/components/snackbar';
 import { formErrorHandle } from '@/utils/errorHandle/formErrorHandle';
 
+type FormValues = {
+  nickname: string;
+  loginId: string;
+  password: string;
+  confirmPassword: string;
+}
+
 export const RegisterForm = () => {
   const { register } = useAuthContext();
   const router = useRouter();
@@ -36,13 +43,6 @@ export const RegisterForm = () => {
   const returnTo = searchParams.get('returnTo');
   const password = useBoolean();
   const passwordConfirm = useBoolean();
-
-  type FormValues = {
-    nickname: string;
-    loginId: string;
-    password: string;
-    confirmPassword: string;
-  }
 
   const RegisterSchema = Yup.object().shape({
     nickname: Yup.string().required(t('Nickname is required')),

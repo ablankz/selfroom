@@ -27,7 +27,7 @@ export default function AuthRegisterView() {
   return (
     <Container maxWidth={settings.themeStretch ? false : 'xl'}>
       <CustomBreadcrumbs
-        heading={t('Authentication')}
+        heading={t('New User')}
         links={[
           { name: t('Application'), href: paths.dashboard.overview },
           { name: t('Authentication'), href: paths.dashboard.auth },
