@@ -11,6 +11,7 @@ import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
 import { RequestFilter } from '../request';
 import { RequestMethods } from '.';
+import { useLocales } from '@/locales';
 
 type Props = {
   onClick: (key: string) => void;
@@ -23,6 +24,7 @@ export const RequestCandidate = ({ url, onClick, filters }: Props) => {
   const key = `${url.urlKey}.${url.method}`;
   const matches = match(url.urlKey, filters.name);
   const parts = parse(url.urlKey, matches);
+  const { t } = useLocales();
 
   return (
     <Tooltip title={url.urlKey} sx={{zIndex: 9999}}>
@@ -91,7 +93,7 @@ export const RequestCandidate = ({ url, onClick, filters }: Props) => {
             component="span"
             color="text.disabled"
           >
-            {url.comment}
+            {t(url.comment)}
           </Typography>
         </Link>
       </ListItem>

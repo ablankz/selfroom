@@ -4,7 +4,7 @@ import axios from '@/utils/axios';
 //
 import { AuthContext } from './auth-context';
 import { ActionMapType, AuthStateType, AuthUserType } from '../types';
-import { AUTH_ENDPOINTS } from '@/constants/endpoint/auth-endpoint';
+import { AUTH_ENDPOINTS } from '@/constants/endpoints/auth-endpoint';
 import { SocialProvider } from '@/types/social-provider';
 import { SocialLoginResponse } from '@/types/response/auth/social-login-response';
 import { useSearchParams } from '@/routes/hooks';

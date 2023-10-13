@@ -4,7 +4,7 @@ export const AUTH_ENDPOINTS = {
       urlKey: '/auth/login',
       method: 'POST',
       url: '/auth/login',
-      comment: 'ログイン',
+      comment: 'Login',
       defaultBody: {
         loginId: 'test_user',
         password: 'test_user',
@@ -14,7 +14,7 @@ export const AUTH_ENDPOINTS = {
       urlKey: '/users',
       method: 'POST',
       url: '/users',
-      comment: 'ユーザーの新規登録',
+      comment: 'New User Registration',
       defaultBody: {
         nickname: 'テストユーザー',
         loginId: 'test_user',
@@ -26,32 +26,32 @@ export const AUTH_ENDPOINTS = {
       urlKey: '/auth/me',
       method: 'POST',
       url: '/auth/me',
-      comment: '認証ユーザーの取得',
+      comment: 'Obtaining an authenticated user',
     },
     logout: {
       urlKey: '/auth/logout',
       method: 'POST',
       url: '/auth/logout',
-      comment: 'ログアウト',
+      comment: 'Logout',
     },
     refresh: {
       urlKey: '/auth/refresh',
       method: 'POST',
       url: '/auth/refresh',
-      comment: 'リフレッシュトークン',
+      comment: 'Refresh Token Request',
     },
     oauth: {
       google: {
         urlKey: '/auth/google',
         method: 'GET',
         url: '/auth/google',
-        comment: 'googleソーシャルログイン'
+        comment: 'google social login'
       },
       line: {
         urlKey: '/auth/line',
         method: 'GET',
         url: '/auth/line',
-        comment: 'lineソーシャルログイン'
+        comment: 'line social login'
       },
     }
   },
