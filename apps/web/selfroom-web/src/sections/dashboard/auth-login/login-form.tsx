@@ -67,7 +67,7 @@ export const LoginForm = () => {
       })
       .catch((error: AxiosError<ErrorResponse>) => {
         reset();
-        setErrorMsg(error.response?.errorMessage || '');
+        setErrorMsg(t(error.response?.errorMessage || ''));
       });
   });
 
@@ -80,7 +80,7 @@ export const LoginForm = () => {
 
         <Link
           component={RouterLink}
-          href={paths.dashboard.auth}
+          href={paths.dashboard.register}
           variant="subtitle2"
         >
           こちらから

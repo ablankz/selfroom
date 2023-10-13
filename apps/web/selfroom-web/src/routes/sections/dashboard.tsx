@@ -16,6 +16,7 @@ const LinkPage = lazy(() => import('../../pages/dashboard/link'));
 
 const OverviewPage = lazy(() => import('../../pages/dashboard/app'));
 const AuthLoginPage = lazy(() => import('../../pages/dashboard/auth-login'));
+const AuthRegisterPage = lazy(() => import('../../pages/dashboard/auth-register'));
 const RawApiPage = lazy(() => import('../../pages/dashboard/raw-api'));
 const ChatPage = lazy(() => import('../../pages/dashboard/chat'));
 
@@ -51,7 +52,7 @@ export const dashboardRoutes = [
         ),
         children: [
           { path: 'auth', element: <AuthLoginPage /> },
-          { path: 'register', element: <AuthLoginPage /> },
+          { path: 'auth/register', element: <AuthRegisterPage /> },
         ],
       },
       {

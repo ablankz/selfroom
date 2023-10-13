@@ -15,7 +15,7 @@ export const paths = {
     chat: '/chat',
     setting: '/setting',
     profile: (id: string) => `/profile/${id}`,
-    register: '/register',
+    register: '/auth/register',
   },
   oauthCallback: '/oauth-callback',
 };

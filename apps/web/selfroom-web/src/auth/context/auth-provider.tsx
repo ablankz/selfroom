@@ -142,18 +142,20 @@ export function AuthProvider({ children }: Props) {
   // REGISTER
   const register = useCallback(
     async (
-      userId: string,
+      loginId: string,
       password: string,
+      confirmPassword: string,
       nickname: string
     ): Promise<AxiosResponse<AuthUserResponse, any>> => {
       const data = {
-        userId,
+        loginId,
         password,
+        confirmPassword,
         nickname,
       };
 
       return await axios
-        .post(AUTH_ENDPOINTS.auth.login.url, data)
+        .post(AUTH_ENDPOINTS.auth.register.url, data)
         .then(async (_) => {
           return await initialize();
         })

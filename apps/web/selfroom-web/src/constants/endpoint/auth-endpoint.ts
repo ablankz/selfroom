@@ -6,8 +6,20 @@ export const AUTH_ENDPOINTS = {
       url: '/auth/login',
       comment: 'ログイン',
       defaultBody: {
-        login_id: 'admin',
-        password: 'admin',
+        loginId: 'test_user',
+        password: 'test_user',
+      },
+    },
+    register: {
+      urlKey: '/users',
+      method: 'POST',
+      url: '/users',
+      comment: 'ユーザーの新規登録',
+      defaultBody: {
+        nickname: 'テストユーザー',
+        loginId: 'test_user',
+        password: 'test_user',
+        confirmPassword: 'test_user'
       },
     },
     me: {
