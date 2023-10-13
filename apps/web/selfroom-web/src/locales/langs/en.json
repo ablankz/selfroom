@@ -117,5 +117,15 @@
   "Logout": "Logout",
   "Setting": "Setting",
   "Profile": "Profile",
-  "Updated certification information": "Updated certification information"
+  "Updated certification information": "Updated certification information",
+  "Logout successfully": "Logout successfully",
+  "New User": "New User",
+  "Register successfully": "Register successfully",
+  "Sign in": "Sign in",
+  "Nickname": "Nickname",
+  "Password Confirm": "Password Confirm",
+  "Nickname is required": "Nickname is required",
+  "Password Confirm is required": "Password Confirm is required",
+  "Password must have at least 6 characters": "Password must have at least 6 characters",
+  "Must match \"password\" field value": "Must match \"password\" field value"
 }

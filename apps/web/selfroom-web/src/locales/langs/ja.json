@@ -117,5 +117,15 @@
   "Logout": "ログアウト",
   "Setting": "設定",
   "Profile": "プロフィール",
-  "Updated certification information": "認証情報を更新しました"
+  "Updated certification information": "認証情報を更新しました",
+  "Logout successfully": "ログアウトしました",
+  "New User": "新規登録",
+  "Register successfully": "登録に成功しました",
+  "Sign in": "ログイン",
+  "Nickname": "ニックネーム",
+  "Password Confirm": "確認用パスワード",
+  "Nickname is required": "ニックネームは必須項目です",
+  "Password Confirm is required": "確認用パスワードは必須項目です",
+  "Password must have at least 6 characters": "パスワードは６文字以上必要です",
+  "Must match \"password\" field value": "確認用パスワードが一致しません"
 }
