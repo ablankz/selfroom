@@ -13,7 +13,8 @@ export const paths = {
     auth: '/auth',
     rawApi: `/raw-api`,
     chat: '/chat',
-
+    setting: '/setting',
+    profile: (id: string) => `/profile/${id}`,
   },
   oauthCallback: '/oauth-callback',
 };

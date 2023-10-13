@@ -39,6 +39,7 @@ export const dashboardRoutes = [
       { path: 'link', element: <LinkPage /> },
       { path: 'overview', element: <OverviewPage /> },
       { path: 'raw-api', element: <RawApiPage /> },
+      { path: 'profile/:id', element: <AuthLoginPage /> },
       {
         path: '',
         element: (
@@ -48,7 +49,9 @@ export const dashboardRoutes = [
             </Suspense>
           </GuestGuard>
         ),
-        children: [{ path: 'auth', element: <AuthLoginPage /> }],
+        children: [
+          { path: 'auth', element: <AuthLoginPage /> },
+        ],
       },
       {
         path: '',
@@ -59,7 +62,10 @@ export const dashboardRoutes = [
             </Suspense>
           </AuthGuard>
         ),
-        children: [{ path: 'chat', element: <ChatPage /> }],
+        children: [
+          { path: 'chat', element: <ChatPage /> },
+          { path: 'setting', element: <ChatPage /> }
+        ],
       },
     ],
   },

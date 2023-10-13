@@ -22,11 +22,11 @@ import { paths } from '@/routes/paths';
 const OPTIONS = [
   {
     label: 'Profile',
-    linkTo: '/',
+    linkTo: paths.dashboard.profile,
   },
   {
     label: 'Setting',
-    linkTo: '/',
+    linkTo: (_: string) => paths.dashboard.setting,
   },
 ];
 
@@ -105,7 +105,7 @@ export default function AccountPopover() {
             {OPTIONS.map((option) => (
               <MenuItem
                 key={option.label}
-                onClick={() => handleClickItem(option.linkTo)}
+                onClick={() => handleClickItem(option.linkTo(user.userId ? `${user.userId}` : `${user.adminId}`))}
               >
                 {t(option.label)}
               </MenuItem>
