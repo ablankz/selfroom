@@ -166,5 +166,15 @@
   "Entering a chat room": "Entering a chat room",
   "Leaving the chat room": "Leaving the chat room",
   "Bookmark a chat room to your favorites": "Bookmark a chat room to your favorites",
-  "Remove a chat room from your favorites": "Remove a chat room from your favorites"
+  "Remove a chat room from your favorites": "Remove a chat room from your favorites",
+  "Delete your account": "Delete your account",
+  "account-delete-desscription": "Once an account is deleted, data cannot be restored. After deletion, your login ID and other information will be released.",
+  "Cancel": "Cancel",
+  "Confirm": "Confirm",
+  "Save": "Save",
+  "Delete Account": "Delete Account",
+  "Account successfully deleted": "Account successfully deleted",
+  "Account deletion failed": "Account deletion failed",
+  "Updated user information": "Updated user information",
+  "Failed to update user information": "Failed to update user information"
 }

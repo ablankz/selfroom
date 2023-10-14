@@ -27,6 +27,13 @@ import { formErrorHandle } from '@/utils/errorHandle/formErrorHandle';
 import { ErrorResponse } from '@/types/response/error-response';
 import { AxiosError } from 'axios';
 import { useUserDeleteQuery } from '@/api/users/useUserDeleteQuery';
+import { useBoolean } from '@/hooks/use-boolean';
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -34,7 +41,8 @@ export default function SettingForm() {
   const { enqueueSnackbar } = useSnackbar();
   const { t } = useLocales();
   const { mutate, status, error } = useUserUpdateQuery();
-  // const { mutate: deleteMutate, status: deleteStatus } = useUserDeleteQuery();
+  const { mutate: deleteMutate, status: deleteStatus } = useUserDeleteQuery();
+  const dialog = useBoolean();
 
   const { user } = useAuthContext();
 
@@ -62,12 +70,31 @@ export default function SettingForm() {
 
   const onSubmit = handleSubmit(async (data) => {
     const formData = new FormData();
-    formData.append("nickname", data.nickname || "");
-    if (typeof data.profilePhoto !== "string" && !!data.profilePhoto) {
-      formData.append("profilePhoto", data.profilePhoto);
+    formData.append('nickname', data.nickname || '');
+    if (typeof data.profilePhoto !== 'string' && !!data.profilePhoto) {
+      formData.append('profilePhoto', data.profilePhoto);
     }
     mutate(formData);
   });
+
+  const handleDelete = () => {
+    deleteMutate();
+    dialog.onFalse();
+  };
+
+  useEffect(() => {
+    if (deleteStatus === 'error' && error instanceof AxiosError) {
+      enqueueSnackbar({
+        variant: 'error',
+        message: t('Account deletion failed'),
+      });
+    } else if (deleteStatus === 'success') {
+      enqueueSnackbar({
+        variant: 'success',
+        message: t('Account successfully deleted'),
+      });
+    }
+  }, [deleteStatus]);
 
   useEffect(() => {
     if (status === 'error' && error instanceof AxiosError) {
@@ -75,12 +102,12 @@ export default function SettingForm() {
         formErrorHandle(error.response.data as ErrorResponse, setError);
       enqueueSnackbar({
         variant: 'error',
-        message: t('Register successfully'),
+        message: t('Failed to update user information'),
       });
     } else if (status === 'success') {
       enqueueSnackbar({
         variant: 'success',
-        message: t('Register successfully'),
+        message: t('Updated user information'),
       });
     }
   }, [status]);
@@ -101,59 +128,82 @@ export default function SettingForm() {
   );
 
   return (
-    <FormProvider methods={methods} onSubmit={onSubmit}>
-      <Grid container spacing={3}>
-        <Grid xs={12} md={4}>
-          <Card sx={{ pt: 10, pb: 5, px: 3, textAlign: 'center' }}>
-            <RHFUploadAvatar
-              name="profilePhoto"
-              maxSize={3145728}
-              onDrop={handleDrop}
-              helperText={
-                <Typography
-                  variant="caption"
-                  sx={{
-                    mt: 3,
-                    mx: 'auto',
-                    display: 'block',
-                    textAlign: 'center',
-                    color: 'text.disabled',
-                  }}
-                >
-                  Allowed *.jpeg, *.jpg, *.png, *.gif
-                  <br /> max size of {fData(3145728)}
-                </Typography>
-              }
-            />
+    <>
+      <FormProvider methods={methods} onSubmit={onSubmit}>
+        <Grid container spacing={3}>
+          <Grid xs={12} md={4}>
+            <Card sx={{ pt: 10, pb: 5, px: 3, textAlign: 'center' }}>
+              <RHFUploadAvatar
+                name="profilePhoto"
+                maxSize={3145728}
+                onDrop={handleDrop}
+                helperText={
+                  <Typography
+                    variant="caption"
+                    sx={{
+                      mt: 3,
+                      mx: 'auto',
+                      display: 'block',
+                      textAlign: 'center',
+                      color: 'text.disabled',
+                    }}
+                  >
+                    Allowed *.jpeg, *.jpg, *.png, *.gif
+                    <br /> max size of {fData(3145728)}
+                  </Typography>
+                }
+              />
 
-            <Button variant="soft" color="error" sx={{ mt: 3 }}>
-              Delete User
-            </Button>
-          </Card>
-        </Grid>
-
-        <Grid xs={12} md={8}>
-          <Card sx={{ p: 3, height: 1 }}>
-            <Box
-              display="flex"
-              alignItems="center"
-              height={{ xs: 0.5, md: 0.7 }}
-            >
-              <RHFTextField name="nickname" label={t('Nickname')} />
-            </Box>
-
-            <Stack spacing={3} alignItems="flex-end" sx={{ mt: 3 }}>
-              <LoadingButton
-                type="submit"
-                variant="contained"
-                loading={isSubmitting}
+              <Button
+                variant="soft"
+                color="error"
+                sx={{ mt: 3 }}
+                onClick={dialog.onTrue}
               >
-                Save Changes
-              </LoadingButton>
-            </Stack>
-          </Card>
+                {t('Delete Account')}
+              </Button>
+            </Card>
+          </Grid>
+
+          <Grid xs={12} md={8}>
+            <Card sx={{ p: 3, height: 1 }}>
+              <Box
+                display="flex"
+                alignItems="center"
+                height={{ xs: 0.5, md: 0.7 }}
+              >
+                <RHFTextField name="nickname" label={t('Nickname')} />
+              </Box>
+
+              <Stack spacing={3} alignItems="flex-end" sx={{ mt: 3 }}>
+                <LoadingButton
+                  type="submit"
+                  variant="contained"
+                  loading={isSubmitting}
+                >
+                  {t('Save')}
+                </LoadingButton>
+              </Stack>
+            </Card>
+          </Grid>
         </Grid>
-      </Grid>
-    </FormProvider>
+      </FormProvider>
+      <Dialog open={dialog.value} onClose={dialog.onFalse}>
+        <DialogTitle>{t('Delete your account')}</DialogTitle>
+
+        <DialogContent sx={{ color: 'text.secondary' }}>
+          {t('account-delete-desscription')}
+        </DialogContent>
+
+        <DialogActions>
+          <Button variant="outlined" onClick={dialog.onFalse}>
+            {t('Cancel')}
+          </Button>
+          <Button variant="contained" onClick={handleDelete} autoFocus>
+            {t('Confirm')}
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 }

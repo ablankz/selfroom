@@ -166,5 +166,15 @@
   "Entering a chat room": "チャットルームへの入室",
   "Leaving the chat room": "チャットルームからの退室",
   "Bookmark a chat room to your favorites": "チャットルームをお気に入りへ登録",
-  "Remove a chat room from your favorites": "チャットルームをお気に入りから削除"
+  "Remove a chat room from your favorites": "チャットルームをお気に入りから削除",
+  "Delete your account": "アカウント削除",
+  "account-delete-desscription": "一度アカウントを削除した場合、データを復元することはできません。削除した後、ログインIDなどは解放されます。",
+  "Cancel": "キャンセル",
+  "Confirm": "確認",
+  "Save": "保存",
+  "Delete Account": "アカウント削除",
+  "Account successfully deleted": "アカウントの削除に成功しました",
+  "Account deletion failed": "アカウントの削除に失敗しました",
+  "Updated user information": "ユーザー情報を更新しました",
+  "Failed to update user information": "ユーザー情報の更新に失敗しました"
 }
