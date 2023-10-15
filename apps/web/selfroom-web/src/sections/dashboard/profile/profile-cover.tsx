@@ -6,10 +6,16 @@ import ListItemText from '@mui/material/ListItemText';
 import { useTheme, alpha } from '@mui/material/styles';
 // theme
 import { bgGradient } from '@/theme/css';
-import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useMemo,
+} from 'react';
 import { uuidHash } from '@/utils/uuid-hash';
 import { HOST_ASSET } from '@/config-global';
-import { Button } from '@mui/material';
+import { Button, IconButton, Typography } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { paths } from '@/routes/paths';
 import { useRouter } from '@/routes/hooks';
@@ -20,6 +26,7 @@ import { useLocales } from '@/locales';
 import { UserData } from '@/types/response/user/user-response';
 import { useAuthContext } from '@/auth/hooks';
 import Iconify from '@/components/iconify';
+import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard';
 
 type Props = {
   user: UserData;
@@ -45,6 +52,22 @@ export default function ProfileCover({ user, setDispatch }: Props) {
     else follow();
   };
 
+  const { copy } = useCopyToClipboard();
+
+  const onCopy = useCallback(async () => {
+    if (await copy(user.userId)) {
+      enqueueSnackbar({
+        message: t('copied'),
+        variant: 'success',
+      });
+    } else {
+      enqueueSnackbar({
+        message: t('failed-copy'),
+        variant: 'error',
+      });
+    }
+  }, [copy, enqueueSnackbar]);
+
   useEffect(() => {
     if (followStatus === 'success') {
       setDispatch(true);
@@ -57,7 +80,7 @@ export default function ProfileCover({ user, setDispatch }: Props) {
         message: t('Failed follow up'),
         variant: 'error',
       });
-    } 
+    }
   }, [followStatus]);
 
   useEffect(() => {
@@ -67,7 +90,7 @@ export default function ProfileCover({ user, setDispatch }: Props) {
         message: t('Successfully unfollowed'),
         variant: 'success',
       });
-    }else if (cancelStatus === 'error') {
+    } else if (cancelStatus === 'error') {
       enqueueSnackbar({
         message: t('Failed unfollow'),
         variant: 'error',
@@ -101,6 +124,7 @@ export default function ProfileCover({ user, setDispatch }: Props) {
           pt: { xs: 6, md: 0 },
           position: { md: 'absolute' },
           width: 1,
+          pointerEvents: 'none',
         }}
       >
         <Stack direction={{ xs: 'column', md: 'row' }}>
@@ -122,7 +146,22 @@ export default function ProfileCover({ user, setDispatch }: Props) {
               textAlign: { xs: 'center', md: 'unset' },
             }}
             primary={user.nickname}
-            secondary={user.userId}
+            secondary={
+              <Typography
+                fontSize={{ xs: 12, md: 16 }}
+                onClick={() => onCopy()}
+                sx={{
+                  cursor: 'pointer',
+                  pointerEvents: 'auto',
+                }}
+                color={'text.disabled'}
+              >
+                {user.userId}
+                <IconButton>
+                  <Iconify icon="eva:copy-fill" width={24} />
+                </IconButton>
+              </Typography>
+            }
             primaryTypographyProps={{
               typography: 'h4',
             }}
@@ -142,14 +181,16 @@ export default function ProfileCover({ user, setDispatch }: Props) {
               variant="contained"
               size="medium"
               color="primary"
-              sx={{ flexShrink: 0, ml: 1.5 }}
+              sx={{ flexShrink: 0, ml: 1.5, pointerEvents: 'auto' }}
             >
               {'Setting'}
             </Button>
           ) : (
             <LoadingButton
               loading={followStatus === 'loading' || cancelStatus === 'loading'}
-              disabled={followStatus === 'loading' || cancelStatus === 'loading'}
+              disabled={
+                followStatus === 'loading' || cancelStatus === 'loading'
+              }
               size="medium"
               variant={user.isFollow ? 'soft' : 'outlined'}
               color={user.isFollow ? 'success' : 'inherit'}
@@ -163,7 +204,7 @@ export default function ProfileCover({ user, setDispatch }: Props) {
                 ) : null
               }
               onClick={handleFollow}
-              sx={{ flexShrink: 0, ml: 1.5 }}
+              sx={{ flexShrink: 0, ml: 1.5, pointerEvents: 'auto' }}
             >
               {user.isFollow ? 'Followed' : 'Follow'}
             </LoadingButton>

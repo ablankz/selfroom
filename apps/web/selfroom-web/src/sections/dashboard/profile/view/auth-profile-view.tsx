@@ -14,9 +14,7 @@ import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
 //
 import ProfileHome from '../profile-home';
 import ProfileCover from '../profile-cover';
-// import ProfileFriends from '../profile-friends';
 // import ProfileGallery from '../profile-gallery';
-// import ProfileFollowers from '../profile-followers';
 import { useLocales } from '@/locales';
 import { useGetUserQuery } from '@/api/users/useGetUserQuery';
 import { MotionContainer, varBounce } from '@/components/animate';
@@ -145,7 +143,7 @@ export default function ProfileView({ userId }: Props) {
       <Card
         sx={{
           mb: 3,
-          height: 290,
+          height: 320,
         }}
       >
         <ProfileCover user={data.data} setDispatch={setDispatch} />
