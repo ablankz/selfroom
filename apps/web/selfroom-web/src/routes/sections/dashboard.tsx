@@ -42,7 +42,6 @@ export const dashboardRoutes = [
       { path: 'link', element: <LinkPage /> },
       { path: 'overview', element: <OverviewPage /> },
       { path: 'raw-api', element: <RawApiPage /> },
-      { path: 'profile/:id', element: <ProfilePage /> },
       {
         path: '',
         element: (
@@ -68,7 +67,8 @@ export const dashboardRoutes = [
         ),
         children: [
           { path: 'chat', element: <ChatPage /> },
-          { path: 'setting', element: <SettingPage /> }
+          { path: 'setting', element: <SettingPage /> },
+          { path: 'profile/:id', element: <ProfilePage /> },
         ],
       },
     ],

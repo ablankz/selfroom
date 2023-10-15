@@ -69,7 +69,8 @@ export default function ProfileFollows({ userId, setDispatch }: Props) {
           description={t('None of the users are currently being followed')}
           sx={{
             borderRadius: 1.5,
-            height: 200,
+            height: 300,
+            boxShadow: (theme) => theme.customShadows.error,
           }}
         />
       )}

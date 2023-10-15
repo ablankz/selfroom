@@ -69,7 +69,8 @@ export default function ProfileFollowers({ userId, setDispatch }: Props) {
           description={t('Not a single follower')}
           sx={{
             borderRadius: 1.5,
-            height: 200,
+            height: 300,
+            boxShadow: (theme) => theme.customShadows.error,
           }}
         />
       )}

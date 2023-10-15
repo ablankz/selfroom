@@ -27,7 +27,7 @@ export default function ProfilePage() {
 
       {userId ? (
         <Suspense fallback={<LoadingScreen />}>
-          <ProfileView userId={userId} />
+          <ProfileView userId={userId} key={userId}/>
         </Suspense>
       ) : (
         <LoadingScreen />
