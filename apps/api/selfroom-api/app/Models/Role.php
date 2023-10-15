@@ -6,6 +6,22 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+/**
+ * App\Models\Role
+ *
+ * @property int $m_roles_pkey
+ * @property int $role_id
+ * @property string $name
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Admin> $admins
+ * @property-read int|null $admins_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Role newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Role newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Role query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Role whereMRolesPkey($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Role whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Role whereRoleId($value)
+ * @mixin \Eloquent
+ */
 class Role extends Model
 {
   use HasFactory;

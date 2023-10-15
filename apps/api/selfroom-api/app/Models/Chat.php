@@ -8,6 +8,31 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * App\Models\Chat
+ *
+ * @property int $t_chats_pkey
+ * @property string $chat_id
+ * @property string|null $user_id
+ * @property string $content コメント内容
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string $chat_room_id
+ * @property-read \App\Models\ChatRoom $room
+ * @property-read \App\Models\User|null $user
+ * @method static \Database\Factories\ChatFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Chat newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Chat newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Chat query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Chat whereChatId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Chat whereChatRoomId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Chat whereContent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Chat whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Chat whereTChatsPkey($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Chat whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Chat whereUserId($value)
+ * @mixin \Eloquent
+ */
 class Chat extends Model
 {
     use HasFactory, HasUlids;
