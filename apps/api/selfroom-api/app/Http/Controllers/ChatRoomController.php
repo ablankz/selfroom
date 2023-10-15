@@ -43,7 +43,18 @@ class ChatRoomController extends Controller
     $categories = $request->categories ? array_unique(explode("+", urldecode(str_replace(" ", "%2B", $request->categories)))) : [];
 
     return response()->success(app()->call(
-      [$this->service, 'get']
+      [$this->service, 'get'],
+      [
+        'limit' => $limit,
+        'offset' => $offset,
+        'order' => $order,
+        'order_opt' => $order_opt,
+        'search_type' => $search_type,
+        'search' => $search,
+        'is_lock' => $is_lock,
+        'is_favorite' => $is_favorite,
+        'categories' => $categories
+      ]
     ));
   }
 

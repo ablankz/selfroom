@@ -32,7 +32,13 @@ class RoleController extends Controller
     $order_opt = $request->order_opt ? urldecode($request->order_opt) : "asc";
 
     return response()->success(app()->call(
-      [$this->service, 'get']
+      [$this->service, 'get'],
+      [
+        'limit' => $limit,
+        'offset' => $offset,
+        'order' => $order,
+        'order_opt' => $order_opt
+      ]
     ));
   }
 }

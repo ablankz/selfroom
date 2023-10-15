@@ -26,7 +26,11 @@ class FollowController extends Controller
     return response()->success(app()->call(
       [$this->service, 'getFollowers'],
       [
-        'user_id' => $userId
+        'user_id' => $userId,
+        'limit' => $limit,
+        'offset' => $offset,
+        'order' => $order,
+        'order_opt' => $order_opt
       ]
     ));
   }
@@ -38,7 +42,7 @@ class FollowController extends Controller
     // create | name 
     $order = $request->order ? urldecode($request->order) : "create";
     $order_opt = $request->order_opt ? urldecode($request->order_opt) : "asc";
-    
+
     return response()->success(app()->call(
       [$this->service, 'getFollowees'],
       [

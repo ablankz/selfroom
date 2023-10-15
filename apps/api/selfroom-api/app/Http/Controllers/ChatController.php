@@ -40,6 +40,10 @@ class ChatController extends Controller
       [$this->service, 'get'],
       [
         'chat_room_id' => $chatRoomId,
+        'limit' => $limit,
+        'offset' => $offset,
+        'order' => $order,
+        'order_opt' => $order_opt
       ]
     ));
   }
