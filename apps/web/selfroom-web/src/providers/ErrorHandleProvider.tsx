@@ -46,20 +46,20 @@ export const ErrorHandleProvider = ({ children }: Props) => {
         // 同時送信のレスポンスの返却の確認が難しいため、setTimeoutより時間をあけて行っている.
         // なおこの時間はaccessTokenの有効期限内であれば、どれだけ長くてもいいはず。ただこの時間だけloading時間が長い。
         setTimeout(async () => {
+          isRefreshingAccessToken.current = false;
           await initialize();
           setIsLoading(false);
           enqueueSnackbar({
             message: t('Updated certification information'),
             variant: 'success',
           });
-          isRefreshingAccessToken.current = false;
         }, REFRESH_SECOND * 1000);
       })
       .catch(async (_) => {
-        await initialize();
         setIsLoading(false);
-        setTimeout(() => {
+        setTimeout(async () => {
           isRefreshingAccessToken.current = false;
+          // await initialize();
         }, REFRESH_SECOND * 1000);
       });
   };

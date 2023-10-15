@@ -25,14 +25,14 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::prefix('users')->group(function () {
-  Route::get('{userId}', [\App\Http\Controllers\UserController::class, 'find']);
+  Route::get('{userId}', [\App\Http\Controllers\UserController::class, 'find'])->middleware(['auth:jwt']);
   Route::get('', [\App\Http\Controllers\UserController::class, 'get']);
   Route::post('', [\App\Http\Controllers\UserController::class, 'create'])->middleware(['guest:jwt']);
   Route::put('', [\App\Http\Controllers\UserController::class, 'update'])->middleware(['auth:jwt', 'user:jwt']);
   Route::delete('', [\App\Http\Controllers\UserController::class, 'delete'])->middleware(['auth:jwt', 'user:jwt']);
   Route::prefix('{userId}')->group(function () {
-    Route::get('followees', [\App\Http\Controllers\FollowController::class, 'getFollowees']);
-    Route::get('followers', [\App\Http\Controllers\FollowController::class, 'getFollowers']);
+    Route::get('followees', [\App\Http\Controllers\FollowController::class, 'getFollowees'])->middleware(['auth:jwt']);
+    Route::get('followers', [\App\Http\Controllers\FollowController::class, 'getFollowers'])->middleware(['auth:jwt']);
     Route::post('follows', [\App\Http\Controllers\FollowController::class, 'add'])->middleware(['auth:jwt', 'user:jwt']);
     Route::delete('follows', [\App\Http\Controllers\FollowController::class, 'cancel'])->middleware(['auth:jwt', 'user:jwt']);
   });

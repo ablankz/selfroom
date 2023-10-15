@@ -20,9 +20,9 @@ import { useGetUserQuery } from '@/api/users/useGetUserQuery';
 import { MotionContainer, varBounce } from '@/components/animate';
 import { Button, Skeleton, Typography } from '@mui/material';
 import { PageNotFoundIllustration } from '@/assets/illustrations';
-import { RouterLink } from '@/routes/components';
 import ProfileFollowers from '../profile-followers';
 import ProfileFollows from '../profile-follows';
+import { useRouter } from '@/routes/hooks';
 
 // ----------------------------------------------------------------------
 
@@ -69,6 +69,7 @@ export default function ProfileView({ userId }: Props) {
   }, [dispatch]);
 
   const [currentTab, setCurrentTab] = useState('profile');
+  const router = useRouter();
 
   const handleChangeTab = useCallback(
     (_: React.SyntheticEvent, newValue: string) => {
@@ -112,15 +113,14 @@ export default function ProfileView({ userId }: Props) {
           </m.div>
 
           <Button
-            component={RouterLink}
             sx={{
               maxWidth: '10rem',
             }}
-            href="/"
+            onClick={() => router.back()}
             size="large"
             variant="contained"
           >
-            {t('Go to Home')}
+            {t('Go Back')}
           </Button>
         </MotionContainer>
       </Container>
