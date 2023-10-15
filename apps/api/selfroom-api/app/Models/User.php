@@ -24,7 +24,13 @@ class User extends Model
    */
   protected $fillable = [
     'nickname',
-    'profile_photo_url'
+    'profile_photo_url',
+    'country',
+    'description',
+    'email',
+    'company',
+    'role',
+    'school'
   ];
 
   /**

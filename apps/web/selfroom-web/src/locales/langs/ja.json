@@ -176,5 +176,11 @@
   "Account successfully deleted": "アカウントの削除に成功しました",
   "Account deletion failed": "アカウントの削除に失敗しました",
   "Updated user information": "ユーザー情報を更新しました",
-  "Failed to update user information": "ユーザー情報の更新に失敗しました"
+  "Failed to update user information": "ユーザー情報の更新に失敗しました",
+  "Unregistered information": "登録されていない情報です",
+  "Email Address": "メールアドレス",
+  "Company": "会社",
+  "Role": "役職",
+  "School": "学校",
+  "Country": "国"
 }

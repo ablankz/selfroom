@@ -1,14 +1,9 @@
-import { useRef } from 'react';
 // @mui
-import { alpha } from '@mui/material/styles';
-import Fab from '@mui/material/Fab';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
-import InputBase from '@mui/material/InputBase';
 import Grid from '@mui/material/Unstable_Grid2';
 import CardHeader from '@mui/material/CardHeader';
 // utils
@@ -16,41 +11,47 @@ import { fNumber } from '@/utils/format-number';
 // components
 import Iconify from '@/components/iconify';
 //
-import ProfilePostItem from './profile-post-item';
 import { ProfileLogs } from './profile-logs';
 import { User } from '@/types/entity';
+import { useLocales } from '@/locales';
 
 // ----------------------------------------------------------------------
 
 type Props = {
   user: User;
-}
+};
 
 export default function ProfileHome({ user }: Props) {
-  const fileRef = useRef<HTMLInputElement>(null);
-
-  const handleAttach = () => {
-    if (fileRef.current) {
-      fileRef.current.click();
-    }
-  };
+  const { t } = useLocales();
 
   const renderFollows = (
     <Card sx={{ py: 3, textAlign: 'center', typography: 'h4' }}>
       <Stack
         direction="row"
-        divider={<Divider orientation="vertical" flexItem sx={{ borderStyle: 'dashed' }} />}
+        divider={
+          <Divider
+            orientation="vertical"
+            flexItem
+            sx={{ borderStyle: 'dashed' }}
+          />
+        }
       >
         <Stack width={1}>
           {fNumber(user.followerNum)}
-          <Box component="span" sx={{ color: 'text.secondary', typography: 'body2' }}>
+          <Box
+            component="span"
+            sx={{ color: 'text.secondary', typography: 'body2' }}
+          >
             Follower
           </Box>
         </Stack>
 
         <Stack width={1}>
           {fNumber(user.followNum)}
-          <Box component="span" sx={{ color: 'text.secondary', typography: 'body2' }}>
+          <Box
+            component="span"
+            sx={{ color: 'text.secondary', typography: 'body2' }}
+          >
             Following
           </Box>
         </Stack>
@@ -63,32 +64,46 @@ export default function ProfileHome({ user }: Props) {
       <CardHeader title="About" />
 
       <Stack spacing={2} sx={{ p: 3 }}>
-        <Box sx={{ typography: 'body2' }}>aaaa</Box>
+        {user.description && (
+          <Box sx={{ typography: 'body2', whiteSpace: 'pre-wrap' }}>{user.description}</Box>
+        )}
 
         <Stack direction="row" spacing={2}>
           <Iconify icon="mingcute:location-fill" width={24} />
 
           <Box sx={{ typography: 'body2' }}>
-            {`Live at `}
-            <Link variant="subtitle2" color="inherit">
-              Japan
-            </Link>
+            {user.country ? (
+              <>
+                {`Live at `}
+                <Link variant="subtitle2" color="inherit">
+                  {user.country}
+                </Link>
+              </>
+            ) : (
+              t('Unregistered information')
+            )}
           </Box>
         </Stack>
 
         <Stack direction="row" sx={{ typography: 'body2' }}>
           <Iconify icon="fluent:mail-24-filled" width={24} sx={{ mr: 2 }} />
-          hayaken3007@i.softbank.jp
+          {user.email || t('Unregistered information')}
         </Stack>
 
         <Stack direction="row" spacing={2}>
           <Iconify icon="ic:round-business-center" width={24} />
 
           <Box sx={{ typography: 'body2' }}>
-            engineer {`at `}
-            <Link variant="subtitle2" color="inherit">
-              epoch-net
-            </Link>
+            {user.company && user.role ? (
+              <>
+                {user.role} {`at `}
+                <Link variant="subtitle2" color="inherit">
+                  {user.company}
+                </Link>
+              </>
+            ) : (
+              t('Unregistered information')
+            )}
           </Box>
         </Stack>
 
@@ -96,79 +111,18 @@ export default function ProfileHome({ user }: Props) {
           <Iconify icon="ic:round-business-center" width={24} />
 
           <Box sx={{ typography: 'body2' }}>
-            {`Studied at `}
-            <Link variant="subtitle2" color="inherit">
-              kansai university
-            </Link>
+            {user.school ? (
+              <>
+                {`Studied at `}
+                <Link variant="subtitle2" color="inherit">
+                  {user.school}
+                </Link>
+              </>
+            ) : (
+              t('Unregistered information')
+            )}
           </Box>
         </Stack>
-      </Stack>
-    </Card>
-  );
-
-  const renderPostInput = (
-    <Card sx={{ p: 3 }}>
-      <InputBase
-        multiline
-        fullWidth
-        rows={4}
-        placeholder="Share what you are thinking here..."
-        sx={{
-          p: 2,
-          mb: 3,
-          borderRadius: 1,
-          border: (theme) => `solid 1px ${alpha(theme.palette.grey[500], 0.2)}`,
-        }}
-      />
-
-      <Stack direction="row" alignItems="center" justifyContent="space-between">
-        <Stack direction="row" spacing={1} alignItems="center" sx={{ color: 'text.secondary' }}>
-          <Fab size="small" color="inherit" variant="softExtended" onClick={handleAttach}>
-            <Iconify icon="solar:gallery-wide-bold" width={24} sx={{ color: 'success.main' }} />
-            Image/Video
-          </Fab>
-
-          <Fab size="small" color="inherit" variant="softExtended">
-            <Iconify icon="solar:videocamera-record-bold" width={24} sx={{ color: 'error.main' }} />
-            Streaming
-          </Fab>
-        </Stack>
-
-        <Button variant="contained">Post</Button>
-      </Stack>
-
-      <input ref={fileRef} type="file" style={{ display: 'none' }} />
-    </Card>
-  );
-
-  const renderSocials = (
-    <Card>
-      <CardHeader title="Social" />
-
-      <Stack spacing={2} sx={{ p: 3 }}>
-        {/* {_socials.map((link) => (
-          <Stack
-            key={link.name}
-            spacing={2}
-            direction="row"
-            sx={{ wordBreak: 'break-all', typography: 'body2' }}
-          >
-            <Iconify
-              icon={link.icon}
-              width={24}
-              sx={{
-                flexShrink: 0,
-                color: link.color,
-              }}
-            />
-            <Link color="inherit">
-              {link.value === 'facebook' && info.socialLinks.facebook}
-              {link.value === 'instagram' && info.socialLinks.instagram}
-              {link.value === 'linkedin' && info.socialLinks.linkedin}
-              {link.value === 'twitter' && info.socialLinks.twitter}
-            </Link>
-          </Stack>
-        ))} */}
       </Stack>
     </Card>
   );
@@ -180,19 +134,12 @@ export default function ProfileHome({ user }: Props) {
           {renderFollows}
 
           {renderAbout}
-
-          {/* {renderSocials} */}
         </Stack>
       </Grid>
 
       <Grid xs={12} md={8}>
         <Stack spacing={3}>
-          <ProfileLogs/>
-          {/* {renderPostInput} */}
-
-          {/* {posts.map((post) => (
-            <ProfilePostItem key={post.id} post={post} />
-          ))} */}
+          <ProfileLogs />
         </Stack>
       </Grid>
     </Grid>

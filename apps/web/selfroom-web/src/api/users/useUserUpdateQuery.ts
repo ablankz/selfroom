@@ -7,6 +7,12 @@ import { EmptySuccessResponse } from '@/types/response/empty-success-reponse';
 export type UserUpdateRequest = {
   nickname: string;
   profilePhoto?: any;
+  country?: string;
+  description?: string;
+  email?: string;
+  company?: string;
+  role?: string;
+  school?: string;
 };
 
 export const useUserUpdateQuery = () => {

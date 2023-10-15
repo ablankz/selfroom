@@ -186,6 +186,11 @@ return [
       'password' => 'Passsword',
       'nickname' => 'Nickname',
       'profilePhoto' => 'Profile photo',
+      'school' => 'schhol',
+      'country' => 'country',
+      'role' => 'role',
+      'email' => 'email',
+      'description' => 'profile'
     ],
 
 ];

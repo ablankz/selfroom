@@ -130,7 +130,7 @@ return [
     'uploaded'             => ':attributeのアップロードに失敗しました。',
     'url'                  => ':attributeに正しい形式を指定してください。',
     'uuid'                 => ':attributeに有効なUUIDを指定してください。',
-    'single-char' => ':attributeは半角である必要があります。',
+    'single-char' => ':attributeは半角文字である必要があります。',
 
     /*
     |--------------------------------------------------------------------------
@@ -164,7 +164,12 @@ return [
       'loginId' => 'ログインID',
       'password' => 'パスワード',
       'nickname' => 'ニックネーム',
-      'profilePhoto' => 'プロフィール写真'
+      'profilePhoto' => 'プロフィール写真',
+      'school' => '学校名',
+      'country' => '国名',
+      'role' => '役職',
+      'email' => 'メールアドレス',
+      'description' => 'プロフィール'
     ],
 
 ];

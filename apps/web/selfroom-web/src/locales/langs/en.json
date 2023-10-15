@@ -176,5 +176,11 @@
   "Account successfully deleted": "Account successfully deleted",
   "Account deletion failed": "Account deletion failed",
   "Updated user information": "Updated user information",
-  "Failed to update user information": "Failed to update user information"
+  "Failed to update user information": "Failed to update user information",
+  "Unregistered information": "Unregistered information",
+  "Email Address": "Email Address",
+  "Company": "Company",
+  "Role": "Role",
+  "School": "School",
+  "Country": "Country"
 }

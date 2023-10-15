@@ -4,16 +4,15 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import LoadingButton from '@mui/lab/LoadingButton';
-import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 // utils
 import { fData } from '@/utils/format-number';
 import { useSnackbar } from '@/components/snackbar';
 import FormProvider, {
+  RHFAutocomplete,
   RHFTextField,
   RHFUploadAvatar,
 } from '@/components/hook-form';
@@ -33,7 +32,10 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  Grid,
 } from '@mui/material';
+import Iconify from '@/components/iconify';
+import { countries } from '@/assets/data';
 
 // ----------------------------------------------------------------------
 
@@ -49,11 +51,23 @@ export default function SettingForm() {
   const UpdateUserSchema = Yup.object().shape({
     nickname: Yup.string().required('Name is required'),
     profilePhoto: Yup.mixed<any>().nullable(),
+    country: Yup.string().nullable(),
+    description: Yup.string().nullable(),
+    email: Yup.string().nullable(),
+    company: Yup.string().nullable(),
+    role: Yup.string().nullable(),
+    school: Yup.string().nullable(),
   });
 
   const defaultValues: UserUpdateRequest = {
     nickname: user?.nickname || '',
     profilePhoto: user?.profilePhotoUrl || null,
+    country: user?.country || '',
+    description: user?.description || '',
+    email: user?.email || '',
+    company: user?.company || '',
+    role: user?.role || '',
+    school: user?.school || '',
   };
 
   const methods = useForm({
@@ -71,6 +85,12 @@ export default function SettingForm() {
   const onSubmit = handleSubmit(async (data) => {
     const formData = new FormData();
     formData.append('nickname', data.nickname || '');
+    formData.append('country', data.country || '');
+    formData.append('description', data.description || '');
+    formData.append('email', data.email || '');
+    formData.append('company', data.company || '');
+    formData.append('role', data.role || '');
+    formData.append('school', data.school || '');
     if (typeof data.profilePhoto !== 'string' && !!data.profilePhoto) {
       formData.append('profilePhoto', data.profilePhoto);
     }
@@ -166,14 +186,62 @@ export default function SettingForm() {
           </Grid>
 
           <Grid xs={12} md={8}>
-            <Card sx={{ p: 3, height: 1 }}>
-              <Box
-                display="flex"
-                alignItems="center"
-                height={{ xs: 0.5, md: 0.7 }}
-              >
-                <RHFTextField name="nickname" label={t('Nickname')} />
-              </Box>
+            <Card sx={{ p: 3, height: 1, mx: 2 }}>
+              <Grid container columnGap={2} rowGap={3} justifyContent="center">
+                <Grid item xs={12} md={5.5}>
+                  <RHFTextField name="nickname" label={t('Nickname')} />
+                </Grid>
+                <Grid item xs={12} md={5.5}>
+                  <RHFTextField name="email" label={t('Email Address')} />
+                </Grid>
+                <Grid item xs={12} md={5.5}>
+                  <RHFTextField name="company" label={t('Company')} />
+                </Grid>
+                <Grid item xs={12} md={5.5}>
+                  <RHFTextField name="role" label={t('Role')} />
+                </Grid>
+                <Grid item xs={12} md={5.5}>
+                  <RHFTextField name="school" label={t('School')} />
+                </Grid>
+                <Grid item xs={12} md={5.5}>
+                  <RHFAutocomplete
+                    name="country"
+                    label={t('Country')}
+                    options={countries.map((country) => country.label)}
+                    getOptionLabel={(option) => option}
+                    renderOption={(props, option) => {
+                      const { code, label, phone } = countries.filter(
+                        (country) => country.label === option
+                      )[0];
+
+                      if (!label) {
+                        return null;
+                      }
+
+                      return (
+                        <li {...props} key={label}>
+                          <Iconify
+                            key={label}
+                            icon={`circle-flags:${code.toLowerCase()}`}
+                            width={28}
+                            sx={{ mr: 1 }}
+                          />
+                          {label} ({code}) +{phone}
+                        </li>
+                      );
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12} md={11}>
+                  <RHFTextField
+                    name="description"
+                    fullWidth
+                    multiline
+                    rows={4}
+                    label={t('Profile')}
+                  />
+                </Grid>
+              </Grid>
 
               <Stack spacing={3} alignItems="flex-end" sx={{ mt: 3 }}>
                 <LoadingButton
