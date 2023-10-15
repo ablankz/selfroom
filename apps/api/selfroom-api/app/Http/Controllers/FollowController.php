@@ -17,6 +17,12 @@ class FollowController extends Controller
 
   public function getFollowers(Request $request, string $userId): JsonResponse
   {
+    $limit = $request->limit ? max((int)urldecode($request->limit), 0) : 100;
+    $offset = $request->offset ? max((int)urldecode($request->offset), 0) : 0;
+    // create | name 
+    $order = $request->order ? urldecode($request->order) : "create";
+    $order_opt = $request->order_opt ? urldecode($request->order_opt) : "asc";
+
     return response()->success(app()->call(
       [$this->service, 'getFollowers'],
       [
@@ -27,6 +33,12 @@ class FollowController extends Controller
 
   public function getFollowees(Request $request, string $userId): JsonResponse
   {
+    $limit = $request->limit ? max((int)urldecode($request->limit), 0) : 100;
+    $offset = $request->offset ? max((int)urldecode($request->offset), 0) : 0;
+    // create | name 
+    $order = $request->order ? urldecode($request->order) : "create";
+    $order_opt = $request->order_opt ? urldecode($request->order_opt) : "asc";
+    
     return response()->success(app()->call(
       [$this->service, 'getFollowees'],
       [

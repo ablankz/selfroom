@@ -28,6 +28,12 @@ class AdminController extends Controller
 
   public function get(ViewAdminRequest $request): JsonResponse
   {
+    $limit = $request->limit ? max((int)urldecode($request->limit), 0) : 100;
+    $offset = $request->offset ? max((int)urldecode($request->offset), 0) : 0;
+    // create | update | nickname | permission_num
+    $order = $request->order ? urldecode($request->order) : "create";
+    $order_opt = $request->order_opt ? urldecode($request->order_opt) : "asc";
+
     return response()->success(app()->call(
       [$this->service, 'get']
     ));
