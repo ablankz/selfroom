@@ -18,14 +18,15 @@ import Iconify from '@/components/iconify';
 //
 import ProfilePostItem from './profile-post-item';
 import { ProfileLogs } from './profile-logs';
+import { User } from '@/types/entity';
 
 // ----------------------------------------------------------------------
 
 type Props = {
-
+  user: User;
 }
 
-export default function ProfileHome({ }: Props) {
+export default function ProfileHome({ user }: Props) {
   const fileRef = useRef<HTMLInputElement>(null);
 
   const handleAttach = () => {
@@ -41,14 +42,14 @@ export default function ProfileHome({ }: Props) {
         divider={<Divider orientation="vertical" flexItem sx={{ borderStyle: 'dashed' }} />}
       >
         <Stack width={1}>
-          {fNumber(11123)}
+          {fNumber(user.followerNum)}
           <Box component="span" sx={{ color: 'text.secondary', typography: 'body2' }}>
             Follower
           </Box>
         </Stack>
 
         <Stack width={1}>
-          {fNumber(79668968)}
+          {fNumber(user.followNum)}
           <Box component="span" sx={{ color: 'text.secondary', typography: 'body2' }}>
             Following
           </Box>
@@ -62,7 +63,7 @@ export default function ProfileHome({ }: Props) {
       <CardHeader title="About" />
 
       <Stack spacing={2} sx={{ p: 3 }}>
-        {/* <Box sx={{ typography: 'body2' }}>{info.quote}</Box>
+        <Box sx={{ typography: 'body2' }}>aaaa</Box>
 
         <Stack direction="row" spacing={2}>
           <Iconify icon="mingcute:location-fill" width={24} />
@@ -70,23 +71,23 @@ export default function ProfileHome({ }: Props) {
           <Box sx={{ typography: 'body2' }}>
             {`Live at `}
             <Link variant="subtitle2" color="inherit">
-              {info.country}
+              Japan
             </Link>
           </Box>
         </Stack>
 
         <Stack direction="row" sx={{ typography: 'body2' }}>
           <Iconify icon="fluent:mail-24-filled" width={24} sx={{ mr: 2 }} />
-          {info.email}
+          hayaken3007@i.softbank.jp
         </Stack>
 
         <Stack direction="row" spacing={2}>
           <Iconify icon="ic:round-business-center" width={24} />
 
           <Box sx={{ typography: 'body2' }}>
-            {info.role} {`at `}
+            engineer {`at `}
             <Link variant="subtitle2" color="inherit">
-              {info.company}
+              epoch-net
             </Link>
           </Box>
         </Stack>
@@ -97,10 +98,10 @@ export default function ProfileHome({ }: Props) {
           <Box sx={{ typography: 'body2' }}>
             {`Studied at `}
             <Link variant="subtitle2" color="inherit">
-              {info.school}
+              kansai university
             </Link>
           </Box>
-        </Stack> */}
+        </Stack>
       </Stack>
     </Card>
   );
@@ -180,7 +181,7 @@ export default function ProfileHome({ }: Props) {
 
           {renderAbout}
 
-          {renderSocials}
+          {/* {renderSocials} */}
         </Stack>
       </Grid>
 

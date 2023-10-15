@@ -21,9 +21,8 @@ export const ProfileLogs = () => {
           <Table sx={{ minWidth: 700 }}>
             <TableHead>
               <TableRow>
-                <TableCell>Method</TableCell>
-                <TableCell>Status</TableCell>
-                <TableCell>Path</TableCell>
+                <TableCell>Room Name</TableCell>
+                <TableCell>Room ID</TableCell>
                 <TableCell>Date</TableCell>
                 <TableCell>Date</TableCell>
               </TableRow>
@@ -54,46 +53,28 @@ export const ProfileLogs = () => {
               );
             })} */}
               <TableRow>
-                <TableCell width="100">
+                <TableCell>
                   <Typography color="text.secondary" variant="caption">
                     room
                   </Typography>
-                </TableCell>
-                <TableCell width="64">
-                  {/* <SeverityPill color={statusColor}>
-                      {log.status}
-                    </SeverityPill> */}
-                  in
                 </TableCell>
                 <TableCell>ygj-ajkbjkb-bajkb-sgjg</TableCell>
                 <TableCell>2023:02:20:222:22</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell width="100">
+                <TableCell>
                   <Typography color="text.secondary" variant="caption">
                     room
                   </Typography>
-                </TableCell>
-                <TableCell width="64">
-                  {/* <SeverityPill color={statusColor}>
-                      {log.status}
-                    </SeverityPill> */}
-                  in
                 </TableCell>
                 <TableCell>ygj-ajkbjkb-bajkb-sgjg</TableCell>
                 <TableCell>2023:02:20:222:22</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell width="100">
+                <TableCell>
                   <Typography color="text.secondary" variant="caption">
                     room
                   </Typography>
-                </TableCell>
-                <TableCell width="64">
-                  {/* <SeverityPill color={statusColor}>
-                      {log.status}
-                    </SeverityPill> */}
-                  in
                 </TableCell>
                 <TableCell>ygj-ajkbjkb-bajkb-sgjg</TableCell>
                 <TableCell>2023:02:20:222:22</TableCell>

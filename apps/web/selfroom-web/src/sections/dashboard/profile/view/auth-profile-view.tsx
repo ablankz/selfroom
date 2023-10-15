@@ -180,7 +180,7 @@ export default function ProfileView({ userId }: Props) {
         </Tabs>
       </Card>
 
-      {currentTab === 'profile' && <ProfileHome />}
+      {currentTab === 'profile' && <ProfileHome user={data.data}/>}
 
       {currentTab === 'followers' && (
         // <ProfileFollowers followers={_userFollowers} />
