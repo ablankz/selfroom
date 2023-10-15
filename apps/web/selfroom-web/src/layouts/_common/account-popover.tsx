@@ -50,10 +50,10 @@ export default function AccountPopover() {
       popover.onClose();
     } catch (error) {
       popover.onClose();
-      enqueueSnackbar({
-        message: t('Logout failed'),
-        variant: 'error',
-      });
+      // enqueueSnackbar({
+      //   message: t('Logout failed'),
+      //   variant: 'error',
+      // });
     }
   };
 

@@ -23,7 +23,6 @@ type Props = {
 
 export default function ProfileHome({ user }: Props) {
   const { t } = useLocales();
-
   const renderFollows = (
     <Card sx={{ py: 3, textAlign: 'center', typography: 'h4' }}>
       <Stack
@@ -65,7 +64,9 @@ export default function ProfileHome({ user }: Props) {
 
       <Stack spacing={2} sx={{ p: 3 }}>
         {user.description && (
-          <Box sx={{ typography: 'body2', whiteSpace: 'pre-wrap' }}>{user.description}</Box>
+          <Box sx={{ typography: 'body2', whiteSpace: 'pre-wrap' }}>
+            {user.description}
+          </Box>
         )}
 
         <Stack direction="row" spacing={2}>

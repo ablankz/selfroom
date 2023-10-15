@@ -29,6 +29,18 @@ export const USERS_ENDPOINTS = {
       comment: 'Delete authenticated user',
     },
     follows: {
+      followees: {
+        urlKey: '/users/*/followees',
+        method: 'GET',
+        url: (id: string) => `/users/${id}/followees`,
+        comment: 'Retrieving following users',
+      },
+      followers: {
+        urlKey: '/users/*/followers',
+        method: 'GET',
+        url: (id: string) => `/users/${id}/followers`,
+        comment: 'Retrieving follower users',
+      },
       add: {
         urlKey: '/users/*/follows',
         method: 'POST',
