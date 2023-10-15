@@ -30,9 +30,10 @@ class ChatRoomService
     string $search,
     string $is_lock,
     string $is_favorite,
-    array $categories
+    array $categories,
+    string $category_select_type,
   ) {
-    return new ChatRoomResourceCollection($usecase->handle($limit, $offset, $order, $order_opt, $search_type, $search, $is_lock, $is_favorite, $categories));
+    return new ChatRoomResourceCollection($usecase->handle($limit, $offset, $order, $order_opt, $search_type, $search, $is_lock, $is_favorite, $categories, $category_select_type));
   }
 
   public function create(

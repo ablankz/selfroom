@@ -5,7 +5,6 @@ namespace App\Usecases\RoomCategory;
 use App\Models\RoomCategory;
 use App\Usecases\Usecase;
 
-// TODO 条件の絞り込みとページネーション対応
 class GetRoomCategories extends Usecase
 {
   public function run(
@@ -14,7 +13,19 @@ class GetRoomCategories extends Usecase
     string $order,
     string $order_opt,
   ) {
-    $ret = RoomCategory::all();
+    $query = RoomCategory::query();
+
+    $order_opt = $order_opt === 'desc' ? 'desc' : 'asc';
+    switch ($order) {
+      case 'room':
+        $query = $query->withCount('hasRooms')->orderBy('has_rooms_count', $order_opt);
+      case 'name':
+      default:
+        $query = $query->orderBy('name', $order_opt);
+        break;
+    }
+
+    $ret = $query->limit($limit)->offset($offset)->get();
 
     return [
       'data' => $ret,

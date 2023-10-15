@@ -46,7 +46,11 @@ class FollowController extends Controller
     return response()->success(app()->call(
       [$this->service, 'getFollowees'],
       [
-        'user_id' => $userId
+        'user_id' => $userId,
+        'limit' => $limit,
+        'offset' => $offset,
+        'order' => $order,
+        'order_opt' => $order_opt
       ]
     ));
   }

@@ -30,7 +30,7 @@ class AdminController extends Controller
   {
     $limit = $request->limit ? max((int)urldecode($request->limit), 0) : 100;
     $offset = $request->offset ? max((int)urldecode($request->offset), 0) : 0;
-    // create | update | nickname | permission_num
+    // create | name | permission
     $order = $request->order ? urldecode($request->order) : "create";
     $order_opt = $request->order_opt ? urldecode($request->order_opt) : "asc";
 

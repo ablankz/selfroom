@@ -40,7 +40,12 @@ class ChatRoomController extends Controller
     // お気に入りか(all | true)
     $is_favorite = $request->is_favorite ? urldecode($request->is_favorite) : "all";
     // カテゴリー(aaa+bbb+・・・)
-    $categories = $request->categories ? array_unique(explode("+", urldecode(str_replace(" ", "%2B", $request->categories)))) : [];
+    $cs = $request->categories ? array_unique(explode("+", urldecode(str_replace(" ", "%2B", $request->categories)))) : [];
+    $categories = array_map(function($e){
+      return max((int)$e, 0);
+    }, $cs);
+    // カテゴリーの選択 any | all
+    $category_select_type = $request->category_select_type ? urldecode($request->category_select_type) : "any";
 
     return response()->success(app()->call(
       [$this->service, 'get'],
@@ -53,7 +58,8 @@ class ChatRoomController extends Controller
         'search' => $search,
         'is_lock' => $is_lock,
         'is_favorite' => $is_favorite,
-        'categories' => $categories
+        'categories' => $categories,
+        'category_select_type' => $category_select_type
       ]
     ));
   }

@@ -13,7 +13,7 @@ class FindUser extends Usecase
 
   public function run(string $id)
   {
-    $authFollowers = request()->user()?->user_id ? User::find(request()->user()?->user_id)->followees->pluck('user_id')->toArray() : [];
+    $authFollowers = request()->user()?->user_id ? User::find(request()->user()->user_id)->followees->pluck('user_id')->toArray() : [];
 
     $ret = User::find($id);
 
