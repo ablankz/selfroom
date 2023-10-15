@@ -2,6 +2,7 @@ import { Dialog, DialogTitle } from '@mui/material';
 import RHRegisterContent from './rh-register-content';
 import { Dispatch, SetStateAction } from 'react';
 import { RequestFilter } from '../request';
+import { useLocales } from '@/locales';
 
 type Param = {
   key: string;
@@ -28,6 +29,7 @@ export const RequestHeaderRegister = ({
     setTargetParam(undefined);
     onClose();
   };
+  const { t } = useLocales();
   return (
     <Dialog
       open={open}
@@ -35,7 +37,7 @@ export const RequestHeaderRegister = ({
       aria-labelledby="form-dialog-title"
       fullWidth
     >
-      <DialogTitle>リクエストヘッダー</DialogTitle>
+      <DialogTitle>{t('Add HEADER')}</DialogTitle>
       <RHRegisterContent
         onClose={handleClose}
         {...contentProp}

@@ -2,6 +2,7 @@ import { Dialog, DialogTitle } from '@mui/material';
 import RPRegisterContent from './rp-register-content';
 import { Dispatch, SetStateAction } from 'react';
 import { RequestFilter } from '../request';
+import { useLocales } from '@/locales';
 
 type Param = {
   key: string;
@@ -28,6 +29,7 @@ export const RequestParamRegister = ({
     setTargetParam(undefined);
     onClose();
   };
+  const { t } = useLocales();
   return (
     <Dialog
       open={open}
@@ -35,7 +37,7 @@ export const RequestParamRegister = ({
       aria-labelledby="form-dialog-title"
       fullWidth
     >
-      <DialogTitle>クエリパラム追加</DialogTitle>
+      <DialogTitle>{t('Add PARAM')}</DialogTitle>
       <RPRegisterContent
         onClose={handleClose}
         {...contentProp}

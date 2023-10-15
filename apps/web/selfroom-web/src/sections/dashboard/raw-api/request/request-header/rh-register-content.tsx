@@ -13,6 +13,7 @@ import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { useSnackbar } from '@/components/snackbar';
 import { RequestFilter } from '../request';
+import { useLocales } from '@/locales';
 
 type Param = {
   key: string;
@@ -33,21 +34,22 @@ export default function RHRegisterContent({
   filters,
 }: Props) {
   const { enqueueSnackbar } = useSnackbar();
+  const { t } = useLocales();
   const newCreate = !param;
 
   const ParamSchema = Yup.object().shape({
     key: Yup.string()
-      .required('Keyは必須です')
+      .required(t('Key is required'))
       .test(
         'already exist key',
-        'すでに存在しているKeyです.',
+        t("It's a Key that already exists"),
         function (this: Yup.TestContext, data: string) {
           return !(
             newCreate && Object.keys(filters.header).some((e) => e === data)
           );
         }
       ),
-    value: Yup.string().required('Valueは必須です'),
+    value: Yup.string().required(t('Value is required')),
   });
 
   const defaultValues = useMemo(
@@ -76,16 +78,14 @@ export default function RHRegisterContent({
       };
     });
     reset();
-    enqueueSnackbar(
-      param ? 'リクエストヘッダーを更新しました' : 'リクエストヘッダーを追加しました'
-    );
+    enqueueSnackbar(param ? t('Updated HEADER values') : t('Add BODY value'));
     onClose();
   };
 
   return (
     <DialogContent>
       <DialogContentText>
-        追加するリクエストヘッダー情報を入力してください。
+        {t('Please enter the HEADER information you wish to add')}
       </DialogContentText>
       <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
         <Box
@@ -104,10 +104,10 @@ export default function RHRegisterContent({
         </Box>
         <DialogActions>
           <Button onClick={onClose} color="primary">
-            Cancel
+            {t('Cancel')}
           </Button>
           <Button color="primary" type="submit">
-            {newCreate ? 'Add' : 'Update'}
+            {newCreate ? t('Add') : t('Update')}
           </Button>
         </DialogActions>
       </FormProvider>

@@ -4,6 +4,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { RequestQuery } from '../../view/raw-api-view';
 import { RequestFilter } from '../request';
 import { useResponsive } from '@/hooks/use-responsive';
+import { useLocales } from '@/locales';
 
 type Props = {
   loading: boolean;
@@ -17,6 +18,7 @@ export const RequestQueryButton = ({
   setRequestQuery,
 }: Props) => {
   const smUp = useResponsive('up', 'sm');
+  const { t } = useLocales();
   const handleClick = () => {
     setRequestQuery({
       endpoint: filters.name,
@@ -43,7 +45,7 @@ export const RequestQueryButton = ({
         mx: 1,
       }}
     >
-      <span>Send</span>
+      {t('Send')}
     </LoadingButton>
   );
 };

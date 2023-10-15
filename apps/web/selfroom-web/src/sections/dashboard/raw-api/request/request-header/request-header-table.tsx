@@ -16,6 +16,7 @@ import { RequestFilter } from '../request';
 import { useSnackbar } from '@/components/snackbar';
 import { RequestHeaderTableHead } from './request-header-table-head';
 import EditIcon from '@mui/icons-material/Edit';
+import { useLocales } from '@/locales';
 
 type Param = {
   key: string;
@@ -37,6 +38,7 @@ export const RequestHeaderTable = ({
 }: Props) => {
   const [selected, setSelected] = useState<string[]>([]);
   const { enqueueSnackbar } = useSnackbar();
+  const { t } = useLocales();
 
   const paramKeys = useMemo(() => Object.keys(params), [params]);
 
@@ -82,7 +84,7 @@ export const RequestHeaderTable = ({
       };
     });
     enqueueSnackbar({
-      message: `リクエストヘッダーを削除しました`,
+      message: t('HEADER removed'),
       variant: 'success',
     });
     setSelected([]);
@@ -107,7 +109,7 @@ export const RequestHeaderTable = ({
           <DeleteIcon />
         </IconButton>
         <Button variant="contained" color="primary" onClick={handleOpen}>
-          ヘッダー追加
+          {t('Add HEADER')}
         </Button>
       </Box>
       <TableContainer>

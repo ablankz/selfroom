@@ -9,6 +9,7 @@ import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import { endpointMatch } from '@/utils/rawAxios';
 import { useSnackbar } from '@/components/snackbar';
 import { DEFAULT_HEADERS } from '@/constants/endpoint';
+import { useLocales } from '@/locales';
 
 type Props = {
   filters: RequestFilter;
@@ -31,6 +32,7 @@ export const RequestHeader = ({ filters, setFilters }: Props) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const { enqueueSnackbar } = useSnackbar();
+  const { t } = useLocales();
 
   const handleComplete = () => {
     const matchPoint = endpointMatch(filters.method, filters.name);
@@ -38,7 +40,7 @@ export const RequestHeader = ({ filters, setFilters }: Props) => {
     if (!matchPoint) {
       enqueueSnackbar({
         variant: 'error',
-        message: 'パターンの一致するエンドポイントが見つかりません',
+        message: t('No endpoint matching pattern found'),
       });
       return;
     }
@@ -51,7 +53,7 @@ export const RequestHeader = ({ filters, setFilters }: Props) => {
     }));
     enqueueSnackbar({
       variant: 'success',
-      message: `${matchPoint.urlKey}でのheader補完に成功しました`,
+      message: t('Successful HEADER completion'),
     });
   };
 
@@ -59,7 +61,7 @@ export const RequestHeader = ({ filters, setFilters }: Props) => {
     <Box>
       <Typography variant="h6" sx={{ mb: 2 }}>
         Request Header
-        <Tooltip title="Complete Test Header">
+        <Tooltip title={t('Complement with HEADER for testing')}>
           <IconButton color="primary" onClick={handleComplete}>
             <AddCircleOutlinedIcon />
           </IconButton>
@@ -86,7 +88,7 @@ export const RequestHeader = ({ filters, setFilters }: Props) => {
             <EmptyContent
               title="NoItem"
               description={
-                isDesktop ? '登録されたリクエストヘッダーがありません' : ''
+                isDesktop ? t('No registered BODY') : ''
               }
               sx={{
                 borderRadius: 1.5,
@@ -100,7 +102,7 @@ export const RequestHeader = ({ filters, setFilters }: Props) => {
               }}
               onClick={handleOpen}
             >
-              ヘッダー追加
+              {t('Add')}
             </Button>
           </>
         )}
