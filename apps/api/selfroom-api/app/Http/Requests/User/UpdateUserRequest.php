@@ -24,6 +24,12 @@ class UpdateUserRequest extends ApiRequest
     return [
       'nickname' => ['required', 'string'],
       'profilePhoto' => ['file', 'max:10240', 'mimes:jpg,jpeg,png,gif'],
+      'country' => ['string'],
+      'description' => ['string'],
+      'email' => ['string'],
+      'company' => ['string'],
+      'role' => ['string'],
+      'school' => ['string']
     ];
   }
 }

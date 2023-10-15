@@ -56,7 +56,13 @@ class UserService
     UpdateUser $usecase,
     string $user_id,
     string $nickname,
-    UploadedFile | null $profile_photo_url
+    UploadedFile | null $profile_photo_url,
+    string | null $country,
+    string | null $description,
+    string | null $email,
+    string | null $company,
+    string | null $role,
+    string | null $school
   ) {
     $current = request()->user()->user?->profile_photo_url;
 
@@ -75,7 +81,13 @@ class UserService
     return $usecase->handle(
       $user_id,
       $nickname,
-      $imgPath
+      $imgPath,
+      $country,
+      $description,
+      $email,
+      $company,
+      $role,
+      $school
     );
   }
 

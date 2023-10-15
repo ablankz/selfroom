@@ -74,6 +74,12 @@ class UserController extends Controller
         'user_id' => $request->user()->user_id,
         'nickname' => $request->get('nickname'),
         'profile_photo_url' => $request->file('profilePhoto'),
+        'country' => $request->get('country'),
+        'description' => $request->get('description'),
+        'email' => $request->get('email'),
+        'company' => $request->get('company'),
+        'role' => $request->get('role'),
+        'school' => $request->get('school')
       ]
     ));
   }
