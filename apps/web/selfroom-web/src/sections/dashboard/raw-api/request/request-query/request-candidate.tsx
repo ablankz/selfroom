@@ -2,7 +2,6 @@ import {
   Avatar,
   Link,
   ListItem,
-  Tooltip,
   Typography,
   useTheme,
 } from '@mui/material';
@@ -27,76 +26,74 @@ export const RequestCandidate = ({ url, onClick, filters }: Props) => {
   const { t } = useLocales();
 
   return (
-    <Tooltip title={url.urlKey} sx={{zIndex: 9999}}>
-      <ListItem
+    <ListItem
+      key={key}
+      onClick={() => onClick(url.urlKey)}
+      sx={{
+        cursor: 'pointer',
+        backgroundColor: theme.palette.background.default,
+        boxShadow: theme.shadows[2],
+        borderRadius: 3,
+        ':hover': {
+          backgroundColor: theme.palette.background.neutral,
+          boxShadow: theme.shadows[16],
+        },
+      }}
+    >
+      <Avatar
+        sizes=""
         key={key}
-        onClick={() => onClick(url.urlKey)}
+        variant="rounded"
         sx={{
-          cursor: 'pointer',
-          backgroundColor: theme.palette.background.default,
-          boxShadow: theme.shadows[2],
-          borderRadius: 3,
-          ':hover': {
-            backgroundColor: theme.palette.background.neutral,
-            boxShadow: theme.shadows[16],
-          },
+          width: 32,
+          height: 32,
+          flexShrink: 0,
+          mr: 1.5,
+          borderRadius: 1,
+          bgcolor: RequestMethods[url.method].color || 'orange',
         }}
       >
-        <Avatar
-          sizes=""
-          key={key}
-          variant="rounded"
+        <Typography
+          variant="caption"
+          component="span"
           sx={{
-            width: 32,
-            height: 32,
-            flexShrink: 0,
-            mr: 1.5,
-            borderRadius: 1,
-            bgcolor: RequestMethods[url.method].color || 'orange',
+            fontSize: 1.2,
           }}
         >
+          {url.method}
+        </Typography>
+      </Avatar>
+      <Link
+        key={filters.name}
+        underline="none"
+        sx={{ ml: 0.8 }}
+        overflow="hidden"
+      >
+        {parts.map((part, index) => (
           <Typography
-            variant="caption"
+            key={index}
             component="span"
+            color={part.highlight ? 'primary' : 'textPrimary'}
             sx={{
-              fontSize: 1.2,
+              typography: 'body2',
+              fontWeight: part.highlight
+                ? 'fontWeightSemiBold'
+                : 'fontWeightMedium',
             }}
           >
-            {url.method}
+            {part.text}
           </Typography>
-        </Avatar>
-        <Link
-          key={filters.name}
-          underline="none"
-          sx={{ ml: 0.8 }}
-          overflow="hidden"
+        ))}
+        <br />
+        <Typography
+          sx={{ ml: 0.4 }}
+          variant="caption"
+          component="span"
+          color="text.disabled"
         >
-          {parts.map((part, index) => (
-            <Typography
-              key={index}
-              component="span"
-              color={part.highlight ? 'primary' : 'textPrimary'}
-              sx={{
-                typography: 'body2',
-                fontWeight: part.highlight
-                  ? 'fontWeightSemiBold'
-                  : 'fontWeightMedium',
-              }}
-            >
-              {part.text}
-            </Typography>
-          ))}
-          <br />
-          <Typography
-            sx={{ ml: 0.4 }}
-            variant="caption"
-            component="span"
-            color="text.disabled"
-          >
-            {t(url.comment)}
-          </Typography>
-        </Link>
-      </ListItem>
-    </Tooltip>
+          {t(url.comment)}
+        </Typography>
+      </Link>
+    </ListItem>
   );
 };

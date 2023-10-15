@@ -28,10 +28,6 @@ export const RequestCandidatesPanel = ({
   return (
     <Card
       component={m.div}
-      whileHover={{
-        scale: 1.05,
-        transition: { duration: 0.8 },
-      }}
       animate={{
         scale: [1, 1.005, 1.01, 1.005, 1],
         opacity: [0, 0.2, 0.3, 0.8, 1.0],

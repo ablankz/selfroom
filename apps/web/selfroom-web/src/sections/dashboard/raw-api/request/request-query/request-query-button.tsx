@@ -3,6 +3,7 @@ import SendIcon from '@mui/icons-material/Send';
 import { Dispatch, SetStateAction } from 'react';
 import { RequestQuery } from '../../view/raw-api-view';
 import { RequestFilter } from '../request';
+import { useResponsive } from '@/hooks/use-responsive';
 
 type Props = {
   loading: boolean;
@@ -15,6 +16,7 @@ export const RequestQueryButton = ({
   filters,
   setRequestQuery,
 }: Props) => {
+  const smUp = useResponsive('up', 'sm');
   const handleClick = () => {
     setRequestQuery({
       endpoint: filters.name,
@@ -28,6 +30,7 @@ export const RequestQueryButton = ({
 
   return (
     <LoadingButton
+      fullWidth={smUp ? false : true}
       onClick={handleClick}
       size="large"
       endIcon={<SendIcon />}

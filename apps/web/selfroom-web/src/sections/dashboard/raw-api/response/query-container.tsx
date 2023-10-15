@@ -94,7 +94,7 @@ export const QueryContainer = ({
         }));
         setLoading(false);
         
-        // await initialize();
+        await initialize();
       })();
     }
   }, [requestQuery.dispatch]);
