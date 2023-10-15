@@ -1,9 +1,9 @@
-export type RoomCategory = {
+export interface RoomCategory {
   roomCategoryId: number;
   name: string;
 };
 
-export type SimpleRoomCategory = {
+export interface SimpleRoomCategory {
   roomCategoryId: number;
   name: string;
 };

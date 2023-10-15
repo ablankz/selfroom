@@ -1,6 +1,6 @@
 import { ApplicationResponse } from '../application-response';
 
-type ResponseData = {
+interface ResponseData {
   redirectUrl: string;
 };
 

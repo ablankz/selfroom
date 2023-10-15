@@ -1,6 +1,6 @@
 import { SimpleChatRoom } from '.';
 
-export type User = {
+export interface User {
   userId: string;
   nickname: string;
   profilePhotoUrl: string | null;
@@ -18,7 +18,7 @@ export type User = {
   updatedAt: string;
 };
 
-export type SimpleUser = {
+export interface SimpleUser {
   userId: string;
   nickname: string;
   profilePhotoUrl: string | null;

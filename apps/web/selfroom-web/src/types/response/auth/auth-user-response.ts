@@ -1,7 +1,7 @@
 import { SimpleAdmin, SimpleRole } from '@/types/entity';
 import { ApplicationResponse } from '../application-response';
 
-export type AuthUserData = {
+export interface AuthUserData {
   userId?: string;
   adminId?: string;
   nickname: string;

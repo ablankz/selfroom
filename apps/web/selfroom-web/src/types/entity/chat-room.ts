@@ -1,6 +1,6 @@
 import { SimpleRoomCategory } from ".";
 
-export type ChatRoom = {
+export interface ChatRoom {
   chatRoomId: string;
   name: string;
   userNum: number;
@@ -12,7 +12,7 @@ export type ChatRoom = {
   updatedAt: string;
 };
 
-export type SimpleChatRoom = {
+export interface SimpleChatRoom {
   chatRoomId: string;
   name: string;
   userNum: number;
