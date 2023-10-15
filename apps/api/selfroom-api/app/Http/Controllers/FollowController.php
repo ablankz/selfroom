@@ -15,6 +15,26 @@ class FollowController extends Controller
     $this->service = $service;
   }
 
+  public function getFollowers(Request $request, string $userId): JsonResponse
+  {
+    return response()->success(app()->call(
+      [$this->service, 'getFollowers'],
+      [
+        'user_id' => $userId
+      ]
+    ));
+  }
+
+  public function getFollowees(Request $request, string $userId): JsonResponse
+  {
+    return response()->success(app()->call(
+      [$this->service, 'getFollowees'],
+      [
+        'user_id' => $userId
+      ]
+    ));
+  }
+
   public function add(Request $request, string $userId): JsonResponse
   {
     return response()->success(app()->call(
