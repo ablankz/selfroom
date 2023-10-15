@@ -182,5 +182,13 @@
   "Company": "会社",
   "Role": "役職",
   "School": "学校",
-  "Country": "国"
+  "Country": "国",
+  "Retrieving following users": "フォローユーザーの取得",
+  "Retrieving follower users": "フォロワーユーザーの取得",
+  "Successfully followed up": "フォローしました",
+  "Successfully unfollowed": "フォローを解除しました",
+  "Failed follow up": "フォローに失敗しました",
+  "Failed unfollow": "フォローの解除に失敗しました",
+  "Not a single follower": "フォロワーが一人もいません",
+  "None of the users are currently being followed": "フォロー中のユーザーが一人もいません"
 }

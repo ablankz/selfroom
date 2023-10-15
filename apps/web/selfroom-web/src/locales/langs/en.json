@@ -182,5 +182,13 @@
   "Company": "Company",
   "Role": "Role",
   "School": "School",
-  "Country": "Country"
+  "Country": "Country",
+  "Retrieving following users": "Retrieving following users",
+  "Retrieving follower users": "Retrieving follower users",
+  "Successfully followed up": "Successfully followed up",
+  "Successfully unfollowed": "Successfully unfollowed",
+  "Failed follow up": "Failed follow up",
+  "Failed unfollow": "Failed unfollow",
+  "Not a single follower": "Not a single follower",
+  "None of the users are currently being followed": "None of the users are currently being followed"
 }

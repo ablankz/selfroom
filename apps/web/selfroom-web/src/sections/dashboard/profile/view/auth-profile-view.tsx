@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, Suspense, useEffect } from 'react';
 import { m } from 'framer-motion';
 // @mui
 import Tab from '@mui/material/Tab';
@@ -19,12 +19,12 @@ import ProfileCover from '../profile-cover';
 // import ProfileFollowers from '../profile-followers';
 import { useLocales } from '@/locales';
 import { useGetUserQuery } from '@/api/users/useGetUserQuery';
-import { NotFoundView } from '@/sections/error';
 import { MotionContainer, varBounce } from '@/components/animate';
-import { Button, Typography } from '@mui/material';
+import { Button, Skeleton, Typography } from '@mui/material';
 import { PageNotFoundIllustration } from '@/assets/illustrations';
 import { RouterLink } from '@/routes/components';
-import { User } from '@/types/entity';
+import ProfileFollowers from '../profile-followers';
+import ProfileFollows from '../profile-follows';
 
 // ----------------------------------------------------------------------
 
@@ -37,12 +37,12 @@ const TABS = [
   {
     value: 'followers',
     label: 'Followers',
-    icon: <Iconify icon="solar:heart-bold" width={24} />,
+    icon: <Iconify icon="solar:users-group-rounded-bold" width={24} />,
   },
   {
-    value: 'friends',
-    label: 'Friends',
-    icon: <Iconify icon="solar:users-group-rounded-bold" width={24} />,
+    value: 'follows',
+    label: 'Follows',
+    icon: <Iconify icon="solar:heart-bold" width={24} />,
   },
   {
     value: 'gallery',
@@ -60,22 +60,21 @@ type Props = {
 export default function ProfileView({ userId }: Props) {
   const settings = useSettingsContext();
   const { t } = useLocales();
-  const { data, status } = useGetUserQuery(userId);
+  const { data, refetch } = useGetUserQuery(userId);
+  const [dispatch, setDispatch] = useState(false);
 
-  const [searchFriends, setSearchFriends] = useState('');
+  useEffect(() => {
+    if (dispatch) {
+      refetch();
+      setDispatch(false);
+    }
+  }, [dispatch]);
 
   const [currentTab, setCurrentTab] = useState('profile');
 
   const handleChangeTab = useCallback(
-    (event: React.SyntheticEvent, newValue: string) => {
+    (_: React.SyntheticEvent, newValue: string) => {
       setCurrentTab(newValue);
-    },
-    []
-  );
-
-  const handleSearchFriends = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setSearchFriends(event.target.value);
     },
     []
   );
@@ -180,20 +179,18 @@ export default function ProfileView({ userId }: Props) {
         </Tabs>
       </Card>
 
-      {currentTab === 'profile' && <ProfileHome user={data.data}/>}
+      {currentTab === 'profile' && <ProfileHome user={data.data} />}
 
       {currentTab === 'followers' && (
-        // <ProfileFollowers followers={_userFollowers} />
-        <h1>followers</h1>
+        <Suspense fallback={<Skeleton variant="rounded" height={400} />}>
+          <ProfileFollowers userId={userId} setDispatch={setDispatch} />
+        </Suspense>
       )}
 
-      {currentTab === 'friends' && (
-        // <ProfileFriends
-        //   friends={_userFriends}
-        //   searchFriends={searchFriends}
-        //   onSearchFriends={handleSearchFriends}
-        // />
-        <h1>friends</h1>
+      {currentTab === 'follows' && (
+        <Suspense fallback={<Skeleton variant="rounded" height={400} />}>
+          <ProfileFollows userId={userId} setDispatch={setDispatch} />
+        </Suspense>
       )}
 
       {currentTab === 'gallery' && (
