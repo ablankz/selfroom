@@ -106,16 +106,20 @@ function FolloweeItem({ followee, authId, setDispatch }: FolloweeItemProps) {
         message: t('Successfully followed up'),
         variant: 'success',
       });
-    } else if (cancelStatus === 'success') {
-      setDispatch(true);
-      enqueueSnackbar({
-        message: t('Successfully unfollowed'),
-        variant: 'success',
-      });
     } else if (followStatus === 'error') {
       enqueueSnackbar({
         message: t('Failed follow up'),
         variant: 'error',
+      });
+    }
+  }, [followStatus]);
+
+  useEffect(() => {
+    if (cancelStatus === 'success') {
+      setDispatch(true);
+      enqueueSnackbar({
+        message: t('Successfully unfollowed'),
+        variant: 'success',
       });
     } else if (cancelStatus === 'error') {
       enqueueSnackbar({
@@ -123,7 +127,7 @@ function FolloweeItem({ followee, authId, setDispatch }: FolloweeItemProps) {
         variant: 'error',
       });
     }
-  }, [followStatus, cancelStatus]);
+  }, [cancelStatus]);
 
   return (
     <Card

@@ -148,7 +148,7 @@ export default function ProfileView({ userId }: Props) {
           height: 290,
         }}
       >
-        <ProfileCover user={data.data} />
+        <ProfileCover user={data.data} setDispatch={setDispatch} />
 
         <Tabs
           value={currentTab}

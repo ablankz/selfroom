@@ -24,7 +24,7 @@ import EmptyContent from '@/components/empty-content';
 
 type Props = {
   userId: string;
-  setDispatch: Dispatch<SetStateAction<boolean>>
+  setDispatch: Dispatch<SetStateAction<boolean>>;
 };
 
 export default function ProfileFollowers({ userId, setDispatch }: Props) {
@@ -82,7 +82,7 @@ export default function ProfileFollowers({ userId, setDispatch }: Props) {
 type FollowerItemProps = {
   follower: UserFollowerData;
   authId: string;
-  setDispatch: Dispatch<SetStateAction<boolean>>
+  setDispatch: Dispatch<SetStateAction<boolean>>;
 };
 
 function FollowerItem({ follower, authId, setDispatch }: FollowerItemProps) {
@@ -106,24 +106,28 @@ function FollowerItem({ follower, authId, setDispatch }: FollowerItemProps) {
         message: t('Successfully followed up'),
         variant: 'success',
       });
-    } else if (cancelStatus === 'success') {
+    } else if (followStatus === 'error') {
+      enqueueSnackbar({
+        message: t('Failed follow up'),
+        variant: 'error',
+      });
+    }
+  }, [followStatus]);
+
+  useEffect(() => {
+    if (cancelStatus === 'success') {
       setDispatch(true);
       enqueueSnackbar({
         message: t('Successfully unfollowed'),
         variant: 'success',
       });
-    } else if (followStatus === 'error') {
-      enqueueSnackbar({
-        message: t('Failed follow up'),
-        variant: 'success',
-      });
     } else if (cancelStatus === 'error') {
       enqueueSnackbar({
         message: t('Failed unfollow'),
-        variant: 'success',
+        variant: 'error',
       });
     }
-  }, [followStatus, cancelStatus]);
+  }, [cancelStatus]);
 
   return (
     <Card
