@@ -17,9 +17,15 @@ class ChatService
     return new ChatResource($usecase->handle($chat_id));
   }
 
-  public function get(GetChats $usecase, string $chat_room_id)
-  {
-    return new ChatResourceCollection($usecase->handle());
+  public function get(
+    GetChats $usecase,
+    string $chat_room_id,
+    int $limit,
+    int $offset,
+    string $order,
+    string $order_opt
+  ) {
+    return new ChatResourceCollection($usecase->handle($chat_room_id, $limit, $offset, $order, $order_opt));
   }
 
   public function create(

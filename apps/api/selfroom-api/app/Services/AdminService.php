@@ -23,9 +23,14 @@ class AdminService
     return new AdminResource($usecase->handle($admin_id));
   }
 
-  public function get(GetAdmins $usecase)
-  {
-    return new SimplifiedAdminResourceCollection($usecase->handle());
+  public function get(
+    GetAdmins $usecase,
+    int $limit,
+    int $offset,
+    string $order,
+    string $order_opt
+  ) {
+    return new SimplifiedAdminResourceCollection($usecase->handle($limit, $offset, $order, $order_opt));
   }
 
   public function create(

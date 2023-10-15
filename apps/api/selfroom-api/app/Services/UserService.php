@@ -24,9 +24,14 @@ class UserService
     return new UserCardResource($usecase->handle($user_id));
   }
 
-  public function get(GetUsers $usecase)
-  {
-    return new SimplifiedUserResourceCollection($usecase->handle());
+  public function get(
+    GetUsers $usecase,
+    int $limit,
+    int $offset,
+    string $order,
+    string $order_opt,
+  ) {
+    return new SimplifiedUserResourceCollection($usecase->handle($limit, $offset, $order, $order_opt));
   }
 
   public function create(

@@ -10,14 +10,26 @@ use App\Usecases\Follow\GetFollowers;
 
 class FollowService
 {
-  public function getFollowers(GetFollowers $usecase, string $user_id)
-  {
-    return new UserCardResourceCollection($usecase->handle($user_id));
+  public function getFollowers(
+    GetFollowers $usecase,
+    string $user_id,
+    int $limit,
+    int $offset,
+    string $order,
+    string $order_opt
+  ) {
+    return new UserCardResourceCollection($usecase->handle($user_id, $limit, $offset, $order, $order_opt));
   }
 
-  public function getFollowees(GetFollowees $usecase, string $user_id)
-  {
-    return new UserCardResourceCollection($usecase->handle($user_id));
+  public function getFollowees(
+    GetFollowees $usecase,
+    string $user_id,
+    int $limit,
+    int $offset,
+    string $order,
+    string $order_opt
+  ) {
+    return new UserCardResourceCollection($usecase->handle($user_id, $limit, $offset, $order, $order_opt));
   }
 
   public function add(Follow $usecase, string $follower_id, string $followee_id)

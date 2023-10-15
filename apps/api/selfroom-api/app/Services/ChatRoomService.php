@@ -20,9 +20,19 @@ class ChatRoomService
     return new ChatRoomResource($usecase->handle($chat_room_id));
   }
 
-  public function get(GetChatRooms $usecase)
-  {
-    return new ChatRoomResourceCollection($usecase->handle());
+  public function get(
+    GetChatRooms $usecase,
+    int $limit,
+    int $offset,
+    string $order,
+    string $order_opt,
+    string $search_type,
+    string $search,
+    string $is_lock,
+    string $is_favorite,
+    array $categories
+  ) {
+    return new ChatRoomResourceCollection($usecase->handle($limit, $offset, $order, $order_opt, $search_type, $search, $is_lock, $is_favorite, $categories));
   }
 
   public function create(

@@ -17,9 +17,14 @@ class RoomCategoryService
     return new RoomCategoryResource($usecase->handle($room_category_id));
   }
 
-  public function get(GetRoomCategories $usecase)
-  {
-    return new SimplifiedRoomCategoryResourceCollection($usecase->handle());
+  public function get(
+    GetRoomCategories $usecase,
+    int $limit,
+    int $offset,
+    string $order,
+    string $order_opt,
+  ) {
+    return new SimplifiedRoomCategoryResourceCollection($usecase->handle($limit, $offset, $order, $order_opt));
   }
 
   public function create(

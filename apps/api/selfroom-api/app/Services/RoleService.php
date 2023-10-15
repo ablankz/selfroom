@@ -14,8 +14,13 @@ class RoleService
     return new RoleResource($usecase->handle($role_id));
   }
 
-  public function get(GetRoles $usecase)
-  {
-    return new SimplifiedRoleResourceCollection($usecase->handle());
+  public function get(
+    GetRoles $usecase,
+    int $limit,
+    int $offset,
+    string $order,
+    string $order_opt
+  ) {
+    return new SimplifiedRoleResourceCollection($usecase->handle($limit, $offset, $order, $order_opt));
   }
 }
