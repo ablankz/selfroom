@@ -28,6 +28,14 @@ export const USERS_ENDPOINTS = {
       url: '/users',
       comment: 'Delete authenticated user',
     },
+    favorites: {
+      favorites: {
+        urlKey: '/users/*/favorites',
+        method: 'GET',
+        url: (id: string) => `/users/${id}/favorites`,
+        comment: 'Retrieving favorite chat rooms',
+      },
+    },
     follows: {
       followees: {
         urlKey: '/users/*/followees',

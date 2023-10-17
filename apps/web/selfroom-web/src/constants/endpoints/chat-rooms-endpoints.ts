@@ -75,12 +75,6 @@ export const CHAT_ROOMS_ENDPOINTS = {
       comment: 'Leaving the chat room',
     },
     favorites: {
-      favors: {
-        urlKey: '/users/*/favors',
-        method: 'GET',
-        url: (id: string) => `/users/${id}/favors`,
-        comment: 'Retrieving chat room favors',
-      },
       add: {
         urlKey: '/chat-rooms/*/favorites',
         method: 'POST',
