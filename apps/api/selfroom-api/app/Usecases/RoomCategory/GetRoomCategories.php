@@ -12,6 +12,7 @@ class GetRoomCategories extends Usecase
     int $offset,
     string $order,
     string $order_opt,
+    bool $with_total_count
   ) {
     $query = RoomCategory::query();
 
@@ -25,10 +26,21 @@ class GetRoomCategories extends Usecase
         break;
     }
 
+    $data = [];
+
+    if ($with_total_count) {
+      $dataQuery = clone $query;
+      $count = $dataQuery->count();
+      $data = [
+        ...$data,
+        'total_count' => $count
+      ];
+    }
+
     $ret = $query->limit($limit)->offset($offset)->get();
 
     return [
-      'data' => $ret,
+      'data' => !count($data) ? $ret : ['data' => $ret, ...$data],
       'code' => self::SUCCESS
     ];
   }

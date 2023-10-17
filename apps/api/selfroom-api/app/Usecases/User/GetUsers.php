@@ -12,11 +12,12 @@ class GetUsers extends Usecase
     int $offset,
     string $order,
     string $order_opt,
+    bool $with_total_count
   ) {
     $query = User::query();
 
     $order_opt = $order_opt === 'desc' ? 'desc' : 'asc';
-    switch($order){
+    switch ($order) {
       case 'name':
         $query = $query->orderBy('nickname', $order_opt);
         break;
@@ -29,10 +30,21 @@ class GetUsers extends Usecase
         break;
     }
 
+    $data = [];
+
+    if ($with_total_count) {
+      $dataQuery = clone $query;
+      $count = $dataQuery->count();
+      $data = [
+        ...$data,
+        'total_count' => $count
+      ];
+    }
+
     $ret = $query->limit($limit)->offset($offset)->get();
 
     return [
-      'data' => $ret,
+      'data' => !count($data) ? $ret : ['data' => $ret, ...$data],
       'code' => self::SUCCESS
     ];
   }

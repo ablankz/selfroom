@@ -12,7 +12,8 @@ class GetFollowees extends Usecase
     int $limit,
     int $offset,
     string $order,
-    string $order_opt
+    string $order_opt,
+    bool $with_total_count
   )
   {
     $authFollowers = request()->user()?->user_id ? User::find(request()->user()->user_id)->followees->pluck('user_id')->toArray() : [];
@@ -30,13 +31,24 @@ class GetFollowees extends Usecase
         break;
     }
 
+    $data = [];
+
+    if ($with_total_count) {
+      $dataQuery = clone $query;
+      $count = $dataQuery->count();
+      $data = [
+        ...$data,
+        'total_count' => $count
+      ];
+    }
+
     $ret = $query->limit($limit)->offset($offset)->get()->map(function ($user) use ($authFollowers) {
       $user->is_follow = in_array($user->user_id, $authFollowers);
       return $user;
     });
 
     return [
-      'data' => $ret,
+      'data' => !count($data) ? $ret : ['data' => $ret, ...$data],
       'code' => self::SUCCESS
     ];
   }

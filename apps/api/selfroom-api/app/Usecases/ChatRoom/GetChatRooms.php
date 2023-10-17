@@ -19,7 +19,8 @@ class GetChatRooms extends Usecase
     string $is_lock,
     string $is_favorite,
     array $categories,
-    string $category_select_type
+    string $category_select_type,
+    bool $with_total_count
   ) {
     $query = ChatRoom::query()->with('categories');
 
@@ -78,10 +79,21 @@ class GetChatRooms extends Usecase
       }, '>=', $selectCount);
     }
 
+    $data = [];
+
+    if ($with_total_count) {
+      $dataQuery = clone $query;
+      $count = $dataQuery->count();
+      $data = [
+        ...$data,
+        'total_count' => $count
+      ];
+    }
+
     $ret = $query->limit($limit)->offset($offset)->get();
 
     return [
-      'data' => $ret,
+      'data' => !count($data) ? $ret : ['data' => $ret, ...$data],
       'code' => self::SUCCESS
     ];
   }

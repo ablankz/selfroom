@@ -13,6 +13,7 @@ class GetChats extends Usecase
     int $offset,
     string $order,
     string $order_opt,
+    bool $with_total_count
   ) {
     $query = Chat::query()->with(['user', 'room'])->where('chats.chat_room_id', $chat_room_id);
 
@@ -24,10 +25,21 @@ class GetChats extends Usecase
         break;
     }
 
+    $data = [];
+
+    if ($with_total_count) {
+      $dataQuery = clone $query;
+      $count = $dataQuery->count();
+      $data = [
+        ...$data,
+        'total_count' => $count
+      ];
+    }
+
     $ret = $query->limit($limit)->offset($offset)->get();
 
     return [
-      'data' => $ret,
+      'data' => !count($data) ? $ret : ['data' => $ret, ...$data],
       'code' => self::SUCCESS
     ];
   }
