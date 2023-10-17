@@ -23,9 +23,10 @@ class ChatService
     int $limit,
     int $offset,
     string $order,
-    string $order_opt
+    string $order_opt,
+    bool $with_total_count
   ) {
-    return new ChatResourceCollection($usecase->handle($chat_room_id, $limit, $offset, $order, $order_opt));
+    return new ChatResourceCollection($usecase->handle($chat_room_id, $limit, $offset, $order, $order_opt, $with_total_count));
   }
 
   public function create(

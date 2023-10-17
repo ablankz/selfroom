@@ -16,9 +16,10 @@ class FollowService
     int $limit,
     int $offset,
     string $order,
-    string $order_opt
+    string $order_opt,
+    bool $with_total_count
   ) {
-    return new UserCardResourceCollection($usecase->handle($user_id, $limit, $offset, $order, $order_opt));
+    return new UserCardResourceCollection($usecase->handle($user_id, $limit, $offset, $order, $order_opt, $with_total_count));
   }
 
   public function getFollowees(
@@ -27,9 +28,10 @@ class FollowService
     int $limit,
     int $offset,
     string $order,
-    string $order_opt
+    string $order_opt,
+    bool $with_total_count
   ) {
-    return new UserCardResourceCollection($usecase->handle($user_id, $limit, $offset, $order, $order_opt));
+    return new UserCardResourceCollection($usecase->handle($user_id, $limit, $offset, $order, $order_opt, $with_total_count));
   }
 
   public function add(Follow $usecase, string $follower_id, string $followee_id)

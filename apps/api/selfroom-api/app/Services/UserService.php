@@ -7,7 +7,6 @@ use App\Enums\ApplicationCode;
 use App\Exceptions\ApplicationLoggerException;
 use App\Http\Resources\User\SimplifiedUserResourceCollection;
 use App\Http\Resources\User\UserCardResource;
-use App\Http\Resources\User\UserResource;
 use App\Usecases\User\CreateUser;
 use App\Usecases\User\DeleteUser;
 use App\Usecases\User\FindUser;
@@ -30,8 +29,9 @@ class UserService
     int $offset,
     string $order,
     string $order_opt,
+    bool $with_total_count
   ) {
-    return new SimplifiedUserResourceCollection($usecase->handle($limit, $offset, $order, $order_opt));
+    return new SimplifiedUserResourceCollection($usecase->handle($limit, $offset, $order, $order_opt, $with_total_count));
   }
 
   public function create(

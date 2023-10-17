@@ -19,8 +19,9 @@ class RoleService
     int $limit,
     int $offset,
     string $order,
-    string $order_opt
+    string $order_opt,
+    bool $with_total_count
   ) {
-    return new SimplifiedRoleResourceCollection($usecase->handle($limit, $offset, $order, $order_opt));
+    return new SimplifiedRoleResourceCollection($usecase->handle($limit, $offset, $order, $order_opt, $with_total_count));
   }
 }

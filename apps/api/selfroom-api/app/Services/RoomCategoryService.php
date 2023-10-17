@@ -23,8 +23,9 @@ class RoomCategoryService
     int $offset,
     string $order,
     string $order_opt,
+    bool $with_total_count
   ) {
-    return new SimplifiedRoomCategoryResourceCollection($usecase->handle($limit, $offset, $order, $order_opt));
+    return new SimplifiedRoomCategoryResourceCollection($usecase->handle($limit, $offset, $order, $order_opt, $with_total_count));
   }
 
   public function create(
