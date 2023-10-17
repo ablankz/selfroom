@@ -225,5 +225,6 @@
   "Add PARAM value": "PARAMの値を追加しました",
   "Please enter the PARAM information you wish to add": "追加するPARAM情報を入力してください",
   "Add PARAM": "PARAMを追加",
-  "PARAM removed": "PARAMを削除しました"
+  "PARAM removed": "PARAMを削除しました",
+  "Retrieving chat room favors": "チャットルームのお気に入りユーザーの取得"
 }
