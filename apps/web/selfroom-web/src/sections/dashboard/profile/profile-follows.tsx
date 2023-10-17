@@ -11,16 +11,27 @@ import { paths } from '@/routes/paths';
 import { useUserFollowQuery } from '@/api/follows/useUserFollowQuery';
 import { useUserFollowCancelQuery } from '@/api/follows/useUserFollowCancelQuery';
 import { useAuthContext } from '@/auth/hooks';
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useSnackbar } from '@/components/snackbar';
 import { useLocales } from '@/locales';
-import { Button } from '@mui/material';
+import { Button, Pagination, paginationClasses } from '@mui/material';
 import EmptyContent from '@/components/empty-content';
 import { useGetFolloweesQuery } from '@/api/follows/useGetFolloweesQuery';
-import { UserFolloweeData } from '@/types/response/user/user-followees-response';
+import { UserFolloweeData, UserFolloweesResponse } from '@/types/response/user/user-followees-response';
+import { QueryObserverResult, RefetchOptions, RefetchQueryFilters } from '@tanstack/react-query';
 
 // ----------------------------------------------------------------------
+
+const PER_PAGE = 9;
 
 type Props = {
   userId: string;
@@ -28,40 +39,56 @@ type Props = {
 };
 
 export default function ProfileFollows({ userId, setDispatch }: Props) {
-  const { data, refetch } = useGetFolloweesQuery(userId);
   const { user } = useAuthContext();
   const { t } = useLocales();
+  const [page, setPage] = useState(1);
+  const [totalCount, setTotalCount] = useState<number | undefined>(undefined);
 
-  useEffect(() => {
-    refetch();
-  }, [user]);
+  const handlePageChange = useCallback(
+    (_: ChangeEvent<unknown>, page: number) => {
+      setPage(page);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
+
+  const resetPage = useCallback(() => {
+    setPage(1);
+  }, [setPage]);
+
+  const pageCount = useMemo(
+    () => Math.ceil((totalCount || 0) / PER_PAGE),
+    [totalCount]
+  );
 
   return (
     <>
-      {data?.data && !!data.data.length ? (
+      {typeof totalCount === 'undefined' || totalCount !== 0 ? (
         <>
           <Typography variant="h4" sx={{ my: 5 }}>
             Followees
           </Typography>
-
-          <Box
-            gap={3}
-            display="grid"
-            gridTemplateColumns={{
-              xs: 'repeat(1, 1fr)',
-              sm: 'repeat(2, 1fr)',
-              md: 'repeat(3, 1fr)',
+          <FolloweeTable
+            authId={user?.userId || user?.adminId || ''}
+            userId={userId}
+            page={page}
+            setDispatch={setDispatch}
+            setTotalCount={setTotalCount}
+            resetPage={resetPage}
+          />
+          <Pagination
+            shape="rounded"
+            color="primary"
+            onChange={handlePageChange}
+            count={pageCount}
+            page={page}
+            sx={{
+              mt: 8,
+              [`& .${paginationClasses.ul}`]: {
+                justifyContent: 'center',
+              },
             }}
-          >
-            {data?.data.map((followee) => (
-              <FolloweeItem
-                setDispatch={setDispatch}
-                key={followee.userId}
-                followee={followee}
-                authId={user?.userId || user?.adminId || ''}
-              />
-            ))}
-          </Box>
+          />
         </>
       ) : (
         <EmptyContent
@@ -78,15 +105,75 @@ export default function ProfileFollows({ userId, setDispatch }: Props) {
   );
 }
 
+type TableProps = {
+  userId: string;
+  authId: string;
+  page: number;
+  setDispatch: Dispatch<SetStateAction<boolean>>;
+  setTotalCount: Dispatch<SetStateAction<number | undefined>>;
+  resetPage: () => void;
+};
+
+function FolloweeTable({
+  userId,
+  authId,
+  page,
+  setDispatch,
+  setTotalCount,
+  resetPage,
+}: TableProps) {
+  const { data, refetch } = useGetFolloweesQuery(userId, page, PER_PAGE);
+
+  useEffect(() => {
+    refetch();
+  }, [page]);
+
+  useEffect(() => {
+    refetch();
+    resetPage();
+  }, [userId]);
+
+  useEffect(() => {
+    if (data) {
+      setTotalCount(data.data.totalCount);
+    } else {
+      setTotalCount(0);
+    }
+  }, [data]);
+
+  return (
+    <Box
+      gap={3}
+      display="grid"
+      gridTemplateColumns={{
+        xs: 'repeat(1, 1fr)',
+        sm: 'repeat(2, 1fr)',
+        md: 'repeat(3, 1fr)',
+      }}
+    >
+      {data?.data.data.map((followee) => (
+        <FolloweeItem
+          followeesRefetch={refetch}
+          setDispatch={setDispatch}
+          key={followee.userId}
+          followee={followee}
+          authId={authId}
+        />
+      ))}
+    </Box>
+  );
+}
+
 // ----------------------------------------------------------------------
 
 type FolloweeItemProps = {
   followee: UserFolloweeData;
   authId: string;
   setDispatch: Dispatch<SetStateAction<boolean>>;
+  followeesRefetch: <TPageData>(options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined) => Promise<QueryObserverResult<UserFolloweesResponse, unknown>>;
 };
 
-function FolloweeItem({ followee, authId, setDispatch }: FolloweeItemProps) {
+function FolloweeItem({ followee, authId, setDispatch, followeesRefetch }: FolloweeItemProps) {
   const { nickname, userId, profilePhotoUrl, isFollow } = followee;
   const router = useRouter();
   const { mutate: follow, status: followStatus } = useUserFollowQuery(userId);
@@ -103,6 +190,7 @@ function FolloweeItem({ followee, authId, setDispatch }: FolloweeItemProps) {
   useEffect(() => {
     if (followStatus === 'success') {
       setDispatch(true);
+      followeesRefetch();
       enqueueSnackbar({
         message: t('Successfully followed up'),
         variant: 'success',
@@ -118,6 +206,7 @@ function FolloweeItem({ followee, authId, setDispatch }: FolloweeItemProps) {
   useEffect(() => {
     if (cancelStatus === 'success') {
       setDispatch(true);
+      followeesRefetch();
       enqueueSnackbar({
         message: t('Successfully unfollowed'),
         variant: 'success',
