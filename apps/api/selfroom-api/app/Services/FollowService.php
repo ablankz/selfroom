@@ -36,7 +36,11 @@ class FollowService
     string $order_opt,
     bool $with_total_count
   ) {
-    return new UserCardResourceCollection($usecase->handle($user_id, $limit, $offset, $order, $order_opt, $with_total_count));
+    $data = $usecase->handle($user_id, $limit, $offset, $order, $order_opt, $with_total_count);
+    if($with_total_count){
+      return new WithResourceCollection($data, UserCardResourceCollection::class);
+    }
+    return new UserCardResourceCollection($data);
   }
 
   public function add(Follow $usecase, string $follower_id, string $followee_id)
