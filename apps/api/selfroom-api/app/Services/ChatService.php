@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Http\Resources\Chat\ChatResource;
 use App\Http\Resources\Chat\ChatResourceCollection;
+use App\Http\Resources\WithResourceCollection;
 use App\Usecases\Chat\CreateChat;
 use App\Usecases\Chat\DeleteChat;
 use App\Usecases\Chat\FindChat;
@@ -26,7 +27,11 @@ class ChatService
     string $order_opt,
     bool $with_total_count
   ) {
-    return new ChatResourceCollection($usecase->handle($chat_room_id, $limit, $offset, $order, $order_opt, $with_total_count));
+    $data = $usecase->handle($chat_room_id, $limit, $offset, $order, $order_opt, $with_total_count);
+    if($with_total_count){
+      return new WithResourceCollection($data, ChatResourceCollection::class);
+    }
+    return new ChatResourceCollection($data);
   }
 
   public function create(

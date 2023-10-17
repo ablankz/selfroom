@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Http\Resources\User\UserCardResourceCollection;
+use App\Http\Resources\WithResourceCollection;
 use App\Usecases\Follow\Follow;
 use App\Usecases\Follow\FollowCancel;
 use App\Usecases\Follow\GetFollowees;
@@ -19,7 +20,11 @@ class FollowService
     string $order_opt,
     bool $with_total_count
   ) {
-    return new UserCardResourceCollection($usecase->handle($user_id, $limit, $offset, $order, $order_opt, $with_total_count));
+    $data = $usecase->handle($user_id, $limit, $offset, $order, $order_opt, $with_total_count);
+    if($with_total_count){
+      return new WithResourceCollection($data, UserCardResourceCollection::class);
+    }
+    return new UserCardResourceCollection($data);
   }
 
   public function getFollowees(

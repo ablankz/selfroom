@@ -7,6 +7,7 @@ use App\Enums\ApplicationCode;
 use App\Exceptions\ApplicationLoggerException;
 use App\Http\Resources\Admin\AdminResource;
 use App\Http\Resources\Admin\SimplifiedAdminResourceCollection;
+use App\Http\Resources\WithResourceCollection;
 use App\Usecases\Admin\CreateAdmin;
 use App\Usecases\Admin\DeleteAdmin;
 use App\Usecases\Admin\FindAdmin;
@@ -31,7 +32,11 @@ class AdminService
     string $order_opt,
     bool $with_total_count
   ) {
-    return new SimplifiedAdminResourceCollection($usecase->handle($limit, $offset, $order, $order_opt, $with_total_count));
+    $data = $usecase->handle($limit, $offset, $order, $order_opt, $with_total_count);
+    if($with_total_count){
+      return new WithResourceCollection($data, SimplifiedAdminResourceCollection::class);
+    }
+    return new SimplifiedAdminResourceCollection($data);
   }
 
   public function create(

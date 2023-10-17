@@ -7,6 +7,7 @@ use App\Enums\ApplicationCode;
 use App\Exceptions\ApplicationLoggerException;
 use App\Http\Resources\ChatRoom\ChatRoomResource;
 use App\Http\Resources\ChatRoom\ChatRoomResourceCollection;
+use App\Http\Resources\WithResourceCollection;
 use App\Usecases\ChatRoom\CreateChatRoom;
 use App\Usecases\ChatRoom\FindChatRoom;
 use App\Usecases\ChatRoom\GetChatRooms;
@@ -34,19 +35,23 @@ class ChatRoomService
     string $category_select_type,
     bool $with_total_count
   ) {
-    return new ChatRoomResourceCollection($usecase->handle(
-      $limit, 
-      $offset, 
-      $order, 
-      $order_opt, 
-      $search_type, 
-      $search, 
-      $is_lock, 
-      $is_favorite, 
-      $categories, 
+    $data = $usecase->handle(
+      $limit,
+      $offset,
+      $order,
+      $order_opt,
+      $search_type,
+      $search,
+      $is_lock,
+      $is_favorite,
+      $categories,
       $category_select_type,
       $with_total_count
-    ));
+    );
+    if ($with_total_count) {
+      return new WithResourceCollection($data, ChatRoomResourceCollection::class);
+    }
+    return new ChatRoomResourceCollection($data);
   }
 
   public function create(
