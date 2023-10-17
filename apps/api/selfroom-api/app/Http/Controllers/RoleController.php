@@ -30,6 +30,8 @@ class RoleController extends Controller
     // name 
     $order = $request->order ? urldecode($request->order) : "name";
     $order_opt = $request->order_opt ? urldecode($request->order_opt) : "asc";
+    //with
+    $with_total_count = $request->total_count === 'with' ? true : false;
 
     return response()->success(app()->call(
       [$this->service, 'get'],
@@ -37,7 +39,8 @@ class RoleController extends Controller
         'limit' => $limit,
         'offset' => $offset,
         'order' => $order,
-        'order_opt' => $order_opt
+        'order_opt' => $order_opt,
+        'with_total_count' => $with_total_count
       ]
     ));
   }

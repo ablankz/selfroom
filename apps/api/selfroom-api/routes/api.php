@@ -83,8 +83,4 @@ Route::prefix('chat-rooms')->group(function () {
   });
 });
 
-// リスト関連の絞り込みやオーダーなど
-
-// リスト関連のページネーション、カーソルページネーション
-
 // websocket

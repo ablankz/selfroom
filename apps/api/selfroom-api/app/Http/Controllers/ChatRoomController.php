@@ -47,6 +47,9 @@ class ChatRoomController extends Controller
     // カテゴリーの選択 any | all
     $category_select_type = $request->category_select_type ? urldecode($request->category_select_type) : "any";
 
+    //with
+    $with_total_count = $request->total_count === 'with' ? true : false;
+
     return response()->success(app()->call(
       [$this->service, 'get'],
       [
@@ -59,7 +62,8 @@ class ChatRoomController extends Controller
         'is_lock' => $is_lock,
         'is_favorite' => $is_favorite,
         'categories' => $categories,
-        'category_select_type' => $category_select_type
+        'category_select_type' => $category_select_type,
+        'with_total_count' => $with_total_count
       ]
     ));
   }

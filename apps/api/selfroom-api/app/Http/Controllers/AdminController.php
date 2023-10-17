@@ -33,6 +33,8 @@ class AdminController extends Controller
     // create | name | permission
     $order = $request->order ? urldecode($request->order) : "create";
     $order_opt = $request->order_opt ? urldecode($request->order_opt) : "asc";
+    //with
+    $with_total_count = $request->total_count === 'with' ? true : false;
 
     return response()->success(app()->call(
       [$this->service, 'get'],
@@ -40,7 +42,8 @@ class AdminController extends Controller
         'limit' => $limit,
         'offset' => $offset,
         'order' => $order,
-        'order_opt' => $order_opt
+        'order_opt' => $order_opt,
+        'with_total_count' => $with_total_count
       ]
     ));
   }
