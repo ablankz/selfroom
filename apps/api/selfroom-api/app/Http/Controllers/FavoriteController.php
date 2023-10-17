@@ -15,7 +15,7 @@ class FavoriteController extends Controller
     $this->service = $service;
   }
 
-  public function getFavors(Request $request, string $chatRoomId): JsonResponse
+  public function getFavorites(Request $request, string $userId): JsonResponse
   {
     $limit = $request->limit ? max((int)urldecode($request->limit), 0) : 100;
     $offset = $request->offset ? max((int)urldecode($request->offset), 0) : 0;
@@ -26,9 +26,9 @@ class FavoriteController extends Controller
     $with_total_count = $request->total_count === 'with' ? true : false;
 
     return response()->success(app()->call(
-      [$this->service, 'getFavors'],
+      [$this->service, 'getFavorites'],
       [
-        'chat_room_id' => $chatRoomId,
+        'user_id' => $userId,
         'limit' => $limit,
         'offset' => $offset,
         'order' => $order,

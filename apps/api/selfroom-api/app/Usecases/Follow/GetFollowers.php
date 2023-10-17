@@ -2,11 +2,14 @@
 
 namespace App\Usecases\Follow;
 
+use App\Enums\ApplicationCode;
 use App\Models\User;
 use App\Usecases\Usecase;
 
 class GetFollowers extends Usecase
 {
+  public const NOT_FOUND = ApplicationCode::NotFoundModel;
+
   public function run(
     string $user_id,
     int $limit,
@@ -18,7 +21,15 @@ class GetFollowers extends Usecase
   {
     $authFollowers = request()->user()?->user_id ? User::find(request()->user()->user_id)->followees->pluck('user_id')->toArray() : [];
 
-    $query = User::find($user_id)->followers();
+    $query = User::find($user_id);
+
+    if (is_null($query)) {
+      return [
+        'code' => self::NOT_FOUND
+      ];
+    }
+
+    $query = $query->followers();
 
     $order_opt = $order_opt === 'desc' ? 'desc' : 'asc';
     switch ($order) {

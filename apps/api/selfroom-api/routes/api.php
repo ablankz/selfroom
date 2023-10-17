@@ -31,6 +31,8 @@ Route::prefix('users')->group(function () {
   Route::put('', [\App\Http\Controllers\UserController::class, 'update'])->middleware(['auth:jwt', 'user:jwt']);
   Route::delete('', [\App\Http\Controllers\UserController::class, 'delete'])->middleware(['auth:jwt', 'user:jwt']);
   Route::prefix('{userId}')->group(function () {
+    Route::get('favorites', [\App\Http\Controllers\FavoriteController::class, 'getFavorites'])->middleware(['auth:jwt']);
+    
     Route::get('followees', [\App\Http\Controllers\FollowController::class, 'getFollowees'])->middleware(['auth:jwt']);
     Route::get('followers', [\App\Http\Controllers\FollowController::class, 'getFollowers'])->middleware(['auth:jwt']);
     Route::post('follows', [\App\Http\Controllers\FollowController::class, 'add'])->middleware(['auth:jwt', 'user:jwt']);
@@ -78,7 +80,6 @@ Route::prefix('chat-rooms')->group(function () {
   Route::post('in/{chatRoomId}', [\App\Http\Controllers\RoomVisitController::class, 'in'])->middleware(['auth:jwt', 'user:jwt']);
   Route::post('out', [\App\Http\Controllers\RoomVisitController::class, 'out'])->middleware(['auth:jwt', 'user:jwt']);
   Route::prefix('{chatRoomId}')->group(function () {
-    Route::get('favors', [\App\Http\Controllers\FollowController::class, 'getFavors'])->middleware(['auth:jwt']);
     Route::post('favorites', [\App\Http\Controllers\FavoriteController::class, 'add'])->middleware(['auth:jwt', 'user:jwt']);
     Route::delete('favorites', [\App\Http\Controllers\FavoriteController::class, 'cancel'])->middleware(['auth:jwt', 'user:jwt']);
   });

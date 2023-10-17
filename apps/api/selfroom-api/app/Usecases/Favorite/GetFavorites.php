@@ -2,24 +2,33 @@
 
 namespace App\Usecases\Favorite;
 
-use App\Models\ChatRoom;
+use App\Enums\ApplicationCode;
 use App\Models\User;
 use App\Usecases\Usecase;
 
-class GetFavors extends Usecase
+class GetFavorites extends Usecase
 {
+  public const NOT_FOUND = ApplicationCode::NotFoundModel;
+
   public function run(
-    string $chat_room_id,
+    string $user_id,
     int $limit,
     int $offset,
     string $order,
     string $order_opt,
     bool $with_total_count
-  )
-  {
+  ) {
     $authFavorites = request()->user()?->user_id ? User::find(request()->user()->user_id)->favoriteRooms->pluck('chat_room_id')->toArray() : [];
 
-    $query = ChatRoom::find($chat_room_id)->likedUsers();
+    $query = User::find($user_id);
+
+    if (is_null($query)) {
+      return [
+        'code' => self::NOT_FOUND
+      ];
+    }
+
+    $query = $query->favoriteRooms();
 
     $order_opt = $order_opt === 'desc' ? 'desc' : 'asc';
     switch ($order) {
