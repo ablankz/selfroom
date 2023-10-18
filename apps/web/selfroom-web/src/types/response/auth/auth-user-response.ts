@@ -1,4 +1,4 @@
-import { SimpleAdmin, SimpleRole } from '@/types/entity';
+import { SimpleAdmin, SimpleChatRoom, SimpleRole } from '@/types/entity';
 import { ApplicationResponse } from '../application-response';
 
 export interface AuthUserData {
@@ -6,7 +6,7 @@ export interface AuthUserData {
   adminId?: string;
   nickname: string;
   profilePhotoUrl: string | null;
-  currentChatRoom?: string | null;
+  currentChatRoom?: SimpleChatRoom | null;
   favoriteRoomNum?: number;
   followNum?: number;
   followerNum?: number;

@@ -19,8 +19,9 @@ export const paths = {
     chatroom: {
       profile: (id: string) => `/chat-room/profile/${id}`,
       search: '/chat-room/search',
-      create: '/chat-room/create'
-    }
+      create: '/chat-room/create',
+      talk: (id: string) => `/chat-room/talk/${id}`,
+    },
   },
   oauthCallback: '/oauth-callback',
 };

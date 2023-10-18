@@ -21,6 +21,7 @@ import { ChatRoomCard } from '@/types/entity';
 import RoomShareModal from '@/sections/_common/room-share-modal';
 import { useChatRoomInQuery } from '@/api/room-visits/useChatRoomInQuery';
 import RoomKeyModal from '@/sections/_common/room-key-modal';
+import { useAuthContext } from '@/auth/hooks';
 
 type RoomCardProps = {
   chatRoom: ChatRoomCard;
@@ -53,6 +54,8 @@ export function RoomCard({ chatRoom, handleSuccess }: RoomCardProps) {
     (key: string) => roomIn({ keyword: key }),
     [roomIn]
   );
+  const { user: auth } = useAuthContext();
+  console.log('aa', auth?.currentChatRoom);
 
   const handleFavorite = () => {
     if (isFavorite) favoriteCancel();
@@ -213,9 +216,22 @@ export function RoomCard({ chatRoom, handleSuccess }: RoomCardProps) {
         <Divider sx={{ borderStyle: 'dashed' }} />
 
         <Box justifyContent="flex-end" display="flex" px={3} py={2}>
-          <Button variant="contained" onClick={handleEnter}>
-            {t('Entering the room')}
-          </Button>
+          {auth?.currentChatRoom &&
+          auth.currentChatRoom.chatRoomId === chatRoomId ? (
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() =>
+                router.push(paths.dashboard.chatroom.talk(chatRoomId))
+              }
+            >
+              {t('Go to talk screen')}
+            </Button>
+          ) : (
+            <Button variant="contained" onClick={handleEnter}>
+              {t('Entering the room')}
+            </Button>
+          )}
         </Box>
       </Card>
       <RoomShareModal
@@ -224,7 +240,11 @@ export function RoomCard({ chatRoom, handleSuccess }: RoomCardProps) {
         roomId={chatRoomId}
         roomName={name}
       />
-      <RoomKeyModal open={keyOpen} handleClose={handleKeyClose} mutate={roomInWithKey}/>
+      <RoomKeyModal
+        open={keyOpen}
+        handleClose={handleKeyClose}
+        mutate={roomInWithKey}
+      />
     </>
   );
 }
