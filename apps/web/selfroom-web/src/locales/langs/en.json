@@ -233,5 +233,8 @@
   "Failed to register as a favorite": "Failed to register as a favorite",
   "Failed to unsubscribe from your favorites": "Failed to unsubscribe from your favorites",
   "Successfully unsubscribe from your favorites": "Successfully unsubscribe from your favorites",
-  "Entering the room": "Entering the room"
+  "Entering the room": "Entering the room",
+  "invite-room-key-1": "{{userName}} has invited you to a chat room({{roomName}}).",
+  "invite-room-key-2": "Let's chat in real time using Selfroom!",
+  "invite-mail-title": "【Selfroom】Invitation to chat rooms"
 }

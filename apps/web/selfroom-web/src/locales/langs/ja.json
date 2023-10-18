@@ -233,5 +233,8 @@
   "Failed to register as a favorite": "お気に入り登録に失敗しました",
   "Failed to unsubscribe from your favorites": "お気に入り登録の解除に失敗しました",
   "Successfully unsubscribe from your favorites": "お気に入り登録を解除しました",
-  "Entering the room": "入室"
+  "Entering the room": "入室",
+  "invite-room-key-1": "{{userName}}さんがあなたをチャットルーム({{roomName}})へ招待しました。",
+  "invite-room-key-2": "Selfroomを使ってリアルタイムチャットをしてみよう!",
+  "invite-mail-title": "【Selfroom】チャットルームへの招待"
 }

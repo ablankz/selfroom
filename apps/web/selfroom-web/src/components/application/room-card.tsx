@@ -180,7 +180,7 @@ export function RoomCard({ chatRoom, handleSuccess }: RoomCardProps) {
           <Button variant="contained">{t('Entering the room')}</Button>
         </Box>
       </Card>
-      <RoomShareModal open={open} handleClose={handleClose} roomId={chatRoomId}/>
+      <RoomShareModal open={open} handleClose={handleClose} roomId={chatRoomId} roomName={name}/>
     </>
   );
 }

@@ -66,7 +66,7 @@ export const dashboardRoutes = [
           </AuthGuard>
         ),
         children: [
-          { path: 'chat', element: <ChatPage /> },
+          { path: 'chat-room', element: <ChatPage /> },
           { path: 'setting', element: <SettingPage /> },
           { path: 'profile/:id', element: <ProfilePage /> },
         ],

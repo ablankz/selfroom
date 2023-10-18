@@ -12,10 +12,15 @@ export const paths = {
     overview: '/overview',
     auth: '/auth',
     rawApi: `/raw-api`,
-    chat: '/chat',
+    chat: '/chat-room',
     setting: '/setting',
     profile: (id: string) => `/profile/${id}`,
     register: '/auth/register',
+    chatroom: {
+      profile: (id: string) => `/chat-room/profile/${id}`,
+      search: '/chat-room/search',
+      create: '/chat-room/create'
+    }
   },
   oauthCallback: '/oauth-callback',
 };

@@ -8,12 +8,22 @@ import Typography from '@mui/material/Typography';
 import { Box, InputAdornment, TextField, Tooltip } from '@mui/material';
 import Iconify from '@/components/iconify';
 import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard';
-import { useCallback } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useSnackbar } from '@/components/snackbar';
 import { useLocales } from '@/locales';
+import { paths } from '@/routes/paths';
+import { HOST } from '@/config-global';
+import { useAuthContext } from '@/auth/hooks';
+import {
+  FacebookShareButton,
+  EmailShareButton,
+  LineShareButton,
+  TwitterShareButton,
+} from 'react-share';
 
 type Props = {
   roomId: string;
+  roomName: string;
   open: boolean;
   handleClose: () => void;
 };
@@ -24,11 +34,27 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export default function RoomShareModal({ roomId, open, handleClose }: Props) {
+export default function RoomShareModal({
+  roomId,
+  roomName,
+  open,
+  handleClose,
+}: Props) {
   const { copy } = useCopyToClipboard();
   const { enqueueSnackbar } = useSnackbar();
   const { t } = useLocales();
-
+  const { user } = useAuthContext();
+  const sendMsg = useMemo(
+    () => ({
+      url: `${HOST}/${paths.dashboard.chatroom.profile(roomId)}`,
+      mailTitle: t("invite-mail-title"),
+      title: `${t('invite-room-key-1', {
+        userName: user?.nickname || 'unknown',
+        roomName,
+      })}\n${t('invite-room-key-2')}\n`,
+    }),
+    [t]
+  );
   const onCopy = useCallback(async () => {
     if (await copy(roomId)) {
       enqueueSnackbar({
@@ -70,14 +96,16 @@ export default function RoomShareModal({ roomId, open, handleClose }: Props) {
             display="flex"
             flexDirection="column"
             alignItems="center"
-            my={1}
+            my={2}
             p={2}
           >
-            <IconButton>
-              <Iconify width={72} icon="solar:key-bold" />
-            </IconButton>
+            <FacebookShareButton url={sendMsg.url} quote={sendMsg.title}>
+              <IconButton>
+                <Iconify width={72} icon="ic:baseline-facebook" />
+              </IconButton>
+            </FacebookShareButton>
             <Typography variant="body2" fontSize={18}>
-              Twitter
+              Facebook
             </Typography>
           </Box>
           <Box
@@ -87,11 +115,13 @@ export default function RoomShareModal({ roomId, open, handleClose }: Props) {
             my={2}
             p={2}
           >
-            <IconButton>
-              <Iconify width={72} icon="solar:key-bold" />
-            </IconButton>
+            <TwitterShareButton {...sendMsg}>
+              <IconButton>
+                <Iconify width={72} icon="fa6-brands:x-twitter" />
+              </IconButton>
+            </TwitterShareButton>
             <Typography variant="body2" fontSize={18}>
-              Twitter
+              &#x1D54F; (Twitter)
             </Typography>
           </Box>
           <Box
@@ -101,11 +131,13 @@ export default function RoomShareModal({ roomId, open, handleClose }: Props) {
             my={2}
             p={2}
           >
-            <IconButton>
-              <Iconify width={72} icon="solar:key-bold" />
-            </IconButton>
+            <LineShareButton {...sendMsg}>
+              <IconButton>
+                <Iconify width={72} icon="bi:line" />
+              </IconButton>
+            </LineShareButton>
             <Typography variant="body2" fontSize={18}>
-              Twitter
+              Line
             </Typography>
           </Box>
           <Box
@@ -115,11 +147,17 @@ export default function RoomShareModal({ roomId, open, handleClose }: Props) {
             my={2}
             p={2}
           >
-            <IconButton>
-              <Iconify width={72} icon="solar:key-bold" />
-            </IconButton>
+            <EmailShareButton
+              url={sendMsg.url}
+              subject={sendMsg.mailTitle}
+              body={sendMsg.title}
+            >
+              <IconButton>
+                <Iconify width={72} icon="ic:baseline-email" />
+              </IconButton>
+            </EmailShareButton>
             <Typography variant="body2" fontSize={18}>
-              Twitter
+              Email
             </Typography>
           </Box>
         </Box>
