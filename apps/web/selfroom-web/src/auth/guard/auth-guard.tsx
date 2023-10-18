@@ -5,6 +5,7 @@ import { useRouter } from '@/routes/hooks';
 import { useAuthContext } from '../hooks';
 import MinimamLayout from '@/layouts/minimam-layout';
 import AuthOnly from '@/sections/error/auth-only';
+import { paths } from '@/routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -28,12 +29,21 @@ export default function AuthGuard({ children }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [check]);
 
-  if (!auth)
+  if (!auth) {
+    const searchParams = new URLSearchParams({
+      returnTo: window.location.pathname,
+    }).toString();
+
+    const loginPath = paths.dashboard.auth;
+
+    const href = `${loginPath}?${searchParams}`;
+
     return (
       <MinimamLayout>
-        <AuthOnly />
+        <AuthOnly redirectUrl={href} />
       </MinimamLayout>
     );
+  }
 
   return <>{children}</>;
 }

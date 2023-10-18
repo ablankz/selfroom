@@ -10,9 +10,13 @@ import { MotionContainer, varBounce } from '@/components/animate';
 import { useLocales } from '@/locales';
 import { paths } from '@/routes/paths';
 
+type Props = {
+  redirectUrl?: string;
+}
+
 // ----------------------------------------------------------------------
 
-export default function AuthOnly() {
+export default function AuthOnly({redirectUrl}: Props) {
   const { t } = useLocales();
 
   return (
@@ -35,7 +39,7 @@ export default function AuthOnly() {
         <ForbiddenIllustration sx={{ height: 260, my: { xs: 5, sm: 10 } }} />
       </m.div>
 
-      <Button component={RouterLink} href={paths.dashboard.auth} size="large" variant="contained">
+      <Button component={RouterLink} href={redirectUrl || paths.dashboard.auth} size="large" variant="contained">
         {t('Go to login page')}
       </Button>
     </MotionContainer>

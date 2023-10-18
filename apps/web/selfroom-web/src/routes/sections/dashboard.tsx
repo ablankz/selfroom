@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom';
 import DashboardLayout from '@/layouts/dashboard';
 // components
 import { LoadingScreen } from '@/components/loading-screen';
-import { RedirectAuthGuard, RedirectGuestGuard } from '@/auth/guard';
+import { AuthGuard, GuestGuard } from '@/auth/guard';
 
 // ----------------------------------------------------------------------
 
@@ -45,11 +45,11 @@ export const dashboardRoutes = [
       {
         path: '',
         element: (
-          <RedirectGuestGuard>
+          <GuestGuard>
             <Suspense fallback={<LoadingScreen />}>
               <Outlet />
             </Suspense>
-          </RedirectGuestGuard>
+          </GuestGuard>
         ),
         children: [
           { path: 'auth', element: <AuthLoginPage /> },
@@ -59,11 +59,11 @@ export const dashboardRoutes = [
       {
         path: '',
         element: (
-          <RedirectAuthGuard>
+          <AuthGuard>
             <Suspense fallback={<LoadingScreen />}>
               <Outlet />
             </Suspense>
-          </RedirectAuthGuard>
+          </AuthGuard>
         ),
         children: [
           { path: 'chat', element: <ChatPage /> },
