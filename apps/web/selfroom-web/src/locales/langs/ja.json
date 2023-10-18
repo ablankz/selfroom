@@ -236,5 +236,7 @@
   "Entering the room": "入室",
   "invite-room-key-1": "{{userName}}さんがあなたをチャットルーム({{roomName}})へ招待しました。",
   "invite-room-key-2": "Selfroomを使ってリアルタイムチャットをしてみよう!",
-  "invite-mail-title": "【Selfroom】チャットルームへの招待"
+  "invite-mail-title": "【Selfroom】チャットルームへの招待",
+  "The room with a key": "鍵が必要なルームです",
+  "To enter this chat room, please enter your room key password.": "このチャットルームに入るにはルームキーとなるパスワードを入力してください。"
 }

@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import { Box, InputAdornment, TextField, Tooltip } from '@mui/material';
 import Iconify from '@/components/iconify';
 import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useSnackbar } from '@/components/snackbar';
 import { useLocales } from '@/locales';
 import { paths } from '@/routes/paths';

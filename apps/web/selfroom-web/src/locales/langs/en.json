@@ -236,5 +236,7 @@
   "Entering the room": "Entering the room",
   "invite-room-key-1": "{{userName}} has invited you to a chat room({{roomName}}).",
   "invite-room-key-2": "Let's chat in real time using Selfroom!",
-  "invite-mail-title": "【Selfroom】Invitation to chat rooms"
+  "invite-mail-title": "【Selfroom】Invitation to chat rooms",
+  "The room with a key": "The room with a key",
+  "To enter this chat room, please enter your room key password.": "To enter this chat room, please enter your room key password."
 }
