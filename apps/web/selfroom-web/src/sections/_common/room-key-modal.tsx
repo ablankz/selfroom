@@ -1,55 +1,82 @@
 // @mui
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 // hooks
 import { useLocales } from '@/locales';
-import { useState } from 'react';
+import * as Yup from 'yup';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import FormProvider from '@/components/hook-form/form-provider';
+import { RHFTextField } from '@/components/hook-form';
 
 // ----------------------------------------------------------------------
 
 type Props = {
   open: boolean;
   handleClose: () => void;
-  setKey: (key: string) => void;
+  mutate: (key: string) => void;
 };
 
-export default function RoomKeyModal({ open, handleClose, setKey }: Props) {
+type Param = {
+  roomKey: string;
+};
+
+export default function RoomKeyModal({ open, handleClose, mutate }: Props) {
   const { t } = useLocales();
-  const [value, setValue] = useState('');
+  const ParamSchema = Yup.object().shape({
+    roomKey: Yup.string().required(t('Room key is required')),
+  });
+
+  const defaultValues = {
+    roomKey: '',
+  };
+
+  const methods = useForm<Param>({
+    resolver: yupResolver(ParamSchema),
+    defaultValues,
+  });
+
+  const { reset, handleSubmit } = methods;
+
+  const onSubmit = async (data: Param) => {
+    mutate(data.roomKey);
+    reset();
+    handleClose();
+  };
 
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle>{t('The room with a key')}</DialogTitle>
 
-      <DialogContent>
-        <Typography sx={{ mb: 3 }}>
-          {t('To enter this chat room, please enter your room key password.')}
-        </Typography>
+      <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+        <DialogContent>
+          <Typography sx={{ mb: 3 }}>
+            {t('To enter this chat room, please enter your room key password.')}
+          </Typography>
 
-        <TextField
-          autoFocus
-          fullWidth
-          margin="dense"
-          variant="outlined"
-          label="Room Key"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-        />
-      </DialogContent>
+          <RHFTextField
+            name="roomKey"
+            label={t('Room Key')}
+            autoFocus
+            fullWidth
+            margin="dense"
+            variant="outlined"
+          />
+        </DialogContent>
 
-      <DialogActions>
-        <Button onClick={handleClose} variant="outlined" color="inherit">
-          {t('Cancel')}
-        </Button>
-        <Button onClick={() => setKey(value)} variant="contained">
-          {t('Confirm')}
-        </Button>
-      </DialogActions>
+        <DialogActions>
+          <Button onClick={handleClose} variant="outlined" color="inherit">
+            {t('Cancel')}
+          </Button>
+          <Button type="submit" variant="contained">
+            {t('Confirm')}
+          </Button>
+        </DialogActions>
+      </FormProvider>
     </Dialog>
   );
 }

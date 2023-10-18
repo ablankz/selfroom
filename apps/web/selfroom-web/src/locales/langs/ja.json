@@ -238,5 +238,9 @@
   "invite-room-key-2": "Selfroomを使ってリアルタイムチャットをしてみよう!",
   "invite-mail-title": "【Selfroom】チャットルームへの招待",
   "The room with a key": "鍵が必要なルームです",
-  "To enter this chat room, please enter your room key password.": "このチャットルームに入るにはルームキーとなるパスワードを入力してください。"
+  "To enter this chat room, please enter your room key password.": "このチャットルームに入るにはルームキーとなるパスワードを入力してください。",
+  "Successfully enter the room": "ルームに入室しました",
+  "Failed to enter the room": "ルームへの入室に失敗しました",
+  "Room key is required": "ルームキーは必須です",
+  "Room Key": "ルームキー"
 }

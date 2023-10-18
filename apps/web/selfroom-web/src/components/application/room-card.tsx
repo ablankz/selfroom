@@ -7,7 +7,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Iconify from '@/components/iconify';
 import { useRouter } from '@/routes/hooks';
 import { paths } from '@/routes/paths';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSnackbar } from '@/components/snackbar';
 import { useLocales } from '@/locales';
 import { Button, Chip, Divider, IconButton, Link, Stack } from '@mui/material';
@@ -19,6 +19,8 @@ import { fDate } from '@/utils/format-time';
 import Scrollbar from '@/components/scrollbar';
 import { ChatRoomCard } from '@/types/entity';
 import RoomShareModal from '@/sections/_common/room-share-modal';
+import { useChatRoomInQuery } from '@/api/room-visits/useChatRoomInQuery';
+import RoomKeyModal from '@/sections/_common/room-key-modal';
 
 type RoomCardProps = {
   chatRoom: ChatRoomCard;
@@ -37,6 +39,7 @@ export function RoomCard({ chatRoom, handleSuccess }: RoomCardProps) {
     categories,
   } = chatRoom;
   const [open, setOpen] = useState(false);
+  const [keyOpen, setKeyOpen] = useState(false);
   const router = useRouter();
   const { mutate: favoriteAdd, status: favoriteStatus } =
     useRoomFavoriteQuery(chatRoomId);
@@ -44,6 +47,12 @@ export function RoomCard({ chatRoom, handleSuccess }: RoomCardProps) {
     useRoomFavoriteCancelQuery(chatRoomId);
   const { enqueueSnackbar } = useSnackbar();
   const { t } = useLocales();
+  const { mutate: roomIn, status: roomInStatus } =
+    useChatRoomInQuery(chatRoomId);
+  const roomInWithKey = useCallback(
+    (key: string) => roomIn({ keyword: key }),
+    [roomIn]
+  );
 
   const handleFavorite = () => {
     if (isFavorite) favoriteCancel();
@@ -55,6 +64,18 @@ export function RoomCard({ chatRoom, handleSuccess }: RoomCardProps) {
   };
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleKeyClose = () => {
+    setKeyOpen(false);
+  };
+
+  const handleEnter = () => {
+    if (hasKey) {
+      setKeyOpen(true);
+    } else {
+      roomIn({});
+    }
   };
 
   useEffect(() => {
@@ -86,6 +107,21 @@ export function RoomCard({ chatRoom, handleSuccess }: RoomCardProps) {
       });
     }
   }, [cancelStatus]);
+
+  useEffect(() => {
+    if (roomInStatus === 'success') {
+      handleSuccess();
+      enqueueSnackbar({
+        message: t('Successfully enter the room'),
+        variant: 'success',
+      });
+    } else if (roomInStatus === 'error') {
+      enqueueSnackbar({
+        message: t('Failed to enter the room'),
+        variant: 'error',
+      });
+    }
+  }, [roomInStatus]);
 
   const imgUrl: string = useMemo(() => {
     if (coverPhotoUrl) return coverPhotoUrl;
@@ -177,10 +213,18 @@ export function RoomCard({ chatRoom, handleSuccess }: RoomCardProps) {
         <Divider sx={{ borderStyle: 'dashed' }} />
 
         <Box justifyContent="flex-end" display="flex" px={3} py={2}>
-          <Button variant="contained">{t('Entering the room')}</Button>
+          <Button variant="contained" onClick={handleEnter}>
+            {t('Entering the room')}
+          </Button>
         </Box>
       </Card>
-      <RoomShareModal open={open} handleClose={handleClose} roomId={chatRoomId} roomName={name}/>
+      <RoomShareModal
+        open={open}
+        handleClose={handleClose}
+        roomId={chatRoomId}
+        roomName={name}
+      />
+      <RoomKeyModal open={keyOpen} handleClose={handleKeyClose} mutate={roomInWithKey}/>
     </>
   );
 }
