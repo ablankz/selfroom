@@ -19,7 +19,7 @@ export const useRoomFavoriteQuery = (chatRoomId: string) => {
         .then((res) => res.data),
     {
       onSuccess: (_) => {
-        queryClient.invalidateQueries([favoriteQueryKeys.favors.get]);
+        queryClient.invalidateQueries([favoriteQueryKeys.favorites.get]);
         queryClient.invalidateQueries([userQueryKeys.profile.find]);
         initialize();
       },

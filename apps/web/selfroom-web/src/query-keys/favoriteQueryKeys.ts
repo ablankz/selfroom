@@ -1,7 +1,7 @@
 import { createQueryKeyStore } from "@lukemorales/query-key-factory";
 
 export const favoriteQueryKeys = createQueryKeyStore({
-  favavorites: {
+  favorites: {
     get: (id: string) => [id],
   },
 });

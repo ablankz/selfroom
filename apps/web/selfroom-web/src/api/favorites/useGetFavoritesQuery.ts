@@ -1,20 +1,20 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from '@/utils/axios';
-import { CHAT_ROOMS_ENDPOINTS } from '@/constants/endpoints';
-import { UserFollowersResponse } from '@/types/response/user/user-followers-response';
+import { USERS_ENDPOINTS } from '@/constants/endpoints';
 import { favoriteQueryKeys } from '@/query-keys/favoriteQueryKeys';
+import { UserFavoritesResponse } from '@/types/response/user/user-favorites-response';
 
-export const useGetFavorsQuery = (
+export const useGetFavoritesQuery = (
   id: string,
   page: number,
   perPage: number
 ) => {
   const { data, status, refetch } = useQuery(
-    [favoriteQueryKeys.favors.get(id), { page, perPage }],
+    [favoriteQueryKeys.favorites.get(id), { page, perPage }],
     () =>
       axios
-        .get<UserFollowersResponse>(
-          CHAT_ROOMS_ENDPOINTS.chatRooms.favorites.favors.url(id),
+        .get<UserFavoritesResponse>(
+          USERS_ENDPOINTS.users.favorites.favorites.url(id),
           {
             params: {
               limit: perPage,
