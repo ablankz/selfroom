@@ -31,14 +31,15 @@ class Favorite extends Usecase
           'added_at' => now()
         ]]);
         if (empty($ret['attached'])) throw new ApplicationInternalException;
-        $chat_room->favor_num++;
-        $chat_room->save();
+        DB::table('t_chat_rooms')->where('chat_room_id', $chat_room->chat_room_id)->update([
+          'favor_num' => $chat_room->favor_num + 1
+        ]);
         $user->favorite_room_num++;
         $user->save();
         return 1;
       } catch (\Throwable $e) {
         DB::rollBack();
-        if($e instanceof ApplicationInternalException) return 0;
+        if ($e instanceof ApplicationInternalException) return 0;
         throw $e;
       }
     });
