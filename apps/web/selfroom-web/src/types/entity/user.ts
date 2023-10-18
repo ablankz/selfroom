@@ -35,3 +35,7 @@ export interface SimpleUser {
   createdAt: string;
   updatedAt: string;
 };
+
+export interface UserCard extends User {
+  isFollow: boolean;
+};

@@ -23,6 +23,7 @@ import { PageNotFoundIllustration } from '@/assets/illustrations';
 import ProfileFollowers from '../profile-followers';
 import ProfileFollows from '../profile-follows';
 import { useRouter } from '@/routes/hooks';
+import ProfileFavorites from '../profile-favorites';
 
 // ----------------------------------------------------------------------
 
@@ -43,9 +44,9 @@ const TABS = [
     icon: <Iconify icon="solar:heart-bold" width={24} />,
   },
   {
-    value: 'gallery',
-    label: 'Gallery',
-    icon: <Iconify icon="solar:gallery-wide-bold" width={24} />,
+    value: 'favorites',
+    label: 'Favorites',
+    icon: <Iconify icon="ic:baseline-meeting-room" width={24} />,
   },
 ];
 
@@ -191,9 +192,10 @@ export default function ProfileView({ userId }: Props) {
         </Suspense>
       )}
 
-      {currentTab === 'gallery' && (
-        // <ProfileGallery gallery={_userGallery} />
-        <h1>gallery</h1>
+      {currentTab === 'favorites' && (
+        <Suspense fallback={<Skeleton variant="rounded" height={400} />}>
+          <ProfileFavorites userId={userId} setDispatch={setDispatch} />
+        </Suspense>
       )}
     </Container>
   );
