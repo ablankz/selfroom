@@ -227,5 +227,11 @@
   "Add PARAM": "PARAMを追加",
   "PARAM removed": "PARAMを削除しました",
   "Retrieving chat room favors": "チャットルームのお気に入りユーザーの取得",
-  "Retrieving favorite chat rooms": "お気に入りチャットルームの取得"
+  "Retrieving favorite chat rooms": "お気に入りチャットルームの取得",
+  "Not one of favorite rooms": "お気に入り登録されたルームがありません",
+  "Successfully registered as a favorite": "お気に入り登録しました",
+  "Failed to register as a favorite": "お気に入り登録に失敗しました",
+  "Failed to unsubscribe from your favorites": "お気に入り登録の解除に失敗しました",
+  "Successfully unsubscribe from your favorites": "お気に入り登録を解除しました",
+  "Entering the room": "入室"
 }
