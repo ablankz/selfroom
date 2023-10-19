@@ -1,9 +1,9 @@
-export type Role = {
+export interface Role {
   roleId: number;
   name: string;
 };
 
-export type SimpleRole = {
+export interface SimpleRole {
   roleId: number;
   name: string;
 };

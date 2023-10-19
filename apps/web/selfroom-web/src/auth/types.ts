@@ -41,6 +41,7 @@ export type JWTContextType = {
   register: (
     loginId: string,
     password: string,
+    confirmPassword: string,
     nickname: string
   ) => Promise<AxiosResponse<AuthUserResponse, any>>;
   logout: () => Promise<AxiosResponse<EmptySuccessResponse, any>>;

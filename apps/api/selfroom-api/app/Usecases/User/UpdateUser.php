@@ -14,10 +14,22 @@ class UpdateUser extends Usecase
     string $id,
     string $nickname,
     string $profile_photo_url = null,
+    string $country = null,
+    string $description = null,
+    string $email = null,
+    string $company = null,
+    string $role = null,
+    string $school = null
   ) {
     $ret = User::where('user_id', $id)->update([
       'nickname' => $nickname,
-      'profile_photo_url' => $profile_photo_url
+      'profile_photo_url' => $profile_photo_url,
+      'country' => $country,
+      'description' => $description,
+      'email' => $email,
+      'company' => $company,
+      'role' => $role,
+      'school' => $school
     ]);
 
     if (!$ret) {

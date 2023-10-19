@@ -27,8 +27,9 @@ class FavoriteCancel extends Usecase
     $data = DB::transaction(function () use ($user, $chat_room) {
       try {
         if (!($user->favoriteRooms()->detach($chat_room->chat_room_id))) return 0;
-        $chat_room->favor_num--;
-        $chat_room->save();
+        DB::table('t_chat_rooms')->where('chat_room_id', $chat_room->chat_room_id)->update([
+          'favor_num' => $chat_room->favor_num - 1
+        ]);
         $user->favorite_room_num--;
         $user->save();
         return 1;

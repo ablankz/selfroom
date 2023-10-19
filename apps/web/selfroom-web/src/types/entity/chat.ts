@@ -1,6 +1,6 @@
 import { SimpleChatRoom, SimpleRoomCategory, SimpleUser } from ".";
 
-export type Chat = {
+export interface Chat {
   chatId: string;
   user: SimpleUser | null;
   chatRoom: SimpleChatRoom | null;
@@ -11,7 +11,7 @@ export type Chat = {
 };
 
 
-export type SimpleChat = {
+export interface SimpleChat {
   chatId: string;
   userId: string | null;
   chatRoomId: string | null;

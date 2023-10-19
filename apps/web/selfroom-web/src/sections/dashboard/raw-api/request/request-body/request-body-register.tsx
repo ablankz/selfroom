@@ -2,6 +2,7 @@ import { Dialog, DialogTitle } from '@mui/material';
 import RBRegisterContent from './rb-register-content';
 import { Dispatch, SetStateAction } from 'react';
 import { RequestFilter } from '../request';
+import { useLocales } from '@/locales';
 
 type Param = {
   key: string;
@@ -28,6 +29,7 @@ export const RequestBodyRegister = ({
     setTargetParam(undefined);
     onClose();
   };
+  const { t } = useLocales();
   return (
     <Dialog
       open={open}
@@ -35,7 +37,7 @@ export const RequestBodyRegister = ({
       aria-labelledby="form-dialog-title"
       fullWidth
     >
-      <DialogTitle>クエリパラム追加</DialogTitle>
+      <DialogTitle>{t('Add BODY')}</DialogTitle>
       <RBRegisterContent
         onClose={handleClose}
         {...contentProp}

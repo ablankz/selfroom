@@ -43,42 +43,52 @@ import ErrorFallback from './ErrorFallback';
 // auth
 import { AuthProvider, AuthConsumer } from '@/auth/context';
 import { ErrorHandleProvider } from './providers/ErrorHandleProvider';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // ----------------------------------------------------------------------
 
 export default function App() {
   useScrollToTop();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        suspense: true,
+      },
+    },
+  });
 
   return (
     <LocalizationProvider>
-      <SettingsProvider
-        defaultSettings={{
-          themeMode: 'light', // 'light' | 'dark'
-          themeDirection: 'ltr', //  'rtl' | 'ltr'
-          themeContrast: 'default', // 'default' | 'bold'
-          themeLayout: 'vertical', // 'vertical' | 'horizontal' | 'mini'
-          themeColorPresets: 'default', // 'default' | 'cyan' | 'purple' | 'blue' | 'orange' | 'red'
-          themeStretch: false,
-        }}
-      >
-        <ThemeProvider>
-          <SnackbarProvider>
-            <MotionLazy>
-              <AuthProvider>
-                <ErrorHandleProvider>
-                  <SettingsDrawer />
-                  <ProgressBar />
-                  <ErrorBoundary FallbackComponent={ErrorFallback}>
-                    <AuthConsumer>
-                      <Router />
-                    </AuthConsumer>
-                  </ErrorBoundary>
-                </ErrorHandleProvider>
-              </AuthProvider>
-            </MotionLazy>
-          </SnackbarProvider>
-        </ThemeProvider>
-      </SettingsProvider>
+      <QueryClientProvider client={queryClient}>
+        <SettingsProvider
+          defaultSettings={{
+            themeMode: 'light', // 'light' | 'dark'
+            themeDirection: 'ltr', //  'rtl' | 'ltr'
+            themeContrast: 'default', // 'default' | 'bold'
+            themeLayout: 'vertical', // 'vertical' | 'horizontal' | 'mini'
+            themeColorPresets: 'default', // 'default' | 'cyan' | 'purple' | 'blue' | 'orange' | 'red'
+            themeStretch: false,
+          }}
+        >
+          <ThemeProvider>
+            <SnackbarProvider>
+              <MotionLazy>
+                <AuthProvider>
+                  <ErrorHandleProvider>
+                    <SettingsDrawer />
+                    <ProgressBar />
+                    <ErrorBoundary FallbackComponent={ErrorFallback}>
+                      <AuthConsumer>
+                        <Router />
+                      </AuthConsumer>
+                    </ErrorBoundary>
+                  </ErrorHandleProvider>
+                </AuthProvider>
+              </MotionLazy>
+            </SnackbarProvider>
+          </ThemeProvider>
+        </SettingsProvider>
+      </QueryClientProvider>
     </LocalizationProvider>
   );
 }

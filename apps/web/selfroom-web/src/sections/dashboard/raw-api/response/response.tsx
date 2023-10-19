@@ -25,6 +25,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { ResponseError } from './response-error';
 import { ResponseBody } from './response-body';
 import { ResponseHeader } from './response-header';
+import Scrollbar from '@/components/scrollbar';
 
 type Props = {
   loading: boolean;
@@ -84,18 +85,14 @@ export const Response = ({
       direction={{
         xs: 'column',
       }}
-      sx={{
-        p: 2.5,
-        pr: { xs: 2.5, md: 1 },
-      }}
     >
-      <Container sx={{ px: 4, py: 1 }}>
+      <Container sx={{ py: 1 }}>
         <Typography variant="h4" color="text.disabled">
           Response
         </Typography>
         <Box
-          m={1.2}
-          p={2}
+          mt={1.2}
+          p={{ xs: 1.2, sm: 2 }}
           borderRadius={2}
           bgcolor={(theme) =>
             theme.palette.mode === 'dark' ? 'grey.700' : 'grey.200'
@@ -114,107 +111,111 @@ export const Response = ({
             setRequestQuery={setRequestQuery}
             setRes={setRes}
           >
-            <Box sx={{ width: '100%', typography: 'body1' }}>
+            <Box sx={{ width: 1, typography: 'body1' }}>
               <TabContext value={value}>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                    <TabList onChange={handleChange}>
-                      <Tab label="Body" value="body" />
-                      <Tab label="Headers" value="headers" />
-                      <Tab label="Error" value="error" />
-                    </TabList>
-                  </Box>
-                  {isDesktop ? (
-                    <Box sx={{ mt: 1, mr: 3 }}>
-                      <Typography variant="body2" component="span" mx={1}>
-                        status:{' '}
-                        <Typography
-                          variant="body2"
-                          color="primary.main"
-                          component="span"
-                        >
-                          {res.statusCode || 0} {res.statusText}
-                        </Typography>
-                      </Typography>
-                      <Typography variant="body2" component="span" mx={1}>
-                        time:{' '}
-                        <Typography
-                          variant="body2"
-                          color="primary.main"
-                          component="span"
-                        >
-                          {`${res.responseTime || 0}ms`}
-                        </Typography>
-                      </Typography>
-                      <Typography variant="body2" component="span" mx={1}>
-                        size:{' '}
-                        <Typography
-                          variant="body2"
-                          color="primary.main"
-                          component="span"
-                        >
-                          {`${res.size || '0B'}`}
-                        </Typography>
-                      </Typography>
+                <Scrollbar>
+                  <Box
+                    sx={{ display: 'flex', justifyContent: 'space-between' }}
+                  >
+                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                      <TabList onChange={handleChange}>
+                        <Tab label="Body" value="body" />
+                        <Tab label="Headers" value="headers" />
+                        <Tab label="Error" value="error" />
+                      </TabList>
                     </Box>
-                  ) : (
-                    <>
-                      <IconButton
-                        aria-label="more"
-                        id="long-button"
-                        aria-haspopup="true"
-                        onClick={handleClick}
-                      >
-                        <MoreVertIcon />
-                      </IconButton>
-                      <Menu
-                        MenuListProps={{
-                          'aria-labelledby': 'long-button',
-                        }}
-                        anchorEl={anchorEl}
-                        open={open}
-                        onClose={handleClose}
-                      >
-                        <MenuItem>
-                          <Typography variant="body2" component="span" mx={1}>
-                            status:{' '}
-                            <Typography
-                              variant="body2"
-                              color="primary.main"
-                              component="span"
-                            >
-                              {res.statusCode || 0} {res.statusText}
-                            </Typography>
+                    {isDesktop ? (
+                      <Box sx={{ mt: 1, mr: 3 }}>
+                        <Typography variant="body2" component="span" mx={1}>
+                          status:{' '}
+                          <Typography
+                            variant="body2"
+                            color="primary.main"
+                            component="span"
+                          >
+                            {res.statusCode || 0} {res.statusText}
                           </Typography>
-                        </MenuItem>
-                        <MenuItem>
-                          <Typography variant="body2" component="span" mx={1}>
-                            time:{' '}
-                            <Typography
-                              variant="body2"
-                              color="primary.main"
-                              component="span"
-                            >
-                              {`${res.responseTime || 0}ms`}
-                            </Typography>
+                        </Typography>
+                        <Typography variant="body2" component="span" mx={1}>
+                          time:{' '}
+                          <Typography
+                            variant="body2"
+                            color="primary.main"
+                            component="span"
+                          >
+                            {`${res.responseTime || 0}ms`}
                           </Typography>
-                        </MenuItem>
-                        <MenuItem>
-                          <Typography variant="body2" component="span" mx={1}>
-                            size:{' '}
-                            <Typography
-                              variant="body2"
-                              color="primary.main"
-                              component="span"
-                            >
-                              {`${res.size || '0B'}`}
-                            </Typography>
+                        </Typography>
+                        <Typography variant="body2" component="span" mx={1}>
+                          size:{' '}
+                          <Typography
+                            variant="body2"
+                            color="primary.main"
+                            component="span"
+                          >
+                            {`${res.size || '0B'}`}
                           </Typography>
-                        </MenuItem>
-                      </Menu>
-                    </>
-                  )}
-                </Box>
+                        </Typography>
+                      </Box>
+                    ) : (
+                      <>
+                        <IconButton
+                          aria-label="more"
+                          id="long-button"
+                          aria-haspopup="true"
+                          onClick={handleClick}
+                        >
+                          <MoreVertIcon />
+                        </IconButton>
+                        <Menu
+                          MenuListProps={{
+                            'aria-labelledby': 'long-button',
+                          }}
+                          anchorEl={anchorEl}
+                          open={open}
+                          onClose={handleClose}
+                        >
+                          <MenuItem>
+                            <Typography variant="body2" component="span" mx={1}>
+                              status:{' '}
+                              <Typography
+                                variant="body2"
+                                color="primary.main"
+                                component="span"
+                              >
+                                {res.statusCode || 0} {res.statusText}
+                              </Typography>
+                            </Typography>
+                          </MenuItem>
+                          <MenuItem>
+                            <Typography variant="body2" component="span" mx={1}>
+                              time:{' '}
+                              <Typography
+                                variant="body2"
+                                color="primary.main"
+                                component="span"
+                              >
+                                {`${res.responseTime || 0}ms`}
+                              </Typography>
+                            </Typography>
+                          </MenuItem>
+                          <MenuItem>
+                            <Typography variant="body2" component="span" mx={1}>
+                              size:{' '}
+                              <Typography
+                                variant="body2"
+                                color="primary.main"
+                                component="span"
+                              >
+                                {`${res.size || '0B'}`}
+                              </Typography>
+                            </Typography>
+                          </MenuItem>
+                        </Menu>
+                      </>
+                    )}
+                  </Box>
+                </Scrollbar>
                 {loading ? (
                   <Skeleton variant="rounded" width={1} height={500} />
                 ) : (

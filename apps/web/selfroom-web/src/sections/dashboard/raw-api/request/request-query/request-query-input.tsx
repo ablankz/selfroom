@@ -1,6 +1,7 @@
 import Iconify from '@/components/iconify';
 import { IconButton, InputAdornment, TextField } from '@mui/material';
 import { RequestFilter } from '../request';
+import { useLocales } from '@/locales';
 
 type Props = {
   filters: RequestFilter;
@@ -19,6 +20,7 @@ export const RequestQueryInput = ({
   resetFilterName,
   loading,
 }: Props) => {
+  const { t } = useLocales();
   return (
     <TextField
       fullWidth
@@ -28,7 +30,7 @@ export const RequestQueryInput = ({
       value={filters.name}
       onChange={onFilterName}
       disabled={loading}
-      placeholder="Enter endpoint..."
+      placeholder={t('Enter endpoint...')}
       InputProps={{
         startAdornment: (
           <InputAdornment position="start">

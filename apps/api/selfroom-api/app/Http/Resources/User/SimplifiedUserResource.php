@@ -22,6 +22,12 @@ class SimplifiedUserResource extends JsonResource
       'followNum' => $this->follow_num,
       'favoriteRoomNum' => $this->favorite_room_num,
       'currentChatRoomId' => $this->current_chat_room_id,
+      'country' => $this->country,
+      'description' => $this->description,
+      'email' => $this->email,
+      'company' => $this->company,
+      'role' => $this->role,
+      'school' => $this->school,
       'createdAt' => $this->created_at,
       'updatedAt' => $this->updated_at,
     ];

@@ -7,6 +7,7 @@ use App\Enums\ApplicationCode;
 use App\Exceptions\ApplicationLoggerException;
 use App\Http\Resources\ChatRoom\ChatRoomResource;
 use App\Http\Resources\ChatRoom\ChatRoomResourceCollection;
+use App\Http\Resources\WithResourceCollection;
 use App\Usecases\ChatRoom\CreateChatRoom;
 use App\Usecases\ChatRoom\FindChatRoom;
 use App\Usecases\ChatRoom\GetChatRooms;
@@ -20,9 +21,37 @@ class ChatRoomService
     return new ChatRoomResource($usecase->handle($chat_room_id));
   }
 
-  public function get(GetChatRooms $usecase)
-  {
-    return new ChatRoomResourceCollection($usecase->handle());
+  public function get(
+    GetChatRooms $usecase,
+    int $limit,
+    int $offset,
+    string $order,
+    string $order_opt,
+    string $search_type,
+    string $search,
+    string $is_lock,
+    string $is_favorite,
+    array $categories,
+    string $category_select_type,
+    bool $with_total_count
+  ) {
+    $data = $usecase->handle(
+      $limit,
+      $offset,
+      $order,
+      $order_opt,
+      $search_type,
+      $search,
+      $is_lock,
+      $is_favorite,
+      $categories,
+      $category_select_type,
+      $with_total_count
+    );
+    if ($with_total_count) {
+      return new WithResourceCollection($data, ChatRoomResourceCollection::class);
+    }
+    return new ChatRoomResourceCollection($data);
   }
 
   public function create(

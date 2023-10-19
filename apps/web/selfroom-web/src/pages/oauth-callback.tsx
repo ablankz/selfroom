@@ -42,7 +42,7 @@ export default function CallbackPage() {
       }
 
       if (returnTo) {
-        router.replace(returnTo);
+        router.replace(decodeURIComponent(returnTo));
       } else {
         router.replace(PATH_AFTER_LOGIN);
       }

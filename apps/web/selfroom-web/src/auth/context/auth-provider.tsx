@@ -4,10 +4,9 @@ import axios from '@/utils/axios';
 //
 import { AuthContext } from './auth-context';
 import { ActionMapType, AuthStateType, AuthUserType } from '../types';
-import { AUTH_ENDPOINTS } from '@/constants/endpoint/auth-endpoint';
+import { AUTH_ENDPOINTS } from '@/constants/endpoints/auth-endpoint';
 import { SocialProvider } from '@/types/social-provider';
 import { SocialLoginResponse } from '@/types/response/auth/social-login-response';
-import { useSearchParams } from '@/routes/hooks';
 import { PATH_AFTER_LOGIN } from '@/config-global';
 import { setCookie } from '@/utils/cookie-handle';
 import { AxiosResponse } from 'axios';
@@ -81,7 +80,6 @@ type Props = {
 
 export function AuthProvider({ children }: Props) {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const searchParams = useSearchParams();
 
   const initialize = useCallback(async (): Promise<
     AxiosResponse<AuthUserResponse>
@@ -142,18 +140,20 @@ export function AuthProvider({ children }: Props) {
   // REGISTER
   const register = useCallback(
     async (
-      userId: string,
+      loginId: string,
       password: string,
+      confirmPassword: string,
       nickname: string
     ): Promise<AxiosResponse<AuthUserResponse, any>> => {
       const data = {
-        userId,
+        loginId,
         password,
+        confirmPassword,
         nickname,
       };
 
       return await axios
-        .post(AUTH_ENDPOINTS.auth.login.url, data)
+        .post(AUTH_ENDPOINTS.auth.register.url, data)
         .then(async (_) => {
           return await initialize();
         })
@@ -196,8 +196,11 @@ export function AuthProvider({ children }: Props) {
       await axios
         .get<SocialLoginResponse>(AUTH_ENDPOINTS.auth.oauth[provider].url)
         .then((res) => {
-          const returnTo = searchParams.get('returnTo') || PATH_AFTER_LOGIN;
-          setCookie('loginReturnTo', returnTo);
+          // URLを取得
+          const params = new URL(window.location.href).searchParams;
+          const returnTo = params.get('returnTo') || PATH_AFTER_LOGIN;
+          const encodedTo = encodeURIComponent(returnTo);
+          setCookie('loginReturnTo', encodedTo);
           window.location.href = res.data.data.redirectUrl;
         });
     },
@@ -246,8 +249,6 @@ export function AuthProvider({ children }: Props) {
       status,
     ]
   );
-
-  console.log(memoizedValue.user, memoizedValue.authenticated);
 
   return (
     <AuthContext.Provider value={memoizedValue}>

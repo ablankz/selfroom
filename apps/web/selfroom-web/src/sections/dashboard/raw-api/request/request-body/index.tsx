@@ -8,6 +8,7 @@ import { RequestBodyTable } from './request-body-table';
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import { endpointMatch } from '@/utils/rawAxios';
 import { useSnackbar } from '@/components/snackbar';
+import { useLocales } from '@/locales';
 
 type Props = {
   filters: RequestFilter;
@@ -27,13 +28,14 @@ export const RequestBody = ({ filters, setFilters }: Props) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const { enqueueSnackbar } = useSnackbar();
+  const { t } = useLocales();
 
   const handleComplete = () => {
     const matchPoint = endpointMatch(filters.method, filters.name);
     if (!matchPoint) {
       enqueueSnackbar({
         variant: 'error',
-        message: 'パターンの一致するエンドポイントが見つかりません',
+        message: t('No endpoint matching pattern found'),
       });
       return;
     }
@@ -44,13 +46,13 @@ export const RequestBody = ({ filters, setFilters }: Props) => {
     if(!(Object.keys(matchPoint.defaultBody || {}).length)){
       enqueueSnackbar({
         variant: 'warning',
-        message: `補完できるbodyがありません`,
+        message: t(`There is no BODY that can complement`),
       });
       return;
     }
     enqueueSnackbar({
       variant: 'success',
-      message: `${matchPoint.urlKey}でのbody補完に成功しました`,
+      message: t(`Successful BODY completion`),
     });
   };
 
@@ -58,7 +60,7 @@ export const RequestBody = ({ filters, setFilters }: Props) => {
     <Box>
       <Typography variant="h6" sx={{ mb: 2 }}>
         Request Body
-        <Tooltip title="Complete Test Body">
+        <Tooltip title={t('Complement with BODY for testing')}>
           <IconButton color="primary" onClick={handleComplete}>
             <AddCircleOutlinedIcon />
           </IconButton>
@@ -85,7 +87,7 @@ export const RequestBody = ({ filters, setFilters }: Props) => {
             <EmptyContent
               title="NoItem"
               description={
-                isDesktop ? '登録されたクエリデータがありません' : ''
+                isDesktop ? t('No registered BODY') : ''
               }
               sx={{
                 borderRadius: 1.5,
@@ -99,7 +101,7 @@ export const RequestBody = ({ filters, setFilters }: Props) => {
               }}
               onClick={handleOpen}
             >
-              データ追加
+              {t('Add')}
             </Button>
           </>
         )}

@@ -31,7 +31,7 @@ export const API_RESPONSE_HANDLING: MessageType = {
   },
   [API_RESPONSE_TYPES.Permission]: {
     message: '許可されていないアクションです',
-    level: RESPONSE_LEVEL.Toast,
+    level: RESPONSE_LEVEL.None,
   },
   [API_RESPONSE_TYPES.Unauthorized]: {
     message: '認証されていないユーザーです',
@@ -87,7 +87,7 @@ export const API_RESPONSE_HANDLING: MessageType = {
   },
   [API_RESPONSE_TYPES.GuestGuard]: {
     message: 'すでにログイン済みのユーザーです',
-    level: RESPONSE_LEVEL.Toast,
+    level: RESPONSE_LEVEL.None,
   },
   [API_RESPONSE_TYPES.UserOnly]: {
     message: '一般ユーザーのみ許可されているアクションです',

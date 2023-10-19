@@ -11,7 +11,6 @@ declare module 'axios' {
 }
 
 type Headers = {
-  'Content-Type': string;
   'X-Requested-With': string;
   'CSRF-Token'?: string;
   'XSRF-TOKEN'?: string;
@@ -19,7 +18,6 @@ type Headers = {
 
 // default values
 const headers: Headers = {
-  'Content-Type': 'application/json',
   'X-Requested-With': 'XMLHttpRequest',
 };
 

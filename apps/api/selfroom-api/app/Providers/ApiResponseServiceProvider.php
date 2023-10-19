@@ -39,7 +39,6 @@ class ApiResponseServiceProvider extends ServiceProvider
       ], $statusCode);
     });
 
-    // error用レスポンス([todo]: 開発中はstackTraceを表示させたい)
     Response::macro('error', function (Throwable $e, ApplicationCode $errorCode, $headers = [], array $errors = []) {
       $data = config('app.debug') ? [
         'success'  => false,

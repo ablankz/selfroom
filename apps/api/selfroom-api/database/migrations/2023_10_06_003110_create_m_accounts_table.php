@@ -19,12 +19,13 @@ return new class extends Migration
     Schema::table('m_accounts', function (Blueprint $table) {
       $table->bigIncrements('account_id')->unique();
 
-      $table->string('login_id')->nullable()->comment('ログインのための識別子');
+      $table->string('login_id')->nullable()->comment('ログインのための識別子')->unique();
       $table->string('password')->nullable()->comment('認証時のパスワード');
       $table->string('provider_id')->nullable()->comment('ソーシャルログイン用ID');
       $table->string('provider_name')->nullable()->comment('ソーシャルプロバイダ');
       $table->timestamps();
 
+      $table->unique(['provider_id', 'provider_name']);
       $table->dropPrimary();
       $table->primary('m_accounts_pkey');
     });

@@ -7,6 +7,7 @@ use App\Enums\ApplicationCode;
 use App\Exceptions\ApplicationLoggerException;
 use App\Http\Resources\Admin\AdminResource;
 use App\Http\Resources\Admin\SimplifiedAdminResourceCollection;
+use App\Http\Resources\WithResourceCollection;
 use App\Usecases\Admin\CreateAdmin;
 use App\Usecases\Admin\DeleteAdmin;
 use App\Usecases\Admin\FindAdmin;
@@ -23,9 +24,19 @@ class AdminService
     return new AdminResource($usecase->handle($admin_id));
   }
 
-  public function get(GetAdmins $usecase)
-  {
-    return new SimplifiedAdminResourceCollection($usecase->handle());
+  public function get(
+    GetAdmins $usecase,
+    int $limit,
+    int $offset,
+    string $order,
+    string $order_opt,
+    bool $with_total_count
+  ) {
+    $data = $usecase->handle($limit, $offset, $order, $order_opt, $with_total_count);
+    if($with_total_count){
+      return new WithResourceCollection($data, SimplifiedAdminResourceCollection::class);
+    }
+    return new SimplifiedAdminResourceCollection($data);
   }
 
   public function create(
@@ -84,6 +95,11 @@ class AdminService
 
   public function delete(DeleteAdmin $usecase, string $admin_id)
   {
-    return $usecase->handle($admin_id);
+    $ret = $usecase->handle($admin_id);
+    if(!is_null($ret['options']['profile_photo'])){
+      Storage::delete($ret['options']['profile_photo']);
+    } 
+
+    return $ret['data'];
   }
 }

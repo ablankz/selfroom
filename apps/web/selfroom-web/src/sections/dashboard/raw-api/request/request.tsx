@@ -51,10 +51,6 @@ export const Request = ({ setRequestQuery, loading }: Props) => {
       direction={{
         xs: 'column',
       }}
-      sx={{
-        p: 2.5,
-        pr: { xs: 2.5, md: 1 },
-      }}
     >
       <RequestQuery
         filters={filters}
@@ -63,7 +59,7 @@ export const Request = ({ setRequestQuery, loading }: Props) => {
         setRequestQuery={setRequestQuery}
       />
 
-      <Box sx={{ width: '100%' }}>
+      <Box sx={{ width: 1 }}>
         <Tabs
           value={value}
           onChange={handleChange}
@@ -74,7 +70,7 @@ export const Request = ({ setRequestQuery, loading }: Props) => {
           <Tab value="body" label="Body" />
           <Tab value="header" label="Header" />
         </Tabs>
-        <Card sx={{ boxShadow: 4, my: 4, mx: 2, px: 2, py: 3 }}>
+        <Card sx={{ boxShadow: 4, my: 4, px: 2, py: 3 }}>
           {value === 'param' && (
             <RequestParams filters={filters} setFilters={setFilters} />
           )}

@@ -25,12 +25,18 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::prefix('users')->group(function () {
-  Route::get('{userId}', [\App\Http\Controllers\UserController::class, 'find']);
+  Route::get('{userId}', [\App\Http\Controllers\UserController::class, 'find'])->middleware(['auth:jwt']);
   Route::get('', [\App\Http\Controllers\UserController::class, 'get']);
   Route::post('', [\App\Http\Controllers\UserController::class, 'create'])->middleware(['guest:jwt']);
   Route::put('', [\App\Http\Controllers\UserController::class, 'update'])->middleware(['auth:jwt', 'user:jwt']);
   Route::delete('', [\App\Http\Controllers\UserController::class, 'delete'])->middleware(['auth:jwt', 'user:jwt']);
   Route::prefix('{userId}')->group(function () {
+    Route::get('visited-rooms', [\App\Http\Controllers\RoomVisitController::class, 'getVisitRooms'])->middleware(['auth:jwt']);
+
+    Route::get('favorites', [\App\Http\Controllers\FavoriteController::class, 'getFavorites'])->middleware(['auth:jwt']);
+    
+    Route::get('followees', [\App\Http\Controllers\FollowController::class, 'getFollowees'])->middleware(['auth:jwt']);
+    Route::get('followers', [\App\Http\Controllers\FollowController::class, 'getFollowers'])->middleware(['auth:jwt']);
     Route::post('follows', [\App\Http\Controllers\FollowController::class, 'add'])->middleware(['auth:jwt', 'user:jwt']);
     Route::delete('follows', [\App\Http\Controllers\FollowController::class, 'cancel'])->middleware(['auth:jwt', 'user:jwt']);
   });
@@ -80,9 +86,5 @@ Route::prefix('chat-rooms')->group(function () {
     Route::delete('favorites', [\App\Http\Controllers\FavoriteController::class, 'cancel'])->middleware(['auth:jwt', 'user:jwt']);
   });
 });
-
-// リスト関連の絞り込みやオーダーなど
-
-// リスト関連のページネーション、カーソルページネーション
 
 // websocket

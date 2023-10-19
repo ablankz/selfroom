@@ -1,6 +1,6 @@
 import { SimpleRole } from '.';
 
-export type Admin = {
+export interface Admin {
   adminId: string;
   nickname: string;
   profilePhotoUrl: string | null;
@@ -10,7 +10,7 @@ export type Admin = {
   updatedAt: string;
 };
 
-export type SimpleAdmin = {
+export interface SimpleAdmin {
   adminId: string;
   nickname: string;
   profilePhotoUrl: string | null;

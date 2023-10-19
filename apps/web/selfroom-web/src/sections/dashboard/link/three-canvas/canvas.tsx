@@ -64,7 +64,7 @@ export const Canvas = memo(({ canvasTop, canvasLeft }: Props) => {
     //glTFの読み込み
     const gltfLoader = new GLTFLoader();
 
-    gltfLoader.load(`${HOST_ASSET}object/EarthHologram.glb`, function (gltf) {
+    gltfLoader.load(`${HOST_ASSET}/object/EarthHologram.glb`, function (gltf) {
       const obj = gltf.scene;
       const mesh = obj.children[0];
       scene.add(mesh);

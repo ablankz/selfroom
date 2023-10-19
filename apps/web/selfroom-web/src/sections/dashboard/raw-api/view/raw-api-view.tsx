@@ -60,7 +60,7 @@ export default function RawApiView() {
           mb: { xs: 3, md: 5 },
         }}
       />
-      <Container sx={{ width: '100%' }}>
+      <Container>
         <Request setRequestQuery={setRequestQuery} loading={loading} />
         <Response
           loading={loading}

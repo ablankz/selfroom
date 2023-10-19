@@ -2,11 +2,30 @@
 
 namespace App\Services;
 
+use App\Http\Resources\ChatRoom\ChatRoomCardResourceCollection;
+use App\Http\Resources\WithResourceCollection;
 use App\Usecases\Favorite\Favorite;
 use App\Usecases\Favorite\FavoriteCancel;
+use App\Usecases\Favorite\GetFavorites;
 
 class FavoriteService
 {
+  public function getFavorites(
+    GetFavorites $usecase,
+    string $user_id,
+    int $limit,
+    int $offset,
+    string $order,
+    string $order_opt,
+    bool $with_total_count
+  ) {
+    $data = $usecase->handle($user_id, $limit, $offset, $order, $order_opt, $with_total_count);
+    if($with_total_count){
+      return new WithResourceCollection($data, ChatRoomCardResourceCollection::class);
+    }
+    return new ChatRoomCardResourceCollection($data);
+  }
+
   public function add(Favorite $usecase, string $user_id, string $chat_room_id)
   {
     return $usecase->handle($user_id, $chat_room_id);

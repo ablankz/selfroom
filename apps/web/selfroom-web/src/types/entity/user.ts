@@ -1,6 +1,6 @@
-import { SimpleChatRoom } from ".";
+import { SimpleChatRoom } from '.';
 
-export type User = {
+export interface User {
   userId: string;
   nickname: string;
   profilePhotoUrl: string | null;
@@ -8,11 +8,17 @@ export type User = {
   favoriteRoomNum: number;
   followNum: number;
   followerNum: number;
+  country: string | null;
+  description: string | null;
+  email: string | null;
+  company: string | null;
+  role: string | null;
+  school: string | null;
   createdAt: string;
   updatedAt: string;
 };
 
-export type SimpleUser = {
+export interface SimpleUser {
   userId: string;
   nickname: string;
   profilePhotoUrl: string | null;
@@ -20,6 +26,16 @@ export type SimpleUser = {
   favoriteRoomNum: number;
   followNum: number;
   followerNum: number;
+  country: string | null;
+  description: string | null;
+  email: string | null;
+  company: string | null;
+  role: string | null;
+  school: string | null;
   createdAt: string;
   updatedAt: string;
+};
+
+export interface UserCard extends User {
+  isFollow: boolean;
 };

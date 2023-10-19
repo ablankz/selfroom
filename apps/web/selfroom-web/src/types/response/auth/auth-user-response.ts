@@ -1,27 +1,25 @@
-import { User, Admin, SimpleAdmin, SimpleRole } from '@/types/entity';
+import { SimpleAdmin, SimpleChatRoom, SimpleRole } from '@/types/entity';
 import { ApplicationResponse } from '../application-response';
 
-export type AuthUserData = {
+export interface AuthUserData {
   userId?: string;
   adminId?: string;
   nickname: string;
   profilePhotoUrl: string | null;
-  currentChatRoom?: string | null;
+  currentChatRoom?: SimpleChatRoom | null;
   favoriteRoomNum?: number;
   followNum?: number;
   followerNum?: number;
   permissions?: SimpleRole[];
+  country?: string | null;
+  description?: string | null;
+  email?: string | null;
+  company?: string | null;
+  role?: string | null;
+  school?: string | null;
   createdBy?: SimpleAdmin | null;
   createdAt: string;
   updatedAt: string;
 };
-
-export const isUser = (auth: AuthUserData): auth is User => {
-  return !!(auth as User)?.userId
-}
-
-export const isAdmin = (auth: AuthUserData): auth is Admin => {
-  return !!(auth as Admin)?.adminId
-}
 
 export type AuthUserResponse = ApplicationResponse<AuthUserData>;

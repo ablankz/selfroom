@@ -8,6 +8,39 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
+/**
+ * App\Models\Account
+ *
+ * @property int $m_accounts_pkey
+ * @property int $account_id
+ * @property string|null $login_id ログインのための識別子
+ * @property mixed|null $password 認証時のパスワード
+ * @property string|null $provider_id ソーシャルログイン用ID
+ * @property string|null $provider_name ソーシャルプロバイダ
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $user_id
+ * @property string|null $admin_id
+ * @property-read \App\Models\Admin|null $admin
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
+ * @property-read int|null $notifications_count
+ * @property-read \App\Models\User|null $user
+ * @method static \Database\Factories\AccountFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Account newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Account newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Account query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Account whereAccountId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Account whereAdminId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Account whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Account whereLoginId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Account whereMAccountsPkey($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Account wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Account whereProviderId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Account whereProviderName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Account whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Account whereUserId($value)
+ * @mixin \Eloquent
+ */
 class Account extends Authenticatable implements JWTSubject
 {
   use HasFactory, Notifiable;

@@ -37,7 +37,7 @@ export default function GuestGuard({ children }: Props) {
   if (auth)
     return (
       <MinimamLayout>
-        <GuestOnly />
+        <GuestOnly redirectUrl={returnTo}/>
       </MinimamLayout>
     );
 

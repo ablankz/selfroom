@@ -13,5 +13,5 @@ type ApiResponseType =
   (typeof API_RESPONSE_TYPES)[keyof typeof API_RESPONSE_TYPES];
 
 type ApplicationErrorAttributes = {
-  [key: string]: number | string | (string | number)[];
-}[];
+  [key: string]: any;
+};

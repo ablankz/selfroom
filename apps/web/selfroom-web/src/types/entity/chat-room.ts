@@ -1,24 +1,33 @@
-import { SimpleRoomCategory } from ".";
+import { SimpleRoomCategory } from '.';
 
-export type ChatRoom = {
+export interface ChatRoom {
   chatRoomId: string;
   name: string;
   userNum: number;
   favorNum: number;
-  coverPhotoUrl: string;
+  coverPhotoUrl: string | null;
   categories: SimpleRoomCategory[];
   hasKey: boolean;
   createdAt: string;
   updatedAt: string;
-};
+}
 
-export type SimpleChatRoom = {
+export interface SimpleChatRoom {
   chatRoomId: string;
   name: string;
   userNum: number;
   favorNum: number;
-  coverPhotoUrl: string;
+  coverPhotoUrl: string | null;
   hasKey: boolean;
   createdAt: string;
   updatedAt: string;
-};
+}
+
+export interface ChatRoomCard extends ChatRoom {
+  isFavorite: boolean;
+}
+
+export interface VisitedChatRoom extends SimpleChatRoom {
+  visitedAt: string;
+  leftAt: string;
+}

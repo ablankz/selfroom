@@ -134,13 +134,13 @@ export const RequestQuery = ({
       />
 
       <Stack
-        direction="row"
+        direction={{ xs: 'column', sm: 'row' }}
         alignItems="center"
         spacing={2}
         flexGrow={1}
         sx={{ width: 1 }}
       >
-        <Stack sx={{ position: 'relative' }} spacing={2}>
+        <Stack sx={{ position: 'relative', width: {xs: 1, sm: 'auto'} }} spacing={2}>
           <RequestQueryInput
             onBlur={handleBlur}
             onFilterName={handleFilterName}

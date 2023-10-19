@@ -24,6 +24,12 @@ class UserResource extends JsonResource
       'followNum' => $this->follow_num,
       'favoriteRoomNum' => $this->favorite_room_num,
       'currentChatRoom' => $currentRoom ? new SimplifiedChatRoomResource($currentRoom) : null,
+      'country' => $this->country,
+      'description' => $this->description,
+      'email' => $this->email,
+      'company' => $this->company,
+      'role' => $this->role,
+      'school' => $this->school,
       'createdAt' => $this->created_at,
       'updatedAt' => $this->updated_at,
     ];

@@ -16,6 +16,9 @@ const LinkPage = lazy(() => import('../../pages/dashboard/link'));
 
 const OverviewPage = lazy(() => import('../../pages/dashboard/app'));
 const AuthLoginPage = lazy(() => import('../../pages/dashboard/auth-login'));
+const AuthRegisterPage = lazy(() => import('../../pages/dashboard/auth-register'));
+const SettingPage = lazy(() => import('../../pages/dashboard/setting'));
+const ProfilePage = lazy(() => import('../../pages/dashboard/profile'));
 const RawApiPage = lazy(() => import('../../pages/dashboard/raw-api'));
 const ChatPage = lazy(() => import('../../pages/dashboard/chat'));
 
@@ -48,7 +51,10 @@ export const dashboardRoutes = [
             </Suspense>
           </GuestGuard>
         ),
-        children: [{ path: 'auth', element: <AuthLoginPage /> }],
+        children: [
+          { path: 'auth', element: <AuthLoginPage /> },
+          { path: 'auth/register', element: <AuthRegisterPage /> },
+        ],
       },
       {
         path: '',
@@ -59,7 +65,11 @@ export const dashboardRoutes = [
             </Suspense>
           </AuthGuard>
         ),
-        children: [{ path: 'chat', element: <ChatPage /> }],
+        children: [
+          { path: 'chat-room', element: <ChatPage /> },
+          { path: 'setting', element: <SettingPage /> },
+          { path: 'profile/:id', element: <ProfilePage /> },
+        ],
       },
     ],
   },

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\User;
 
 use App\Http\Requests\ApiRequest;
+use App\Rules\SingleByteAllCharRule;
 
 class UpdateUserRequest extends ApiRequest
 {
@@ -24,6 +25,12 @@ class UpdateUserRequest extends ApiRequest
     return [
       'nickname' => ['required', 'string'],
       'profilePhoto' => ['file', 'max:10240', 'mimes:jpg,jpeg,png,gif'],
+      'country' => ['string', 'nullable', new SingleByteAllCharRule],
+      'description' => ['string', 'nullable'],
+      'email' => ['string', 'nullable', 'email'],
+      'company' => ['string', 'nullable', new SingleByteAllCharRule],
+      'role' => ['string', 'nullable', new SingleByteAllCharRule],
+      'school' => ['string', 'nullable', new SingleByteAllCharRule]
     ];
   }
 }

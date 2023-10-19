@@ -11,6 +11,40 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * App\Models\Admin
+ *
+ * @property int $t_admins_pkey
+ * @property string $admin_id
+ * @property string $nickname 表示名
+ * @property string|null $profile_photo_url プロフィール画像パス
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $created_by
+ * @property-read \App\Models\Account|null $account
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Admin> $createAdmins
+ * @property-read int|null $create_admins_count
+ * @property-read Admin|null $myAdmin
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Role> $roles
+ * @property-read int|null $roles_count
+ * @method static \Database\Factories\AdminFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Admin newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Admin newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Admin onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Admin query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Admin whereAdminId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Admin whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Admin whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Admin whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Admin whereNickname($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Admin whereProfilePhotoUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Admin whereTAdminsPkey($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Admin whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Admin withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Admin withoutTrashed()
+ * @mixin \Eloquent
+ */
 class Admin extends Model
 {
   use HasFactory, SoftDeletes, HasUuids;

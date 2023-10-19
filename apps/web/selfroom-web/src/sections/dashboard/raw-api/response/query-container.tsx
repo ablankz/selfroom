@@ -6,6 +6,7 @@ import { isAxiosError } from 'axios';
 import prettyBytes from 'pretty-bytes';
 import { useSnackbar } from '@/components/snackbar';
 import { useAuthContext } from '@/auth/hooks';
+import { useLocales } from '@/locales';
 
 type Props = {
   children: ReactNode;
@@ -24,6 +25,7 @@ export const QueryContainer = ({
 }: Props) => {
   const { enqueueSnackbar } = useSnackbar();
   const { initialize } = useAuthContext();
+  const { t } = useLocales();
   useEffect(() => {
     if (requestQuery.dispatch) {
       (async () => {
@@ -81,20 +83,22 @@ export const QueryContainer = ({
             } else {
               res.error = error;
               enqueueSnackbar({
-                message: `${error.message || '予期せぬエラーです'}`,
+                message: `${
+                  error.message || t('An unexpected error has occurred')
+                }`,
                 variant: 'error',
               });
             }
             setRes(res);
-          })
+          });
 
         setRequestQuery((prev) => ({
           ...prev,
           dispatch: false,
         }));
         setLoading(false);
-        
-        // await initialize();
+
+        await initialize();
       })();
     }
   }, [requestQuery.dispatch]);

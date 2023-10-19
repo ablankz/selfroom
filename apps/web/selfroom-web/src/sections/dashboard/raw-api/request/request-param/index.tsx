@@ -8,6 +8,7 @@ import { RequestParamTable } from './request-param-table';
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import { endpointMatch } from '@/utils/rawAxios';
 import { useSnackbar } from '@/components/snackbar';
+import { useLocales } from '@/locales';
 
 type Props = {
   filters: RequestFilter;
@@ -27,13 +28,14 @@ export const RequestParams = ({ filters, setFilters }: Props) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const { enqueueSnackbar } = useSnackbar();
+  const { t } = useLocales();
 
   const handleComplete = () => {
     const matchPoint = endpointMatch(filters.method, filters.name);
     if (!matchPoint) {
       enqueueSnackbar({
         variant: 'error',
-        message: 'パターンの一致するエンドポイントが見つかりません',
+        message: t('No endpoint matching pattern found'),
       });
       return;
     }
@@ -44,13 +46,13 @@ export const RequestParams = ({ filters, setFilters }: Props) => {
     if (!Object.keys(matchPoint.defaultParam || {}).length) {
       enqueueSnackbar({
         variant: 'warning',
-        message: `補完できるparamがありません`,
+        message: t('There is no PARAM that can complement'),
       });
       return;
     }
     enqueueSnackbar({
       variant: 'success',
-      message: `${matchPoint.urlKey}でのparam補完に成功しました`,
+      message: t('Successful PARAM completion'),
     });
   };
 
@@ -84,9 +86,7 @@ export const RequestParams = ({ filters, setFilters }: Props) => {
           <>
             <EmptyContent
               title="NoItem"
-              description={
-                isDesktop ? '登録されたクエリパラムがありません' : ''
-              }
+              description={isDesktop ? t('No registered PARAM') : ''}
               sx={{
                 borderRadius: 1.5,
               }}
@@ -99,7 +99,7 @@ export const RequestParams = ({ filters, setFilters }: Props) => {
               }}
               onClick={handleOpen}
             >
-              パラム追加
+              {t('Add')}
             </Button>
           </>
         )}

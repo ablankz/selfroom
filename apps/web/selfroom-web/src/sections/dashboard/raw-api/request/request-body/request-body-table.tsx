@@ -16,6 +16,7 @@ import { RequestFilter } from '../request';
 import { useSnackbar } from '@/components/snackbar';
 import { RequestBodyTableHead } from './request-body-table-head';
 import EditIcon from '@mui/icons-material/Edit';
+import { useLocales } from '@/locales';
 
 type Param = {
   key: string;
@@ -37,6 +38,7 @@ export const RequestBodyTable = ({
 }: Props) => {
   const [selected, setSelected] = useState<string[]>([]);
   const { enqueueSnackbar } = useSnackbar();
+  const { t } = useLocales();
 
   const paramKeys = useMemo(() => Object.keys(params), [params]);
 
@@ -82,7 +84,7 @@ export const RequestBodyTable = ({
       };
     });
     enqueueSnackbar({
-      message: `クエリパラムを削除しました`,
+      message: t('BODY removed'),
       variant: 'success',
     });
     setSelected([]);
@@ -107,7 +109,7 @@ export const RequestBodyTable = ({
           <DeleteIcon />
         </IconButton>
         <Button variant="contained" color="primary" onClick={handleOpen}>
-          パラム追加
+          {t('Add BODY')}
         </Button>
       </Box>
       <TableContainer>

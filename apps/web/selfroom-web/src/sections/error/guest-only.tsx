@@ -12,7 +12,11 @@ import { PATH_AFTER_LOGIN } from '@/config-global';
 
 // ----------------------------------------------------------------------
 
-export default function GuestOnly() {
+type Props = {
+  redirectUrl?: string;
+}
+
+export default function GuestOnly({redirectUrl}: Props) {
   const { t } = useLocales();
 
   return (
@@ -35,7 +39,7 @@ export default function GuestOnly() {
         <ForbiddenIllustration sx={{ height: 260, my: { xs: 5, sm: 10 } }} />
       </m.div>
 
-      <Button component={RouterLink} href={PATH_AFTER_LOGIN} size="large" variant="contained">
+      <Button component={RouterLink} href={redirectUrl || PATH_AFTER_LOGIN} size="large" variant="contained">
         {t('Go to Main Content')}
       </Button>
     </MotionContainer>
