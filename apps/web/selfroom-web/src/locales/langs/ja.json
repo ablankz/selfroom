@@ -250,5 +250,7 @@
   "Visited Date": "入室日時",
   "Left Date": "退室日時",
   "Visit Log": "訪問履歴",
-  "No visit history": "訪問履歴がありません"
+  "No visit history": "訪問履歴がありません",
+  "Find a Room": "ルームを探す",
+  "Create a Room": "ルームを作成"
 }
