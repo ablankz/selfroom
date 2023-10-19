@@ -18,12 +18,14 @@ import ProfileCover from '../profile-cover';
 import { useLocales } from '@/locales';
 import { useGetUserQuery } from '@/api/users/useGetUserQuery';
 import { MotionContainer, varBounce } from '@/components/animate';
-import { Button, Skeleton, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { PageNotFoundIllustration } from '@/assets/illustrations';
 import ProfileFollowers from '../profile-followers';
 import ProfileFollows from '../profile-follows';
 import { useRouter } from '@/routes/hooks';
 import ProfileFavorites from '../profile-favorites';
+import { MiniCardListSkelton } from '@/sections/_common/skelton/mini-card-list-skelton';
+import { RectangleCardListSkelton } from '@/sections/_common/skelton/rectangle-card-list-skelton';
 
 // ----------------------------------------------------------------------
 
@@ -181,21 +183,36 @@ export default function ProfileView({ userId }: Props) {
       {currentTab === 'profile' && <ProfileHome user={data.data} />}
 
       {currentTab === 'followers' && (
-        <Suspense fallback={<Skeleton variant="rounded" height={400} />}>
-          <ProfileFollowers userId={userId} setDispatch={setDispatch} />
-        </Suspense>
+        <>
+          <Typography variant="h4" sx={{ my: 5 }}>
+            Followers
+          </Typography>
+          <Suspense fallback={<MiniCardListSkelton skeltonCount={6}/>}>
+            <ProfileFollowers userId={userId} setDispatch={setDispatch} />
+          </Suspense>
+        </>
       )}
 
       {currentTab === 'follows' && (
-        <Suspense fallback={<Skeleton variant="rounded" height={400} />}>
-          <ProfileFollows userId={userId} setDispatch={setDispatch} />
-        </Suspense>
+        <>
+          <Typography variant="h4" sx={{ my: 5 }}>
+            Follows
+          </Typography>
+          <Suspense fallback={<MiniCardListSkelton skeltonCount={6}/>}>
+            <ProfileFollows userId={userId} setDispatch={setDispatch} />
+          </Suspense>
+        </>
       )}
 
       {currentTab === 'favorites' && (
-        <Suspense fallback={<Skeleton variant="rounded" height={400} />}>
-          <ProfileFavorites userId={userId} setDispatch={setDispatch} />
-        </Suspense>
+        <>
+          <Typography variant="h4" sx={{ my: 5 }}>
+            Favorites
+          </Typography>
+          <Suspense fallback={<RectangleCardListSkelton skeltonCount={6}/>}>
+            <ProfileFavorites userId={userId} setDispatch={setDispatch} />
+          </Suspense>
+        </>
       )}
     </Container>
   );

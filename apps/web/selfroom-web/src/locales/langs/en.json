@@ -244,5 +244,11 @@
   "Room key is required": "Room key is required",
   "Room Key": "Room Key",
   "Go to talk screen": "Go to talk screen",
-  "Retrieve room visit history": "Retrieve room visit history"
+  "Retrieve room visit history": "Retrieve room visit history",
+  "Room Name": "Room Name",
+  "Room ID": "Room ID",
+  "Visited Date": "Visited Date",
+  "Left Date": "Left Date",
+  "Visit Log": "Visit Log",
+  "No visit history": "No visit history"
 }

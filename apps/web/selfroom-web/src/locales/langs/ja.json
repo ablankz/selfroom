@@ -244,5 +244,11 @@
   "Room key is required": "ルームキーは必須です",
   "Room Key": "ルームキー",
   "Go to talk screen": "トーク画面へ",
-  "Retrieve room visit history": "ルームの訪問履歴を取得"
+  "Retrieve room visit history": "ルームの訪問履歴を取得",
+  "Room Name": "ルーム名",
+  "Room ID": "ルームID",
+  "Visited Date": "入室日時",
+  "Left Date": "退室日時",
+  "Visit Log": "訪問履歴",
+  "No visit history": "訪問履歴がありません"
 }
