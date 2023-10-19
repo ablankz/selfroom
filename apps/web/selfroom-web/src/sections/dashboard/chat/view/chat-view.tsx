@@ -11,6 +11,7 @@ import {
   ButtonProps,
   Divider,
   Typography,
+  alpha,
   styled,
   useTheme,
 } from '@mui/material';
@@ -59,9 +60,9 @@ export default function ChatView() {
           width: { xs: 0.95, md: 0.75 },
           height: 800,
           bgcolor:
-            theme.palette.mode === 'dark'
+            alpha(theme.palette.mode === 'dark'
               ? theme.palette.primary.darker
-              : theme.palette.primary.lighter,
+              : theme.palette.primary.lighter, 0.2),
           borderRadius: 3,
           boxShadow: theme.shadows[12],
         }}
