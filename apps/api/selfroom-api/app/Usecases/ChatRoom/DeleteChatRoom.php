@@ -15,8 +15,8 @@ class DeleteChatRoom extends Usecase
   public function run(
     string $id
   ) {
-    $ret = DB::transaction(function() use($id) {
-      $chatRoom = ChatRoom::with(['likedUsers'])->where('chat_room_id', $id)->first();
+    $chatRoom = ChatRoom::with(['likedUsers'])->where('chat_room_id', $id)->first();
+    $ret = DB::transaction(function() use($chatRoom) {
       $chatRoom->likedUsers->each(function($user){
         $user->update([
           'favorite_room_num' => $user->favorite_room_num - 1
@@ -31,7 +31,12 @@ class DeleteChatRoom extends Usecase
       ];
     }
     return [
-      'data' => [],
+      'data' => [
+        'data' => [],
+        'options' => [
+          'cover_photo' => $chatRoom->cover_photo_url
+        ]
+      ],
       'code' => self::SUCCESS
     ];
   }
