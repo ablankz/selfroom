@@ -55,7 +55,6 @@ export function RoomCard({ chatRoom, handleSuccess }: RoomCardProps) {
     [roomIn]
   );
   const { user: auth } = useAuthContext();
-  console.log('aa', auth?.currentChatRoom);
 
   const handleFavorite = () => {
     if (isFavorite) favoriteCancel();
