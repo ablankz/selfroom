@@ -31,6 +31,8 @@ Route::prefix('users')->group(function () {
   Route::put('', [\App\Http\Controllers\UserController::class, 'update'])->middleware(['auth:jwt', 'user:jwt']);
   Route::delete('', [\App\Http\Controllers\UserController::class, 'delete'])->middleware(['auth:jwt', 'user:jwt']);
   Route::prefix('{userId}')->group(function () {
+    Route::get('visit-histories', [\App\Http\Controllers\RoomVisitController::class, 'getVisitRooms'])->middleware(['auth:jwt']);
+
     Route::get('favorites', [\App\Http\Controllers\FavoriteController::class, 'getFavorites'])->middleware(['auth:jwt']);
     
     Route::get('followees', [\App\Http\Controllers\FollowController::class, 'getFollowees'])->middleware(['auth:jwt']);
