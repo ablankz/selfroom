@@ -4,10 +4,11 @@ import { CHAT_ROOMS_ENDPOINTS } from '@/constants/endpoints';
 import { EmptySuccessResponse } from '@/types/response/empty-success-reponse';
 import { useAuthContext } from '@/auth/hooks';
 import { favoriteQueryKeys } from '@/query-keys/favoriteQueryKeys';
+import { roomVisitQueryKeys } from '@/query-keys/roomVisitQueryKeys';
 
 export const useChatRoomOutQuery = () => {
   const queryClient = useQueryClient();
-  const { initialize } = useAuthContext();
+  const { initialize, user } = useAuthContext();
 
   const { data, error, mutate, status } = useMutation(
     () =>
@@ -19,6 +20,7 @@ export const useChatRoomOutQuery = () => {
     {
       onSuccess: (_) => {
         queryClient.invalidateQueries([favoriteQueryKeys.favorites.get]);
+        queryClient.invalidateQueries([roomVisitQueryKeys.visitRooms.get(user?.userId || '')]);
         initialize();
       },
     }

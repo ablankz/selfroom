@@ -4,6 +4,7 @@ import { CHAT_ROOMS_ENDPOINTS } from '@/constants/endpoints';
 import { EmptySuccessResponse } from '@/types/response/empty-success-reponse';
 import { useAuthContext } from '@/auth/hooks';
 import { favoriteQueryKeys } from '@/query-keys/favoriteQueryKeys';
+import { roomVisitQueryKeys } from '@/query-keys/roomVisitQueryKeys';
 
 type MutateProps = {
   keyword?: string;
@@ -11,7 +12,7 @@ type MutateProps = {
 
 export const useChatRoomInQuery = (chatRoomId: string) => {
   const queryClient = useQueryClient();
-  const { initialize } = useAuthContext();
+  const { initialize, user } = useAuthContext();
 
   const { data, error, mutate, status } = useMutation(
     (mutateProps: MutateProps) =>
@@ -22,6 +23,7 @@ export const useChatRoomInQuery = (chatRoomId: string) => {
     {
       onSuccess: (_) => {
         queryClient.invalidateQueries([favoriteQueryKeys.favorites.get]);
+        queryClient.invalidateQueries([roomVisitQueryKeys.visitRooms.get(user?.userId || '')]);
         initialize();
       },
     }
