@@ -3,7 +3,6 @@
 namespace App\Usecases\User;
 
 use App\Enums\ApplicationCode;
-use App\Http\Resources\User\UserResource;
 use App\Models\User;
 use App\Usecases\Usecase;
 
@@ -17,13 +16,13 @@ class FindUser extends Usecase
 
     $ret = User::find($id);
 
-    $ret->is_follow = in_array($ret->user_id, $authFollowers);
-
     if (is_null($ret)) {
       return [
         'code' => self::NOT_FOUND
       ];
     }
+
+    $ret->is_follow = in_array($ret->user_id, $authFollowers);
 
     return [
       'data' => $ret,

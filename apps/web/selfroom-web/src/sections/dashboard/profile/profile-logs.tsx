@@ -3,6 +3,8 @@ import EmptyContent from '@/components/empty-content';
 import Scrollbar from '@/components/scrollbar';
 import { TablePaginationCustom } from '@/components/table';
 import { useLocales } from '@/locales';
+import { useRouter } from '@/routes/hooks';
+import { paths } from '@/routes/paths';
 import { fDateTime } from '@/utils/format-time';
 import {
   Card,
@@ -15,6 +17,7 @@ import {
   TableHead,
   TableRow,
   Typography,
+  alpha,
 } from '@mui/material';
 import {
   Dispatch,
@@ -108,6 +111,7 @@ function HistoryTable({
 }: HistoryProps) {
   const { data, refetch } = useGetVisitRoomsQuery(userId, page, perPage);
   const { t, currentLang } = useLocales();
+  const router = useRouter();
 
   useEffect(() => {
     refetch();
@@ -138,7 +142,16 @@ function HistoryTable({
       </TableHead>
       <TableBody>
         {data?.data.data.map((room, index) => (
-          <TableRow key={`${room.chatRoomId}.${index}`}>
+          <TableRow
+            key={`${room.chatRoomId}.${index}`}
+            sx={{
+              cursor: 'pointer',
+              ':hover': {
+                bgcolor: (theme) => alpha(theme.palette.background.neutral, 0.5),
+              },
+            }}
+            onClick={() => router.push(paths.dashboard.chatroom.profile(room.chatRoomId))}
+          >
             <TableCell>
               <Typography color="text.secondary" variant="body2">
                 {room.name}
