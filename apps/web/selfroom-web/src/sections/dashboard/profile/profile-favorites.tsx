@@ -1,6 +1,5 @@
 // @mui
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import {
   ChangeEvent,
   Dispatch,
@@ -51,9 +50,6 @@ export default function ProfileFavorites({ userId, setDispatch }: Props) {
     <>
       {typeof totalCount === 'undefined' || totalCount !== 0 ? (
         <>
-          <Typography variant="h4" sx={{ my: 5 }}>
-            Favorites
-          </Typography>
           <FavoriteTable
             userId={userId}
             page={page}

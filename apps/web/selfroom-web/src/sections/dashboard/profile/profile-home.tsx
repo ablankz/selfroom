@@ -14,6 +14,8 @@ import Iconify from '@/components/iconify';
 import { ProfileLogs } from './profile-logs';
 import { User } from '@/types/entity';
 import { useLocales } from '@/locales';
+import { Suspense } from 'react';
+import { TableListSkelton } from '@/sections/_common/skelton/table-list-skelton';
 
 // ----------------------------------------------------------------------
 
@@ -140,7 +142,9 @@ export default function ProfileHome({ user }: Props) {
 
       <Grid xs={12} md={8}>
         <Stack spacing={3}>
-          <ProfileLogs />
+          <Suspense fallback={<TableListSkelton />}>
+            <ProfileLogs userId={user.userId} />
+          </Suspense>
         </Stack>
       </Grid>
     </Grid>

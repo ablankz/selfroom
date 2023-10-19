@@ -2,7 +2,6 @@
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
 import ListItemText from '@mui/material/ListItemText';
 // components
 import Iconify from '@/components/iconify';
@@ -72,9 +71,6 @@ export default function ProfileFollowers({ userId, setDispatch }: Props) {
     <>
       {typeof totalCount === 'undefined' || totalCount !== 0 ? (
         <>
-          <Typography variant="h4" sx={{ my: 5 }}>
-            Followers
-          </Typography>
           <FollowerTable
             authId={user?.userId || user?.adminId || ''}
             userId={userId}

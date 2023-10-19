@@ -2,7 +2,6 @@
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
 import ListItemText from '@mui/material/ListItemText';
 // components
 import Iconify from '@/components/iconify';
@@ -26,8 +25,15 @@ import { useLocales } from '@/locales';
 import { Button, Pagination, paginationClasses } from '@mui/material';
 import EmptyContent from '@/components/empty-content';
 import { useGetFolloweesQuery } from '@/api/follows/useGetFolloweesQuery';
-import { UserFolloweeData, UserFolloweesResponse } from '@/types/response/user/user-followees-response';
-import { QueryObserverResult, RefetchOptions, RefetchQueryFilters } from '@tanstack/react-query';
+import {
+  UserFolloweeData,
+  UserFolloweesResponse,
+} from '@/types/response/user/user-followees-response';
+import {
+  QueryObserverResult,
+  RefetchOptions,
+  RefetchQueryFilters,
+} from '@tanstack/react-query';
 
 // ----------------------------------------------------------------------
 
@@ -65,9 +71,6 @@ export default function ProfileFollows({ userId, setDispatch }: Props) {
     <>
       {typeof totalCount === 'undefined' || totalCount !== 0 ? (
         <>
-          <Typography variant="h4" sx={{ my: 5 }}>
-            Followees
-          </Typography>
           <FolloweeTable
             authId={user?.userId || user?.adminId || ''}
             userId={userId}
@@ -170,10 +173,17 @@ type FolloweeItemProps = {
   followee: UserFolloweeData;
   authId: string;
   setDispatch: Dispatch<SetStateAction<boolean>>;
-  followeesRefetch: <TPageData>(options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined) => Promise<QueryObserverResult<UserFolloweesResponse, unknown>>;
+  followeesRefetch: <TPageData>(
+    options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined
+  ) => Promise<QueryObserverResult<UserFolloweesResponse, unknown>>;
 };
 
-function FolloweeItem({ followee, authId, setDispatch, followeesRefetch }: FolloweeItemProps) {
+function FolloweeItem({
+  followee,
+  authId,
+  setDispatch,
+  followeesRefetch,
+}: FolloweeItemProps) {
   const { nickname, userId, profilePhotoUrl, isFollow } = followee;
   const router = useRouter();
   const { mutate: follow, status: followStatus } = useUserFollowQuery(userId);
