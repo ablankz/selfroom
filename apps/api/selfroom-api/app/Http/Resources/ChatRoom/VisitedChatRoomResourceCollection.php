@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Resources\VisitHistory;
+namespace App\Http\Resources\ChatRoom;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class VisitHistoryResourceCollection extends ResourceCollection
+class VisitedChatRoomResourceCollection extends ResourceCollection
 {
   /**
    * Transform the resource collection into an array.
@@ -16,7 +16,7 @@ class VisitHistoryResourceCollection extends ResourceCollection
   public function toArray(Request $request): array
   {
     return $this->resource->map(function ($value) {
-      return new VisitHistoryResource($value);
+      return new VisitedChatRoomResource($value);
     })->all();
   }
 
