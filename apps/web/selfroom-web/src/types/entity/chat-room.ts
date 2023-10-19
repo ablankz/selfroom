@@ -26,3 +26,8 @@ export interface SimpleChatRoom {
 export interface ChatRoomCard extends ChatRoom {
   isFavorite: boolean;
 }
+
+export interface VistedChatRoom extends SimpleChatRoom {
+  visitedAt: string;
+  leftAt: string;
+}
