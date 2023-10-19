@@ -250,8 +250,6 @@ export function AuthProvider({ children }: Props) {
     ]
   );
 
-  console.log(memoizedValue.user, memoizedValue.authenticated);
-
   return (
     <AuthContext.Provider value={memoizedValue}>
       {children}
