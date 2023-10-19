@@ -151,7 +151,7 @@ export default function SettingForm() {
     <>
       <FormProvider methods={methods} onSubmit={onSubmit}>
         <Grid container spacing={3}>
-          <Grid xs={12} md={4}>
+          <Grid xs={12} md={4} item>
             <Card sx={{ pt: 10, pb: 5, px: 3, textAlign: 'center' }}>
               <RHFUploadAvatar
                 name="profilePhoto"
@@ -185,7 +185,7 @@ export default function SettingForm() {
             </Card>
           </Grid>
 
-          <Grid xs={12} md={8}>
+          <Grid xs={12} md={8} item>
             <Card sx={{ p: 3, height: 1, mx: 2 }}>
               <Grid container columnGap={2} rowGap={3} justifyContent="center">
                 <Grid item xs={12} md={5.5}>

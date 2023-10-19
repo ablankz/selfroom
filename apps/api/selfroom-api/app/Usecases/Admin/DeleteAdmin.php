@@ -13,7 +13,8 @@ class DeleteAdmin extends Usecase
   public function run(
     string $id
   ) {
-    $ret = Admin::where('admin_id', $id)->delete();
+    $admin = Admin::find($id);
+    $ret = $admin->delete();
 
     if (!$ret) {
       return [
@@ -21,7 +22,12 @@ class DeleteAdmin extends Usecase
       ];
     }
     return [
-      'data' => [],
+      'data' => [
+        'data' => [],
+        'options' => [
+          'profile_photo' => $admin->profile_photo_url
+        ]
+      ],
       'code' => self::SUCCESS
     ];
   }

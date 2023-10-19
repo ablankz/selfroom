@@ -95,6 +95,11 @@ class AdminService
 
   public function delete(DeleteAdmin $usecase, string $admin_id)
   {
-    return $usecase->handle($admin_id);
+    $ret = $usecase->handle($admin_id);
+    if(!is_null($ret['options']['profile_photo'])){
+      Storage::delete($ret['options']['profile_photo']);
+    } 
+
+    return $ret['data'];
   }
 }

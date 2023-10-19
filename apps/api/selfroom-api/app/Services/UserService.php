@@ -104,6 +104,11 @@ class UserService
 
   public function delete(DeleteUser $usecase, string $user_id)
   {
-    return $usecase->handle($user_id);
+    $ret = $usecase->handle($user_id);
+    if(!is_null($ret['options']['profile_photo'])){
+      Storage::delete($ret['options']['profile_photo']);
+    } 
+
+    return $ret['data'];
   }
 }

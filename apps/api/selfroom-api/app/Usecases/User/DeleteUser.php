@@ -14,8 +14,8 @@ class DeleteUser extends Usecase
   public function run(
     string $id
   ) {
-    $ret = DB::transaction(function() use($id) {
-      $user = User::with(['followers', 'followees', 'favoriteRooms', 'currentRoom'])->where('user_id', $id)->first();
+    $user = User::with(['followers', 'followees', 'favoriteRooms', 'currentRoom'])->where('user_id', $id)->first();
+    $ret = DB::transaction(function() use($user) {   
       $user->followers->each(function($follower){
         $follower->update([
           'followees' => $follower->follow_num - 1
@@ -42,8 +42,14 @@ class DeleteUser extends Usecase
         'code' => self::NOT_FOUND
       ];
     }
+
     return [
-      'data' => [],
+      'data' => [
+        'data' => [],
+        'options' => [
+          'profile_photo' => $user->profile_photo_url
+        ]
+      ],
       'code' => self::SUCCESS
     ];
   }
