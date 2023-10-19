@@ -243,5 +243,6 @@
   "Failed to enter the room": "Failed to enter the room",
   "Room key is required": "Room key is required",
   "Room Key": "Room Key",
-  "Go to talk screen": "Go to talk screen"
+  "Go to talk screen": "Go to talk screen",
+  "Retrieve room visit history": "Retrieve room visit history"
 }

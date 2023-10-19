@@ -243,5 +243,6 @@
   "Failed to enter the room": "ルームへの入室に失敗しました",
   "Room key is required": "ルームキーは必須です",
   "Room Key": "ルームキー",
-  "Go to talk screen": "トーク画面へ"
+  "Go to talk screen": "トーク画面へ",
+  "Retrieve room visit history": "ルームの訪問履歴を取得"
 }
