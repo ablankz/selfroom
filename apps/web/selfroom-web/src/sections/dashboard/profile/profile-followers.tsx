@@ -131,10 +131,6 @@ function FollowerTable({
 
   useEffect(() => {
     refetch();
-  }, [page]);
-
-  useEffect(() => {
-    refetch();
     resetPage();
   }, [userId]);
 

@@ -105,10 +105,6 @@ function FavoriteTable({
 
   useEffect(() => {
     refetch();
-  }, [page]);
-
-  useEffect(() => {
-    refetch();
     resetPage();
   }, [userId]);
 

@@ -129,10 +129,6 @@ function FolloweeTable({
 
   useEffect(() => {
     refetch();
-  }, [page]);
-
-  useEffect(() => {
-    refetch();
     resetPage();
   }, [userId]);
 
