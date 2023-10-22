@@ -30,7 +30,7 @@ export default function WorksView() {
   const upLg = useResponsive('up', 'lg');
 
   useEffect(() => {
-    import(`../../../../assets/data/works/${currentLang.value}`)
+    import(`../../../../assets/data/works/${currentLang.value}.ts`)
       .then((module) => {
         if (!module.default) throw new Error();
         setWorks(module.default);

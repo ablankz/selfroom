@@ -64,7 +64,7 @@ export default function LinkView() {
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
-    import(`../../../../assets/data/link/${currentLang.value}`)
+    import(`../../../../assets/data/link/${currentLang.value}.ts`)
       .then((module) => {
         if (!module.default) throw new Error();
         setLinks(module.default);
