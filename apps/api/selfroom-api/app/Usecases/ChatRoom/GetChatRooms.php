@@ -6,6 +6,7 @@ use App\Models\ChatRoom;
 use App\Models\User;
 use App\Usecases\Usecase;
 use Illuminate\Support\Carbon;
+use Ramsey\Uuid\Uuid;
 
 class GetChatRooms extends Usecase
 {
@@ -22,6 +23,8 @@ class GetChatRooms extends Usecase
     string $category_select_type,
     bool $with_total_count
   ) {
+    $authFavorites = request()->user()?->user_id ? User::find(request()->user()->user_id)->favoriteRooms->pluck('chat_room_id')->toArray() : [];
+
     $query = ChatRoom::query()->with('categories');
 
     $order_opt = $order_opt === 'desc' ? 'desc' : 'asc';
@@ -31,31 +34,35 @@ class GetChatRooms extends Usecase
         $thirtyMinutesAgo = $currentDateTime->subMinutes(30);
         $query = $query->withCount(['chats as latest_chats_count' => function ($query) use ($thirtyMinutesAgo) {
           $query->where('created_at', '>=', $thirtyMinutesAgo);
-        }])->orderBy('latest_chats_count', $order_opt);
+        }])->orderBy('latest_chats_count', $order_opt)->orderBy('name', 'asc');
         break;
       case 'chat':
-        $query = $query->withCount('chats', $order_opt)->orderBy('chats_count', $order_opt);
+        $query = $query->withCount('chats', $order_opt)->orderBy('chats_count', $order_opt)->orderBy('name', 'asc');
         break;
       case 'favorite':
-        $query = $query->orderBy('favor_num', $order_opt);
+        $query = $query->orderBy('favor_num', $order_opt)->orderBy('name', 'asc');
         break;
       case 'name':
         $query = $query->orderBy('name', $order_opt);
         break;
       case 'in':
-        $query = $query->orderBy('user_num', $order_opt);
+        $query = $query->orderBy('user_num', $order_opt)->orderBy('name', 'asc');
         break;
       case 'create':
         $query = $query->orderBy('t_chat_rooms_pkey', $order_opt);
         break;
       case 'update':
       default:
-        $query = $query->orderBy('updated_at', $order_opt);
+        $query = $query->orderBy('updated_at', $order_opt)->orderBy('name', 'asc');
         break;
     }
 
     if ($search_type === "id") {
-      $query = $query->where('chat_room_id', $search);
+      if(Uuid::isValid($search)){
+        $query = $query->where('chat_room_id', $search);
+      }else{
+        $query = $query->whereNull('chat_room_id');
+      }
     } else {
       $searchQuery = addcslashes($search, '%_\\');
       $query = $query->where('name', 'like', '%' . $searchQuery . '%');
@@ -69,7 +76,7 @@ class GetChatRooms extends Usecase
 
     if ($is_favorite === "true") {
       $authFavorites = request()->user()?->user_id ? User::find(request()->user()->user_id)->favoriteRooms->pluck('chat_room_id')->toArray() : [];
-      $query = $query->whereIn($authFavorites);
+      $query = $query->whereIn('chat_room_id', $authFavorites);
     }
 
     if (!empty($categories)) {
@@ -90,7 +97,10 @@ class GetChatRooms extends Usecase
       ];
     }
 
-    $ret = $query->limit($limit)->offset($offset)->get();
+    $ret = $query->limit($limit)->offset($offset)->get()->map(function ($room) use ($authFavorites) {
+      $room->is_favorite = in_array($room->chat_room_id, $authFavorites);
+      return $room;
+    });
 
     return [
       'data' => !count($data) ? $ret : ['data' => $ret, ...$data],

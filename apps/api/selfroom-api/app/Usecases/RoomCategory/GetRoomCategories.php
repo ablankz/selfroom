@@ -19,7 +19,7 @@ class GetRoomCategories extends Usecase
     $order_opt = $order_opt === 'desc' ? 'desc' : 'asc';
     switch ($order) {
       case 'room':
-        $query = $query->withCount('hasRooms')->orderBy('has_rooms_count', $order_opt);
+        $query = $query->withCount('hasRooms')->orderBy('has_rooms_count', $order_opt)->orderBy('name', $order_opt);
       case 'name':
       default:
         $query = $query->orderBy('name', $order_opt);

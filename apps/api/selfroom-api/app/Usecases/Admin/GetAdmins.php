@@ -22,7 +22,7 @@ class GetAdmins extends Usecase
         $query = $query->orderBy('nickname', $order_opt);
         break;
       case 'permission':
-        $query = $query->withCount('roles')->orderBy('roles_count', $order_opt);
+        $query = $query->withCount('roles')->orderBy('roles_count', $order_opt)->orderBy('nickname', $order_opt);
         break;
       case 'create':
       default:
