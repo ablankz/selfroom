@@ -252,5 +252,12 @@
   "Visit Log": "訪問履歴",
   "No visit history": "訪問履歴がありません",
   "Find a Room": "ルームを探す",
-  "Create a Room": "ルームを作成"
+  "Create a Room": "ルームを作成",
+  "Search": "検索",
+  "Talk": "トーク",
+  "Create": "新規作成",
+  "ChatRoomCreate": "チャットルーム新規作成",
+  "ChatRoomSearch": "チャットルーム検索",
+  "ChatRoomProfile": "チャットルームプロフィール",
+  "ChatRoomTalk": "トーク"
 }

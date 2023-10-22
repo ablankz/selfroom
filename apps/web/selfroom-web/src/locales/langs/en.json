@@ -252,5 +252,12 @@
   "Visit Log": "Visit Log",
   "No visit history": "No visit history",
   "Find a Room": "Find a Room",
-  "Create a Room": "Create a Room"
+  "Create a Room": "Create a Room",
+  "Search": "Search",
+  "Talk": "Talk",
+  "Create": "Create",
+  "ChatRoomCreate": "ChatRoomCreate",
+  "ChatRoomSearch": "ChatRoomSearch",
+  "ChatRoomProfile": "ChatRoomProfile",
+  "ChatRoomTalk": "Talk"
 }

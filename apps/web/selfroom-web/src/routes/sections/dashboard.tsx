@@ -22,6 +22,12 @@ const ProfilePage = lazy(() => import('../../pages/dashboard/profile'));
 const RawApiPage = lazy(() => import('../../pages/dashboard/raw-api'));
 const ChatPage = lazy(() => import('../../pages/dashboard/chat'));
 
+const ChatRoomCreatePage = lazy(() => import('../../pages/dashboard/chat-room-create'));
+const ChatRoomProfilePage = lazy(() => import('../../pages/dashboard/chat-room-profile'));
+const ChatRoomSearchPage = lazy(() => import('../../pages/dashboard/chat-room-search'));
+const ChatRoomTalkPage = lazy(() => import('../../pages/dashboard/chat-room-talk'));
+
+
 // ----------------------------------------------------------------------
 
 export const dashboardRoutes = [
@@ -67,6 +73,10 @@ export const dashboardRoutes = [
         ),
         children: [
           { path: 'chat-room', element: <ChatPage /> },
+          { path: 'chat-room/create', element: <ChatRoomCreatePage /> },
+          { path: 'chat-room/profile/:id', element: <ChatRoomProfilePage /> },
+          { path: 'chat-room/search', element: <ChatRoomSearchPage /> },
+          { path: 'chat-room/talk', element: <ChatRoomTalkPage /> },
           { path: 'setting', element: <SettingPage /> },
           { path: 'profile/:id', element: <ProfilePage /> },
         ],
