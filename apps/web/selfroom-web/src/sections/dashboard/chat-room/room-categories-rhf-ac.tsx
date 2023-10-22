@@ -1,31 +1,25 @@
 import { useGetRoomCategoriesQuery } from '@/api/room-categories/useGetRoomCategoriesQuery';
+import { RHFAutocomplete } from '@/components/hook-form';
 import { useLocales } from '@/locales';
 import { RoomCategoriesData } from '@/types/response/room-category/room-categories-response';
-import { Autocomplete, Chip, TextField } from '@mui/material';
+import { Chip } from '@mui/material';
 
-type Props = {
-  categories: RoomCategoriesData[];
-  handleCategories: (newValue: RoomCategoriesData[]) => void;
-};
+type Props = {};
 
-export const RoomCategoriesAc = ({
-  categories,
-  handleCategories,
+export const RoomCategoriesRHFAc = ({
 }: Props) => {
   const { data } = useGetRoomCategoriesQuery();
   const { t } = useLocales();
 
   return (
-    <Autocomplete
+    <RHFAutocomplete
+      name="categories"
+      label={t('Categories')}
+      freeSolo
+      placeholder={`+ ${t('Categories')}`}
       multiple
-      disableCloseOnSelect
       options={(data?.data || []).map((option) => option)}
-      getOptionLabel={(option: RoomCategoriesData) => t(option.name)}
-      value={categories}
-      onChange={(_, newValue) => handleCategories(newValue)}
-      renderInput={(params) => (
-        <TextField placeholder="Select Categories" {...params} />
-      )}
+      getOptionLabel={(option: RoomCategoriesData | string) => typeof option === 'string' ? option : t(option.name)}
       renderOption={(props, option) => (
         <li {...props} key={option.roomCategoryId}>
           {t(option.name)}

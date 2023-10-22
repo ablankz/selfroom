@@ -5,6 +5,10 @@ import { useSettingsContext } from '@/components/settings';
 import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
 import { useLocales } from '@/locales';
 import { paths } from '@/routes/paths';
+import { RouterLink } from '@/routes/components';
+import { Button } from '@mui/material';
+import Iconify from '@/components/iconify';
+import RoomNewEditForm from '../room-new-edit-form';
 
 // ----------------------------------------------------------------------
 
@@ -13,7 +17,10 @@ export default function ChatRoomCreateView() {
   const { t } = useLocales();
 
   return (
-    <Container maxWidth={settings.themeStretch ? false : 'xl'}>
+    <Container
+      maxWidth={settings.themeStretch ? false : 'xl'}
+      sx={{ mb: { xs: 2, md: 'auto' } }}
+    >
       <CustomBreadcrumbs
         heading={t('Chat')}
         links={[
@@ -21,22 +28,21 @@ export default function ChatRoomCreateView() {
           { name: t('Chat'), href: paths.dashboard.chat },
           { name: t('Create') },
         ]}
+        action={
+          <Button
+            component={RouterLink}
+            href={paths.dashboard.chatroom.search}
+            variant="contained"
+            startIcon={<Iconify icon="material-symbols:search" />}
+          >
+            {t('Search')}
+          </Button>
+        }
         sx={{
           mb: { xs: 3, md: 5 },
         }}
       />
-      <Container
-        sx={{
-          width: '100%',
-          boxShadow: (theme) => theme.customShadows.primary,
-          borderRadius: 4,
-          py: 4,
-          overflowX: 'auto',
-          overflowWrap: 'normal',
-        }}
-      >
-        RoomCreate
-      </Container>
+      <RoomNewEditForm />
     </Container>
   );
 }

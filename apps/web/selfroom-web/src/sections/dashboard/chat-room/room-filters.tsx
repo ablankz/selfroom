@@ -238,8 +238,8 @@ export default function RoomFilters({
                 }
               >
                 <RoomCategoriesAc
-                  filters={filters}
-                  handleFilterCategories={handleFilterCategories}
+                  categories={filters.categories}
+                  handleCategories={handleFilterCategories}
                 />
               </Suspense>
             </Stack>
