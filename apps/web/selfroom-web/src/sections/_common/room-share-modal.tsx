@@ -47,7 +47,7 @@ export default function RoomShareModal({
   const sendMsg = useMemo(
     () => ({
       url: `${HOST}/${paths.dashboard.chatroom.profile(roomId)}`,
-      mailTitle: t("invite-mail-title"),
+      mailtitle: t('invite-mail-title'),
       title: `${t('invite-room-key-1', {
         userName: user?.nickname || 'unknown',
         roomName,
@@ -100,9 +100,7 @@ export default function RoomShareModal({
             p={2}
           >
             <FacebookShareButton url={sendMsg.url} quote={sendMsg.title}>
-              <IconButton>
-                <Iconify width={72} icon="ic:baseline-facebook" />
-              </IconButton>
+              <Iconify width={72} icon="ic:baseline-facebook" />
             </FacebookShareButton>
             <Typography variant="body2" fontSize={18}>
               Facebook
@@ -116,12 +114,10 @@ export default function RoomShareModal({
             p={2}
           >
             <TwitterShareButton {...sendMsg}>
-              <IconButton>
-                <Iconify width={72} icon="fa6-brands:x-twitter" />
-              </IconButton>
+              <Iconify width={72} icon="fa6-brands:x-twitter" />
             </TwitterShareButton>
             <Typography variant="body2" fontSize={18}>
-              &#x1D54F; (Twitter)
+              &#x1D54F;(Twitter)
             </Typography>
           </Box>
           <Box
@@ -132,9 +128,7 @@ export default function RoomShareModal({
             p={2}
           >
             <LineShareButton {...sendMsg}>
-              <IconButton>
-                <Iconify width={72} icon="bi:line" />
-              </IconButton>
+              <Iconify width={72} icon="bi:line" />
             </LineShareButton>
             <Typography variant="body2" fontSize={18}>
               Line
@@ -149,12 +143,10 @@ export default function RoomShareModal({
           >
             <EmailShareButton
               url={sendMsg.url}
-              subject={sendMsg.mailTitle}
+              subject={sendMsg.mailtitle}
               body={sendMsg.title}
             >
-              <IconButton>
-                <Iconify width={72} icon="ic:baseline-email" />
-              </IconButton>
+              <Iconify width={72} icon="ic:baseline-email" />
             </EmailShareButton>
             <Typography variant="body2" fontSize={18}>
               Email
