@@ -139,7 +139,7 @@ export default function ChatRoomProfileView({ chatRoomId }: Props) {
         </Grid>
 
         <Grid xs={12} md={6} lg={5} item>
-          <RoomProfileDetail data={data.data} />
+          <RoomProfileDetail data={data.data} handleSuccess={handleSuccess} />
         </Grid>
       </Grid>
 
