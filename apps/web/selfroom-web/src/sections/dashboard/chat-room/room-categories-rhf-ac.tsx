@@ -1,41 +1,73 @@
 import { useGetRoomCategoriesQuery } from '@/api/room-categories/useGetRoomCategoriesQuery';
-import { RHFAutocomplete } from '@/components/hook-form';
 import { useLocales } from '@/locales';
 import { RoomCategoriesData } from '@/types/response/room-category/room-categories-response';
-import { Chip } from '@mui/material';
+import { Autocomplete, Chip, CircularProgress, TextField } from '@mui/material';
+import { Controller, useFormContext } from 'react-hook-form';
 
 type Props = {};
 
-export const RoomCategoriesRHFAc = ({
-}: Props) => {
-  const { data } = useGetRoomCategoriesQuery();
+export const RoomCategoriesRHFAc = ({}: Props) => {
+  const { data } = useGetRoomCategoriesQuery({ suspense: false });
   const { t } = useLocales();
+  const { control, setValue } = useFormContext();
 
   return (
-    <RHFAutocomplete
+    <Controller
       name="categories"
-      label={t('Categories')}
-      freeSolo
-      placeholder={`+ ${t('Categories')}`}
-      multiple
-      options={(data?.data || []).map((option) => option)}
-      getOptionLabel={(option: RoomCategoriesData | string) => typeof option === 'string' ? option : t(option.name)}
-      renderOption={(props, option) => (
-        <li {...props} key={option.roomCategoryId}>
-          {t(option.name)}
-        </li>
+      control={control}
+      render={({ field, fieldState: { error } }) => (
+        <Autocomplete
+          {...field}
+          freeSolo
+          placeholder={`+ ${t('Categories')}`}
+          options={(data?.data || []).map((option) => option)}
+          multiple
+          getOptionLabel={(option: RoomCategoriesData | string) =>
+            t((option as RoomCategoriesData).name)
+          }
+          renderOption={(props, option) => (
+            <li {...props} key={(option as RoomCategoriesData).roomCategoryId}>
+              {t((option as RoomCategoriesData).name)}
+            </li>
+          )}
+          renderTags={(selected, getTagProps) =>
+            selected.map((option, index) => (
+              <Chip
+                {...getTagProps({ index })}
+                key={(option as RoomCategoriesData).roomCategoryId}
+                label={t((option as RoomCategoriesData).name)}
+                variant="soft"
+              />
+            ))
+          }
+          isOptionEqualToValue={(option, v) =>
+            (option as RoomCategoriesData).roomCategoryId === (v as RoomCategoriesData).roomCategoryId
+          }
+          onChange={(_, newValue) =>
+            setValue('categories', newValue, { shouldValidate: true })
+          }
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label={t('Categories')}
+              placeholder={`+ ${t('Categories')}`}
+              error={!!error}
+              helperText={error ? error?.message : undefined}
+              InputProps={{
+                ...params.InputProps,
+                endAdornment: (
+                  <>
+                    {status === 'loading' ? (
+                      <CircularProgress color="inherit" size={20} />
+                    ) : null}
+                    {params.InputProps.endAdornment}
+                  </>
+                ),
+              }}
+            />
+          )}
+        />
       )}
-      renderTags={(selected, getTagProps) =>
-        selected.map((option, index) => (
-          <Chip
-            {...getTagProps({ index })}
-            key={option.roomCategoryId}
-            label={t(option.name)}
-            size="small"
-            variant="soft"
-          />
-        ))
-      }
     />
   );
 };

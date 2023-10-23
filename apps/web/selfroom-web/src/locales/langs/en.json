@@ -284,5 +284,16 @@
   "Categories": "Categories",
   "results found": "results found",
   "Clear": "Clear",
-  "No matching rooms found": "No matching rooms found"
+  "No matching rooms found": "No matching rooms found",
+  "Must have at least-categories": "Must have at least {{least}} categories",
+  "Maximum number of categories": "Maximum number of categories is {{maximum}}",
+  "room-name-required": "Room name is required",
+  "room-key-required": "Room key is required",
+  "new-room-setting-description": "Name, Cover Photo, Room Key, etc",
+  "Cover Photo": "Cover Photo",
+  "Required Key": "Required Key",
+  "Properties": "Properties",
+  "new-room-properties-description": "Room category, etc",
+  "Room creation failed": "Room creation failed",
+  "Room successfully created": "Room successfully created"
 }

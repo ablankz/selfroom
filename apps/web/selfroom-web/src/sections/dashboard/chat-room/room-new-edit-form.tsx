@@ -1,43 +1,60 @@
 import * as Yup from 'yup';
-import { useCallback, useMemo, useEffect, Suspense } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 // @mui
 import LoadingButton from '@mui/lab/LoadingButton';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
-import Switch from '@mui/material/Switch';
 import Grid from '@mui/material/Unstable_Grid2';
 import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
-import FormControlLabel from '@mui/material/FormControlLabel';
 // hooks
 import { useBoolean } from '@/hooks/use-boolean';
 import { useResponsive } from '@/hooks/use-responsive';
-// routes
-import { useRouter } from '@/routes/hooks';
 // components
 import { useSnackbar } from '@/components/snackbar';
 import FormProvider, {
   RHFUpload,
   RHFTextField,
+  RHFSwitch,
 } from '@/components/hook-form';
 import { RoomCategoriesRHFAc } from './room-categories-rhf-ac';
-import { Skeleton } from '@mui/material';
+import { useLocales } from '@/locales';
+import { IconButton, InputAdornment } from '@mui/material';
+import Iconify from '@/components/iconify';
+import { useChatRoomCreateQuery } from '@/api/chat-rooms/useChatRoomCreateQuery';
+import { RoomCategory } from '@/types/entity';
+import { useRouter } from '@/routes/hooks';
+import { AxiosError } from 'axios';
+import { formErrorHandle } from '@/utils/errorHandle/formErrorHandle';
+import { ErrorResponse } from '@/types/response/error-response';
+import { paths } from '@/routes/paths';
 
 // ----------------------------------------------------------------------
 
 export default function RoomNewEditForm() {
   const mdUp = useResponsive('up', 'md');
-
+  const { t } = useLocales();
+  const { mutate, data, error, status } = useChatRoomCreateQuery();
   const { enqueueSnackbar } = useSnackbar();
-
-  const preview = useBoolean();
+  const password = useBoolean();
+  const router = useRouter();
 
   const NewBlogSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
-    coverPhoto: Yup.mixed<any>().nullable().required('Cover is required'),
-    categories: Yup.array().min(2, 'Must have at least 2 tags'),
+    name: Yup.string().required(t('room-name-required')),
+    coverPhoto: Yup.mixed<any>().nullable(),
+    categories: Yup.array()
+      .min(1, t('Must have at least-categories', { least: 1 }))
+      .max(5, t('Maximum number of categories', { maximum: 5 })),
+    hasKey: Yup.boolean(),
+    roomKey: Yup.string()
+      .nullable()
+      .test(
+        'if_has_key_required',
+        t('room-key-required'),
+        (value, { parent }) => (parent.hasKey ? !!value : true)
+      ),
   });
 
   const defaultValues = useMemo(
@@ -45,6 +62,8 @@ export default function RoomNewEditForm() {
       name: '',
       coverPhoto: null,
       categories: [],
+      hasKey: false,
+      roomKey: '',
     }),
     []
   );
@@ -55,26 +74,48 @@ export default function RoomNewEditForm() {
   });
 
   const {
-    reset,
     watch,
     setValue,
+    setError,
     handleSubmit,
-    formState: { isSubmitting, isValid },
+    formState: { isSubmitting },
   } = methods;
 
   const values = watch();
 
   const onSubmit = handleSubmit(async (data) => {
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      reset();
-      preview.onFalse();
-      enqueueSnackbar('Create success!');
-      console.info('DATA', data);
-    } catch (error) {
-      console.error(error);
+    const formData = new FormData();
+    formData.append('name', data.name || '');
+    if (typeof data.coverPhoto !== 'string' && !!data.coverPhoto) {
+      formData.append('coverPhoto', data.coverPhoto);
     }
+    if (data.hasKey) {
+      formData.append('roomKey', data.roomKey || '');
+    }
+    (data.categories || []).forEach((v: RoomCategory) => {
+      formData.append('categories[]', v.roomCategoryId);
+    });
+    mutate(formData);
   });
+
+  useEffect(() => {
+    if (status === 'error' && error instanceof AxiosError) {
+      error.response?.data &&
+        formErrorHandle(error.response.data as ErrorResponse, setError);
+      enqueueSnackbar({
+        variant: 'error',
+        message: t('Room creation failed'),
+      });
+    } else if (status === 'success') {
+      enqueueSnackbar({
+        variant: 'success',
+        message: t('Room successfully created'),
+      });
+      router.push(
+        paths.dashboard.chatroom.profile(data?.data.chatRoomId || '')
+      );
+    }
+  }, [status]);
 
   const handleDrop = useCallback(
     (acceptedFiles: File[]) => {
@@ -100,10 +141,10 @@ export default function RoomNewEditForm() {
       {mdUp && (
         <Grid md={4}>
           <Typography variant="h6" sx={{ mb: 0.5 }}>
-            Details
+            {t('Setting')}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            Title, short description, image...
+            {t('new-room-setting-description')}
           </Typography>
         </Grid>
       )}
@@ -116,13 +157,39 @@ export default function RoomNewEditForm() {
             <RHFTextField name="name" label="Room Name" />
 
             <Stack spacing={1.5}>
-              <Typography variant="subtitle2">Cover</Typography>
+              <Typography variant="subtitle2">{t('Cover Photo')}</Typography>
               <RHFUpload
                 name="coverPhoto"
                 maxSize={3145728}
                 onDrop={handleDrop}
                 onDelete={handleRemoveFile}
               />
+            </Stack>
+            <Stack spacing={1.5}>
+              <Typography variant="subtitle2">{t('Room Key')}</Typography>
+              <RHFSwitch name="hasKey" label={t('Required Key')} />
+              {values.hasKey && (
+                <RHFTextField
+                  name="roomKey"
+                  label={t('Room Key')}
+                  type={password.value ? 'text' : 'password'}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton onClick={password.onToggle} edge="end">
+                          <Iconify
+                            icon={
+                              password.value
+                                ? 'solar:eye-bold'
+                                : 'solar:eye-closed-bold'
+                            }
+                          />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              )}
             </Stack>
           </Stack>
         </Card>
@@ -135,10 +202,10 @@ export default function RoomNewEditForm() {
       {mdUp && (
         <Grid md={4}>
           <Typography variant="h6" sx={{ mb: 0.5 }}>
-            Properties
+            {t('Properties')}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            Additional functions and attributes...
+            {t('new-room-properties-description')}
           </Typography>
         </Grid>
       )}
@@ -148,16 +215,7 @@ export default function RoomNewEditForm() {
           {!mdUp && <CardHeader title="Properties" />}
 
           <Stack spacing={3} sx={{ p: 3 }}>
-            <Suspense
-              fallback={<Skeleton variant="rounded" width={250} height={80} />}
-            >
-              <RoomCategoriesRHFAc />
-            </Suspense>
-
-            <FormControlLabel
-              control={<Switch defaultChecked />}
-              label="Enable comments"
-            />
+            <RoomCategoriesRHFAc />
           </Stack>
         </Card>
       </Grid>

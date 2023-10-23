@@ -284,5 +284,16 @@
   "Categories": "カテゴリー",
   "results found": "件の結果が見つかりました",
   "Clear": "クリア",
-  "No matching rooms found": "一致する部屋が見つかりません"
+  "No matching rooms found": "一致する部屋が見つかりません",
+  "Must have at least-categories": "少なくとも{{least}}つのカテゴリーが必要です",
+  "Maximum number of categories": "カテゴリー数は最大で{{maximum}}つまでです",
+  "room-name-required": "ルーム名は必須項目です",
+  "room-key-required": "ルームキーは必須項目です",
+  "new-room-setting-description": "ルーム名, カバー写真, ルームキーなど",
+  "Cover Photo": "カバー画像",
+  "Required Key": "ルームキーを作成",
+  "Properties": "プロパティ",
+  "new-room-properties-description": "ルームカテゴリーなど",
+  "Room creation failed": "ルームの作成に失敗しました",
+  "Room successfully created": "ルームの作成に成功しました"
 }
