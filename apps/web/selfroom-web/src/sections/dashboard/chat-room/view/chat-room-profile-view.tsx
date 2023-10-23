@@ -34,10 +34,10 @@ const TABS = [
     value: 'favors',
     label: 'Favors',
   },
-  {
-    value: 'analytics',
-    label: 'Analytics',
-  },
+  // {
+  //   value: 'analytics',
+  //   label: 'Analytics',
+  // },
 ];
 
 type Props = {
@@ -133,7 +133,7 @@ export default function ChatRoomProfileView({ chatRoomId }: Props) {
           mb: { xs: 3, md: 5 },
         }}
       />
-      <Grid container spacing={{ xs: 3, md: 5, lg: 8 }}>
+      <Grid container spacing={{ xs: 3, md: 5, lg: 8 }} mb={3}>
         <Grid xs={12} md={6} lg={7} item>
           <RoomProfileImage data={data.data} handleSuccess={handleSuccess} />
         </Grid>
@@ -173,15 +173,8 @@ export default function ChatRoomProfileView({ chatRoomId }: Props) {
           // />
         )}
 
-        {currentTab === 'analytics' && (
-          <>aaaaa</>
-          // <ProductDetailsReview
-          //   ratings={product.ratings}
-          //   reviews={product.reviews}
-          //   totalRatings={product.totalRatings}
-          //   totalReviews={product.totalReviews}
-          // />
-        )}
+        {/* {currentTab === 'analytics' && (
+        )} */}
       </Card>
     </Container>
   );

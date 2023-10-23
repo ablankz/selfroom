@@ -29,6 +29,7 @@ export default function TablePaginationCustom({
         sx={{
           borderTopColor: 'transparent',
         }}
+        className='scrollbar-none'
       />
 
       {onChangeDense && (

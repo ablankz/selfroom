@@ -131,7 +131,9 @@ function HistoryTable({
   }, [data]);
 
   return (
-    <Table sx={{ minWidth: 700 }}>
+    <Table
+      sx={{ minWidth: 700 }}
+    >
       <TableHead>
         <TableRow>
           <TableCell>{t('Room Name')}</TableCell>
@@ -147,10 +149,13 @@ function HistoryTable({
             sx={{
               cursor: 'pointer',
               ':hover': {
-                bgcolor: (theme) => alpha(theme.palette.background.neutral, 0.5),
+                bgcolor: (theme) =>
+                  alpha(theme.palette.background.neutral, 0.5),
               },
             }}
-            onClick={() => router.push(paths.dashboard.chatroom.profile(room.chatRoomId))}
+            onClick={() =>
+              router.push(paths.dashboard.chatroom.profile(room.chatRoomId))
+            }
           >
             <TableCell>
               <Typography color="text.secondary" variant="body2">
