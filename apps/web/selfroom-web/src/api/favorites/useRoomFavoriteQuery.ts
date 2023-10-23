@@ -5,6 +5,7 @@ import { EmptySuccessResponse } from '@/types/response/empty-success-reponse';
 import { useAuthContext } from '@/auth/hooks';
 import { userQueryKeys } from '@/query-keys/userQueryKeys';
 import { favoriteQueryKeys } from '@/query-keys/favoriteQueryKeys';
+import { chatRoomQueryKeys } from '@/query-keys/chatRoomQueryKey';
 
 export const useRoomFavoriteQuery = (chatRoomId: string) => {
   const queryClient = useQueryClient();
@@ -21,6 +22,8 @@ export const useRoomFavoriteQuery = (chatRoomId: string) => {
       onSuccess: (_) => {
         queryClient.invalidateQueries([favoriteQueryKeys.favorites.get]);
         queryClient.invalidateQueries([userQueryKeys.profile.find]);
+        queryClient.invalidateQueries([chatRoomQueryKeys.profile.find]);
+        queryClient.invalidateQueries([chatRoomQueryKeys.list]);
         initialize();
       },
     }
