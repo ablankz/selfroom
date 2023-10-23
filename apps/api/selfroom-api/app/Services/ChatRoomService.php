@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Constants\StorageSettings;
 use App\Enums\ApplicationCode;
 use App\Exceptions\ApplicationLoggerException;
+use App\Http\Resources\ChatRoom\ChatRoomCardResource;
 use App\Http\Resources\ChatRoom\ChatRoomCardResourceCollection;
 use App\Http\Resources\ChatRoom\ChatRoomResource;
 use App\Http\Resources\WithResourceCollection;
@@ -18,7 +19,7 @@ class ChatRoomService
 {
   public function find(FindChatRoom $usecase, string $chat_room_id)
   {
-    return new ChatRoomResource($usecase->handle($chat_room_id));
+    return new ChatRoomCardResource($usecase->handle($chat_room_id));
   }
 
   public function get(
