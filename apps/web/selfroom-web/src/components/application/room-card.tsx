@@ -224,7 +224,7 @@ export function RoomCard({ chatRoom, handleSuccess }: RoomCardProps) {
               variant="contained"
               color="primary"
               onClick={() =>
-                router.push(paths.dashboard.chatroom.talk(chatRoomId))
+                router.push(paths.dashboard.chatroom.talk)
               }
             >
               {t('Go to talk screen')}
