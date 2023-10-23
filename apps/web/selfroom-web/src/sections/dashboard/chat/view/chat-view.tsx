@@ -5,6 +5,7 @@ import { useSettingsContext } from '@/components/settings';
 import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
 import { useLocales } from '@/locales';
 import { paths } from '@/routes/paths';
+import { RouterLink } from '@/routes/components';
 import {
   Box,
   Button,
@@ -16,6 +17,7 @@ import {
   useTheme,
 } from '@mui/material';
 import { useRouter } from '@/routes/hooks';
+import Iconify from '@/components/iconify';
 
 // ----------------------------------------------------------------------
 
@@ -48,6 +50,16 @@ export default function ChatView() {
           { name: t('Application'), href: paths.dashboard.overview },
           { name: t('Chat') },
         ]}
+        action={
+          <Button
+            component={RouterLink}
+            href={paths.dashboard.chatroom.talk}
+            variant="contained"
+            startIcon={<Iconify icon="clarity:talk-bubbles-solid" />}
+          >
+            {t('Talk')}
+          </Button>
+        }
         sx={{
           mb: { xs: 3, md: 5 },
         }}

@@ -20,7 +20,7 @@ export const paths = {
       profile: (id: string) => `/chat-room/profile/${id}`,
       search: '/chat-room/search',
       create: '/chat-room/create',
-      talk: (id: string) => `/chat-room/talk/${id}`,
+      talk: '/chat-room/talk',
     },
   },
   oauthCallback: '/oauth-callback',
