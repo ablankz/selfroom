@@ -25,7 +25,7 @@ class RevokeAdminRoleRequest extends ApiRequest
   {
     return [
       'roles' => ['required', 'array', 'min:1'],
-      'roles.*' => ['numeric', 'integer', 'exists:App\Models\Roles,role_id'],
+      'roles.*' => ['numeric', 'integer', 'exists:m_room_categories,role_id'],
     ];
   }
 }
