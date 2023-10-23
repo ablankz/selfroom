@@ -1,18 +1,15 @@
 import { useGetRoomCategoriesQuery } from '@/api/room-categories/useGetRoomCategoriesQuery';
 import { useLocales } from '@/locales';
 import { RoomCategoriesData } from '@/types/response/room-category/room-categories-response';
-import { Autocomplete, Chip, TextField } from '@mui/material';
+import { Autocomplete, Chip, CircularProgress, TextField } from '@mui/material';
 
 type Props = {
   categories: RoomCategoriesData[];
   handleCategories: (newValue: RoomCategoriesData[]) => void;
 };
 
-export const RoomCategoriesAc = ({
-  categories,
-  handleCategories,
-}: Props) => {
-  const { data } = useGetRoomCategoriesQuery();
+export const RoomCategoriesAc = ({ categories, handleCategories }: Props) => {
+  const { data, status } = useGetRoomCategoriesQuery({ suspense: false });
   const { t } = useLocales();
 
   return (
@@ -24,7 +21,21 @@ export const RoomCategoriesAc = ({
       value={categories}
       onChange={(_, newValue) => handleCategories(newValue)}
       renderInput={(params) => (
-        <TextField placeholder="Select Categories" {...params} />
+        <TextField
+          {...params}
+          label="Select Categories"
+          InputProps={{
+            ...params.InputProps,
+            endAdornment: (
+              <>
+                {status === 'loading' ? (
+                  <CircularProgress color="inherit" size={20} />
+                ) : null}
+                {params.InputProps.endAdornment}
+              </>
+            ),
+          }}
+        />
       )}
       renderOption={(props, option) => (
         <li {...props} key={option.roomCategoryId}>

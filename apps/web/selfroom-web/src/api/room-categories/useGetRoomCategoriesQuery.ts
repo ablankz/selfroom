@@ -1,10 +1,20 @@
-import { useQuery } from '@tanstack/react-query';
+import { UseQueryOptions, useQuery } from '@tanstack/react-query';
 import axios from '@/utils/axios';
 import { ROOM_CATEGORIES_ENDPOINTS } from '@/constants/endpoints';
 import { roomCategoryQueryKeys } from '@/query-keys/roomCategoryQueryKey';
 import { RoomCategoriesResponse } from '@/types/response/room-category/room-categories-response';
 
-export const useGetRoomCategoriesQuery = () => {
+export const useGetRoomCategoriesQuery = (
+  options?: Omit<
+    UseQueryOptions<
+      RoomCategoriesResponse,
+      unknown,
+      RoomCategoriesResponse,
+      any
+    >,
+    'queryKey' | 'queryFn' | 'initialData'
+  > & { initialData?: () => undefined }
+) => {
   const { data, status, refetch } = useQuery(
     [roomCategoryQueryKeys.list],
     () =>
@@ -25,6 +35,7 @@ export const useGetRoomCategoriesQuery = () => {
       refetchOnWindowFocus: false,
       useErrorBoundary: false,
       retry: false,
+      ...options,
     }
   );
 

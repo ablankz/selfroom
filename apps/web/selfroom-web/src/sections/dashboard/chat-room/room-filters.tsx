@@ -1,4 +1,4 @@
-import { Suspense, useCallback } from 'react';
+import { useCallback } from 'react';
 // @mui
 import Radio from '@mui/material/Radio';
 import Stack from '@mui/material/Stack';
@@ -23,7 +23,6 @@ import {
 import { useLocales } from '@/locales';
 import { RoomCategoriesData } from '@/types/response/room-category/room-categories-response';
 import { RoomCategoriesAc } from './room-categories-ac';
-import { Skeleton } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -232,16 +231,10 @@ export default function RoomFilters({
               <Typography variant="subtitle2" sx={{ mb: 1.5 }}>
                 {t('Categories')}
               </Typography>
-              <Suspense
-                fallback={
-                  <Skeleton variant="rounded" width={180} height={40} />
-                }
-              >
-                <RoomCategoriesAc
-                  categories={filters.categories}
-                  handleCategories={handleFilterCategories}
-                />
-              </Suspense>
+              <RoomCategoriesAc
+                categories={filters.categories}
+                handleCategories={handleFilterCategories}
+              />
             </Stack>
 
             {renderCategoryBy}
