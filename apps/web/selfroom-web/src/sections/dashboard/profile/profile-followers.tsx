@@ -42,9 +42,16 @@ const PER_PAGE = 9;
 type Props = {
   userId: string;
   setDispatch: Dispatch<SetStateAction<boolean>>;
+  followerDispatch: boolean;
+  setFollowerDispatch: Dispatch<SetStateAction<boolean>>;
 };
 
-export default function ProfileFollowers({ userId, setDispatch }: Props) {
+export default function ProfileFollowers({
+  userId,
+  setDispatch,
+  followerDispatch,
+  setFollowerDispatch,
+}: Props) {
   const { user } = useAuthContext();
   const { t } = useLocales();
   const [page, setPage] = useState(1);
@@ -78,6 +85,8 @@ export default function ProfileFollowers({ userId, setDispatch }: Props) {
             setDispatch={setDispatch}
             setTotalCount={setTotalCount}
             resetPage={resetPage}
+            followerDispatch={followerDispatch}
+            setFollowerDispatch={setFollowerDispatch}
           />
           <Pagination
             shape="rounded"
@@ -117,6 +126,8 @@ type TableProps = {
   setDispatch: Dispatch<SetStateAction<boolean>>;
   setTotalCount: Dispatch<SetStateAction<number | undefined>>;
   resetPage: () => void;
+  followerDispatch: boolean;
+  setFollowerDispatch: Dispatch<SetStateAction<boolean>>;
 };
 
 function FollowerTable({
@@ -126,6 +137,8 @@ function FollowerTable({
   setDispatch,
   setTotalCount,
   resetPage,
+  followerDispatch,
+  setFollowerDispatch,
 }: TableProps) {
   const { data, refetch } = useGetFollowersQuery(userId, page, PER_PAGE);
 
@@ -141,6 +154,13 @@ function FollowerTable({
       setTotalCount(0);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (followerDispatch) {
+      refetch();
+      setFollowerDispatch(false);
+    }
+  }, [followerDispatch]);
 
   return (
     <Box
@@ -174,7 +194,12 @@ type FollowerItemProps = {
   ) => Promise<QueryObserverResult<UserFollowersResponse, unknown>>;
 };
 
-function FollowerItem({ follower, authId, setDispatch, followersRefetch }: FollowerItemProps) {
+function FollowerItem({
+  follower,
+  authId,
+  setDispatch,
+  followersRefetch,
+}: FollowerItemProps) {
   const { nickname, userId, profilePhotoUrl, isFollow } = follower;
   const router = useRouter();
   const { mutate: follow, status: followStatus } = useUserFollowQuery(userId);

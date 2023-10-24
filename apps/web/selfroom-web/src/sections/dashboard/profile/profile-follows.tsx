@@ -42,9 +42,16 @@ const PER_PAGE = 9;
 type Props = {
   userId: string;
   setDispatch: Dispatch<SetStateAction<boolean>>;
+  followDispatch: boolean;
+  setFollowDispatch: Dispatch<SetStateAction<boolean>>;
 };
 
-export default function ProfileFollows({ userId, setDispatch }: Props) {
+export default function ProfileFollows({
+  userId,
+  setDispatch,
+  followDispatch,
+  setFollowDispatch,
+}: Props) {
   const { user } = useAuthContext();
   const { t } = useLocales();
   const [page, setPage] = useState(1);
@@ -78,6 +85,8 @@ export default function ProfileFollows({ userId, setDispatch }: Props) {
             setDispatch={setDispatch}
             setTotalCount={setTotalCount}
             resetPage={resetPage}
+            followDispatch={followDispatch}
+            setFollowDispatch={setFollowDispatch}
           />
           <Pagination
             shape="rounded"
@@ -115,6 +124,8 @@ type TableProps = {
   setDispatch: Dispatch<SetStateAction<boolean>>;
   setTotalCount: Dispatch<SetStateAction<number | undefined>>;
   resetPage: () => void;
+  followDispatch: boolean;
+  setFollowDispatch: Dispatch<SetStateAction<boolean>>;
 };
 
 function FolloweeTable({
@@ -124,6 +135,8 @@ function FolloweeTable({
   setDispatch,
   setTotalCount,
   resetPage,
+  followDispatch,
+  setFollowDispatch,
 }: TableProps) {
   const { data, refetch } = useGetFolloweesQuery(userId, page, PER_PAGE);
 
@@ -139,6 +152,13 @@ function FolloweeTable({
       setTotalCount(0);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (followDispatch) {
+      refetch();
+      setFollowDispatch(false);
+    }
+  }, [followDispatch]);
 
   return (
     <Box
