@@ -83,6 +83,12 @@ export const CHAT_ROOMS_ENDPOINTS = {
       },
     },
     favorites: {
+      favors: {
+        urlKey: '/chat-rooms/*/favors',
+        method: 'GET',
+        url: (id: string) => `/chat-rooms/${id}/favors`,
+        comment: 'Retrieve favors',
+      },
       add: {
         urlKey: '/chat-rooms/*/favorites',
         method: 'POST',
