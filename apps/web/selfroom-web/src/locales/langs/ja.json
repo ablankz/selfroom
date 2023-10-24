@@ -298,5 +298,7 @@
   "Room successfully created": "ルームの作成に成功しました",
   "Retrieve visitor history": "訪問者履歴を取得する",
   "User Name": "ユーザー名",
-  "User ID": "ユーザーID"
+  "User ID": "ユーザーID",
+  "Retrieve favors": "お気に入りユーザーの取得",
+  "Not a single favorite user": "お気に入りユーザーが一人もいません"
 }

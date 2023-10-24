@@ -6,7 +6,7 @@ import { ChatRoomCard } from '@/types/entity';
 import { uuidHash } from '@/utils/uuid-hash';
 import { bgGradient } from '@/theme/css';
 import { Box, IconButton, alpha, useTheme } from '@mui/material';
-import { useEffect, useMemo, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
 import { useSnackbar } from '@/components/snackbar';
 import { useLocales } from '@/locales';
 import RoomShareModal from '@/sections/_common/room-share-modal';
@@ -14,9 +14,10 @@ import RoomShareModal from '@/sections/_common/room-share-modal';
 type Props = {
   data: ChatRoomCard;
   handleSuccess: () => void;
+  setFavorDispatch: Dispatch<SetStateAction<boolean>>;
 };
 
-export const RoomProfileImage = ({ data, handleSuccess }: Props) => {
+export const RoomProfileImage = ({ data, handleSuccess, setFavorDispatch }: Props) => {
   const theme = useTheme();
   const { coverPhotoUrl, chatRoomId, isFavorite, hasKey, name } = data;
   const [open, setOpen] = useState(false);
@@ -51,6 +52,7 @@ export const RoomProfileImage = ({ data, handleSuccess }: Props) => {
         message: t('Successfully registered as a favorite'),
         variant: 'success',
       });
+      setFavorDispatch(true);
     } else if (favoriteStatus === 'error') {
       enqueueSnackbar({
         message: t('Failed to register as a favorite'),
@@ -66,6 +68,7 @@ export const RoomProfileImage = ({ data, handleSuccess }: Props) => {
         message: t('Successfully unsubscribe from your favorites'),
         variant: 'success',
       });
+      setFavorDispatch(true);
     } else if (cancelStatus === 'error') {
       enqueueSnackbar({
         message: t('Failed to unsubscribe from your favorites'),

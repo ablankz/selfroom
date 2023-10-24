@@ -27,13 +27,18 @@ import {
 
 type Props = {
   chatRoomId: string;
+  visitDispatch: boolean;
+  setVisitDispatch: Dispatch<SetStateAction<boolean>>;
 };
 
-export const VisitorsLog = ({ chatRoomId }: Props) => {
-  const { t } = useLocales();
+export const VisitorsLog = ({
+  chatRoomId,
+  visitDispatch,
+  setVisitDispatch,
+}: Props) => {
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
-  const [totalCount, setTotalCount] = useState<number | undefined>(undefined);
+  const [totalCount, setTotalCount] = useState<number>(0);
 
   const onChangePage = useCallback((_: unknown, newPage: number) => {
     setPage(newPage + 1);
@@ -55,20 +60,23 @@ export const VisitorsLog = ({ chatRoomId }: Props) => {
     <Container
       sx={{
         width: 0.9,
-        mt: 3,
+        my: 3,
         boxShadow: (theme) => theme.customShadows.z24,
       }}
     >
-      {typeof totalCount === 'undefined' || totalCount !== 0 ? (
-        <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>
-          <Scrollbar>
-            <VisitorsTable
-              chatRoomId={chatRoomId}
-              page={page}
-              perPage={perPage}
-              setTotalCount={setTotalCount}
-              resetPage={resetPage}
-            />
+      <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>
+        <Scrollbar>
+          <VisitorsTable
+            chatRoomId={chatRoomId}
+            page={page}
+            perPage={perPage}
+            totalCount={totalCount}
+            setTotalCount={setTotalCount}
+            resetPage={resetPage}
+            setVisitDispatch={setVisitDispatch}
+            visitDispatch={visitDispatch}
+          />
+          {!!totalCount && (
             <TablePaginationCustom
               component="div"
               count={totalCount || 0}
@@ -78,19 +86,9 @@ export const VisitorsLog = ({ chatRoomId }: Props) => {
               rowsPerPage={perPage}
               rowsPerPageOptions={[5, 10, 25]}
             />
-          </Scrollbar>
-        </TableContainer>
-      ) : (
-        <EmptyContent
-          title="NoItem"
-          description={t('No visit history')}
-          sx={{
-            borderRadius: 1.5,
-            height: 300,
-            boxShadow: (theme) => theme.customShadows.error,
-          }}
-        />
-      )}
+          )}
+        </Scrollbar>
+      </TableContainer>
     </Container>
   );
 };
@@ -99,16 +97,22 @@ type HistoryProps = {
   chatRoomId: string;
   page: number;
   perPage: number;
-  setTotalCount: Dispatch<SetStateAction<number | undefined>>;
+  totalCount: number;
+  setTotalCount: Dispatch<SetStateAction<number>>;
   resetPage: () => void;
+  visitDispatch: boolean;
+  setVisitDispatch: Dispatch<SetStateAction<boolean>>;
 };
 
 const VisitorsTable = ({
   chatRoomId,
   page,
   perPage,
+  totalCount,
   setTotalCount,
   resetPage,
+  visitDispatch,
+  setVisitDispatch,
 }: HistoryProps) => {
   const { data, refetch } = useGetVisitorsQuery(chatRoomId, page, perPage);
   const { t, currentLang } = useLocales();
@@ -130,48 +134,76 @@ const VisitorsTable = ({
       setTotalCount(0);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (visitDispatch) {
+      refetch();
+      setVisitDispatch(false);
+    }
+  }, [visitDispatch]);
+
   return (
-    <Table sx={{ minWidth: 700 }}>
-      <TableHead>
-        <TableRow>
-          <TableCell>{t('User Name')}</TableCell>
-          <TableCell>{t('User ID')}</TableCell>
-          <TableCell>{t('Visited Date')}</TableCell>
-          <TableCell>{t('Left Date')}</TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {data?.data.data.map((user, index) => (
-          <TableRow
-            key={`${user.userId}.${index}`}
-            sx={{
-              cursor: 'pointer',
-              ':hover': {
-                bgcolor: (theme) =>
-                  alpha(theme.palette.background.neutral, 0.5),
-              },
-            }}
-            onClick={() => router.push(paths.dashboard.profile(user.userId))}
-          >
-            <TableCell>
-              <Typography color="text.secondary" variant="body2">
-                {user.nickname}
-              </Typography>
-            </TableCell>
-            <TableCell>
-              <Typography color="text.disabled" variant="caption" fontSize={12}>
-                {user.userId}
-              </Typography>
-            </TableCell>
-            <TableCell>
-              {fDateTime(user.visitedAt, 'MMM dd HH:mm', currentLang.value)}
-            </TableCell>
-            <TableCell>
-              {fDateTime(user.leftAt, 'MMM dd HH:mm', currentLang.value)}
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+    <>
+      {!!totalCount ? (
+        <Table sx={{ minWidth: 700 }}>
+          <TableHead>
+            <TableRow>
+              <TableCell>{t('User Name')}</TableCell>
+              <TableCell>{t('User ID')}</TableCell>
+              <TableCell>{t('Visited Date')}</TableCell>
+              <TableCell>{t('Left Date')}</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data?.data.data.map((user, index) => (
+              <TableRow
+                key={`${user.userId}.${index}`}
+                sx={{
+                  cursor: 'pointer',
+                  ':hover': {
+                    bgcolor: (theme) =>
+                      alpha(theme.palette.background.neutral, 0.5),
+                  },
+                }}
+                onClick={() =>
+                  router.push(paths.dashboard.profile(user.userId))
+                }
+              >
+                <TableCell>
+                  <Typography color="text.secondary" variant="body2">
+                    {user.nickname}
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography
+                    color="text.disabled"
+                    variant="caption"
+                    fontSize={12}
+                  >
+                    {user.userId}
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  {fDateTime(user.visitedAt, 'MMM dd HH:mm', currentLang.value)}
+                </TableCell>
+                <TableCell>
+                  {fDateTime(user.leftAt, 'MMM dd HH:mm', currentLang.value)}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      ) : (
+        <EmptyContent
+          title="NoItem"
+          description={t('No visit history')}
+          sx={{
+            borderRadius: 1.5,
+            height: 300,
+            boxShadow: (theme) => theme.customShadows.error,
+          }}
+        />
+      )}
+    </>
   );
 };

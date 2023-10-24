@@ -11,7 +11,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import { useCallback, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
 import { useSnackbar } from '@/components/snackbar';
 import Iconify from '@/components/iconify';
 import { fDate } from '@/utils/format-time';
@@ -24,9 +24,10 @@ import RoomKeyModal from '@/sections/_common/room-key-modal';
 type Props = {
   data: ChatRoomCard;
   handleSuccess: () => void;
+  setVisitDispatch: Dispatch<SetStateAction<boolean>>;
 };
 
-export const RoomProfileDetail = ({ data, handleSuccess }: Props) => {
+export const RoomProfileDetail = ({ data, handleSuccess, setVisitDispatch }: Props) => {
   const { name, chatRoomId, updatedAt, favorNum, userNum, categories, hasKey } =
     data;
   const { enqueueSnackbar } = useSnackbar();
@@ -75,6 +76,7 @@ export const RoomProfileDetail = ({ data, handleSuccess }: Props) => {
         message: t('Successfully enter the room'),
         variant: 'success',
       });
+      setVisitDispatch(true);
     } else if (roomInStatus === 'error') {
       enqueueSnackbar({
         message: t('Failed to enter the room'),

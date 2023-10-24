@@ -298,5 +298,7 @@
   "Room successfully created": "Room successfully created",
   "Retrieve visitor history": "Retrieve visitor history",
   "User Name": "User Name",
-  "User ID": "User ID"
+  "User ID": "User ID",
+  "Retrieve favors": "Retrieve favors",
+  "Not a single favorite user": "Not a single favorite user"
 }
