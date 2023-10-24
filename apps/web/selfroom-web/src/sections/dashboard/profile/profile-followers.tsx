@@ -53,9 +53,8 @@ export default function ProfileFollowers({
   setFollowerDispatch,
 }: Props) {
   const { user } = useAuthContext();
-  const { t } = useLocales();
   const [page, setPage] = useState(1);
-  const [totalCount, setTotalCount] = useState<number | undefined>(undefined);
+  const [totalCount, setTotalCount] = useState<number>(0);
 
   const handlePageChange = useCallback(
     (_: ChangeEvent<unknown>, page: number) => {
@@ -76,40 +75,29 @@ export default function ProfileFollowers({
 
   return (
     <>
-      {typeof totalCount === 'undefined' || totalCount !== 0 ? (
-        <>
-          <FollowerTable
-            authId={user?.userId || user?.adminId || ''}
-            userId={userId}
-            page={page}
-            setDispatch={setDispatch}
-            setTotalCount={setTotalCount}
-            resetPage={resetPage}
-            followerDispatch={followerDispatch}
-            setFollowerDispatch={setFollowerDispatch}
-          />
-          <Pagination
-            shape="rounded"
-            color="primary"
-            onChange={handlePageChange}
-            count={pageCount}
-            page={page}
-            sx={{
-              mt: 8,
-              [`& .${paginationClasses.ul}`]: {
-                justifyContent: 'center',
-              },
-            }}
-          />
-        </>
-      ) : (
-        <EmptyContent
-          title="NoItem"
-          description={t('Not a single follower')}
+      <FollowerTable
+        authId={user?.userId || user?.adminId || ''}
+        userId={userId}
+        page={page}
+        setDispatch={setDispatch}
+        totalCount={totalCount}
+        setTotalCount={setTotalCount}
+        resetPage={resetPage}
+        followerDispatch={followerDispatch}
+        setFollowerDispatch={setFollowerDispatch}
+      />
+      {!!totalCount && (
+        <Pagination
+          shape="rounded"
+          color="primary"
+          onChange={handlePageChange}
+          count={pageCount}
+          page={page}
           sx={{
-            borderRadius: 1.5,
-            height: 300,
-            boxShadow: (theme) => theme.customShadows.error,
+            mt: 8,
+            [`& .${paginationClasses.ul}`]: {
+              justifyContent: 'center',
+            },
           }}
         />
       )}
@@ -124,7 +112,8 @@ type TableProps = {
   authId: string;
   page: number;
   setDispatch: Dispatch<SetStateAction<boolean>>;
-  setTotalCount: Dispatch<SetStateAction<number | undefined>>;
+  totalCount: number;
+  setTotalCount: Dispatch<SetStateAction<number>>;
   resetPage: () => void;
   followerDispatch: boolean;
   setFollowerDispatch: Dispatch<SetStateAction<boolean>>;
@@ -135,12 +124,14 @@ function FollowerTable({
   authId,
   page,
   setDispatch,
+  totalCount,
   setTotalCount,
   resetPage,
   followerDispatch,
   setFollowerDispatch,
 }: TableProps) {
   const { data, refetch } = useGetFollowersQuery(userId, page, PER_PAGE);
+  const { t } = useLocales();
 
   useEffect(() => {
     refetch();
@@ -163,25 +154,39 @@ function FollowerTable({
   }, [followerDispatch]);
 
   return (
-    <Box
-      gap={3}
-      display="grid"
-      gridTemplateColumns={{
-        xs: 'repeat(1, 1fr)',
-        sm: 'repeat(2, 1fr)',
-        md: 'repeat(3, 1fr)',
-      }}
-    >
-      {data?.data.data.map((follower) => (
-        <FollowerItem
-          followersRefetch={refetch}
-          setDispatch={setDispatch}
-          key={follower.userId}
-          follower={follower}
-          authId={authId}
+    <>
+      {!!totalCount ? (
+        <Box
+          gap={3}
+          display="grid"
+          gridTemplateColumns={{
+            xs: 'repeat(1, 1fr)',
+            sm: 'repeat(2, 1fr)',
+            md: 'repeat(3, 1fr)',
+          }}
+        >
+          {data?.data.data.map((follower) => (
+            <FollowerItem
+              followersRefetch={refetch}
+              setDispatch={setDispatch}
+              key={follower.userId}
+              follower={follower}
+              authId={authId}
+            />
+          ))}
+        </Box>
+      ) : (
+        <EmptyContent
+          title="NoItem"
+          description={t('Not a single follower')}
+          sx={{
+            borderRadius: 1.5,
+            height: 300,
+            boxShadow: (theme) => theme.customShadows.error,
+          }}
         />
-      ))}
-    </Box>
+      )}
+    </>
   );
 }
 
