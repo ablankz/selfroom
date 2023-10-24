@@ -296,5 +296,7 @@
   "new-room-properties-description": "ルームカテゴリーなど",
   "Room creation failed": "ルームの作成に失敗しました",
   "Room successfully created": "ルームの作成に成功しました",
-  "Retrieve visitor history": "訪問者履歴を取得する"
+  "Retrieve visitor history": "訪問者履歴を取得する",
+  "User Name": "ユーザー名",
+  "User ID": "ユーザーID"
 }

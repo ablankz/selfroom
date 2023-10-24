@@ -296,5 +296,7 @@
   "new-room-properties-description": "Room category, etc",
   "Room creation failed": "Room creation failed",
   "Room successfully created": "Room successfully created",
-  "Retrieve visitor history": "Retrieve visitor history"
+  "Retrieve visitor history": "Retrieve visitor history",
+  "User Name": "User Name",
+  "User ID": "User ID"
 }

@@ -14,7 +14,7 @@ import {
   Typography,
   alpha,
 } from '@mui/material';
-import { useCallback, useEffect, useState } from 'react';
+import { Suspense, useCallback, useEffect, useState } from 'react';
 import { useGetChatRoomQuery } from '@/api/chat-rooms/useGetChatRoomQuery';
 import { MotionContainer, varBounce } from '@/components/animate';
 import { m } from 'framer-motion';
@@ -22,6 +22,8 @@ import { PageNotFoundIllustration } from '@/assets/illustrations';
 import { useRouter } from '@/routes/hooks';
 import { RoomProfileImage } from '../room-profile-image';
 import { RoomProfileDetail } from '../room-profile-detail';
+import { VisitorsLog } from '../visitors-log';
+import { TableListSkelton } from '@/sections/_common/skelton/table-list-skelton';
 
 // ----------------------------------------------------------------------
 
@@ -159,8 +161,9 @@ export default function ChatRoomProfileView({ chatRoomId }: Props) {
         </Tabs>
 
         {currentTab === 'visitors' && (
-          <>aa</>
-          // <ProductDetailsDescription description={product?.description} />
+          <Suspense fallback={<TableListSkelton />}>
+            <VisitorsLog chatRoomId={chatRoomId} />
+          </Suspense>
         )}
 
         {currentTab === 'favors' && (
