@@ -300,5 +300,6 @@
   "User Name": "User Name",
   "User ID": "User ID",
   "Retrieve favors": "Retrieve favors",
-  "Not a single favorite user": "Not a single favorite user"
+  "Not a single favorite user": "Not a single favorite user",
+  "Retrieving the current user in the room": "Retrieving the current user in the room"
 }

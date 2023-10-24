@@ -300,5 +300,6 @@
   "User Name": "ユーザー名",
   "User ID": "ユーザーID",
   "Retrieve favors": "お気に入りユーザーの取得",
-  "Not a single favorite user": "お気に入りユーザーが一人もいません"
+  "Not a single favorite user": "お気に入りユーザーが一人もいません",
+  "Retrieving the current user in the room": "部屋にいるユーザーの取得"
 }

@@ -81,6 +81,12 @@ export const CHAT_ROOMS_ENDPOINTS = {
         url: (id: string) => `/chat-rooms/${id}/visitors`,
         comment: 'Retrieve visitor history',
       },
+      inUsers: {
+        urlKey: '/chat-rooms/*/users',
+        method: 'GET',
+        url: (id: string) => `/chat-rooms/${id}/users`,
+        comment: 'Retrieving the current user in the room',
+      }
     },
     favorites: {
       favors: {
