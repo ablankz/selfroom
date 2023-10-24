@@ -87,6 +87,8 @@ Route::prefix('chat-rooms')->group(function () {
   });
   Route::prefix('{chatRoomId}')->group(function () {
     Route::get('visitors', [\App\Http\Controllers\RoomVisitController::class, 'getVisitors'])->middleware(['auth:jwt']);
+
+    Route::get('favors', [\App\Http\Controllers\RoomVisitController::class, 'getFavors'])->middleware(['auth:jwt']);
   });
 });
 
