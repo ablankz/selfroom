@@ -89,7 +89,7 @@ class ChatRoom extends Model
 
   public function likedUsers(): BelongsToMany
   {
-    return $this->belongsToMany(ChatRoom::class, 't_favorite_chat_rooms', 'chat_room_id', 'user_id')
+    return $this->belongsToMany(User::class, 't_favorite_chat_rooms', 'chat_room_id', 'user_id')
       ->as('favorite')
       ->withPivot('added_at');
   }

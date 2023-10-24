@@ -34,7 +34,7 @@ class GetFavors extends Usecase
     $order_opt = $order_opt === 'desc' ? 'desc' : 'asc';
     switch ($order) {
       case 'name':
-        $query = $query->orderBy('name', $order_opt);
+        $query = $query->orderBy('nickname', $order_opt);
         break;
       case 'create':
       default:
