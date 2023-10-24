@@ -24,6 +24,8 @@ import { RoomProfileImage } from '../room-profile-image';
 import { RoomProfileDetail } from '../room-profile-detail';
 import { VisitorsLog } from '../visitors-log';
 import { TableListSkelton } from '@/sections/_common/skelton/table-list-skelton';
+import { MiniCardListSkelton } from '@/sections/_common/skelton/mini-card-list-skelton';
+import RoomFavors from '../room-favors';
 
 // ----------------------------------------------------------------------
 
@@ -53,6 +55,8 @@ export default function ChatRoomProfileView({ chatRoomId }: Props) {
   const { data, refetch } = useGetChatRoomQuery(chatRoomId);
   const [dispatch, setDispatch] = useState(false);
   const router = useRouter();
+  const [visitDispatch, setVisitDispatch] = useState(false);
+  const [favorDispatch, setFavorDispatch] = useState(false);
 
   const handleChangeTab = useCallback(
     (_: React.SyntheticEvent, newValue: string) => {
@@ -137,11 +141,19 @@ export default function ChatRoomProfileView({ chatRoomId }: Props) {
       />
       <Grid container spacing={{ xs: 3, md: 5, lg: 8 }} mb={3}>
         <Grid xs={12} md={6} lg={7} item>
-          <RoomProfileImage data={data.data} handleSuccess={handleSuccess} />
+          <RoomProfileImage
+            data={data.data}
+            handleSuccess={handleSuccess}
+            setFavorDispatch={setFavorDispatch}
+          />
         </Grid>
 
         <Grid xs={12} md={6} lg={5} item>
-          <RoomProfileDetail data={data.data} handleSuccess={handleSuccess} />
+          <RoomProfileDetail
+            data={data.data}
+            handleSuccess={handleSuccess}
+            setVisitDispatch={setVisitDispatch}
+          />
         </Grid>
       </Grid>
 
@@ -162,18 +174,23 @@ export default function ChatRoomProfileView({ chatRoomId }: Props) {
 
         {currentTab === 'visitors' && (
           <Suspense fallback={<TableListSkelton />}>
-            <VisitorsLog chatRoomId={chatRoomId} />
+            <VisitorsLog
+              chatRoomId={chatRoomId}
+              visitDispatch={visitDispatch}
+              setVisitDispatch={setVisitDispatch}
+            />
           </Suspense>
         )}
 
         {currentTab === 'favors' && (
-          <>aaa</>
-          // <ProductDetailsReview
-          //   ratings={product.ratings}
-          //   reviews={product.reviews}
-          //   totalRatings={product.totalRatings}
-          //   totalReviews={product.totalReviews}
-          // />
+          <Suspense fallback={<MiniCardListSkelton skeltonCount={6} />}>
+            <RoomFavors
+              chatRoomId={chatRoomId}
+              setDispatch={setDispatch}
+              setFavorDispatch={setFavorDispatch}
+              favorDispatch={favorDispatch}
+            />
+          </Suspense>
         )}
 
         {/* {currentTab === 'analytics' && (
