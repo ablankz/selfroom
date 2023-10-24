@@ -85,6 +85,9 @@ Route::prefix('chat-rooms')->group(function () {
     Route::post('favorites', [\App\Http\Controllers\FavoriteController::class, 'add'])->middleware(['auth:jwt', 'user:jwt']);
     Route::delete('favorites', [\App\Http\Controllers\FavoriteController::class, 'cancel'])->middleware(['auth:jwt', 'user:jwt']);
   });
+  Route::prefix('{chatRoomId}')->group(function () {
+    Route::get('visitors', [\App\Http\Controllers\RoomVisitController::class, 'getVisitors'])->middleware(['auth:jwt']);
+  });
 });
 
 // websocket
