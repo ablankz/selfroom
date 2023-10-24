@@ -74,6 +74,14 @@ export const CHAT_ROOMS_ENDPOINTS = {
       url: '/chat-rooms/out',
       comment: 'Leaving the chat room',
     },
+    visitRooms: {
+      visitors: {
+        urlKey: '/chat-rooms/*/visitors',
+        method: 'GET',
+        url: (id: string) => `/chat-rooms/${id}/visitors`,
+        comment: 'Retrieve visitor history',
+      },
+    },
     favorites: {
       add: {
         urlKey: '/chat-rooms/*/favorites',
