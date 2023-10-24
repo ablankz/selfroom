@@ -1,0 +1,42 @@
+<?php
+
+namespace App\Http\Resources\User;
+
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class VisitorResource extends JsonResource
+{
+  /**
+   * Transform the resource into an array.
+   *
+   * @return array<string, mixed>
+   */
+  public function toArray(Request $request): array
+  {
+    return [
+      'userId' => $this->user_id,
+      'nickname' => $this->nickname,
+      'profilePhotoUrl' => $this->profile_photo_url,
+      'followerNum' => $this->follower_num,
+      'followNum' => $this->follow_num,
+      'favoriteRoomNum' => $this->favorite_room_num,
+      'currentChatRoomId' => $this->current_chat_room_id,
+      'country' => $this->country,
+      'description' => $this->description,
+      'email' => $this->email,
+      'company' => $this->company,
+      'role' => $this->role,
+      'school' => $this->school,
+      'createdAt' => $this->created_at,
+      'updatedAt' => $this->updated_at,
+      'visitedAt' => $this->history->visited_at,
+      'leftAt' => $this->history->left_at,
+    ];
+  }
+
+  public function boot(): void
+  {
+    JsonResource::withoutWrapping();
+  }
+}
