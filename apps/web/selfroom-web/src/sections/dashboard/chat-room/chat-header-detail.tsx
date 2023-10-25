@@ -11,7 +11,12 @@ import { ListItemText, Skeleton } from '@mui/material';
 import { useLocales } from '@/locales';
 import { paths } from '@/routes/paths';
 import { Navigate } from 'react-router-dom';
-import { Suspense } from 'react';
+import { Suspense, useEffect, useState } from 'react';
+import { useGetChatRoomQuery } from '@/api/chat-rooms/useGetChatRoomQuery';
+import { useRoomFavoriteQuery } from '@/api/favorites/useRoomFavoriteQuery';
+import { useRoomFavoriteCancelQuery } from '@/api/favorites/useRoomFavoriteCancelQuery';
+import { useSnackbar } from 'notistack';
+import RoomShareModal from '@/sections/_common/room-share-modal';
 
 // ----------------------------------------------------------------------
 
@@ -20,6 +25,62 @@ type Props = {
 };
 
 export default function ChatHeaderDetail({ chatRoom }: Props) {
+  const [open, setOpen] = useState(false);
+  const { data, refetch } = useGetChatRoomQuery(chatRoom.chatRoomId);
+  const { mutate: favoriteAdd, status: favoriteStatus } = useRoomFavoriteQuery(
+    chatRoom.chatRoomId
+  );
+  const { mutate: favoriteCancel, status: cancelStatus } =
+    useRoomFavoriteCancelQuery(chatRoom.chatRoomId);
+  const { enqueueSnackbar } = useSnackbar();
+  const { t } = useLocales();
+
+  if (!data) {
+    return <Navigate to={paths.error.server} replace />;
+  }
+
+  const handleFavorite = () => {
+    if (data.data.isFavorite) favoriteCancel();
+    else favoriteAdd();
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    if (favoriteStatus === 'success') {
+      refetch();
+      enqueueSnackbar({
+        message: t('Successfully registered as a favorite'),
+        variant: 'success',
+      });
+    } else if (favoriteStatus === 'error') {
+      enqueueSnackbar({
+        message: t('Failed to register as a favorite'),
+        variant: 'error',
+      });
+    }
+  }, [favoriteStatus]);
+
+  useEffect(() => {
+    if (cancelStatus === 'success') {
+      refetch();
+      enqueueSnackbar({
+        message: t('Successfully unsubscribe from your favorites'),
+        variant: 'success',
+      });
+    } else if (cancelStatus === 'error') {
+      enqueueSnackbar({
+        message: t('Failed to unsubscribe from your favorites'),
+        variant: 'error',
+      });
+    }
+  }, [cancelStatus]);
+
   return (
     <>
       <Suspense
@@ -35,22 +96,39 @@ export default function ChatHeaderDetail({ chatRoom }: Props) {
       </Suspense>
       <Stack flexGrow={1} />
 
-      <IconButton>
-        <Iconify icon="solar:phone-bold" />
+      <IconButton
+        onClick={handleFavorite}
+        sx={{ position: 'absolute', top: 8, right: 8 }}
+        color={data.data.isFavorite ? 'warning' : 'inherit'}
+      >
+        <Iconify icon="ant-design:star-filled" />
       </IconButton>
-      <IconButton>
-        <Iconify icon="solar:videocamera-record-bold" />
+      {data.data.hasKey && (
+        <IconButton
+          sx={{ position: 'absolute', top: 8, right: 40 }}
+          color="warning"
+        >
+          <Iconify icon="solar:key-bold" />
+        </IconButton>
+      )}
+      <IconButton
+        sx={{ position: 'absolute', top: 8, right: data.data.hasKey ? 72 : 40 }}
+        onClick={handleClickOpen}
+      >
+        <Iconify icon="material-symbols:share" />
       </IconButton>
-      <IconButton>
-        <Iconify icon="eva:more-vertical-fill" />
-      </IconButton>
+      <RoomShareModal
+        open={open}
+        handleClose={handleClose}
+        roomId={chatRoom.chatRoomId}
+        roomName={chatRoom.name}
+      />
     </>
   );
 }
 
 const UserList = ({ chatRoom }: Props) => {
-  const { data, refetch } = useGetInUsersQuery(chatRoom.chatRoomId, 1, 5);
-  const { t } = useLocales();
+  const { data } = useGetInUsersQuery(chatRoom.chatRoomId, 1, 5);
 
   if (!data) {
     return <Navigate to={paths.error.server} replace />;
