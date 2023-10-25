@@ -309,5 +309,8 @@
   "Favors": "お気に入り数",
   "Create Time": "作成日時",
   "Visitors": "訪問者履歴",
-  "Favors-list": "お気に入りユーザー"
+  "Favors-list": "お気に入りユーザー",
+  "Room successfully vacated": "ルームを退室しました",
+  "Failed to exit room": "ルームの退室に失敗しました",
+  "Type a message": "メッセージを入力してください"
 }

@@ -5,7 +5,7 @@ import { useSettingsContext } from '@/components/settings';
 import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
 import { useLocales } from '@/locales';
 import { paths } from '@/routes/paths';
-import { Button, Card, Stack, Typography } from '@mui/material';
+import { Button, Card, Skeleton, Stack, Typography } from '@mui/material';
 import { useAuthContext } from '@/auth/hooks';
 import { MotionContainer, varBounce } from '@/components/animate';
 import { ForbiddenIllustration } from '@/assets/illustrations';
@@ -13,6 +13,11 @@ import { useRouter } from '@/routes/hooks';
 import { m } from 'framer-motion';
 import ChatHeaderDetail from '../chat-header-detail';
 import ChatNav from '../chat-nav';
+import ChatRoom from '../chat-room';
+import ChatMessageInput from '../chat-message-input';
+import ChatMessageList from '../chat-message-list';
+import { Suspense, useState } from 'react';
+import { TalkSkelton } from '../talk-skelton';
 
 // ----------------------------------------------------------------------
 
@@ -21,6 +26,7 @@ export default function ChatRoomTalkView() {
   const settings = useSettingsContext();
   const { t } = useLocales();
   const router = useRouter();
+  const [dispatch, setDispatch] = useState(false);
 
   if (!auth?.currentChatRoom?.chatRoomId) {
     return (
@@ -66,6 +72,30 @@ export default function ChatRoomTalkView() {
     );
   }
 
+  const renderMessages = (
+    <Stack
+      sx={{
+        width: 1,
+        height: 1,
+        overflow: 'hidden',
+      }}
+    >
+      <Suspense fallback={<TalkSkelton />}>
+        <ChatMessageList
+          chatRoom={auth.currentChatRoom}
+          dispatch={dispatch}
+          setDispatch={setDispatch}
+        />
+      </Suspense>
+
+      <ChatMessageInput
+        disabled={false}
+        chatRoom={auth.currentChatRoom}
+        setDispatch={setDispatch}
+      />
+    </Stack>
+  );
+
   const renderHead = (
     <Stack
       direction="row"
@@ -73,7 +103,11 @@ export default function ChatRoomTalkView() {
       flexShrink={0}
       sx={{ pr: 1, pl: 2.5, py: 1, minHeight: 72 }}
     >
-      <ChatHeaderDetail chatRoom={auth.currentChatRoom} />
+      <Suspense
+        fallback={<Skeleton variant="rounded" width={120} height={20} />}
+      >
+        <ChatHeaderDetail chatRoom={auth.currentChatRoom} />
+      </Suspense>
     </Stack>
   );
 
@@ -113,9 +147,8 @@ export default function ChatRoomTalkView() {
               borderTop: (theme) => `solid 1px ${theme.palette.divider}`,
             }}
           >
-            {/* {renderMessages} */}
-
-            {/* {details && <ChatRoom conversation={conversation} participants={participants} />} */}
+            {renderMessages}
+            <ChatRoom chatRoom={auth.currentChatRoom} />
           </Stack>
         </Stack>
       </Stack>

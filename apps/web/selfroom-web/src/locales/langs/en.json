@@ -309,5 +309,8 @@
   "Favors": "Favors",
   "Create Time": "Create Time",
   "Visitors": "Visitors",
-  "Favors-list": "Favors"
+  "Favors-list": "Favors",
+  "Room successfully vacated": "Room successfully vacated",
+  "Failed to exit room": "Failed to exit room",
+  "Type a message": "Type a message"
 }
