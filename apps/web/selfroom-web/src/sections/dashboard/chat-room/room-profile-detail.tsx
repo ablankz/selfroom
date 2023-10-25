@@ -20,6 +20,7 @@ import { paths } from '@/routes/paths';
 import { useRouter } from '@/routes/hooks';
 import { useChatRoomInQuery } from '@/api/room-visits/useChatRoomInQuery';
 import RoomKeyModal from '@/sections/_common/room-key-modal';
+import { fNumber } from '@/utils/format-number';
 
 type Props = {
   data: ChatRoomCard;
@@ -28,7 +29,7 @@ type Props = {
 };
 
 export const RoomProfileDetail = ({ data, handleSuccess, setVisitDispatch }: Props) => {
-  const { name, chatRoomId, updatedAt, favorNum, userNum, categories, hasKey } =
+  const { name, chatRoomId, updatedAt, favorNum, createdAt, userNum, categories, hasKey } =
     data;
   const { enqueueSnackbar } = useSnackbar();
   const { t, currentLang } = useLocales();
@@ -145,28 +146,28 @@ export const RoomProfileDetail = ({ data, handleSuccess, setVisitDispatch }: Pro
             {
               label: 'Last Talk',
               value: `${fDate(updatedAt, 'MMM dd HH:mm', currentLang.value)}`,
-              icon: <Iconify icon="solar:calendar-date-bold" />,
+              icon: <Iconify icon="mdi:latest" />,
             },
             {
-              label: 'Contact name',
-              value: 'Hello World',
-              icon: <Iconify icon="solar:user-rounded-bold" />,
+              label: 'Users',
+              value: fNumber(userNum),
+              icon: <Iconify icon="mdi:users" />,
             },
             {
-              label: 'Durations',
-              value: userNum,
-              icon: <Iconify icon="solar:clock-circle-bold" />,
+              label: 'Favors',
+              value: fNumber(favorNum),
+              icon: <Iconify icon="material-symbols:favorite" />,
             },
             {
-              label: 'Contact phone',
-              value: favorNum,
-              icon: <Iconify icon="solar:phone-bold" />,
+              label: 'Create Time',
+              value: `${fDate(createdAt, 'MMM dd HH:mm', currentLang.value)}`,
+              icon: <Iconify icon="eos-icons:subscriptions-created" />,
             },
           ].map((item) => (
             <Stack key={item.label} spacing={1.5} direction="row">
               {item.icon}
               <ListItemText
-                primary={item.label}
+                primary={t(item.label)}
                 secondary={item.value}
                 primaryTypographyProps={{
                   typography: 'body2',

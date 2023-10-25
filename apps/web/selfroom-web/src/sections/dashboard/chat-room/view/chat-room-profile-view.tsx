@@ -36,7 +36,7 @@ const TABS = [
   },
   {
     value: 'favors',
-    label: 'Favors',
+    label: 'Favors-list',
   },
   // {
   //   value: 'analytics',
@@ -168,7 +168,7 @@ export default function ChatRoomProfileView({ chatRoomId }: Props) {
           }}
         >
           {TABS.map((tab) => (
-            <Tab key={tab.value} value={tab.value} label={tab.label} />
+            <Tab key={tab.value} value={tab.value} label={t(tab.label)} />
           ))}
         </Tabs>
 

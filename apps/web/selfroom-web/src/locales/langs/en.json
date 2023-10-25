@@ -301,5 +301,13 @@
   "User ID": "User ID",
   "Retrieve favors": "Retrieve favors",
   "Not a single favorite user": "Not a single favorite user",
-  "Retrieving the current user in the room": "Retrieving the current user in the room"
+  "Retrieving the current user in the room": "Retrieving the current user in the room",
+  "You must enter the chat room to view this page.": "You must enter the chat room to view this page.",
+  "Entering the Room": "Entering the Room",
+  "Users": "Users",
+  "Last Talk": "Last Talk",
+  "Favors": "Favors",
+  "Create Time": "Create Time",
+  "Visitors": "Visitors",
+  "Favors-list": "Favors"
 }

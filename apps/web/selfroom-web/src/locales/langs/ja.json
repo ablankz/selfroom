@@ -301,5 +301,13 @@
   "User ID": "ユーザーID",
   "Retrieve favors": "お気に入りユーザーの取得",
   "Not a single favorite user": "お気に入りユーザーが一人もいません",
-  "Retrieving the current user in the room": "部屋にいるユーザーの取得"
+  "Retrieving the current user in the room": "部屋にいるユーザーの取得",
+  "You must enter the chat room to view this page.": "このページを閲覧するにはチャットルームに入室する必要があります。",
+  "Entering the Room": "ルームに入る",
+  "Users": "ユーザー数",
+  "Last Talk": "最終トーク",
+  "Favors": "お気に入り数",
+  "Create Time": "作成日時",
+  "Visitors": "訪問者履歴",
+  "Favors-list": "お気に入りユーザー"
 }

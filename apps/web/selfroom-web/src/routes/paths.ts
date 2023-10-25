@@ -24,4 +24,7 @@ export const paths = {
     },
   },
   oauthCallback: '/oauth-callback',
+  error: {
+    server: '/internal-server-error',
+  },
 };
