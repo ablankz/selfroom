@@ -7,4 +7,7 @@ export const roomVisitQueryKeys = createQueryKeyStore({
   visitors: {
     get: (id: string) => [id],
   },
+  users: {
+    get: (id: string) => [id],
+  },
 });
