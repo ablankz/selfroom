@@ -25,10 +25,11 @@ class ChatService
     int $offset,
     string $order,
     string $order_opt,
-    bool $with_total_count
+    bool $with_total_count,
+    bool $cursor_pagination
   ) {
-    $data = $usecase->handle($chat_room_id, $limit, $offset, $order, $order_opt, $with_total_count);
-    if($with_total_count){
+    $data = $usecase->handle($chat_room_id, $limit, $offset, $order, $order_opt, $with_total_count, $cursor_pagination);
+    if($with_total_count || $cursor_pagination){
       return new WithResourceCollection($data, ChatResourceCollection::class);
     }
     return new ChatResourceCollection($data);
