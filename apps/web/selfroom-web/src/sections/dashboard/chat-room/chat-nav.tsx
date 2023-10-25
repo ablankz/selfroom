@@ -8,18 +8,17 @@ import { useResponsive } from '@/hooks/use-responsive';
 import { useRouter } from '@/routes/hooks';
 import useCollapseNav from '@/hooks/use-collapse-nav';
 import {
-  Autocomplete,
   Avatar,
   Box,
-  Button,
   Chip,
   Divider,
   IconButton,
   ListItemText,
+  Skeleton,
   Typography,
 } from '@mui/material';
 import Iconify from '@/components/iconify';
-import { useCallback, useEffect, useMemo } from 'react';
+import { Suspense, useCallback, useEffect, useMemo } from 'react';
 import { paths } from '@/routes/paths';
 import { AuthUserType } from '@/auth/types';
 import Scrollbar from '@/components/scrollbar';
@@ -35,6 +34,7 @@ import { fDate } from '@/utils/format-time';
 import { fNumber } from '@/utils/format-number';
 import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard';
 import { useSnackbar } from '@/components/snackbar';
+import { useChatRoomOutQuery } from '@/api/room-visits/useChatRoomOutQuery';
 
 // ----------------------------------------------------------------------
 
@@ -106,10 +106,28 @@ export default function ChatNav({ auth, chatRoom }: Props) {
         </IconButton>
       </Stack>
 
-      <ChatNavInfo
-        chatRoomId={chatRoom.chatRoomId}
-        collapseDesktop={collapseDesktop}
-      />
+      <Suspense
+        fallback={
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            height={1}
+            width={1}
+          >
+            <Skeleton
+              variant="rounded"
+              width={collapseDesktop ? NAV_COLLAPSE_WIDTH : NAV_WIDTH}
+              height="90%"
+            />
+          </Box>
+        }
+      >
+        <ChatNavInfo
+          chatRoomId={chatRoom.chatRoomId}
+          collapseDesktop={collapseDesktop}
+        />
+      </Suspense>
     </>
   );
 
@@ -181,7 +199,8 @@ type InfoProps = {
 };
 
 const ChatNavInfo = ({ chatRoomId, collapseDesktop }: InfoProps) => {
-  const { data, refetch } = useGetChatRoomQuery(chatRoomId);
+  const { data } = useGetChatRoomQuery(chatRoomId);
+  const { mutate, status } = useChatRoomOutQuery();
   const toggleTags = useBoolean(true);
   const properties = useBoolean(true);
   const { t, currentLang } = useLocales();
@@ -203,6 +222,21 @@ const ChatNavInfo = ({ chatRoomId, collapseDesktop }: InfoProps) => {
       });
     }
   }, [copy, enqueueSnackbar]);
+
+  useEffect(() => {
+    if (status === 'success') {
+      enqueueSnackbar({
+        message: t('Room successfully vacated'),
+        variant: 'success',
+      });
+      router.push(paths.dashboard.chat);
+    } else if (status === 'error') {
+      enqueueSnackbar({
+        message: t('Failed to exit room'),
+        variant: 'error',
+      });
+    }
+  }, [status]);
 
   if (!data) {
     return <Navigate to={paths.error.server} replace />;
@@ -330,7 +364,12 @@ const ChatNavInfo = ({ chatRoomId, collapseDesktop }: InfoProps) => {
   return (
     <>
       <Scrollbar sx={{ height: 1, mt: 2 }}>
-        <FileThumbnail imageView file={imgUrl} imgSx={{ borderRadius: 1 }} />
+        <FileThumbnail
+          imageView
+          file={imgUrl}
+          imgSx={{ borderRadius: 1 }}
+          uuid={chatRoomId}
+        />
         {!collapseDesktop ? (
           <>
             <Stack
@@ -429,7 +468,7 @@ const ChatNavInfo = ({ chatRoomId, collapseDesktop }: InfoProps) => {
           >
             <Iconify icon="mingcute:profile-fill" width={30} height={30} />
           </IconButton>
-          <IconButton>
+          <IconButton onClick={() => mutate()}>
             <Iconify icon="iconamoon:exit-bold" width={30} height={30} />
           </IconButton>
         </Stack>
