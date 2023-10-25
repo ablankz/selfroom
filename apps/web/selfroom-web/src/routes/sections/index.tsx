@@ -1,12 +1,15 @@
-import { useRoutes } from 'react-router-dom';
+import { Outlet, useRoutes } from 'react-router-dom';
 import { dashboardRoutes } from './dashboard';
 import NotFound from '@/NotFound';
 import MainLayout from '@/layouts/main/layout';
-import { lazy } from 'react';
+import { Suspense, lazy } from 'react';
+import CompactLayout from '@/layouts/compact/layout';
+import { SplashScreen } from '@/components/loading-screen';
 
 // ----------------------------------------------------------------------
 
 const AuthCallbackPage = lazy(() => import('../../pages/oauth-callback'));
+const Page500 = lazy(() => import('../../pages/500-cover'));
 
 export default function Router() {
   return useRoutes([
@@ -43,6 +46,16 @@ export default function Router() {
       ),
     },
 
+    {
+      element: (
+        <CompactLayout>
+          <Suspense fallback={<SplashScreen />}>
+            <Outlet />
+          </Suspense>
+        </CompactLayout>
+      ),
+      children: [{ path: '/internal-server-error', element: <Page500 /> }],
+    },
     // // No match 404
     { path: '*', element: <NotFound /> },
   ]);
