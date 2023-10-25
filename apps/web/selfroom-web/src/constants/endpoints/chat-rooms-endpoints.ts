@@ -34,13 +34,13 @@ export const CHAT_ROOMS_ENDPOINTS = {
       get: {
         urlKey: '/chat-rooms/*/chats',
         method: 'GET',
-        url: '/chat-rooms/*/chats',
+        url: (roomId: string) => `/chat-rooms/${roomId}/chats`,
         comment: 'Retrieving the chat list',
       },
       create: {
         urlKey: '/chat-rooms/*/chats',
         method: 'POST',
-        url: '/chat-rooms/*/chats',
+        url: (roomId: string) => `/chat-rooms/${roomId}/chats`,
         comment: 'Send Chat',
         defaultBody: {
           content: 'hello',
