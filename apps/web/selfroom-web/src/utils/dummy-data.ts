@@ -1,17 +1,11 @@
 import { HOST_ASSET } from '@/config-global';
-import { SimpleUser } from '@/types/entity';
+import { Chat, SimpleChatRoom, SimpleUser } from '@/types/entity';
 import { uuidHash } from '@/utils/uuid-hash';
-
-function generateUUID() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-    var r = (Math.random() * 16) | 0,
-      v = c === 'x' ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
-}
+import uuidv4 from './uuidv4';
+import {randomChar, ulid} from 'ulid';
 
 export const getDummyUser = (): SimpleUser => {
-  const uuid = generateUUID();
+  const uuid = uuidv4();
   const now = new Date();
   const formattedDate = now.toISOString();
 
@@ -33,3 +27,17 @@ export const getDummyUser = (): SimpleUser => {
     updatedAt: formattedDate,
   };
 };
+
+export const getDummyTalk = (chatRoom: SimpleChatRoom): Chat => {
+  const now = new Date();
+  const formattedDate = now.toISOString();
+
+  return {
+    chatId: ulid(),
+    user: getDummyUser(),
+    chatRoom,
+    content: `hello dummy ${randomChar(Math.random)}`,
+    createdAt: formattedDate,
+    updatedAt: formattedDate,
+  }
+}

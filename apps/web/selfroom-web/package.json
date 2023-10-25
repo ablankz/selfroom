@@ -69,6 +69,7 @@
     "slick-carousel": "^1.8.1",
     "stylis-plugin-rtl": "^2.1.1",
     "three": "^0.156.1",
+    "ulid": "^2.3.0",
     "uuid": "^9.0.1",
     "yet-another-react-lightbox": "^3.12.2",
     "yup": "^1.2.0"
