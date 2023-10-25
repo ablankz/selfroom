@@ -37,11 +37,11 @@ class RoomOut extends Usecase
             'user_num' => $current_chat_room->user_num - 1
           ]);
         }
-        $user->current_chat_room_id = null;
-        $user->save();
-        $user->visitedRooms()->updateExistingPivot($user->current_chat_room_id, [
+        $user->latestVisit()->updateExistingPivot($user->current_chat_room_id, [
           'left_at' => now()
         ]);
+        $user->current_chat_room_id = null;
+        $user->save();
       } catch (\Throwable $e) {
         DB::rollBack();
         throw $e;
