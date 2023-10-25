@@ -15,7 +15,7 @@ class GetChats extends Usecase
     string $order_opt,
     bool $with_total_count
   ) {
-    $query = Chat::query()->with(['user', 'room'])->where('chats.chat_room_id', $chat_room_id);
+    $query = Chat::query()->with(['user', 'room'])->where('t_chats.chat_room_id', $chat_room_id);
 
     $order_opt = $order_opt === 'desc' ? 'desc' : 'asc';
     switch ($order) {
