@@ -21,12 +21,15 @@ type Props = {
   dispatch: boolean;
 };
 
-export default function ChatMessageList({ chatRoom, dispatch, setDispatch }: Props) {
+export default function ChatMessageList({
+  chatRoom,
+  dispatch,
+  setDispatch,
+}: Props) {
   const { data, refetch } = useGetChatsQuery(chatRoom.chatRoomId, 1, 100);
 
-
   useEffect(() => {
-    if(dispatch){
+    if (dispatch) {
       refetch();
       setDispatch(false);
     }
@@ -43,7 +46,12 @@ export default function ChatMessageList({ chatRoom, dispatch, setDispatch }: Pro
       <Scrollbar ref={messagesEndRef} sx={{ px: 3, py: 5, height: 1 }}>
         <Box>
           {data.data.map((message) => (
-            <ChatMessageItem key={message.chatId} message={message} />
+            <ChatMessageItem
+              key={message.chatId}
+              message={message}
+              chatRoomId={chatRoom.chatRoomId}
+              setDispatch={setDispatch}
+            />
           ))}
         </Box>
       </Scrollbar>

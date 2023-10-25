@@ -312,5 +312,7 @@
   "Favors-list": "お気に入りユーザー",
   "Room successfully vacated": "ルームを退室しました",
   "Failed to exit room": "ルームの退室に失敗しました",
-  "Type a message": "メッセージを入力してください"
+  "Type a message": "メッセージを入力してください",
+  "Undo message failed": "メッセージの取り消しに失敗しました",
+  "Failed to send message": "メッセージの送信に失敗しました"
 }

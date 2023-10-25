@@ -1,4 +1,3 @@
-import { formatDistanceToNowStrict } from 'date-fns';
 // @mui
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
@@ -9,26 +8,44 @@ import Iconify from '@/components/iconify';
 import { Chat } from '@/types/entity';
 import { useAuthContext } from '@/auth/hooks';
 import { getDummyUser } from '@/utils/dummy-data';
-import { useMemo } from 'react';
-import { TIME_LOCALE_MAPPING } from '@/utils/format-time';
+import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
+import { fDateTime } from '@/utils/format-time';
 import { useLocales } from '@/locales';
 import { useRouter } from '@/routes/hooks';
 import { paths } from '@/routes/paths';
+import { useChatDeleteQuery } from '@/api/chats/useChatDeleteQuery';
+import { useSnackbar } from '@/components/snackbar';
 
 // ----------------------------------------------------------------------
 
 type Props = {
+  chatRoomId: string;
   message: Chat;
+  setDispatch: Dispatch<SetStateAction<boolean>>;
 };
 
-export default function ChatMessageItem({ message }: Props) {
+export default function ChatMessageItem({ chatRoomId, message, setDispatch }: Props) {
   const { user: auth } = useAuthContext();
-  const { currentLang } = useLocales();
+  const { currentLang, t } = useLocales();
   const { userId, nickname, profilePhotoUrl } = message.user || getDummyUser();
+  const { mutate, status } = useChatDeleteQuery(chatRoomId);
   const router = useRouter();
-  const { content, createdAt } = message;
+  const { chatId, content, createdAt } = message;
+  const { enqueueSnackbar } = useSnackbar();
 
   const me = useMemo(() => auth?.userId === userId, [auth, message.user]);
+
+  useEffect(() => {
+    if (status === 'success') {
+      setDispatch(true);
+    }else if(status === 'error'){
+      enqueueSnackbar({
+        message: t('Undo message failed'),
+        variant: 'error'
+      })
+    }
+  }, [status]);
+
 
   const renderInfo = (
     <Typography
@@ -43,10 +60,7 @@ export default function ChatMessageItem({ message }: Props) {
       }}
     >
       {!me && `${nickname},`} &nbsp;
-      {formatDistanceToNowStrict(new Date(createdAt), {
-        addSuffix: true,
-        locale: TIME_LOCALE_MAPPING[currentLang.value || 'en'],
-      })}
+      {fDateTime(createdAt, 'MMM dd HH:mm', currentLang.value)}
     </Typography>
   );
 
@@ -95,7 +109,7 @@ export default function ChatMessageItem({ message }: Props) {
       <IconButton size="small">
         <Iconify icon="eva:smiling-face-fill" width={16} />
       </IconButton> */}
-      <IconButton size="small">
+      <IconButton size="small" onClick={() => mutate(chatId)}>
         <Iconify icon="solar:trash-bin-trash-bold" width={16} />
       </IconButton>
     </Stack>

@@ -55,6 +55,7 @@ class ChatService
   ) {
     return $usecase->handle(
       $chat_id,
+      $chat_room_id,
       $content
     );
   }
@@ -62,6 +63,6 @@ class ChatService
 
   public function delete(DeleteChat $usecase, string $chat_id, string $chat_room_id)
   {
-    return $usecase->handle($chat_id);
+    return $usecase->handle($chat_id, $chat_room_id);
   }
 }

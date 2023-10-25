@@ -18,6 +18,7 @@ import { useLocales } from '@/locales';
 import { EmojiPicker } from '@/components/emoji';
 import { EmojiData } from '@/components/emoji/types';
 import { useBoolean } from '@/hooks/use-boolean';
+import { useSnackbar } from '@/components/snackbar';
 
 // ----------------------------------------------------------------------
 
@@ -41,6 +42,7 @@ export default function ChatMessageInput({
     start: 0,
     end: 0,
   });
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleEmoji = useCallback(
     (emoji: EmojiData) => {
@@ -102,6 +104,11 @@ export default function ChatMessageInput({
   useEffect(() => {
     if (status === 'success') {
       setDispatch(true);
+    }else if(status === 'error'){
+      enqueueSnackbar({
+        message: t('Failed to send message'),
+        variant: 'error'
+      })
     }
   }, [status]);
 
