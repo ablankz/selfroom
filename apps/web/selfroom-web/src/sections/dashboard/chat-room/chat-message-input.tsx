@@ -19,21 +19,22 @@ import { EmojiPicker } from '@/components/emoji';
 import { EmojiData } from '@/components/emoji/types';
 import { useBoolean } from '@/hooks/use-boolean';
 import { useSnackbar } from '@/components/snackbar';
+import { ChatData } from '@/types/response/chat-room/chats-response';
 
 // ----------------------------------------------------------------------
 
 type Props = {
   chatRoom: SimpleChatRoom;
   disabled: boolean;
-  setDispatch: Dispatch<SetStateAction<boolean>>;
+  setAddChat: Dispatch<SetStateAction<ChatData | undefined>>;
 };
 
 export default function ChatMessageInput({
   chatRoom,
   disabled,
-  setDispatch,
+  setAddChat
 }: Props) {
-  const { mutate, status } = useChatCreateQuery(chatRoom.chatRoomId);
+  const { mutate, status, data } = useChatCreateQuery(chatRoom.chatRoomId);
   const [message, setMessage] = useState('');
   const { t } = useLocales();
   const emojiDialog = useBoolean();
@@ -103,7 +104,7 @@ export default function ChatMessageInput({
 
   useEffect(() => {
     if (status === 'success') {
-      setDispatch(true);
+      setAddChat(data?.data);
     }else if(status === 'error'){
       enqueueSnackbar({
         message: t('Failed to send message'),

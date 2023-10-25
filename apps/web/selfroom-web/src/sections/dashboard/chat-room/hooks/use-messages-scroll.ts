@@ -1,9 +1,9 @@
-import { Chat } from '@/types/entity';
+import { ChatsResponse } from '@/types/response/chat-room/chats-response';
 import { useCallback, useEffect, useRef } from 'react';
 
 // ----------------------------------------------------------------------
 
-export default function useMessagesScroll(messages: Chat[]) {
+export default function useMessagesScroll(messages: ChatsResponse[]) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollMessagesToBottom = useCallback(() => {

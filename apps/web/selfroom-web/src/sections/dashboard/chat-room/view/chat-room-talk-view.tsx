@@ -18,6 +18,7 @@ import ChatMessageInput from '../chat-message-input';
 import ChatMessageList from '../chat-message-list';
 import { Suspense, useState } from 'react';
 import { TalkSkelton } from '../talk-skelton';
+import { ChatData } from '@/types/response/chat-room/chats-response';
 
 // ----------------------------------------------------------------------
 
@@ -27,6 +28,7 @@ export default function ChatRoomTalkView() {
   const { t } = useLocales();
   const router = useRouter();
   const [dispatch, setDispatch] = useState(false);
+  const [addChat, setAddChat] = useState<ChatData | undefined>(undefined);
 
   if (!auth?.currentChatRoom?.chatRoomId) {
     return (
@@ -85,13 +87,15 @@ export default function ChatRoomTalkView() {
           chatRoom={auth.currentChatRoom}
           dispatch={dispatch}
           setDispatch={setDispatch}
+          addChat={addChat}
+          setAddChat={setAddChat}
         />
       </Suspense>
 
       <ChatMessageInput
         disabled={false}
         chatRoom={auth.currentChatRoom}
-        setDispatch={setDispatch}
+        setAddChat={setAddChat}
       />
     </Stack>
   );
