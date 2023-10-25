@@ -54,7 +54,7 @@ class GetFavors extends Usecase
     }
 
     $ret = $query->limit($limit)->offset($offset)->get()->map(function ($user) use ($authFollowers) {
-      $user->is_favorite = in_array($user->user_id, $authFollowers);
+      $user->is_follow = in_array($user->user_id, $authFollowers);
       return $user;
     });
 
