@@ -48,7 +48,7 @@ class RoomIn extends Usecase
               'user_num' => $current_chat_room->user_num - 1
             ]);
           }
-          $user->visitedRooms()->latestVisit()->updateExistingPivot($user->current_chat_room_id, [
+          $user->latestVisit()->updateExistingPivot($user->current_chat_room_id, [
             'left_at' => now()
           ]);
         }
