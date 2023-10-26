@@ -16,6 +16,10 @@ expand_variables() {
 app_key=`grep '^[[:space:]]*APP_KEY=' /var/www/${API_APP_NAME}/.env`
 jwt_key=`grep '^[[:space:]]*JWT_SECRET=' /var/www/${API_APP_NAME}/.env`
 
+pusher_app_id=`grep '^[[:space:]]*PUSHER_APP_ID=' /var/www/${API_APP_NAME}/.env`
+pusher_app_key=`grep '^[[:space:]]*PUSHER_APP_KEY=' /var/www/${API_APP_NAME}/.env`
+pusher_app_secret=`grep '^[[:space:]]*PUSHER_APP_SECRET=' /var/www/${API_APP_NAME}/.env`
+
 google_id=`grep '^[[:space:]]*GOOGLE_CLIENT_ID=' /var/www/${API_APP_NAME}/.env`
 google_secret=`grep '^[[:space:]]*GOOGLE_CLIENT_SECRET=' /var/www/${API_APP_NAME}/.env`
 line_id=`grep '^[[:space:]]*LINE_CLIENT_ID=' /var/www/${API_APP_NAME}/.env`
@@ -26,6 +30,10 @@ echo ${app_key} > /var/www/${API_APP_NAME}/.env # key保存
 expand_variables /docker-init/env_templates/.env.template /var/www/${API_APP_NAME}/.env #それ以外を追記
 
 echo ${jwt_key} >> /var/www/${API_APP_NAME}/.env # secretKey保存
+
+echo ${pusher_app_id} >> /var/www/${API_APP_NAME}/.env
+echo ${pusher_app_key} >> /var/www/${API_APP_NAME}/.env
+echo ${pusher_app_secret} >> /var/www/${API_APP_NAME}/.env
 
 echo ${google_id} >> /var/www/${API_APP_NAME}/.env
 echo ${google_secret} >> /var/www/${API_APP_NAME}/.env
