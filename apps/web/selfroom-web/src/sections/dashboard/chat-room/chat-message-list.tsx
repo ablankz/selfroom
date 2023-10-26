@@ -37,6 +37,8 @@ type Props = {
   dispatch: boolean;
   addChat: ChatData | undefined;
   setAddChat: Dispatch<SetStateAction<ChatData | undefined>>;
+  removeChat: string | undefined;
+  setRemoveChat: Dispatch<SetStateAction<string | undefined>>;
 };
 
 export default function ChatMessageList({
@@ -45,6 +47,8 @@ export default function ChatMessageList({
   setDispatch,
   addChat,
   setAddChat,
+  removeChat,
+  setRemoveChat,
 }: Props) {
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } =
     useGetChatsQuery(chatRoom.chatRoomId, PAGE_TALK);
@@ -93,12 +97,62 @@ export default function ChatMessageList({
     [setPages]
   );
 
+  const removeTalk = useCallback(
+    (talkId: string) => {
+      setPages((prev) => {
+        let targetPage = -1;
+        let targetChat = -1;
+        prev.forEach((page, i) => {
+          page.data.data.forEach((chat, j) => {
+            if (chat.chatId === talkId) {
+              targetPage = i;
+              targetChat = j;
+            }
+          });
+        });
+        if (
+          targetPage < 0 ||
+          targetChat < 0 ||
+          targetPage > prev.length ||
+          targetPage > prev[targetPage].data.data.length
+        )
+          return prev;
+
+        const newArray = prev.map((outerItem, outerIndex) => {
+          if (outerIndex === targetPage) {
+            return {
+              ...outerItem,
+              data: {
+                ...outerItem.data,
+                data: [
+                  ...outerItem.data.data.slice(0, targetChat),
+                  ...outerItem.data.data.slice(targetChat + 1),
+                ],
+              },
+            };
+          } else {
+            return outerItem;
+          }
+        });
+        return newArray;
+      });
+    },
+    [setPages]
+  );
+
   useEffect(() => {
     if (!!addChat) {
       addTalk(addChat);
       setAddChat(undefined);
     }
   }, [addChat]);
+
+  useEffect(() => {
+    if (!!removeChat) {
+      removeTalk(removeChat);
+      setRemoveChat(undefined);
+    }
+  }, [removeChat]);
 
   return (
     <>
@@ -118,7 +172,7 @@ export default function ChatMessageList({
                   key={message.chatId}
                   message={message}
                   chatRoomId={chatRoom.chatRoomId}
-                  setDispatch={setDispatch}
+                  setRemoveChat={setRemoveChat}
                 />
               ))}
             </Fragment>

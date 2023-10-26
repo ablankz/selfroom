@@ -29,6 +29,7 @@ export default function ChatRoomTalkView() {
   const router = useRouter();
   const [dispatch, setDispatch] = useState(false);
   const [addChat, setAddChat] = useState<ChatData | undefined>(undefined);
+  const [removeChat, setRemoveChat] = useState<string | undefined>(undefined);
 
   if (!auth?.currentChatRoom?.chatRoomId) {
     return (
@@ -89,6 +90,8 @@ export default function ChatRoomTalkView() {
           setDispatch={setDispatch}
           addChat={addChat}
           setAddChat={setAddChat}
+          removeChat={removeChat}
+          setRemoveChat={setRemoveChat}
         />
       </Suspense>
 

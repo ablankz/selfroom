@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from '@/utils/axios';
 import { CHAT_ROOMS_ENDPOINTS } from '@/constants/endpoints';
 import { chatRoomQueryKeys } from '@/query-keys/chatRoomQueryKey';
-import { chatQueryKeys } from '@/query-keys/chatQueryKey';
+// import { chatQueryKeys } from '@/query-keys/chatQueryKey';
 import { EmptySuccessResponse } from '@/types/response/empty-success-reponse';
 
 export const useChatDeleteQuery = (chatRoomId: string) => {
@@ -17,7 +17,7 @@ export const useChatDeleteQuery = (chatRoomId: string) => {
         .then((res) => res.data),
     {
       onSuccess: (_) => {
-        queryClient.invalidateQueries([chatQueryKeys.list.get(chatRoomId)]);
+        // queryClient.invalidateQueries([chatQueryKeys.list.get(chatRoomId)]);
         queryClient.invalidateQueries([
           chatRoomQueryKeys.profile.find(chatRoomId),
         ]);

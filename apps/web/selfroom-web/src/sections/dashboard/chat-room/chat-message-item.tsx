@@ -21,13 +21,13 @@ import { useSnackbar } from '@/components/snackbar';
 type Props = {
   chatRoomId: string;
   message: Chat;
-  setDispatch: Dispatch<SetStateAction<boolean>>;
+  setRemoveChat: Dispatch<SetStateAction<string | undefined>>;
 };
 
 export default function ChatMessageItem({
   chatRoomId,
   message,
-  setDispatch,
+  setRemoveChat
 }: Props) {
   const { user: auth } = useAuthContext();
   const { currentLang, t } = useLocales();
@@ -41,7 +41,7 @@ export default function ChatMessageItem({
 
   useEffect(() => {
     if (status === 'success') {
-      setDispatch(true);
+      setRemoveChat(chatId);
     } else if (status === 'error') {
       enqueueSnackbar({
         message: t('Undo message failed'),
