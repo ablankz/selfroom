@@ -42,13 +42,19 @@ const PER_PAGE = 9;
 type Props = {
   userId: string;
   setDispatch: Dispatch<SetStateAction<boolean>>;
+  followerDispatch: boolean;
+  setFollowerDispatch: Dispatch<SetStateAction<boolean>>;
 };
 
-export default function ProfileFollowers({ userId, setDispatch }: Props) {
+export default function ProfileFollowers({
+  userId,
+  setDispatch,
+  followerDispatch,
+  setFollowerDispatch,
+}: Props) {
   const { user } = useAuthContext();
-  const { t } = useLocales();
   const [page, setPage] = useState(1);
-  const [totalCount, setTotalCount] = useState<number | undefined>(undefined);
+  const [totalCount, setTotalCount] = useState<number>(0);
 
   const handlePageChange = useCallback(
     (_: ChangeEvent<unknown>, page: number) => {
@@ -69,30 +75,106 @@ export default function ProfileFollowers({ userId, setDispatch }: Props) {
 
   return (
     <>
-      {typeof totalCount === 'undefined' || totalCount !== 0 ? (
-        <>
-          <FollowerTable
-            authId={user?.userId || user?.adminId || ''}
-            userId={userId}
-            page={page}
-            setDispatch={setDispatch}
-            setTotalCount={setTotalCount}
-            resetPage={resetPage}
-          />
-          <Pagination
-            shape="rounded"
-            color="primary"
-            onChange={handlePageChange}
-            count={pageCount}
-            page={page}
-            sx={{
-              mt: 8,
-              [`& .${paginationClasses.ul}`]: {
-                justifyContent: 'center',
-              },
-            }}
-          />
-        </>
+      <FollowerTable
+        authId={user?.userId || user?.adminId || ''}
+        userId={userId}
+        page={page}
+        setDispatch={setDispatch}
+        totalCount={totalCount}
+        setTotalCount={setTotalCount}
+        resetPage={resetPage}
+        followerDispatch={followerDispatch}
+        setFollowerDispatch={setFollowerDispatch}
+      />
+      {!!totalCount && (
+        <Pagination
+          shape="rounded"
+          color="primary"
+          onChange={handlePageChange}
+          count={pageCount}
+          page={page}
+          sx={{
+            mt: 8,
+            [`& .${paginationClasses.ul}`]: {
+              justifyContent: 'center',
+            },
+          }}
+        />
+      )}
+    </>
+  );
+}
+
+// ----------------------------------------------------------------------
+
+type TableProps = {
+  userId: string;
+  authId: string;
+  page: number;
+  setDispatch: Dispatch<SetStateAction<boolean>>;
+  totalCount: number;
+  setTotalCount: Dispatch<SetStateAction<number>>;
+  resetPage: () => void;
+  followerDispatch: boolean;
+  setFollowerDispatch: Dispatch<SetStateAction<boolean>>;
+};
+
+function FollowerTable({
+  userId,
+  authId,
+  page,
+  setDispatch,
+  totalCount,
+  setTotalCount,
+  resetPage,
+  followerDispatch,
+  setFollowerDispatch,
+}: TableProps) {
+  const { data, refetch } = useGetFollowersQuery(userId, page, PER_PAGE);
+  const { t } = useLocales();
+
+  useEffect(() => {
+    refetch();
+    resetPage();
+  }, [userId]);
+
+  useEffect(() => {
+    if (data) {
+      setTotalCount(data.data.totalCount);
+    } else {
+      setTotalCount(0);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (followerDispatch) {
+      refetch();
+      setFollowerDispatch(false);
+    }
+  }, [followerDispatch]);
+
+  return (
+    <>
+      {!!totalCount ? (
+        <Box
+          gap={3}
+          display="grid"
+          gridTemplateColumns={{
+            xs: 'repeat(1, 1fr)',
+            sm: 'repeat(2, 1fr)',
+            md: 'repeat(3, 1fr)',
+          }}
+        >
+          {data?.data.data.map((follower) => (
+            <FollowerItem
+              followersRefetch={refetch}
+              setDispatch={setDispatch}
+              key={follower.userId}
+              follower={follower}
+              authId={authId}
+            />
+          ))}
+        </Box>
       ) : (
         <EmptyContent
           title="NoItem"
@@ -108,67 +190,6 @@ export default function ProfileFollowers({ userId, setDispatch }: Props) {
   );
 }
 
-// ----------------------------------------------------------------------
-
-type TableProps = {
-  userId: string;
-  authId: string;
-  page: number;
-  setDispatch: Dispatch<SetStateAction<boolean>>;
-  setTotalCount: Dispatch<SetStateAction<number | undefined>>;
-  resetPage: () => void;
-};
-
-function FollowerTable({
-  userId,
-  authId,
-  page,
-  setDispatch,
-  setTotalCount,
-  resetPage,
-}: TableProps) {
-  const { data, refetch } = useGetFollowersQuery(userId, page, PER_PAGE);
-
-  useEffect(() => {
-    refetch();
-  }, [page]);
-
-  useEffect(() => {
-    refetch();
-    resetPage();
-  }, [userId]);
-
-  useEffect(() => {
-    if (data) {
-      setTotalCount(data.data.totalCount);
-    } else {
-      setTotalCount(0);
-    }
-  }, [data]);
-
-  return (
-    <Box
-      gap={3}
-      display="grid"
-      gridTemplateColumns={{
-        xs: 'repeat(1, 1fr)',
-        sm: 'repeat(2, 1fr)',
-        md: 'repeat(3, 1fr)',
-      }}
-    >
-      {data?.data.data.map((follower) => (
-        <FollowerItem
-          followersRefetch={refetch}
-          setDispatch={setDispatch}
-          key={follower.userId}
-          follower={follower}
-          authId={authId}
-        />
-      ))}
-    </Box>
-  );
-}
-
 type FollowerItemProps = {
   follower: UserFollowerData;
   authId: string;
@@ -178,7 +199,12 @@ type FollowerItemProps = {
   ) => Promise<QueryObserverResult<UserFollowersResponse, unknown>>;
 };
 
-function FollowerItem({ follower, authId, setDispatch, followersRefetch }: FollowerItemProps) {
+function FollowerItem({
+  follower,
+  authId,
+  setDispatch,
+  followersRefetch,
+}: FollowerItemProps) {
   const { nickname, userId, profilePhotoUrl, isFollow } = follower;
   const router = useRouter();
   const { mutate: follow, status: followStatus } = useUserFollowQuery(userId);

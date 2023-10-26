@@ -51,7 +51,7 @@ export default function CareerView() {
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
-    import(`../../../../assets/data/timelines/${currentLang.value}`)
+    import(`../../../../assets/data/timelines/${currentLang.value}.tsx`)
       .then((module) => {
         if (!module.default) throw new Error();
         setTimelines(module.default);

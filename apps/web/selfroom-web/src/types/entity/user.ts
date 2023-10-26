@@ -39,3 +39,8 @@ export interface SimpleUser {
 export interface UserCard extends User {
   isFollow: boolean;
 };
+
+export interface Visitor extends SimpleUser {
+  visitedAt: string;
+  leftAt: string;
+}

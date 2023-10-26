@@ -82,21 +82,24 @@ class ChatRoom extends Model
     return $this->hasMany(Chat::class, 'chat_room_id', 'chat_room_id');
   }
 
-  public function inUsers(): HasMany
+  public function inUsers(): BelongsToMany
   {
-    return $this->hasMany(User::class, 'current_chat_room_id', 'chat_room_id');
+    return $this->belongsToMany(User::class, 't_visit_histories', 'chat_room_id', 'user_id')
+    ->as('history')
+    ->wherePivotNull('left_at')
+    ->withPivot(['visited_at', 'left_at']);
   }
 
   public function likedUsers(): BelongsToMany
   {
-    return $this->belongsToMany(ChatRoom::class, 't_favorite_chat_rooms', 'chat_room_id', 'user_id')
+    return $this->belongsToMany(User::class, 't_favorite_chat_rooms', 'chat_room_id', 'user_id')
       ->as('favorite')
       ->withPivot('added_at');
   }
 
   public function visitors(): BelongsToMany
   {
-    return $this->belongsToMany(ChatRoom::class, 't_visit_histories', 'chat_room_id', 'user_id')
+    return $this->belongsToMany(User::class, 't_visit_histories', 'chat_room_id', 'user_id')
       ->as('history')
       ->withPivot(['visited_at', 'left_at']);
   }

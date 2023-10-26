@@ -31,11 +31,18 @@ import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard';
 type Props = {
   user: UserData;
   setDispatch: Dispatch<SetStateAction<boolean>>;
+  setFollowDispatch: Dispatch<SetStateAction<boolean>>;
+  setFollowerDispatch: Dispatch<SetStateAction<boolean>>;
 };
 
 // ----------------------------------------------------------------------
 
-export default function ProfileCover({ user, setDispatch }: Props) {
+export default function ProfileCover({
+  user,
+  setDispatch,
+  setFollowDispatch,
+  setFollowerDispatch,
+}: Props) {
   const theme = useTheme();
   const router = useRouter();
   const { user: auth } = useAuthContext();
@@ -75,6 +82,8 @@ export default function ProfileCover({ user, setDispatch }: Props) {
         message: t('Successfully followed up'),
         variant: 'success',
       });
+      setFollowDispatch(true);
+      setFollowerDispatch(true);
     } else if (followStatus === 'error') {
       enqueueSnackbar({
         message: t('Failed follow up'),
@@ -90,6 +99,8 @@ export default function ProfileCover({ user, setDispatch }: Props) {
         message: t('Successfully unfollowed'),
         variant: 'success',
       });
+      setFollowDispatch(true);
+      setFollowerDispatch(true);
     } else if (cancelStatus === 'error') {
       enqueueSnackbar({
         message: t('Failed unfollow'),

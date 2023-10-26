@@ -25,9 +25,8 @@ type Props = {
 };
 
 export default function ProfileFavorites({ userId, setDispatch }: Props) {
-  const { t } = useLocales();
   const [page, setPage] = useState(1);
-  const [totalCount, setTotalCount] = useState<number | undefined>(undefined);
+  const [totalCount, setTotalCount] = useState<number>(0);
 
   const handlePageChange = useCallback(
     (_: ChangeEvent<unknown>, page: number) => {
@@ -48,37 +47,26 @@ export default function ProfileFavorites({ userId, setDispatch }: Props) {
 
   return (
     <>
-      {typeof totalCount === 'undefined' || totalCount !== 0 ? (
-        <>
-          <FavoriteTable
-            userId={userId}
-            page={page}
-            setDispatch={setDispatch}
-            setTotalCount={setTotalCount}
-            resetPage={resetPage}
-          />
-          <Pagination
-            shape="rounded"
-            color="primary"
-            onChange={handlePageChange}
-            count={pageCount}
-            page={page}
-            sx={{
-              mt: 8,
-              [`& .${paginationClasses.ul}`]: {
-                justifyContent: 'center',
-              },
-            }}
-          />
-        </>
-      ) : (
-        <EmptyContent
-          title="NoItem"
-          description={t('Not one of favorite rooms')}
+      <FavoriteTable
+        userId={userId}
+        page={page}
+        setDispatch={setDispatch}
+        totalCount={totalCount}
+        setTotalCount={setTotalCount}
+        resetPage={resetPage}
+      />
+      {!!totalCount && (
+        <Pagination
+          shape="rounded"
+          color="primary"
+          onChange={handlePageChange}
+          count={pageCount}
+          page={page}
           sx={{
-            borderRadius: 1.5,
-            height: 300,
-            boxShadow: (theme) => theme.customShadows.error,
+            mt: 8,
+            [`& .${paginationClasses.ul}`]: {
+              justifyContent: 'center',
+            },
           }}
         />
       )}
@@ -90,7 +78,8 @@ type TableProps = {
   userId: string;
   page: number;
   setDispatch: Dispatch<SetStateAction<boolean>>;
-  setTotalCount: Dispatch<SetStateAction<number | undefined>>;
+  totalCount: number;
+  setTotalCount: Dispatch<SetStateAction<number>>;
   resetPage: () => void;
 };
 
@@ -98,14 +87,12 @@ function FavoriteTable({
   userId,
   page,
   setDispatch,
+  totalCount,
   setTotalCount,
   resetPage,
 }: TableProps) {
   const { data, refetch } = useGetFavoritesQuery(userId, page, PER_PAGE);
-
-  useEffect(() => {
-    refetch();
-  }, [page]);
+  const { t } = useLocales();
 
   useEffect(() => {
     refetch();
@@ -126,22 +113,36 @@ function FavoriteTable({
   }, []);
 
   return (
-    <Box
-      gap={3}
-      display="grid"
-      gridTemplateColumns={{
-        xs: 'repeat(1, 1fr)',
-        sm: 'repeat(2, 1fr)',
-        md: 'repeat(3, 1fr)',
-      }}
-    >
-      {data?.data.data.map((favorite) => (
-        <RoomCard
-          handleSuccess={handleSuccess}
-          key={favorite.chatRoomId}
-          chatRoom={favorite}
+    <>
+      {!!totalCount ? (
+        <Box
+          gap={3}
+          display="grid"
+          gridTemplateColumns={{
+            xs: 'repeat(1, 1fr)',
+            sm: 'repeat(2, 1fr)',
+            md: 'repeat(3, 1fr)',
+          }}
+        >
+          {data?.data.data.map((favorite) => (
+            <RoomCard
+              handleSuccess={handleSuccess}
+              key={favorite.chatRoomId}
+              chatRoom={favorite}
+            />
+          ))}
+        </Box>
+      ) : (
+        <EmptyContent
+          title="NoItem"
+          description={t('Not one of favorite rooms')}
+          sx={{
+            borderRadius: 1.5,
+            height: 300,
+            boxShadow: (theme) => theme.customShadows.error,
+          }}
         />
-      ))}
-    </Box>
+      )}
+    </>
   );
 }

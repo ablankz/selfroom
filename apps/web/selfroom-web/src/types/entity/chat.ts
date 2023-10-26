@@ -1,11 +1,10 @@
-import { SimpleChatRoom, SimpleRoomCategory, SimpleUser } from ".";
+import { SimpleChatRoom, SimpleUser } from ".";
 
 export interface Chat {
   chatId: string;
   user: SimpleUser | null;
   chatRoom: SimpleChatRoom | null;
   content: string;
-  categories: SimpleRoomCategory[];
   createdAt: string;
   updatedAt: string;
 };

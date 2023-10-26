@@ -5,6 +5,8 @@ import Tooltip from '@mui/material/Tooltip';
 //
 import { fileData, fileFormat, fileThumb } from './utils';
 import DownloadButton from './download-button';
+import { HOST_ASSET } from '@/config-global';
+import { uuidHash } from '@/utils/uuid-hash';
 
 // ----------------------------------------------------------------------
 
@@ -15,6 +17,7 @@ type FileIconProps = {
   onDownload?: VoidFunction;
   sx?: SxProps<Theme>;
   imgSx?: SxProps<Theme>;
+  uuid?: string;
 };
 
 export default function FileThumbnail({
@@ -24,6 +27,7 @@ export default function FileThumbnail({
   onDownload,
   sx,
   imgSx,
+  uuid,
 }: FileIconProps) {
   const { name = '', path = '', preview = '' } = fileData(file);
 
@@ -34,6 +38,11 @@ export default function FileThumbnail({
       <Box
         component="img"
         src={preview}
+        onError={e => {
+          e.target.onError = null; // 下記画像が取得できない場合の無限ループを防ぐため、nullを代入
+          const index = uuid ? uuidHash(uuid, 0, 39) : 0;
+          e.target.src = `${HOST_ASSET}/images/cover/cover_${index}.jpg`;
+        }}
         sx={{
           width: 1,
           height: 1,

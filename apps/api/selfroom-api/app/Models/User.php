@@ -124,6 +124,14 @@ class User extends Model
       ->withPivot(['visited_at', 'left_at']);
   }
 
+  public function latestVisit(): BelongsToMany
+  {
+    return $this->visitedRooms()
+      ->wherePivotNull('left_at')
+      ->as('latest_history')
+      ->withPivot(['visited_at', 'left_at']);
+  }
+
   public function followees(): BelongsToMany
   {
     return $this->belongsToMany(User::class, 't_follows', 'follower_id', 'followee_id')

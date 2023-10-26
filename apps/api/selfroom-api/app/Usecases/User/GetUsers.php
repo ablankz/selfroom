@@ -22,7 +22,7 @@ class GetUsers extends Usecase
         $query = $query->orderBy('nickname', $order_opt);
         break;
       case 'follower':
-        $query = $query->orderBy('follower_num', $order_opt);
+        $query = $query->orderBy('follower_num', $order_opt)->orderBy('nickname', $order_opt);
         break;
       case 'create':
       default:

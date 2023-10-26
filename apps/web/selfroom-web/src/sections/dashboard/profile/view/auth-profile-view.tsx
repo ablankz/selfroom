@@ -63,6 +63,8 @@ export default function ProfileView({ userId }: Props) {
   const { t } = useLocales();
   const { data, refetch } = useGetUserQuery(userId);
   const [dispatch, setDispatch] = useState(false);
+  const [followDispatch, setFollowDispatch] = useState(false);
+  const [followerDispatch, setFollowerDispatch] = useState(false);
 
   useEffect(() => {
     if (dispatch) {
@@ -149,7 +151,12 @@ export default function ProfileView({ userId }: Props) {
           height: 320,
         }}
       >
-        <ProfileCover user={data.data} setDispatch={setDispatch} />
+        <ProfileCover
+          user={data.data}
+          setDispatch={setDispatch}
+          setFollowDispatch={setFollowDispatch}
+          setFollowerDispatch={setFollowerDispatch}
+        />
 
         <Tabs
           value={currentTab}
@@ -187,8 +194,13 @@ export default function ProfileView({ userId }: Props) {
           <Typography variant="h4" sx={{ my: 5 }}>
             Followers
           </Typography>
-          <Suspense fallback={<MiniCardListSkelton skeltonCount={6}/>}>
-            <ProfileFollowers userId={userId} setDispatch={setDispatch} />
+          <Suspense fallback={<MiniCardListSkelton skeltonCount={6} />}>
+            <ProfileFollowers
+              userId={userId}
+              setDispatch={setDispatch}
+              followerDispatch={followerDispatch}
+              setFollowerDispatch={setFollowerDispatch}
+            />
           </Suspense>
         </>
       )}
@@ -198,8 +210,13 @@ export default function ProfileView({ userId }: Props) {
           <Typography variant="h4" sx={{ my: 5 }}>
             Follows
           </Typography>
-          <Suspense fallback={<MiniCardListSkelton skeltonCount={6}/>}>
-            <ProfileFollows userId={userId} setDispatch={setDispatch} />
+          <Suspense fallback={<MiniCardListSkelton skeltonCount={6} />}>
+            <ProfileFollows
+              userId={userId}
+              setDispatch={setDispatch}
+              followDispatch={followDispatch}
+              setFollowDispatch={setFollowDispatch}
+            />
           </Suspense>
         </>
       )}
@@ -209,7 +226,7 @@ export default function ProfileView({ userId }: Props) {
           <Typography variant="h4" sx={{ my: 5 }}>
             Favorites
           </Typography>
-          <Suspense fallback={<RectangleCardListSkelton skeltonCount={6}/>}>
+          <Suspense fallback={<RectangleCardListSkelton skeltonCount={6} />}>
             <ProfileFavorites userId={userId} setDispatch={setDispatch} />
           </Suspense>
         </>

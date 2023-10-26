@@ -9,7 +9,7 @@ type LocaleMapping = {
   [key in string]: Locale;
 };
 
-const TIME_LOCALE_MAPPING: LocaleMapping = {
+export const TIME_LOCALE_MAPPING: LocaleMapping = {
   ja,
   en: enUS,
 } as const;

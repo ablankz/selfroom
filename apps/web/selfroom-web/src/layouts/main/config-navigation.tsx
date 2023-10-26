@@ -1,5 +1,3 @@
-// routes
-import { paths } from '@/routes/paths';
 // config
 import { PATH_AFTER_LOGIN } from '@/config-global';
 // components

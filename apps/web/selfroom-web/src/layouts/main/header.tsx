@@ -1,7 +1,6 @@
 // @mui
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
@@ -17,7 +16,6 @@ import { bgBlur } from '@/theme/css';
 import { paths } from '@/routes/paths';
 // components
 import Logo from '@/components/logo';
-import Label from '@/components/label';
 //
 import { HEADER } from '../config-layout';
 import { navConfig } from './config-navigation';

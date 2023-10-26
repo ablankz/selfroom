@@ -4,36 +4,43 @@ import Container from '@mui/material/Container';
 import { useSettingsContext } from '@/components/settings';
 import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
 import { useLocales } from '@/locales';
-import Markdown from '@/components/markdown';
-import { useEffect, useState } from 'react';
-import axios, { AxiosError } from 'axios';
-import { HOST_ASSET } from '@/config-global';
-import { useSnackbar } from '@/components/snackbar';
-import MainHaeder from '../../_common/header/main-header';
 import { paths } from '@/routes/paths';
+import { RouterLink } from '@/routes/components';
+import {
+  Box,
+  Button,
+  ButtonProps,
+  Divider,
+  Typography,
+  alpha,
+  styled,
+  useTheme,
+} from '@mui/material';
+import { useRouter } from '@/routes/hooks';
+import Iconify from '@/components/iconify';
 
 // ----------------------------------------------------------------------
 
-export default function ChatView() {
-  const settings = useSettingsContext();
-  const { t, currentLang } = useLocales();
-  const [markdown, setMarkdown] = useState('');
-  const { enqueueSnackbar } = useSnackbar();
+const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
+  color: theme.palette.getContrastText(
+    theme.palette.mode === 'dark'
+      ? theme.palette.primary.dark
+      : theme.palette.primary.light
+  ),
+  backgroundColor:
+    theme.palette.mode === 'dark'
+      ? theme.palette.primary.dark
+      : theme.palette.primary.light,
+  '&:hover': {
+    backgroundColor: theme.palette.primary.main,
+  },
+}));
 
-  useEffect(() => {
-    axios
-      .get(`${HOST_ASSET}/markdown/me/${currentLang.value}/introduction.md`)
-      .then((m) => {
-        setMarkdown(m.data);
-      })
-      .catch((_: AxiosError) => {
-        setMarkdown(``);
-        enqueueSnackbar({
-          message: `${t('Failed to retrieve file')}`,
-          variant: 'error',
-        });
-      });
-  }, [currentLang]);
+export default function ChatView() {
+  const theme = useTheme();
+  const settings = useSettingsContext();
+  const { t } = useLocales();
+  const router = useRouter();
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'xl'}>
@@ -43,22 +50,95 @@ export default function ChatView() {
           { name: t('Application'), href: paths.dashboard.overview },
           { name: t('Chat') },
         ]}
+        action={
+          <Button
+            component={RouterLink}
+            href={paths.dashboard.chatroom.talk}
+            variant="contained"
+            startIcon={<Iconify icon="clarity:talk-bubbles-solid" />}
+          >
+            {t('Talk')}
+          </Button>
+        }
         sx={{
           mb: { xs: 3, md: 5 },
         }}
       />
-      <MainHaeder title='PROFILE' description='profile-description' />
       <Container
         sx={{
-          width: '100%',
-          boxShadow: (theme) => theme.customShadows.primary,
-          borderRadius: 4,
-          py: 4,
-          overflowX: 'auto',
-          overflowWrap: 'normal',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          width: { xs: 0.95, md: 0.75 },
+          height: 800,
+          bgcolor:
+            alpha(theme.palette.mode === 'dark'
+              ? theme.palette.primary.darker
+              : theme.palette.primary.lighter, 0.2),
+          borderRadius: 3,
+          boxShadow: theme.shadows[12],
         }}
       >
-        <Markdown>{markdown}</Markdown>
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          height={0.45}
+          width={1}
+        >
+          <ColorButton
+            size="large"
+            variant="contained"
+            sx={{
+              p: { xs: 2, sm: 6 },
+            }}
+            onClick={() => router.push(paths.dashboard.chatroom.search)}
+          >
+            <Typography
+              fontSize={{ xs: 24, sm: 36 }}
+              variant="button"
+              fontFamily="Rampart One"
+            >
+              {t('Find a Room')}
+            </Typography>
+          </ColorButton>
+        </Box>
+        <Divider
+          sx={{
+            borderStyle: 'inset',
+            width: 0.95,
+            borderBlockWidth: 10,
+            borderRadius: 999,
+            borderColor: theme.palette.primary.darker,
+            borderInlineStyle: 'double',
+            borderTopColor: theme.palette.primary.light,
+            my: 3,
+          }}
+        />
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          height={0.45}
+          width={1}
+        >
+          <ColorButton
+            size="large"
+            variant="contained"
+            sx={{
+              p: { xs: 2, sm: 6 },
+            }}
+            onClick={() => router.push(paths.dashboard.chatroom.create)}
+          >
+            <Typography
+              fontSize={{ xs: 24, sm: 36 }}
+              variant="button"
+              fontFamily="Rampart One"
+            >
+              {t('Create a Room')}
+            </Typography>
+          </ColorButton>
+        </Box>
       </Container>
     </Container>
   );

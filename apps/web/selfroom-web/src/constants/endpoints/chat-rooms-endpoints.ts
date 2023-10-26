@@ -34,13 +34,13 @@ export const CHAT_ROOMS_ENDPOINTS = {
       get: {
         urlKey: '/chat-rooms/*/chats',
         method: 'GET',
-        url: '/chat-rooms/*/chats',
+        url: (roomId: string) => `/chat-rooms/${roomId}/chats`,
         comment: 'Retrieving the chat list',
       },
       create: {
         urlKey: '/chat-rooms/*/chats',
         method: 'POST',
-        url: '/chat-rooms/*/chats',
+        url: (roomId: string) => `/chat-rooms/${roomId}/chats`,
         comment: 'Send Chat',
         defaultBody: {
           content: 'hello',
@@ -74,7 +74,27 @@ export const CHAT_ROOMS_ENDPOINTS = {
       url: '/chat-rooms/out',
       comment: 'Leaving the chat room',
     },
+    roomVisits: {
+      visitors: {
+        urlKey: '/chat-rooms/*/visitors',
+        method: 'GET',
+        url: (id: string) => `/chat-rooms/${id}/visitors`,
+        comment: 'Retrieve visitor history',
+      },
+      inUsers: {
+        urlKey: '/chat-rooms/*/users',
+        method: 'GET',
+        url: (id: string) => `/chat-rooms/${id}/users`,
+        comment: 'Retrieving the current user in the room',
+      }
+    },
     favorites: {
+      favors: {
+        urlKey: '/chat-rooms/*/favors',
+        method: 'GET',
+        url: (id: string) => `/chat-rooms/${id}/favors`,
+        comment: 'Retrieve favors',
+      },
       add: {
         urlKey: '/chat-rooms/*/favorites',
         method: 'POST',

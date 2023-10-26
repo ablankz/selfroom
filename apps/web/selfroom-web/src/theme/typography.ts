@@ -8,7 +8,15 @@ export function pxToRem(value: number) {
   return `${value / 16}rem`;
 }
 
-export function responsiveFontSizes({ sm, md, lg }: { sm: number; md: number; lg: number }) {
+export function responsiveFontSizes({
+  sm,
+  md,
+  lg,
+}: {
+  sm: number;
+  md: number;
+  lg: number;
+}) {
   return {
     '@media (min-width:600px)': {
       fontSize: pxToRem(sm),
@@ -28,13 +36,13 @@ declare module '@mui/material/styles' {
   }
 }
 
-const primaryFont = 'Public Sans, sans-serif'; // Google Font
+const primaryFont = ['Kaisei Decol', 'Public Sans', 'sans-serif']; // Google Font
 // const secondaryFont = 'CircularStd, sans-serif'; // Local Font
 
 // ----------------------------------------------------------------------
 
 export const typography = {
-  fontFamily: primaryFont,
+  fontFamily: primaryFont.join(','),
   fontWeightRegular: 400,
   fontWeightMedium: 500,
   fontWeightSemiBold: 600,

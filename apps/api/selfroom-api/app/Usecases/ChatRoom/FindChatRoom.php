@@ -4,6 +4,7 @@ namespace App\Usecases\ChatRoom;
 
 use App\Enums\ApplicationCode;
 use App\Models\ChatRoom;
+use App\Models\User;
 use App\Usecases\Usecase;
 
 class FindChatRoom extends Usecase
@@ -12,6 +13,8 @@ class FindChatRoom extends Usecase
 
   public function run(string $id)
   {
+    $authFavorites = request()->user()?->user_id ? User::find(request()->user()->user_id)->favoriteRooms->pluck('chat_room_id')->toArray() : [];
+
     $ret = ChatRoom::find($id);
 
     if (is_null($ret)) {
@@ -19,6 +22,8 @@ class FindChatRoom extends Usecase
         'code' => self::NOT_FOUND
       ];
     }
+
+    $ret->is_favorite = in_array($ret->chat_room_id, $authFavorites);
 
     return [
       'data' => $ret,

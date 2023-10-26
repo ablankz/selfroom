@@ -168,8 +168,11 @@ export function RoomCard({ chatRoom, handleSuccess }: RoomCardProps) {
             sx={{ mb: 1 }}
             primary={
               <Link
-                onClick={() => router.push(paths.dashboard.profile(chatRoomId))}
+                onClick={() => router.push(paths.dashboard.chatroom.profile(chatRoomId))}
                 color="inherit"
+                sx={{
+                  cursor: 'pointer'
+                }}
               >
                 {name}
               </Link>
@@ -221,7 +224,7 @@ export function RoomCard({ chatRoom, handleSuccess }: RoomCardProps) {
               variant="contained"
               color="primary"
               onClick={() =>
-                router.push(paths.dashboard.chatroom.talk(chatRoomId))
+                router.push(paths.dashboard.chatroom.talk)
               }
             >
               {t('Go to talk screen')}
