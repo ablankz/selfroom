@@ -17,7 +17,6 @@ import {
   SetStateAction,
   useCallback,
   useEffect,
-  useLayoutEffect,
   useRef,
   useState,
 } from 'react';
@@ -27,6 +26,8 @@ import {
   ChatData,
   ChatsResponse,
 } from '@/types/response/chat-room/chats-response';
+
+export const PAGE_TALK = 50;
 
 // ----------------------------------------------------------------------
 
@@ -46,20 +47,9 @@ export default function ChatMessageList({
   setAddChat,
 }: Props) {
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } =
-    useGetChatsQuery(chatRoom.chatRoomId, 10);
-  const scrollRef = useRef<HTMLDivElement>(null);
+    useGetChatsQuery(chatRoom.chatRoomId, PAGE_TALK);
   const [pages, setPages] = useState<ChatsResponse[]>([]);
-
-  useLayoutEffect(() => {
-    scrollRef.current?.scrollIntoView();
-  }, [scrollRef]);
-
-  let loadMoreMessage;
-  if (isFetchingNextPage) {
-    loadMoreMessage = 'Loading...';
-  } else {
-    loadMoreMessage = hasNextPage ? 'Read more' : ' ';
-  }
+  const parentElementRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (dispatch) {
@@ -67,6 +57,8 @@ export default function ChatMessageList({
       setDispatch(false);
     }
   }, [dispatch]);
+
+  const { messagesEndRef } = useMessagesScroll(pages);
 
   const { loadMoreRef } = useIntersectionObserver({
     onIntersect: fetchNextPage,
@@ -80,8 +72,6 @@ export default function ChatMessageList({
   useEffect(() => {
     setPages(data.pages);
   }, [data]);
-
-  const { messagesEndRef } = useMessagesScroll(pages);
 
   const addTalk = useCallback(
     (talk: ChatData) => {
@@ -116,7 +106,11 @@ export default function ChatMessageList({
         <Box {...{ ref: loadMoreRef }} textAlign="center">
           {isFetchingNextPage && <CircularProgress />}
         </Box>
-        <Box display="flex" flexDirection="column-reverse">
+        <Box
+          display="flex"
+          flexDirection="column-reverse"
+          ref={parentElementRef}
+        >
           {pages.map((page) => (
             <Fragment key={`${page.data.nextCursor}`}>
               {page.data.data.map((message) => (

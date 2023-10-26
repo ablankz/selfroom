@@ -1,13 +1,14 @@
 import { ChatsResponse } from '@/types/response/chat-room/chats-response';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 // ----------------------------------------------------------------------
 
 export default function useMessagesScroll(messages: ChatsResponse[]) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [_, setHeight] = useState(0);
 
   const scrollMessagesToBottom = useCallback(() => {
-    if (!messages) {
+    if (!messages.length) {
       return;
     }
 
@@ -16,7 +17,14 @@ export default function useMessagesScroll(messages: ChatsResponse[]) {
     }
 
     if (messagesEndRef.current) {
-      messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight;
+      setHeight((prev) => {
+        messagesEndRef.current &&
+          messagesEndRef.current.scrollTo({
+            top: messagesEndRef.current.scrollHeight - prev,
+            behavior: 'auto',
+          });
+        return messagesEndRef.current?.scrollHeight || 0;
+      });
     }
   }, [messages]);
 

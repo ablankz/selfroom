@@ -1,9 +1,9 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect } from 'react';
 import {
   FetchNextPageOptions,
-  InfiniteQueryObserverResult
-} from "@tanstack/react-query";
-import { AxiosError } from "axios";
+  InfiniteQueryObserverResult,
+} from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 
 type Argument = {
   root?: React.RefObject<HTMLElement> | null;
@@ -23,8 +23,8 @@ const useIntersectionObserver = ({
   root = null,
   onIntersect,
   threshold = 1.0,
-  rootMargin = "0px",
-  enabled = true
+  rootMargin = '0px',
+  enabled = true,
 }: Argument): Response => {
   const [target, setTarget] = useState<Element | null>(null);
 
@@ -35,19 +35,18 @@ const useIntersectionObserver = ({
     }
   }, []);
 
-  const newIntersectionObserver = useCallback(
-    () =>
-      new IntersectionObserver(
-        (entries) =>
-          entries.forEach((entry) => entry.isIntersecting && onIntersect()),
-        {
-          root: root && root.current,
-          rootMargin,
-          threshold
-        }
-      ),
-    [root, onIntersect, threshold, rootMargin]
-  );
+  const newIntersectionObserver = useCallback(() => {
+    return new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => entry.isIntersecting && onIntersect());
+      },
+      {
+        root: root && root.current,
+        rootMargin,
+        threshold,
+      }
+    );
+  }, [root, onIntersect, threshold, rootMargin]);
 
   useEffect(() => {
     if (!enabled) {
@@ -58,8 +57,8 @@ const useIntersectionObserver = ({
     if (!el) {
       return;
     }
-    const observer = newIntersectionObserver();
 
+    const observer = newIntersectionObserver();
     observer.observe(el);
 
     // eslint-disable-next-line consistent-return

@@ -24,7 +24,11 @@ type Props = {
   setDispatch: Dispatch<SetStateAction<boolean>>;
 };
 
-export default function ChatMessageItem({ chatRoomId, message, setDispatch }: Props) {
+export default function ChatMessageItem({
+  chatRoomId,
+  message,
+  setDispatch,
+}: Props) {
   const { user: auth } = useAuthContext();
   const { currentLang, t } = useLocales();
   const { userId, nickname, profilePhotoUrl } = message.user || getDummyUser();
@@ -32,20 +36,19 @@ export default function ChatMessageItem({ chatRoomId, message, setDispatch }: Pr
   const router = useRouter();
   const { chatId, content, createdAt } = message;
   const { enqueueSnackbar } = useSnackbar();
-
+  
   const me = useMemo(() => auth?.userId === userId, [auth, message.user]);
 
   useEffect(() => {
     if (status === 'success') {
       setDispatch(true);
-    }else if(status === 'error'){
+    } else if (status === 'error') {
       enqueueSnackbar({
         message: t('Undo message failed'),
-        variant: 'error'
-      })
+        variant: 'error',
+      });
     }
   }, [status]);
-
 
   const renderInfo = (
     <Typography
@@ -117,6 +120,7 @@ export default function ChatMessageItem({ chatRoomId, message, setDispatch }: Pr
 
   return (
     <Stack
+      component="div"
       direction="row"
       justifyContent={me ? 'flex-end' : 'unset'}
       sx={{ mb: 5 }}
