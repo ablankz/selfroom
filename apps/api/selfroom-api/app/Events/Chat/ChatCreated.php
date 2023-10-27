@@ -2,7 +2,11 @@
 
 namespace App\Events\Chat;
 
+use App\Http\Resources\Chat\ChatResource;
+use App\Http\Resources\ChatRoom\SimplifiedChatRoomResource;
+use App\Http\Resources\User\SimplifiedUserResource;
 use App\Models\Chat;
+use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -20,10 +24,9 @@ class ChatCreated implements ShouldBroadcast
   /**
    * Create a new event instance.
    */
-  public function __construct(Chat $chat)
+  public function __construct(ChatResource $chat)
   {
     $this->chat = $chat;
-    logger("chat-rooms.{$this->chat->chat_room_id}");
   }
 
   /**
@@ -40,9 +43,4 @@ class ChatCreated implements ShouldBroadcast
   {
     return 'chat.created';
   }
-
-  // public function broadcastWith()
-  // {
-  //   return ['id' => $this->user->id];
-  // }
 }

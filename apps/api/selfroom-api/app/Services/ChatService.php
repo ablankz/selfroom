@@ -48,7 +48,9 @@ class ChatService
       $content
     );
 
-    broadcast(new ChatCreated($chat))->toOthers();
+    $resource = new ChatResource($chat);
+
+    broadcast(new ChatCreated($resource))->toOthers();
 
     return new ChatResource($chat);
   }

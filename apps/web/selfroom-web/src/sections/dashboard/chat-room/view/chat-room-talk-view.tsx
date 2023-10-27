@@ -22,6 +22,7 @@ import { ChatData } from '@/types/response/chat-room/chats-response';
 import Echo from 'laravel-echo';
 import { useRecoilValue } from 'recoil';
 import { onlineUsersState } from '@/store/roomOnlineUset';
+import { CreatedChat } from '@/types/websocket/created-chat';
 
 declare interface Window {
   Echo: Echo;
@@ -51,17 +52,17 @@ export default function ChatRoomTalkView() {
   useEffect(() => {
     if (auth?.currentChatRoom?.chatRoomId) {
       const channel = `chat-rooms.${auth.currentChatRoom.chatRoomId}`;
-      window.Echo.private(channel).listen('.chat.created', (chat: any) => {
-        console.log(chat);
-      });
+      window.Echo.private(channel)
+      .listen(
+        '.chat.created',
+        (data: CreatedChat) => {
+          setAddChat({
+            chat: data.chat,
+            scroll: 'bottom',
+          });
+        }
+      );
     }
-
-    return () => {
-      if (auth?.currentChatRoom?.chatRoomId) {
-        const channel = `chat-rooms.${auth.currentChatRoom.chatRoomId}`;
-        window.Echo.leave(channel);
-      }
-    };
   }, [auth?.currentChatRoom]);
 
   if (!auth?.currentChatRoom?.chatRoomId) {
