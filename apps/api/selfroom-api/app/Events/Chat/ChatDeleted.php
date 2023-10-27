@@ -2,25 +2,26 @@
 
 namespace App\Events\Chat;
 
-use App\Http\Resources\Chat\ChatResource;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ChatCreated implements ShouldBroadcast
+class ChatDeleted implements ShouldBroadcast
 {
   use Dispatchable, InteractsWithSockets, SerializesModels;
 
-  public $chat;
+  private $chatRoomId;
+  public $chatId;
 
   /**
    * Create a new event instance.
    */
-  public function __construct(ChatResource $chat)
+  public function __construct(string $chatRoomId, string $chatId)
   {
-    $this->chat = $chat;
+    $this->chatId = $chatId;
+    $this->chatRoomId = $chatRoomId;
   }
 
   /**
@@ -30,11 +31,11 @@ class ChatCreated implements ShouldBroadcast
    */
   public function broadcastOn()
   {
-    return new PrivateChannel("chat-rooms.{$this->chat->chat_room_id}");
+    return new PrivateChannel("chat-rooms.{$this->chatRoomId}");
   }
 
   public function broadcastAs()
   {
-    return 'chat.created';
+    return 'chat.deleted';
   }
 }
