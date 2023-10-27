@@ -23,6 +23,11 @@ import Echo from 'laravel-echo';
 import { useRecoilValue } from 'recoil';
 import { onlineUsersState } from '@/store/roomOnlineUset';
 import { CreatedChat } from '@/types/websocket/created-chat';
+import { DeletedChat } from '@/types/websocket/deleted-chat';
+import { EmptySocketData } from '@/types/websocket/empty-socket-data';
+import { useQueryClient } from '@tanstack/react-query';
+import { roomVisitQueryKeys } from '@/query-keys/roomVisitQueryKeys';
+import { chatRoomQueryKeys } from '@/query-keys/chatRoomQueryKey';
 
 declare interface Window {
   Echo: Echo;
@@ -48,20 +53,41 @@ export default function ChatRoomTalkView() {
   });
   const [removeChat, setRemoveChat] = useState<string | undefined>(undefined);
   const onlineUsers = useRecoilValue(onlineUsersState);
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     if (auth?.currentChatRoom?.chatRoomId) {
       const channel = `chat-rooms.${auth.currentChatRoom.chatRoomId}`;
       window.Echo.private(channel)
-      .listen(
-        '.chat.created',
-        (data: CreatedChat) => {
+        .listen('.chat.created', (data: CreatedChat) => {
           setAddChat({
             chat: data.chat,
             scroll: 'bottom',
           });
-        }
-      );
+        })
+        .listen('.chat.deleted', (data: DeletedChat) => {
+          setRemoveChat(data.chatId);
+        })
+        .listen('.chat-room.visited', (_: EmptySocketData) => {
+          auth.currentChatRoom &&
+            queryClient.invalidateQueries([
+              roomVisitQueryKeys.users.get(auth.currentChatRoom.chatRoomId),
+            ]);
+          auth.currentChatRoom &&
+            queryClient.invalidateQueries([
+              chatRoomQueryKeys.profile.find(auth.currentChatRoom.chatRoomId),
+            ]);
+        })
+        .listen('.chat-room.left', (_: EmptySocketData) => {
+          auth.currentChatRoom &&
+            queryClient.invalidateQueries([
+              roomVisitQueryKeys.users.get(auth.currentChatRoom.chatRoomId),
+            ]);
+          auth.currentChatRoom &&
+            queryClient.invalidateQueries([
+              chatRoomQueryKeys.profile.find(auth.currentChatRoom.chatRoomId),
+            ]);
+        });
     }
   }, [auth?.currentChatRoom]);
 
