@@ -11,7 +11,13 @@ expand_variables() {
     echo "$content" > "$2"
 }
 
+pusher_app_key=`grep '^[[:space:]]*VITE_PUSHER_KEY=' /usr/src/app/.env.local`
+
 # envの作成
 expand_variables /docker-init/env_templates/.env.local.template /usr/src/app/.env.local #それ以外を追記
+
+echo ${pusher_app_id} >> /usr/src/app/.env.local
+echo ${pusher_app_key} >> /usr/src/app/.env.local
+echo ${pusher_app_secret} >> /usr/src/app/.env.local
 
 sh -c "npm install && npm run dev"
