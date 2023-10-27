@@ -14,12 +14,9 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-// Broadcast::channel('chat.{chatRoomId}', function ($user, $chatRoomId){
-//     return false;  
-//   // logger($chatRoomId);
-//     // return $user->user?->current_chat_room_id === $chatRoomId;
-//     return true;
-// });
+Broadcast::channel('chat-rooms.{roomId}', function ($user, $roomId) {
+  return $user->user?->current_chat_room_id === $roomId;
+});
 
 Broadcast::channel('chat-rooms-online.{roomId}', function ($user, $roomId) {
   if ($user->user?->current_chat_room_id === $roomId) {

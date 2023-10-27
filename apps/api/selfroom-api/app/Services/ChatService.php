@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Events\Chat\ChatCreated;
 use App\Http\Resources\Chat\ChatResource;
 use App\Http\Resources\Chat\ChatResourceCollection;
 use App\Http\Resources\WithResourceCollection;
@@ -41,11 +42,15 @@ class ChatService
     string $user_id,
     string $content
   ) {
-    return new ChatResource($usecase->handle(
+    $chat = $usecase->handle(
       $chat_room_id,
       $user_id,
       $content
-    ));
+    );
+
+    broadcast(new ChatCreated($chat))->toOthers();
+
+    return new ChatResource($chat);
   }
 
   public function update(
