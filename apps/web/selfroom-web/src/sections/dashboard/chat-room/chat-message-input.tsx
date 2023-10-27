@@ -19,20 +19,20 @@ import { EmojiPicker } from '@/components/emoji';
 import { EmojiData } from '@/components/emoji/types';
 import { useBoolean } from '@/hooks/use-boolean';
 import { useSnackbar } from '@/components/snackbar';
-import { ChatData } from '@/types/response/chat-room/chats-response';
+import { AddChat } from './view/chat-room-talk-view';
 
 // ----------------------------------------------------------------------
 
 type Props = {
   chatRoom: SimpleChatRoom;
   disabled: boolean;
-  setAddChat: Dispatch<SetStateAction<ChatData | undefined>>;
+  setAddChat: Dispatch<SetStateAction<AddChat>>;
 };
 
 export default function ChatMessageInput({
   chatRoom,
   disabled,
-  setAddChat
+  setAddChat,
 }: Props) {
   const { mutate, status, data } = useChatCreateQuery(chatRoom.chatRoomId);
   const [message, setMessage] = useState('');
@@ -56,7 +56,6 @@ export default function ChatMessageInput({
           }`
       );
       if (inputRef.current) {
-        
       }
       emojiDialog.onFalse();
     },
@@ -104,12 +103,15 @@ export default function ChatMessageInput({
 
   useEffect(() => {
     if (status === 'success') {
-      setAddChat(data?.data);
-    }else if(status === 'error'){
+      setAddChat({
+        chat: data?.data,
+        scroll: 'bottom',
+      });
+    } else if (status === 'error') {
       enqueueSnackbar({
         message: t('Failed to send message'),
-        variant: 'error'
-      })
+        variant: 'error',
+      });
     }
   }, [status]);
 

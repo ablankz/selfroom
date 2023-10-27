@@ -15,8 +15,8 @@ import ChatHeaderDetail from '../chat-header-detail';
 import ChatNav from '../chat-nav';
 import ChatRoom from '../chat-room';
 import ChatMessageInput from '../chat-message-input';
-import ChatMessageList from '../chat-message-list';
-import { Suspense, useState } from 'react';
+import ChatMessageList, { ScrollValid } from '../chat-message-list';
+import { Suspense, useEffect, useState } from 'react';
 import { TalkSkelton } from '../talk-skelton';
 import { ChatData } from '@/types/response/chat-room/chats-response';
 import Echo from 'laravel-echo';
@@ -31,15 +31,39 @@ declare var window: Window;
 
 // ----------------------------------------------------------------------
 
+export type AddChat = {
+  chat: ChatData | undefined;
+  scroll: ScrollValid;
+};
+
 export default function ChatRoomTalkView() {
   const { user: auth } = useAuthContext();
   const settings = useSettingsContext();
   const { t } = useLocales();
   const router = useRouter();
   const [dispatch, setDispatch] = useState(false);
-  const [addChat, setAddChat] = useState<ChatData | undefined>(undefined);
+  const [addChat, setAddChat] = useState<AddChat>({
+    chat: undefined,
+    scroll: 'none',
+  });
   const [removeChat, setRemoveChat] = useState<string | undefined>(undefined);
   const onlineUsers = useRecoilValue(onlineUsersState);
+
+  useEffect(() => {
+    if (auth?.currentChatRoom?.chatRoomId) {
+      const channel = `chat-rooms.${auth.currentChatRoom.chatRoomId}`;
+      window.Echo.private(channel).listen('.chat.created', (chat: any) => {
+        console.log(chat);
+      });
+    }
+
+    return () => {
+      if (auth?.currentChatRoom?.chatRoomId) {
+        const channel = `chat-rooms.${auth.currentChatRoom.chatRoomId}`;
+        window.Echo.leave(channel);
+      }
+    };
+  }, [auth?.currentChatRoom]);
 
   if (!auth?.currentChatRoom?.chatRoomId) {
     return (
