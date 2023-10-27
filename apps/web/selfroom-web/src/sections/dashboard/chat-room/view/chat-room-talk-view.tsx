@@ -16,9 +16,17 @@ import ChatNav from '../chat-nav';
 import ChatRoom from '../chat-room';
 import ChatMessageInput from '../chat-message-input';
 import ChatMessageList from '../chat-message-list';
-import { Suspense, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { TalkSkelton } from '../talk-skelton';
 import { ChatData } from '@/types/response/chat-room/chats-response';
+import Echo from 'laravel-echo';
+import { SimpleUser } from '@/types/entity';
+
+declare interface Window {
+  Echo: Echo;
+}
+
+declare var window: Window;
 
 // ----------------------------------------------------------------------
 
@@ -30,6 +38,7 @@ export default function ChatRoomTalkView() {
   const [dispatch, setDispatch] = useState(false);
   const [addChat, setAddChat] = useState<ChatData | undefined>(undefined);
   const [removeChat, setRemoveChat] = useState<string | undefined>(undefined);
+  const [onlineUsers, setOnlineUsers] = useState<SimpleUser[]>([]);
 
   if (!auth?.currentChatRoom?.chatRoomId) {
     return (
@@ -74,6 +83,33 @@ export default function ChatRoomTalkView() {
       </Container>
     );
   }
+
+  useEffect(() => {
+    if (auth.currentChatRoom?.chatRoomId) {
+      const channel = `chat-rooms-online.${auth.currentChatRoom.chatRoomId}`;
+      window.Echo.join(channel)
+        .here((users: SimpleUser[]) => {
+          setOnlineUsers(users);
+        })
+        .joining((user: SimpleUser) => {
+          setOnlineUsers((prev) => [...prev, user]);
+        })
+        .leaving((user: SimpleUser) => {
+          setOnlineUsers((prev) => {
+            return prev.filter((u) => u.userId !== user.userId);
+          });
+        });
+    }
+
+    return () => {
+      if (auth.currentChatRoom?.chatRoomId) {
+        const channel = `chat-rooms-online.${auth.currentChatRoom.chatRoomId}`;
+        window.Echo.leave(channel);
+      }
+    };
+  }, [auth.currentChatRoom]);
+
+  console.log(onlineUsers);
 
   const renderMessages = (
     <Stack
@@ -155,7 +191,7 @@ export default function ChatRoomTalkView() {
             }}
           >
             {renderMessages}
-            <ChatRoom chatRoom={auth.currentChatRoom} />
+            <ChatRoom onlineUsers={onlineUsers} />
           </Stack>
         </Stack>
       </Stack>
