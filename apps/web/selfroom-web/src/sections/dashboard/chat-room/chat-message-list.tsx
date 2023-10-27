@@ -25,7 +25,7 @@ import { CircularProgress } from '@mui/material';
 import { ChatData, ChatsResponse } from '@/types/response/chat-room/chats-response';
 import { AddChat } from './view/chat-room-talk-view';
 
-export const PAGE_TALK = 5;
+export const PAGE_TALK = 50;
 
 export type ScrollValid = 'top' | 'bottom' | 'none';
 
