@@ -44,6 +44,8 @@ import ErrorFallback from './ErrorFallback';
 import { AuthProvider, AuthConsumer } from '@/auth/context';
 import { ErrorHandleProvider } from './providers/ErrorHandleProvider';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { RecoilRoot } from 'recoil';
+import { PusherProvider } from './providers/PusherProvider';
 
 // ----------------------------------------------------------------------
 
@@ -58,37 +60,41 @@ export default function App() {
   });
 
   return (
-    <LocalizationProvider>
-      <QueryClientProvider client={queryClient}>
-        <SettingsProvider
-          defaultSettings={{
-            themeMode: 'light', // 'light' | 'dark'
-            themeDirection: 'ltr', //  'rtl' | 'ltr'
-            themeContrast: 'default', // 'default' | 'bold'
-            themeLayout: 'vertical', // 'vertical' | 'horizontal' | 'mini'
-            themeColorPresets: 'default', // 'default' | 'cyan' | 'purple' | 'blue' | 'orange' | 'red'
-            themeStretch: false,
-          }}
-        >
-          <ThemeProvider>
-            <SnackbarProvider>
-              <MotionLazy>
-                <AuthProvider>
-                  <ErrorHandleProvider>
-                    <SettingsDrawer />
-                    <ProgressBar />
-                    <ErrorBoundary FallbackComponent={ErrorFallback}>
-                      <AuthConsumer>
-                        <Router />
-                      </AuthConsumer>
-                    </ErrorBoundary>
-                  </ErrorHandleProvider>
-                </AuthProvider>
-              </MotionLazy>
-            </SnackbarProvider>
-          </ThemeProvider>
-        </SettingsProvider>
-      </QueryClientProvider>
-    </LocalizationProvider>
+    <RecoilRoot>
+      <LocalizationProvider>
+        <QueryClientProvider client={queryClient}>
+          <SettingsProvider
+            defaultSettings={{
+              themeMode: 'light', // 'light' | 'dark'
+              themeDirection: 'ltr', //  'rtl' | 'ltr'
+              themeContrast: 'default', // 'default' | 'bold'
+              themeLayout: 'vertical', // 'vertical' | 'horizontal' | 'mini'
+              themeColorPresets: 'default', // 'default' | 'cyan' | 'purple' | 'blue' | 'orange' | 'red'
+              themeStretch: false,
+            }}
+          >
+            <ThemeProvider>
+              <SnackbarProvider>
+                <MotionLazy>
+                  <AuthProvider>
+                    <ErrorHandleProvider>
+                      <PusherProvider>
+                        <SettingsDrawer />
+                        <ProgressBar />
+                        <ErrorBoundary FallbackComponent={ErrorFallback}>
+                          <AuthConsumer>
+                            <Router />
+                          </AuthConsumer>
+                        </ErrorBoundary>
+                      </PusherProvider>
+                    </ErrorHandleProvider>
+                  </AuthProvider>
+                </MotionLazy>
+              </SnackbarProvider>
+            </ThemeProvider>
+          </SettingsProvider>
+        </QueryClientProvider>
+      </LocalizationProvider>
+    </RecoilRoot>
   );
 }

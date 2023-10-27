@@ -15,21 +15,81 @@ import ChatHeaderDetail from '../chat-header-detail';
 import ChatNav from '../chat-nav';
 import ChatRoom from '../chat-room';
 import ChatMessageInput from '../chat-message-input';
-import ChatMessageList from '../chat-message-list';
-import { Suspense, useState } from 'react';
+import ChatMessageList, { ScrollValid } from '../chat-message-list';
+import { Suspense, useEffect, useState } from 'react';
 import { TalkSkelton } from '../talk-skelton';
 import { ChatData } from '@/types/response/chat-room/chats-response';
+import Echo from 'laravel-echo';
+import { useRecoilValue } from 'recoil';
+import { onlineUsersState } from '@/store/roomOnlineUset';
+import { CreatedChat } from '@/types/websocket/created-chat';
+import { DeletedChat } from '@/types/websocket/deleted-chat';
+import { EmptySocketData } from '@/types/websocket/empty-socket-data';
+import { useQueryClient } from '@tanstack/react-query';
+import { roomVisitQueryKeys } from '@/query-keys/roomVisitQueryKeys';
+import { chatRoomQueryKeys } from '@/query-keys/chatRoomQueryKey';
+
+declare interface Window {
+  Echo: Echo;
+}
+
+declare var window: Window;
 
 // ----------------------------------------------------------------------
+
+export type AddChat = {
+  chat: ChatData | undefined;
+  scroll: ScrollValid;
+};
 
 export default function ChatRoomTalkView() {
   const { user: auth } = useAuthContext();
   const settings = useSettingsContext();
   const { t } = useLocales();
   const router = useRouter();
-  const [dispatch, setDispatch] = useState(false);
-  const [addChat, setAddChat] = useState<ChatData | undefined>(undefined);
+  const [addChat, setAddChat] = useState<AddChat>({
+    chat: undefined,
+    scroll: 'none',
+  });
   const [removeChat, setRemoveChat] = useState<string | undefined>(undefined);
+  const onlineUsers = useRecoilValue(onlineUsersState);
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    if (auth?.currentChatRoom?.chatRoomId) {
+      const channel = `chat-rooms.${auth.currentChatRoom.chatRoomId}`;
+      window.Echo.private(channel)
+        .listen('.chat.created', (data: CreatedChat) => {
+          setAddChat({
+            chat: data.chat,
+            scroll: 'bottom',
+          });
+        })
+        .listen('.chat.deleted', (data: DeletedChat) => {
+          setRemoveChat(data.chatId);
+        })
+        .listen('.chat-room.visited', (_: EmptySocketData) => {
+          auth.currentChatRoom &&
+            queryClient.invalidateQueries([
+              roomVisitQueryKeys.users.get(auth.currentChatRoom.chatRoomId),
+            ]);
+          auth.currentChatRoom &&
+            queryClient.invalidateQueries([
+              chatRoomQueryKeys.profile.find(auth.currentChatRoom.chatRoomId),
+            ]);
+        })
+        .listen('.chat-room.left', (_: EmptySocketData) => {
+          auth.currentChatRoom &&
+            queryClient.invalidateQueries([
+              roomVisitQueryKeys.users.get(auth.currentChatRoom.chatRoomId),
+            ]);
+          auth.currentChatRoom &&
+            queryClient.invalidateQueries([
+              chatRoomQueryKeys.profile.find(auth.currentChatRoom.chatRoomId),
+            ]);
+        });
+    }
+  }, [auth?.currentChatRoom]);
 
   if (!auth?.currentChatRoom?.chatRoomId) {
     return (
@@ -86,8 +146,6 @@ export default function ChatRoomTalkView() {
       <Suspense fallback={<TalkSkelton />}>
         <ChatMessageList
           chatRoom={auth.currentChatRoom}
-          dispatch={dispatch}
-          setDispatch={setDispatch}
           addChat={addChat}
           setAddChat={setAddChat}
           removeChat={removeChat}
@@ -155,7 +213,7 @@ export default function ChatRoomTalkView() {
             }}
           >
             {renderMessages}
-            <ChatRoom chatRoom={auth.currentChatRoom} />
+            <ChatRoom onlineUsers={onlineUsers} />
           </Stack>
         </Stack>
       </Stack>

@@ -13,6 +13,7 @@ type Argument = {
   threshold?: number | number[];
   rootMargin?: string;
   enabled?: boolean;
+  preProcess?: () => void;
 };
 
 type Response = {
@@ -25,6 +26,7 @@ const useIntersectionObserver = ({
   threshold = 1.0,
   rootMargin = '0px',
   enabled = true,
+  preProcess
 }: Argument): Response => {
   const [target, setTarget] = useState<Element | null>(null);
 
@@ -38,6 +40,7 @@ const useIntersectionObserver = ({
   const newIntersectionObserver = useCallback(() => {
     return new IntersectionObserver(
       (entries) => {
+        preProcess && preProcess();
         entries.forEach((entry) => entry.isIntersecting && onIntersect());
       },
       {

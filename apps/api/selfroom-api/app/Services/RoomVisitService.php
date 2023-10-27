@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Events\RoomVisit\ChatRoomLeft;
+use App\Events\RoomVisit\ChatRoomVisited;
 use App\Http\Resources\ChatRoom\VisitedChatRoomResourceCollection;
 use App\Http\Resources\User\SimplifiedUserResourceCollection;
 use App\Http\Resources\User\VisitorResourceCollection;
@@ -64,11 +66,21 @@ class RoomVisitService
 
   public function in(RoomIn $usecase, string $user_id, string $chat_room_id, string $keyword = null)
   {
-    return $usecase->handle($user_id, $chat_room_id, $keyword);
+    $ret = $usecase->handle($user_id, $chat_room_id, $keyword);
+
+    broadcast(new ChatRoomVisited($chat_room_id))->toOthers();
+
+    return $ret;
   }
 
   public function out(RoomOut $usecase, string $user_id)
   {
-    return $usecase->handle($user_id);
+    $prev_chat_room_id = request()->user()->user->current_chat_room_id;
+
+    $ret = $usecase->handle($user_id);
+
+    broadcast(new ChatRoomLeft($prev_chat_room_id))->toOthers();
+
+    return $ret;
   }
 }

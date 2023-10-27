@@ -7,6 +7,13 @@ import { useAuthContext } from '@/auth/hooks';
 import { ErrorResponse } from '@/types/response/error-response';
 import { LoadingScreen } from '@/components/loading-screen';
 import { useLocales } from '@/locales';
+import Echo from 'laravel-echo';
+
+declare interface Window {
+  Echo: Echo;
+}
+
+declare var window: Window;
 
 type Props = {
   children: ReactNode;
@@ -19,7 +26,7 @@ export const ErrorHandleProvider = ({ children }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingInitially, setIsLoadingInitially] = useState(true);
   const { enqueueSnackbar } = useSnackbar();
-  const { logout, reset, initialize } = useAuthContext();
+  const { logout, reset, initialize, user } = useAuthContext();
   const { t, currentLang } = useLocales();
 
   // 強制ログアウト
@@ -105,7 +112,8 @@ export const ErrorHandleProvider = ({ children }: Props) => {
 
   useEffect(() => {
     axios.defaults.headers.common['X-Sr-Language'] = currentLang.value;
-  }, [currentLang.value]);
+    axios.defaults.headers.common['X-Socket-ID'] = window.Echo.socketId();
+  }, [currentLang.value, user?.currentChatRoom]);
 
   if (isLoadingInitially) return null;
   if (isLoading) return <LoadingScreen />;

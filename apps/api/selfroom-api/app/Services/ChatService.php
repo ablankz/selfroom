@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Events\Chat\ChatCreated;
+use App\Events\Chat\ChatDeleted;
 use App\Http\Resources\Chat\ChatResource;
 use App\Http\Resources\Chat\ChatResourceCollection;
 use App\Http\Resources\WithResourceCollection;
@@ -41,11 +43,17 @@ class ChatService
     string $user_id,
     string $content
   ) {
-    return new ChatResource($usecase->handle(
+    $chat = $usecase->handle(
       $chat_room_id,
       $user_id,
       $content
-    ));
+    );
+
+    $resource = new ChatResource($chat);
+
+    broadcast(new ChatCreated($resource))->toOthers();
+
+    return new ChatResource($chat);
   }
 
   public function update(
@@ -64,6 +72,9 @@ class ChatService
 
   public function delete(DeleteChat $usecase, string $chat_id, string $chat_room_id)
   {
-    return $usecase->handle($chat_id, $chat_room_id);
+    $ret = $usecase->handle($chat_id, $chat_room_id);
+    broadcast(new ChatDeleted($chat_room_id, $chat_id))->toOthers();
+
+    return $ret;
   }
 }

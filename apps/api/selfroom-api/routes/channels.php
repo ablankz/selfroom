@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Resources\User\SimplifiedUserResource;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -13,6 +14,13 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
+Broadcast::channel('chat-rooms.{roomId}', function ($user, $roomId) {
+  return $user->user?->current_chat_room_id === $roomId;
+});
+
+Broadcast::channel('chat-rooms-online.{roomId}', function ($user, $roomId) {
+  if ($user->user?->current_chat_room_id === $roomId) {
+    return new SimplifiedUserResource($user->user);
+  }
+  return false;
 });

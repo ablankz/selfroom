@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Exception\SuspiciousOperationException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
 use Throwable;
 
@@ -60,6 +61,7 @@ class Handler extends ExceptionHandler
       $e instanceof TokenMismatchException => new ApplicationException(ApplicationCode::TokenMismatch),
       $e instanceof MethodNotAllowedHttpException => new ApplicationException(ApplicationCode::MethodNotAllowed),
       $e instanceof TokenBlacklistedException => new ApplicationException(ApplicationCode::TokenBlacklisted),
+      $e instanceof UnauthorizedHttpException => new ApplicationException(ApplicationCode::Unauthorized),
       default => $e,
     };
   }

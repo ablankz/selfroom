@@ -22,51 +22,46 @@ import {
 } from 'react';
 import useIntersectionObserver from '@/hooks/use-intersection-observer';
 import { CircularProgress } from '@mui/material';
-import {
-  ChatData,
-  ChatsResponse,
-} from '@/types/response/chat-room/chats-response';
+import { ChatData, ChatsResponse } from '@/types/response/chat-room/chats-response';
+import { AddChat } from './view/chat-room-talk-view';
 
 export const PAGE_TALK = 50;
+
+export type ScrollValid = 'top' | 'bottom' | 'none';
 
 // ----------------------------------------------------------------------
 
 type Props = {
   chatRoom: SimpleChatRoom;
-  setDispatch: Dispatch<SetStateAction<boolean>>;
-  dispatch: boolean;
-  addChat: ChatData | undefined;
-  setAddChat: Dispatch<SetStateAction<ChatData | undefined>>;
+  addChat: AddChat;
+  setAddChat: Dispatch<SetStateAction<AddChat>>;
   removeChat: string | undefined;
   setRemoveChat: Dispatch<SetStateAction<string | undefined>>;
 };
 
 export default function ChatMessageList({
   chatRoom,
-  dispatch,
-  setDispatch,
   addChat,
   setAddChat,
   removeChat,
   setRemoveChat,
 }: Props) {
-  const { data, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } =
+  const { data, hasNextPage, isFetchingNextPage, fetchNextPage } =
     useGetChatsQuery(chatRoom.chatRoomId, PAGE_TALK);
   const [pages, setPages] = useState<ChatsResponse[]>([]);
   const parentElementRef = useRef<HTMLDivElement>(null);
+  const [scrollEnable, setScrollEnable] = useState<ScrollValid>('bottom');
 
-  useEffect(() => {
-    if (dispatch) {
-      refetch();
-      setDispatch(false);
-    }
-  }, [dispatch]);
-
-  const { messagesEndRef } = useMessagesScroll(pages);
+  const { messagesEndRef } = useMessagesScroll(
+    pages,
+    scrollEnable,
+    setScrollEnable
+  );
 
   const { loadMoreRef } = useIntersectionObserver({
     onIntersect: fetchNextPage,
     enabled: hasNextPage,
+    preProcess: () => { setScrollEnable('top') }
   });
 
   if (!data) {
@@ -94,11 +89,12 @@ export default function ChatMessageList({
         return prev;
       });
     },
-    [setPages]
+    [setPages, setScrollEnable]
   );
 
   const removeTalk = useCallback(
     (talkId: string) => {
+      setScrollEnable('none');
       setPages((prev) => {
         let targetPage = -1;
         let targetChat = -1;
@@ -141,9 +137,13 @@ export default function ChatMessageList({
   );
 
   useEffect(() => {
-    if (!!addChat) {
-      addTalk(addChat);
-      setAddChat(undefined);
+    if (!!addChat.chat) {
+      setScrollEnable(addChat.scroll);
+      addTalk(addChat.chat);
+      setAddChat({
+        chat: undefined,
+        scroll: 'none',
+      });
     }
   }, [addChat]);
 

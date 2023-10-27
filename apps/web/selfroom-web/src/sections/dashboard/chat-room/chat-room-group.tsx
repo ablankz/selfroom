@@ -10,18 +10,18 @@ import { useBoolean } from '@/hooks/use-boolean';
 import Iconify from '@/components/iconify';
 import Scrollbar from '@/components/scrollbar';
 //
-import { ApplicationPaginateData } from '@/types/response/application-paginate-data';
-import { ChatRoomUserData } from '@/types/response/chat-room/chat-room-users-response';
 import { useRouter } from '@/routes/hooks';
 import { paths } from '@/routes/paths';
+import { SimpleUser } from '@/types/entity';
+import { Typography } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
 type Props = {
-  data: ApplicationPaginateData<ChatRoomUserData>;
+  onlineUsers: SimpleUser[];
 };
 
-export default function ChatRoomGroup({ data }: Props) {
+export default function ChatRoomGroup({ onlineUsers }: Props) {
   const router = useRouter();
   const collapse = useBoolean(true);
 
@@ -40,7 +40,10 @@ export default function ChatRoomGroup({ data }: Props) {
       }}
     >
       <Box component="span" sx={{ flexGrow: 1 }}>
-        In room ({data.totalCount})
+        <Typography variant="caption" component="span" color={t => t.palette.success.main}>
+          Online
+        </Typography>{' '}
+        ({onlineUsers.length})
       </Box>
       <Iconify
         width={16}
@@ -55,7 +58,7 @@ export default function ChatRoomGroup({ data }: Props) {
 
   const renderContent = (
     <Scrollbar sx={{ height: 56 * 4 }}>
-      {data.data.map((user) => (
+      {onlineUsers.map((user) => (
         <ListItemButton
           key={user.userId}
           onClick={() => router.push(paths.dashboard.profile(user.userId))}

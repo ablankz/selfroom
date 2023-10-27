@@ -1,4 +1,4 @@
-import { useEffect, useCallback, Suspense } from 'react';
+import { useEffect, useCallback } from 'react';
 // @mui
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -12,21 +12,17 @@ import Iconify from '@/components/iconify';
 //
 import ChatRoomGroup from './chat-room-group';
 import useCollapseNav from '@/hooks/use-collapse-nav';
-import { SimpleChatRoom } from '@/types/entity';
-import { useGetInUsersQuery } from '@/api/room-visits/useGetInUsersQuery';
-import { Navigate } from 'react-router-dom';
-import { paths } from '@/routes/paths';
-import { Skeleton } from '@mui/material';
+import { SimpleUser } from '@/types/entity';
 
 // ----------------------------------------------------------------------
 
 const NAV_WIDTH = 240;
 
 type Props = {
-  chatRoom: SimpleChatRoom;
+  onlineUsers: SimpleUser[];
 };
 
-export default function ChatRoom({ chatRoom }: Props) {
+export default function ChatRoom({ onlineUsers }: Props) {
   const theme = useTheme();
   const lgUp = useResponsive('up', 'lg');
 
@@ -114,23 +110,7 @@ export default function ChatRoom({ chatRoom }: Props) {
             }),
           }}
         >
-          {!collapseDesktop && (
-            <Suspense
-              fallback={
-                <Box
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  height={1}
-                  width={1}
-                >
-                  <Skeleton variant="rounded" width={NAV_WIDTH} height="98%" />
-                </Box>
-              }
-            >
-              <ChatRoomContent chatRoom={chatRoom} />
-            </Suspense>
-          )}
+          {!collapseDesktop && <ChatRoomGroup onlineUsers={onlineUsers} />}
         </Stack>
       ) : (
         <Drawer
@@ -144,33 +124,9 @@ export default function ChatRoom({ chatRoom }: Props) {
             sx: { width: NAV_WIDTH },
           }}
         >
-          <Suspense
-            fallback={
-              <Box
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                height={1}
-                width={1}
-              >
-                <Skeleton variant="rounded" width={NAV_WIDTH} height="98%" />
-              </Box>
-            }
-          >
-            <ChatRoomContent chatRoom={chatRoom} />
-          </Suspense>
+          <ChatRoomGroup onlineUsers={onlineUsers} />
         </Drawer>
       )}
     </Box>
   );
 }
-
-const ChatRoomContent = ({ chatRoom }: Props) => {
-  const { data } = useGetInUsersQuery(chatRoom.chatRoomId, 1, 100);
-
-  if (!data) {
-    return <Navigate to={paths.error.server} replace />;
-  }
-
-  return <ChatRoomGroup data={data.data} />;
-};

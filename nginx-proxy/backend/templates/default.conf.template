@@ -14,16 +14,20 @@ server {
 
     charset utf-8;
 
-    location / {
-        # すべてのurlにapiを付与して自サーバーへ流す
-        rewrite ^/(.*)$ /api/$1 break;
-        proxy_pass "http://${PROXY_SERVER_BACKEND}:${BACKEND_PROXY_PORT}";
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-    }
+    # location / {
+    #     # すべてのurlにapiを付与して自サーバーへ流す
+    #     rewrite ^/(.*)$ /api/$1 break;
+    #     proxy_pass "http://${PROXY_SERVER_BACKEND}:${BACKEND_PROXY_PORT}";
+    #     proxy_set_header Host $host;
+    #     proxy_set_header X-Real-IP $remote_addr;
+    # }
 
-    location /api {
-      try_files $uri $uri/ /index.php?$query_string;
+    # location /api {
+    #   try_files $uri $uri/ /index.php?$query_string;
+    # }
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
     }
 
     error_page 404 /index.php;
