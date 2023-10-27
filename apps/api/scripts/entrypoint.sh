@@ -41,5 +41,12 @@ echo ${google_secret} >> /var/www/${API_APP_NAME}/.env
 echo ${line_id} >> /var/www/${API_APP_NAME}/.env
 echo ${line_secret} >> /var/www/${API_APP_NAME}/.env
 
+expand_variables /docker-init/env_templates/supervisord.conf.template /etc/supervisor/conf.d/supervisord.conf #それ以外を追記
+
 # fpmの起動
-sh -c "/usr/local/sbin/php-fpm"
+sh -c "/usr/bin/supervisord"
+
+supervisorctl reread
+supervisorctl update
+supervisorctl start php-fpm:*
+supervisorctl start laravel-worker:*

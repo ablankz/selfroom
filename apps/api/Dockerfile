@@ -5,8 +5,8 @@ COPY docker.conf /usr/local/etc/php-fpm.d/docker.conf
 
 # phpとネットワーク関係
 RUN apt-get update \
-  && apt-get install -y zlib1g-dev mariadb-client vim libzip-dev iputils-ping net-tools dnsutils libpq-dev\
-  && docker-php-ext-install zip pdo pgsql pdo_pgsql 
+  && apt-get install -y zlib1g-dev mariadb-client vim libzip-dev iputils-ping net-tools dnsutils libpq-dev supervisor\
+  && docker-php-ext-install zip pdo pgsql pdo_pgsql
 
 #Composer install
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
