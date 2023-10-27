@@ -41,7 +41,6 @@ export default function ChatRoomTalkView() {
   const settings = useSettingsContext();
   const { t } = useLocales();
   const router = useRouter();
-  const [dispatch, setDispatch] = useState(false);
   const [addChat, setAddChat] = useState<AddChat>({
     chat: undefined,
     scroll: 'none',
@@ -120,8 +119,6 @@ export default function ChatRoomTalkView() {
       <Suspense fallback={<TalkSkelton />}>
         <ChatMessageList
           chatRoom={auth.currentChatRoom}
-          dispatch={dispatch}
-          setDispatch={setDispatch}
           addChat={addChat}
           setAddChat={setAddChat}
           removeChat={removeChat}

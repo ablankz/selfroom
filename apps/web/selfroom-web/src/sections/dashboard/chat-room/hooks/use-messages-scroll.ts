@@ -46,17 +46,16 @@ export default function useMessagesScroll(
 
   useEffect(
     () => {
-      if (scrollEnable === 'top') {
-        scrollMessagesToBottom();
-      } else {
-        if (scrollEnable === 'bottom') {
-          messagesEndRef.current &&
+      if (scrollEnable !== 'none') {
+        scrollEnable === 'top'
+          ? scrollMessagesToBottom()
+          : messagesEndRef.current &&
             messagesEndRef.current.scrollTo({
               top: messagesEndRef.current.scrollHeight,
               behavior: 'auto',
             });
-        }
-        setScrollEnable('top');
+
+        setScrollEnable('none');
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps

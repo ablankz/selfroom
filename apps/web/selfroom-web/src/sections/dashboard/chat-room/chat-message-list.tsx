@@ -33,8 +33,6 @@ export type ScrollValid = 'top' | 'bottom' | 'none';
 
 type Props = {
   chatRoom: SimpleChatRoom;
-  setDispatch: Dispatch<SetStateAction<boolean>>;
-  dispatch: boolean;
   addChat: AddChat;
   setAddChat: Dispatch<SetStateAction<AddChat>>;
   removeChat: string | undefined;
@@ -43,25 +41,16 @@ type Props = {
 
 export default function ChatMessageList({
   chatRoom,
-  dispatch,
-  setDispatch,
   addChat,
   setAddChat,
   removeChat,
   setRemoveChat,
 }: Props) {
-  const { data, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } =
+  const { data, hasNextPage, isFetchingNextPage, fetchNextPage } =
     useGetChatsQuery(chatRoom.chatRoomId, PAGE_TALK);
   const [pages, setPages] = useState<ChatsResponse[]>([]);
   const parentElementRef = useRef<HTMLDivElement>(null);
-  const [scrollEnable, setScrollEnable] = useState<ScrollValid>('top');
-
-  useEffect(() => {
-    if (dispatch) {
-      refetch();
-      setDispatch(false);
-    }
-  }, [dispatch]);
+  const [scrollEnable, setScrollEnable] = useState<ScrollValid>('bottom');
 
   const { messagesEndRef } = useMessagesScroll(
     pages,
@@ -72,6 +61,7 @@ export default function ChatMessageList({
   const { loadMoreRef } = useIntersectionObserver({
     onIntersect: fetchNextPage,
     enabled: hasNextPage,
+    preProcess: () => { setScrollEnable('top') }
   });
 
   if (!data) {
