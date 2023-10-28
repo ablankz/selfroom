@@ -18,7 +18,7 @@
   - Use docker at least during the development phase
   - Production environment will also use AWS ECS for the first time
 - `AWS`
-  - In addition to ecs(, ec2), we plan to use various other services from aws
+  - In addition to ecs, we plan to use various other services from aws
   - However, managed services are discussed with the cost
 - `Pusher`
   - webSocket for chat is using pusher service.
