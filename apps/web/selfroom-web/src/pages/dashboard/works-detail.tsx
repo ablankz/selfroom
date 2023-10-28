@@ -82,7 +82,7 @@ export default function WorksDetailPage() {
 
       {mainWork ? (
         <Suspense fallback={<LoadingScreen />}>
-          <WorksDetailView work={mainWork} key={mainWork.id}/>
+          <WorksDetailView work={mainWork} key={`${mainWork.id}`}/>
         </Suspense>
       ) : (
         <LoadingScreen />

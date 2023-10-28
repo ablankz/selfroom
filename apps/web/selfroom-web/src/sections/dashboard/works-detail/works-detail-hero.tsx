@@ -18,8 +18,11 @@ import {
   EmailShareButton,
   LineShareButton,
   TwitterShareButton,
+  FacebookIcon,
+  TwitterIcon,
+  LineIcon,
+  EmailIcon,
 } from 'react-share';
-import { useMemo } from 'react';
 import { paths } from '@/routes/paths';
 
 type Props = {
@@ -32,16 +35,13 @@ export default function WorksDetailHero({ work }: Props) {
   const theme = useTheme();
   const smUp = useResponsive('up', 'sm');
   const { t } = useLocales();
-  const sendMsg = useMemo(
-    () => ({
-      url: `${HOST}/${paths.dashboard.work(work.id)}`,
-      mailtitle: t('mail-title'),
-      title: `${t('works-share-1', {
-        title: work.title,
-      })}\n\n${work.description}\n`,
-    }),
-    [t]
-  );
+  const sendMsg = {
+    url: `${HOST}/${paths.dashboard.work(work.id)}`,
+    mailtitle: t('mail-title'),
+    title: `${t('works-share-1', {
+      title: work.title,
+    })}\n\n${work.description}\n`,
+  };
 
   return (
     <Box
@@ -152,34 +152,34 @@ export default function WorksDetailHero({ work }: Props) {
               key="facebook"
               icon={
                 <FacebookShareButton url={sendMsg.url} quote={sendMsg.title}>
-                  <Iconify icon="ic:baseline-facebook" color="#4267B2" />
+                  <FacebookIcon size={48} round />
                 </FacebookShareButton>
               }
               tooltipTitle="Facebook"
               tooltipPlacement="top"
-              FabProps={{ color: 'default' }}
+              FabProps={{ color: 'default', component: 'span' }}
             />
             <SpeedDialAction
               key="twitter"
               icon={
                 <TwitterShareButton {...sendMsg}>
-                  <Iconify icon="fa6-brands:x-twitter" color="#000000" />
+                  <TwitterIcon size={48} round />
                 </TwitterShareButton>
               }
               tooltipTitle="&#x1D54F;(Twitter)"
               tooltipPlacement="top"
-              FabProps={{ color: 'default' }}
+              FabProps={{ color: 'default', component: 'span' }}
             />
             <SpeedDialAction
               key="line"
               icon={
-                <LineShareButton {...sendMsg} i18nIsDynamicList>
-                  <Iconify icon="bi:line" color="#00B900" />
+                <LineShareButton {...sendMsg}>
+                  <LineIcon size={48} round />
                 </LineShareButton>
               }
               tooltipTitle="Line"
               tooltipPlacement="top"
-              FabProps={{ color: 'default' }}
+              FabProps={{ color: 'default', component: 'span' }}
             />
             <SpeedDialAction
               key="email"
@@ -189,12 +189,12 @@ export default function WorksDetailHero({ work }: Props) {
                   subject={sendMsg.mailtitle}
                   body={sendMsg.title}
                 >
-                  <Iconify icon="ic:baseline-email" />
+                  <EmailIcon size={48} round />
                 </EmailShareButton>
               }
               tooltipTitle="Email"
               tooltipPlacement="top"
-              FabProps={{ color: 'default' }}
+              FabProps={{ color: 'default', component: 'span' }}
             />
           </SpeedDial>
         </Stack>
