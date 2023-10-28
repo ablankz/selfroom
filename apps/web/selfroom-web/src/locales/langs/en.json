@@ -315,5 +315,7 @@
   "Type a message": "Type a message",
   "Undo message failed": "Undo message failed",
   "Failed to send message": "Failed to send message",
-  "Personal Development": "Personal Development"
+  "Personal Development": "Personal Development",
+  "works-share-1": "Let's go to selfroom to see the work:({{title}})",
+  "mail-title": "【Selfroom】"
 }

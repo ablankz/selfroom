@@ -315,5 +315,7 @@
   "Type a message": "メッセージを入力してください",
   "Undo message failed": "メッセージの取り消しに失敗しました",
   "Failed to send message": "メッセージの送信に失敗しました",
-  "Personal Development": "個人開発"
+  "Personal Development": "個人開発",
+  "works-share-1": "selfroomに制作物:({{title}})を見に行こう",
+  "mail-title": "【Selfroom】"
 }

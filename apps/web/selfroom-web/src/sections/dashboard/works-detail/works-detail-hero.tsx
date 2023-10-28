@@ -11,43 +11,20 @@ import { ListItemText, SpeedDial, SpeedDialAction, Stack } from '@mui/material';
 import Iconify from '@/components/iconify';
 import { useResponsive } from '@/hooks/use-responsive';
 import SvgColor from '@/components/svg-color';
-import { HOST_ASSET } from '@/config-global';
+import { HOST, HOST_ASSET } from '@/config-global';
 import { useLocales } from '@/locales';
+import {
+  FacebookShareButton,
+  EmailShareButton,
+  LineShareButton,
+  TwitterShareButton,
+} from 'react-share';
+import { useMemo } from 'react';
+import { paths } from '@/routes/paths';
 
 type Props = {
   work: Work;
 };
-
-export const _socials = [
-  {
-    value: 'facebook',
-    name: 'FaceBook',
-    icon: 'eva:facebook-fill',
-    color: '#1877F2',
-    path: 'https://www.facebook.com/caitlyn.kerluke',
-  },
-  {
-    value: 'instagram',
-    name: 'Instagram',
-    icon: 'ant-design:instagram-filled',
-    color: '#E02D69',
-    path: 'https://www.instagram.com/caitlyn.kerluke',
-  },
-  {
-    value: 'linkedin',
-    name: 'Linkedin',
-    icon: 'eva:linkedin-fill',
-    color: '#007EBB',
-    path: 'https://www.linkedin.com/caitlyn.kerluke',
-  },
-  {
-    value: 'twitter',
-    name: 'Twitter',
-    icon: 'eva:twitter-fill',
-    color: '#00AAEC',
-    path: 'https://www.twitter.com/caitlyn.kerluke',
-  },
-];
 
 // ----------------------------------------------------------------------
 
@@ -55,6 +32,16 @@ export default function WorksDetailHero({ work }: Props) {
   const theme = useTheme();
   const smUp = useResponsive('up', 'sm');
   const { t } = useLocales();
+  const sendMsg = useMemo(
+    () => ({
+      url: `${HOST}/${paths.dashboard.work(work.id)}`,
+      mailtitle: t('mail-title'),
+      title: `${t('works-share-1', {
+        title: work.title,
+      })}\n\n${work.description}\n`,
+    }),
+    [t]
+  );
 
   return (
     <Box
@@ -127,7 +114,7 @@ export default function WorksDetailHero({ work }: Props) {
               <>
                 <SvgColor
                   src={`${HOST_ASSET}/icons/works/me.svg`}
-                  color={t => t.palette.primary.main}
+                  color={(t) => t.palette.primary.main}
                   sx={{
                     display: 'inline-block',
                     width: 64,
@@ -153,7 +140,7 @@ export default function WorksDetailHero({ work }: Props) {
           <SpeedDial
             direction={smUp ? 'left' : 'up'}
             ariaLabel="Share works"
-            icon={<Iconify icon="lucide:external-link" />}
+            icon={<Iconify icon="solar:share-bold" />}
             FabProps={{ size: 'medium' }}
             sx={{
               position: 'absolute',
@@ -161,17 +148,54 @@ export default function WorksDetailHero({ work }: Props) {
               right: { xs: 16, md: 24 },
             }}
           >
-            {_socials.map((action) => (
-              <SpeedDialAction
-                key={action.name}
-                icon={
-                  <Iconify icon={action.icon} sx={{ color: action.color }} />
-                }
-                tooltipTitle={action.name}
-                tooltipPlacement="top"
-                FabProps={{ color: 'default' }}
-              />
-            ))}
+            <SpeedDialAction
+              key="facebook"
+              icon={
+                <FacebookShareButton url={sendMsg.url} quote={sendMsg.title}>
+                  <Iconify icon="ic:baseline-facebook" color="#4267B2" />
+                </FacebookShareButton>
+              }
+              tooltipTitle="Facebook"
+              tooltipPlacement="top"
+              FabProps={{ color: 'default' }}
+            />
+            <SpeedDialAction
+              key="twitter"
+              icon={
+                <TwitterShareButton {...sendMsg}>
+                  <Iconify icon="fa6-brands:x-twitter" color="#000000" />
+                </TwitterShareButton>
+              }
+              tooltipTitle="&#x1D54F;(Twitter)"
+              tooltipPlacement="top"
+              FabProps={{ color: 'default' }}
+            />
+            <SpeedDialAction
+              key="line"
+              icon={
+                <LineShareButton {...sendMsg} i18nIsDynamicList>
+                  <Iconify icon="bi:line" color="#00B900" />
+                </LineShareButton>
+              }
+              tooltipTitle="Line"
+              tooltipPlacement="top"
+              FabProps={{ color: 'default' }}
+            />
+            <SpeedDialAction
+              key="email"
+              icon={
+                <EmailShareButton
+                  url={sendMsg.url}
+                  subject={sendMsg.mailtitle}
+                  body={sendMsg.title}
+                >
+                  <Iconify icon="ic:baseline-email" />
+                </EmailShareButton>
+              }
+              tooltipTitle="Email"
+              tooltipPlacement="top"
+              FabProps={{ color: 'default' }}
+            />
           </SpeedDial>
         </Stack>
       </Container>
