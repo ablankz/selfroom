@@ -12,6 +12,7 @@ const IndexPage = lazy(() => import('../../pages/dashboard/introduction'));
 const CareerPage = lazy(() => import('../../pages/dashboard/career'));
 const SkillPage = lazy(() => import('../../pages/dashboard/skill'));
 const WorksPage = lazy(() => import('../../pages/dashboard/works'));
+const WorksDetailPage = lazy(() => import('../../pages/dashboard/works-detail'));
 const LinkPage = lazy(() => import('../../pages/dashboard/link'));
 
 const OverviewPage = lazy(() => import('../../pages/dashboard/app'));
@@ -45,6 +46,7 @@ export const dashboardRoutes = [
       { path: 'career', element: <CareerPage /> },
       { path: 'skill', element: <SkillPage /> },
       { path: 'works', element: <WorksPage /> },
+      { path: 'works/:name', element: <WorksDetailPage /> },
       { path: 'link', element: <LinkPage /> },
       { path: 'overview', element: <OverviewPage /> },
       { path: 'raw-api', element: <RawApiPage /> },
