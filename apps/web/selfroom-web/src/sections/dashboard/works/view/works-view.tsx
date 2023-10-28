@@ -12,13 +12,7 @@ import CarouselAnimation from '../carousel-animation';
 import WorkImages from '../work-images';
 import { useResponsive } from '@/hooks/use-responsive';
 import MainHaeder from '../../_common/header/main-header';
-
-type Work = {
-  id: string;
-  title: string;
-  coverUrl: string;
-  description: string;
-};
+import { Work } from '@/pages/dashboard/works-detail';
 
 // ----------------------------------------------------------------------
 
