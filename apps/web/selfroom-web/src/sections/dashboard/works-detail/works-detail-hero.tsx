@@ -19,7 +19,6 @@ import {
   LineShareButton,
   TwitterShareButton,
   FacebookIcon,
-  TwitterIcon,
   LineIcon,
   EmailIcon,
 } from 'react-share';
@@ -152,7 +151,7 @@ export default function WorksDetailHero({ work }: Props) {
               key="facebook"
               icon={
                 <FacebookShareButton url={sendMsg.url} quote={sendMsg.title}>
-                  <FacebookIcon size={48} round />
+                  <FacebookIcon size={48} round style={{marginTop: smUp ? '0.8rem' : 'auto'}}/>
                 </FacebookShareButton>
               }
               tooltipTitle="Facebook"
@@ -163,18 +162,27 @@ export default function WorksDetailHero({ work }: Props) {
               key="twitter"
               icon={
                 <TwitterShareButton {...sendMsg}>
-                  <TwitterIcon size={48} round />
+                  <Iconify width={32} icon='fa6-brands:x-twitter' color='black' sx={{
+                    marginTop: 1
+                  }}/>
                 </TwitterShareButton>
               }
               tooltipTitle="&#x1D54F;(Twitter)"
               tooltipPlacement="top"
-              FabProps={{ color: 'default', component: 'span' }}
+              FabProps={{ color: 'default', component: 'span', sx: {
+                width: 44,
+                height: 44,
+                bgcolor: 'white',
+                ":hover": {
+                  bgcolor: 'white'
+                },
+              } }}
             />
             <SpeedDialAction
               key="line"
               icon={
                 <LineShareButton {...sendMsg}>
-                  <LineIcon size={48} round />
+                  <LineIcon size={48} round style={{marginTop: '0.8rem'}}/>
                 </LineShareButton>
               }
               tooltipTitle="Line"
@@ -189,7 +197,7 @@ export default function WorksDetailHero({ work }: Props) {
                   subject={sendMsg.mailtitle}
                   body={sendMsg.title}
                 >
-                  <EmailIcon size={48} round />
+                  <EmailIcon size={48} round style={{marginTop: '0.8rem'}}/>
                 </EmailShareButton>
               }
               tooltipTitle="Email"
