@@ -6,6 +6,7 @@
 - Blood type: B
 - mail address(business): hayashi@epochworks.jp
 - mail address(private): hayaken3007@i.softbank.jp
+- mail address(for job hunting): hayaken3007@gmail.com
 - university: <span class="inline-code">Kansai University, Faculty of Systems Science and Engineering, Department of Electrical, Electronic, and Informatics, Applied Information Course</span>
 
 #### Scope of activity backend〜
@@ -25,4 +26,4 @@
 | work experience | ◎ | △ | △ | × |
 
 ***
-<div class="capt">2023 Updated October 1, 2023</div>
+<div class="capt">2023 Updated October 28, 2023</div>

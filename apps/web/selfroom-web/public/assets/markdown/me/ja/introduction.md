@@ -6,6 +6,7 @@
 - 血液型: B型
 - メールアドレス(ビジネス用): hayashi@epochworks.jp
 - メールアドレス(プライベート用): hayaken3007@i.softbank.jp
+- メールアドレス(就職活動用): hayaken3007@gmail.com
 - 大学: <span class="inline-code">関西大学 システム理工学部　電気電子情報学科 応用情報コース</span>
 
 #### 活動範囲 バックエンド〜
@@ -25,4 +26,4 @@
 | 実務 | ◎ | △ | △ | × |
 
 ***
-<div class="capt">2023年 10月1日更新</div>
+<div class="capt">2023年 10月28日更新</div>
