@@ -1,9 +1,8 @@
-users:
+admins:
   get:
-    summary: 複数ユーザーの取得
-    description: 複数ユーザーの取得
-    # security: []
-    tags: ["users"]
+    summary: 複数管理者ユーザーの取得
+    description: 複数管理者ユーザーの取得
+    tags: ["admins"]
     parameters:
       - $ref: "../components/parameters/common-header.yaml#/LangHeader"
       - $ref: "../components/parameters/get-common-parameter.yaml#/LimitParam"
@@ -14,23 +13,22 @@ users:
         description: オーダー項目
         schema:
           type: string
-          enum: ["create", "name", "follower"]
+          enum: ["create", "name", "permisssion"]
           default: "create"
       - $ref: "../components/parameters/get-common-parameter.yaml#/WithTotalCountParam"
     responses:
       "200":
-        $ref: "../components/responses/endpoints/user.yaml#/UsersResponse"
+        $ref: "../components/responses/endpoints/admin.yaml#/AdminsResponse"
       "200(with total_count)":
-        $ref: "../components/responses/endpoints/user.yaml#/UsersWithTotalCountResponse"
+        $ref: "../components/responses/endpoints/admin.yaml#/AdminsWithTotalCountResponse"
       "4XX":
         $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
       "5XX":
         $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
   post:
-    summary: ユーザーの新規登録
-    description: ユーザーの新規登録(+ログイン)
-    # security: []
-    tags: ["users"]
+    summary: 管理者ユーザーの新規登録
+    description: 管理者ユーザーの新規登録
+    tags: ["admins"]
     parameters:
         - $ref: "../components/parameters/common-header.yaml#/LangHeader"
     requestBody:
@@ -42,27 +40,26 @@ users:
             type: object
             required: [loginId, password, passwordConfirmation, nickname]
             properties:
-              loginId: { type: string, default: "testtest" }
+              loginId: { type: string, default: "adminadmin" }
               password:
                 { type: string, format: "password", default: "admintest" }
               passwordConfirmation:
                 { type: string, format: "password", default: "admintest" }
-              nickname: { type: string, default: "作成 ユーザー" }
+              nickname: { type: string, default: "作成 管理者ユーザー" }
               profilePhoto:
                 type: string
                 format: binary
     responses:
       "200":
-        $ref: "../components/responses/endpoints/auth.yaml#/JwtTokenResponse"
+        $ref: "../components/responses/endpoints/admin.yaml#/AdminResponse"
       "4XX":
         $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
       "5XX":
         $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
   put:
-    summary: 認証ユーザー情報の更新
-    description: 認証ユーザー情報の更新
-    # security: []
-    tags: ["users"]
+    summary: 認証管理者ユーザー情報の更新
+    description: 認証管理者ユーザー情報の更新
+    tags: ["admins"]
     parameters:
         - $ref: "../components/parameters/common-header.yaml#/LangHeader"
     requestBody:
@@ -74,28 +71,10 @@ users:
             type: object
             required: [nickname]
             properties:
-              nickname: { type: string, default: "更新後 ユーザー" }
+              nickname: { type: string, default: "更新後 管理者ユーザー" }
               profilePhoto:
                 type: string
                 format: binary
-              country:
-                type: string
-                example: Japan
-              description:
-                type: string
-                example: "よろしくおねがいします"
-              email:
-                type: string
-                example: "test@test.test"
-              company:
-                type: string
-                example: "Selfroom Inc."
-              role:
-                type: string
-                example: "Backend Engineer, Web Designer"
-              school:
-                type: string
-                example: "Kansai University"
     responses:
       "200":
         $ref: "../components/responses/empty-data-response.yaml#/EmptyDataResponse"
@@ -104,10 +83,9 @@ users:
       "5XX":
         $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
   delete:
-    summary: 認証ユーザーの削除
-    description: 認証ユーザーの削除
-    # security: []
-    tags: ["users"]
+    summary: 認証管理者ユーザーの削除
+    description: 認証管理者ユーザーの削除
+    tags: ["admins"]
     parameters:
         - $ref: "../components/parameters/common-header.yaml#/LangHeader"
     responses:
@@ -117,18 +95,17 @@ users:
         $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
       "5XX":
         $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
-users_{user_id}:
+admins_{admin_id}:
   get:
-    summary: ユーザーの取得
-    description: ユーザーの取得
+    summary: 管理者ユーザーの取得
+    description: 管理者ユーザーの取得
     parameters:
       - $ref: "../components/parameters/common-header.yaml#/LangHeader"
-      - $ref: "#/components/parameters/UserId"
-    # security: []
-    tags: ["users"]
+      - $ref: "#/components/parameters/AdminId"
+    tags: ["admins"]
     responses:
       "200":
-        $ref: "../components/responses/endpoints/user.yaml#/UserResponse"
+        $ref: "../components/responses/endpoints/admin.yaml#/AdminResponse"
       "4XX":
         $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
       "5XX":
@@ -136,11 +113,11 @@ users_{user_id}:
 
 components:
   parameters:
-    UserId:
-      name: user_id
+    AdminId:
+      name: admin_id
       in: path
-      description: ユーザーID
+      description: 管理者ユーザーID
       required: true
       schema:
         type: string
-        example: "9a5fb3cd-80c7-4d2b-971f-2f1a0ef782f7"
+        example: "9a5fb3cd-6113-4efa-8e2d-a88debba9897"

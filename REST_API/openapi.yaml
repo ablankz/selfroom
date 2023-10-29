@@ -141,6 +141,10 @@ paths:
     $ref: "./paths/follow.yaml#/followees_{user_id}"
   /users/{user_id}/followers:
     $ref: "./paths/follow.yaml#/followers_{user_id}"
+  /admins:
+    $ref: "./paths/admin.yaml#/admins"
+  /admins/{admin_id}:
+    $ref: "./paths/admin.yaml#/admins_{admin_id}"
 components:
   responses:
     4XX-BadRequestResponse:
