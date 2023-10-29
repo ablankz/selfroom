@@ -147,6 +147,10 @@ paths:
     $ref: "./paths/admin.yaml#/admins"
   /admins/{admin_id}:
     $ref: "./paths/admin.yaml#/admins_{admin_id}"
+  /admins/{admin_id}/permissions:
+    $ref: "./paths/admin-role.yaml#/permissions_{admin_id}"
+  /admins/{admin_id}/permissions/all:
+    $ref: "./paths/admin-role.yaml#/permissions_{admin_id}_all"
 components:
   responses:
     4XX-BadRequestResponse:
