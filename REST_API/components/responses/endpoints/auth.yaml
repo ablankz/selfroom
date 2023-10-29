@@ -42,4 +42,19 @@ AuthUserResponse:
           code: { type: integer, example: 0 }
           message: { type: string, example: "OK" }
           errorAttributes: { type: array, maximum: 0, example: [] }
+
+AuthAdminResponse:
+  description: 管理者ユーザーの認証確認時レスポンスデータ
+  content:
+    application/json:
+      schema:
+        type: object
+        required: [success, data, code, message, errorAttributes]
+        properties:
+          success: { type: boolean, example: true }
+          data:
+            $ref: "../../schemas/admin/admin.yaml#/Admin"
+          code: { type: integer, example: 0 }
+          message: { type: string, example: "OK" }
+          errorAttributes: { type: array, maximum: 0, example: [] }
   
