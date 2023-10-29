@@ -163,6 +163,10 @@ paths:
     $ref: "./paths/chat-room.yaml#/chat-rooms"
   /chat-rooms/{chat_room_id}:
     $ref: "./paths/chat-room.yaml#/chat-rooms_{chat_room_id}"
+  /chat-rooms/{chat_room_id}/chats:
+    $ref: "./paths/chat.yaml#/chats_{chat_room_id}"
+  /chat-rooms/{chat_room_id}/chats/{chat_id}:
+    $ref: "./paths/chat.yaml#/chats_{chat_room_id}_{chat_id}"
 components:
   responses:
     4XX-BadRequestResponse:
