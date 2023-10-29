@@ -1,3 +1,5 @@
+import { GET_COMMON_PARAMS, GET_OPT_PARAMS } from '../common-params';
+
 export const ROOM_CATEGORIES_ENDPOINTS = {
   roomCategories: {
     find: {
@@ -11,6 +13,11 @@ export const ROOM_CATEGORIES_ENDPOINTS = {
       method: 'GET',
       url: '/room-categories',
       comment: 'Retrieving the room category list',
+      defaultParam: {
+        ...GET_COMMON_PARAMS,
+        ...GET_OPT_PARAMS,
+        order: 'name'
+      },
     },
     create: {
       urlKey: '/room-categories',
