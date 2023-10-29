@@ -49,6 +49,7 @@ export const USERS_ENDPOINTS = {
         defaultParam: {
           ...GET_COMMON_PARAMS,
           ...GET_OPT_PARAMS,
+          order: 'visited'
         },
       },
     },

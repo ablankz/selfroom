@@ -10,3 +10,9 @@ export const GET_COMMON_PARAMS: RequestParam = {
 export const GET_OPT_PARAMS: RequestParam = {
   total_count: 'with',
 } as const;
+
+export const GET_CURSOR_OPT_PARAMS: RequestParam = {
+  total_count: 'without',
+  pagination: 'cursor',
+  cursor: 'next page cursor'
+} as const;
