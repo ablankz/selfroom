@@ -16,7 +16,7 @@ UserCard:
       type: boolean
       example: true
     currentChatRoom:
-      $ref: "../chat-room/simple-chat-room.yaml#/SimpleChatRoom"
+      $ref: "../chat-room/simple-chat-room.yaml#/NullableSimpleChatRoom"
     favoriteRoomNum:
       type: number
       example: 10

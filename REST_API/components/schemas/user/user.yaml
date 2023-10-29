@@ -13,7 +13,8 @@ User:
       example: "https://via.placeholder.com/640x480.png/00ee88?text=aut"
       nullable: true
     currentChatRoom:
-      $ref: "../chat-room/simple-chat-room.yaml#/SimpleChatRoom"
+      nullable: true
+      $ref: "../chat-room/simple-chat-room.yaml#/NullableSimpleChatRoom"
     favoriteRoomNum:
       type: number
       example: 10

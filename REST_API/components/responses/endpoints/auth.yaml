@@ -38,7 +38,7 @@ AuthUserResponse:
         properties:
           success: { type: boolean, example: true }
           data:
-            $ref: "../../schemas/auth/auth-user.yaml#/AuthUser"
+            $ref: "../../schemas/user/user.yaml#/User"
           code: { type: integer, example: 0 }
           message: { type: string, example: "OK" }
           errorAttributes: { type: array, maximum: 0, example: [] }
