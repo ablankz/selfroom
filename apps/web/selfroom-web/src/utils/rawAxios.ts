@@ -150,7 +150,7 @@ function isMatch(text: string, target: string, strict?: boolean): boolean {
     return `(${patterns.join('|')})`;
   }
 
-  return perseText.every((element, index, array) => {
+  const syntaxCheck = perseText.every((element, index, array) => {
     if (!(index in perseTarget)) return false;
     let targetPattern = '^';
     if (perseTarget[index] == '*') {
@@ -172,6 +172,16 @@ function isMatch(text: string, target: string, strict?: boolean): boolean {
     // test メソッドを使用して一致を判定
     return pattern.test(element);
   });
+
+  if(!strict) return syntaxCheck;
+
+  function countSlashes(str: string) {
+    const regex = new RegExp('/', 'g'); // スラッシュを検出する正規表現
+    const matches = str.match(regex); // 正規表現にマッチする部分文字列を取得
+    return matches ? matches.length : 0; // マッチした数を返す
+  }
+
+  return  syntaxCheck && countSlashes(text.replace(/\/$/, '')) === countSlashes(target.replace(/\/$/, ''));
 }
 
 function isStrictMatch(text: string, target: string): boolean {
@@ -198,12 +208,12 @@ export const endpointMatch = (
   key: string
 ): EndpointBase | null => {
   const fObject = flattenObject(ENDPOINTS as Endpoint);
-  const findKey = Object.keys(fObject).find((e) => {
+  const findKey = Object.keys(fObject).filter((e) => {
     const endpoint: EndpointBase = fObject[e];
     if (method !== endpoint.method) return false;
     if (!isStrictMatch(key || '/', endpoint.urlKey)) return false;
     return true;
   });
   if (!findKey) return null;
-  return fObject[findKey];
+  return fObject[findKey[0]];
 };
