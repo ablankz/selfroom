@@ -1,4 +1,4 @@
-SimpleUser:
+Visitor:
   type: object
   properties:
     userId:
