@@ -5,6 +5,8 @@ auth:
       description: jwtによるログイン
       # security: []
       tags: ["auth"]
+      parameters:
+        - $ref: "../components/parameters/common-header.yaml#/LangHeader"
       requestBody:
         description: 認証のためのデータ
         required: true
@@ -28,6 +30,8 @@ auth:
       summary: ログアウト
       description: ログアウト
       tags: ["auth"]
+      parameters:
+        - $ref: "../components/parameters/common-header.yaml#/LangHeader"
       responses:
         "200":
           $ref: "../components/responses/empty-data-response.yaml#/EmptyDataResponse"
@@ -40,6 +44,8 @@ auth:
       summary: 認証ユーザーの確認
       description: 認証ユーザーの確認
       tags: ["auth"]
+      parameters:
+        - $ref: "../components/parameters/common-header.yaml#/LangHeader"
       responses:
         "200(user)":
           $ref: "../components/responses/endpoints/auth.yaml#/AuthUserResponse"
@@ -55,6 +61,8 @@ auth:
       description: リフレッシュトークンの発行
       # security: []
       tags: ["auth"]
+      parameters:
+        - $ref: "../components/parameters/common-header.yaml#/LangHeader"
       responses:
         "200":
           $ref: "../components/responses/endpoints/auth.yaml#/JwtTokenResponse"
@@ -69,6 +77,7 @@ auth:
       # security: []
       tags: ["auth"]
       parameters:
+        - $ref: "../components/parameters/common-header.yaml#/LangHeader"
         - name: provider
           in: path
           description: プロバイダ名

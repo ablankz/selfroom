@@ -130,6 +130,8 @@ paths:
     $ref: "./paths/auth.yaml#/auth/providerLogin"
   /users:
     $ref: "./paths/users.yaml#/users"
+  /users/{user_id}:
+    $ref: "./paths/users.yaml#/users_{user_id}"
   # /clients:
   #   $ref: "./paths/clients.yaml#/clients"
   # /clients/{client_id}:

@@ -67,6 +67,7 @@ class UserController extends Controller
 
     return response()->success([
       'accessToken' => $token,
+      'tokenType' => 'bearer',
       'expiresIn' => $guard->factory()->getTTL() * 60
     ])->cookie(Cookie::make(
       'token',
