@@ -8,15 +8,9 @@ FavoritesResponse:
         properties:
           success: { type: boolean, example: true }
           data:
-            type: object
-            properties:
-              data:
-                type: array
-                items:
-                  $ref: "../../schemas/chat-room/chat-room-card.yaml#/ChatRoomCard"
-              totalCount:
-                type: integer
-                example: 120
+            type: array
+            items:
+              $ref: "../../schemas/chat-room/chat-room-card.yaml#/ChatRoomCard"
           code: { type: integer, example: 0 }
           message: { type: string, example: "OK" }
           errorAttributes: { type: array, maximum: 0, example: [] }
@@ -31,9 +25,15 @@ FavoritesWithTotalCountResponse:
         properties:
           success: { type: boolean, example: true }
           data:
-            type: array
-            items:
-              $ref: "../../schemas/chat-room/chat-room-card.yaml#/ChatRoomCard"
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: "../../schemas/chat-room/chat-room-card.yaml#/ChatRoomCard"
+              totalCount:
+                type: integer
+                example: 120
           code: { type: integer, example: 0 }
           message: { type: string, example: "OK" }
           errorAttributes: { type: array, maximum: 0, example: [] }

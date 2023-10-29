@@ -8,15 +8,9 @@ FolloweesResponse:
         properties:
           success: { type: boolean, example: true }
           data:
-            type: object
-            properties:
-              data:
-                type: array
-                items:
-                  $ref: "../../schemas/user/user-card.yaml#/UserCard"
-              totalCount:
-                type: integer
-                example: 120
+            type: array
+            items:
+              $ref: "../../schemas/user/user-card.yaml#/UserCard"
           code: { type: integer, example: 0 }
           message: { type: string, example: "OK" }
           errorAttributes: { type: array, maximum: 0, example: [] }
@@ -31,9 +25,15 @@ FolloweesWithTotalCountResponse:
         properties:
           success: { type: boolean, example: true }
           data:
-            type: array
-            items:
-              $ref: "../../schemas/user/user-card.yaml#/UserCard"
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: "../../schemas/user/user-card.yaml#/UserCard"
+              totalCount:
+                type: integer
+                example: 120
           code: { type: integer, example: 0 }
           message: { type: string, example: "OK" }
           errorAttributes: { type: array, maximum: 0, example: [] }
@@ -49,15 +49,9 @@ FollowersResponse:
         properties:
           success: { type: boolean, example: true }
           data:
-            type: object
-            properties:
-              data:
-                type: array
-                items:
-                  $ref: "../../schemas/user/user-card.yaml#/UserCard"
-              totalCount:
-                type: integer
-                example: 120
+            type: array
+            items:
+              $ref: "../../schemas/user/user-card.yaml#/UserCard"
           code: { type: integer, example: 0 }
           message: { type: string, example: "OK" }
           errorAttributes: { type: array, maximum: 0, example: [] }
@@ -72,9 +66,15 @@ FollowersWithTotalCountResponse:
         properties:
           success: { type: boolean, example: true }
           data:
-            type: array
-            items:
-              $ref: "../../schemas/user/user-card.yaml#/UserCard"
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: "../../schemas/user/user-card.yaml#/UserCard"
+              totalCount:
+                type: integer
+                example: 120
           code: { type: integer, example: 0 }
           message: { type: string, example: "OK" }
           errorAttributes: { type: array, maximum: 0, example: [] }

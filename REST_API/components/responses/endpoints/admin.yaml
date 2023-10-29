@@ -8,15 +8,9 @@ AdminsResponse:
         properties:
           success: { type: boolean, example: true }
           data:
-            type: object
-            properties:
-              data:
-                type: array
-                items:
-                  $ref: "../../schemas/admin/simple-admin.yaml#/SimpleAdmin"
-              totalCount:
-                type: integer
-                example: 120
+            type: array
+            items:
+              $ref: "../../schemas/admin/simple-admin.yaml#/SimpleAdmin"
           code: { type: integer, example: 0 }
           message: { type: string, example: "OK" }
           errorAttributes: { type: array, maximum: 0, example: [] }
@@ -31,9 +25,16 @@ AdminsWithTotalCountResponse:
         properties:
           success: { type: boolean, example: true }
           data:
-            type: array
-            items:
-              $ref: "../../schemas/admin/simple-admin.yaml#/SimpleAdmin"
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: "../../schemas/admin/simple-admin.yaml#/SimpleAdmin"
+              totalCount:
+                type: integer
+                example: 120
+
           code: { type: integer, example: 0 }
           message: { type: string, example: "OK" }
           errorAttributes: { type: array, maximum: 0, example: [] }
