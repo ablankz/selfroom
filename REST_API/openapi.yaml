@@ -6,7 +6,6 @@ info:
     # selfroomのwebAPI設計
     ## REST API 設計レベル
     - クライアント/サーバー
-      - とりあえずwebSocketなどの使用予定はないのでこれに準拠
     - 階層化システム
       - web, ap, dbは徹底。
       - ただし今回は、リソースの問題上、階層化とまではいえないかも、、
@@ -87,7 +86,6 @@ info:
       - 基本的には200を返す
       - ヘッダーのLocationに新しいリソースへのurlを含める201(Created)は多分使用しない。
       - 非同期ジョブを受け付けたことを示す202(Accepted)は機会があればジョブをキューに流したときなどに返す。
-      - 204(No Content)は通常、deleteやputなど返すデータがないとき、これを
     - 3xx
       - apiサーバーなので定義しない
     - 4xx
@@ -98,7 +96,7 @@ info:
       - サーバー上のエラーもしくは予期しないエラー
       - 基本的には定義するというよりphpの標準エラーや予期しないエラーで返る
     ## 規定ヘッダー
-    - アプリケーション独自のヘッダーは今の所考えてない
+    - `X-Sr-Language`により言語を指定。現在は日本語(ja)と英語(en)のみサポート
     ## 認証
     - 基本的にはjwtによる認証
     - lineとgoogleによるソーシャル認証もあるが、どちらにせよapi側は、認証方法に依らずjwtのトークンを返却
@@ -107,7 +105,7 @@ info:
     name: Hayashi Kenta
     email: hayaken3007@i.softbank.jp
 servers:
-  - url: http://api.selfroom.net:{port}
+  - url: http://api.selfroom.net:{port}/api
     description: "開発環境"
     variables:
       port:
@@ -118,83 +116,125 @@ servers:
 tags:
   - name: "auth"
     description: 認証に関する操作
-  - name: "clients"
-    description: クライアントに関するCRUD
-  - name: "shops"
-    description: ショップに関するCRUD
-  - name: "partners"
-    description: パートナーに関するCRUD
+  - name: "users"
+    description: ユーザー周りのCRUD
+  - name: "chat-rooms"
+    description: チャットルームに関するCRUD
+  - name: "room-visits"
+    description: ルーム訪問に関するCRUD
+  - name: "room-categories"
+    description: ルームカテゴリーに関するCRUD 
+  - name: "favorites"
+    description: お気に入りに関するCRUD 
+  - name: "follows"
+    description: フォローに関するCRUD 
+  - name: "chats"
+    description: チャットに関するCRUD 
+  - name: "admins"
+    description: 管理者ユーザーに関するCRUD
+  - name: "admin-roles"
+    description: 管理者権限に関するCRUD 
   - name: "roles"
-    description: ロールに関するCRUD
-  - name: "mileages"
-    description: マイレージに関するCRUD
-  - name: "runnings"
-    description: ランニングに関するCRUD
-  - name: "pictures"
-    description: ピクチャーに関するCRUD
-  - name: "permissions"
-    description: パーミッションに関するCRUD
-  - name: "advertisements"
-    description: 広告に関するCRUD
-  - name: "coupons"
-    description: クーポンに関するCRUD
+    description: 管理者ロールに関するCRUD 
 paths:
   /auth/login:
     $ref: "./paths/auth.yaml#/auth/login"
-  /auth/register:
-    $ref: "./paths/auth.yaml#/auth/register"
   /auth/logout:
     $ref: "./paths/auth.yaml#/auth/logout"
-  /auth/user:
-    $ref: "./paths/auth.yaml#/auth/user"
+  /auth/me:
+    $ref: "./paths/auth.yaml#/auth/me"
   /auth/refresh:
     $ref: "./paths/auth.yaml#/auth/refresh"
   /auth/{provider}:
     $ref: "./paths/auth.yaml#/auth/providerLogin"
-  /clients:
-    $ref: "./paths/clients.yaml#/clients"
-  /clients/{client_id}:
-    $ref: "./paths/clients.yaml#/clients_{client_id}"
-  /shops:
-    $ref: "./paths/shops.yaml#/shops"
-  /shops/{shop_id}:
-    $ref: "./paths/shops.yaml#/shops_{shop_id}"
-  /partners:
-    $ref: "./paths/partners.yaml#/partners"
-  /partners/{partner_id}:
-    $ref: "./paths/partners.yaml#/partners_{partner_id}"
+  /users:
+    $ref: "./paths/users.yaml#/users"
+  /users/{user_id}:
+    $ref: "./paths/users.yaml#/users_{user_id}"
+  /users/{user_id}/visited-rooms:
+    $ref: "./paths/room-visit.yaml#/visited-rooms_{user_id}"
+  /users/{user_id}/favorites:
+    $ref: "./paths/favorite.yaml#/favorites_{user_id}"
+  /users/{user_id}/followees:
+    $ref: "./paths/follow.yaml#/followees_{user_id}"
+  /users/{user_id}/followers:
+    $ref: "./paths/follow.yaml#/followers_{user_id}"
+  /users/{user_id}/follows:
+    $ref: "./paths/follow.yaml#/follows_{user_id}"
+  /admins:
+    $ref: "./paths/admin.yaml#/admins"
+  /admins/{admin_id}:
+    $ref: "./paths/admin.yaml#/admins_{admin_id}"
+  /admins/{admin_id}/permissions:
+    $ref: "./paths/admin-role.yaml#/permissions_{admin_id}"
+  /admins/{admin_id}/permissions/all:
+    $ref: "./paths/admin-role.yaml#/permissions_{admin_id}_all"
+  /room-categories:
+    $ref: "./paths/room-category.yaml#/room-categories"
+  /room-categories/{room_category_id}:
+    $ref: "./paths/room-category.yaml#/room-categories_{room_category_id}"
   /roles:
-    $ref: "./paths/roles.yaml#/roles"
+    $ref: "./paths/role.yaml#/roles"
   /roles/{role_id}:
-    $ref: "./paths/roles.yaml#/roles_{role_id}"
-  /mileages:
-    $ref: "./paths/mileages.yaml#/mileages"
-  /mileages/{mileage_id}:
-    $ref: "./paths/mileages.yaml#/mileages_{mileage_id}"
-  /runnings:
-    $ref: "./paths/runnings.yaml#/runnings"
-  /runnings/{running_id}:
-    $ref: "./paths/runnings.yaml#/runnings_{running_id}"
-  /pictures:
-    $ref: "./paths/pictures.yaml#/pictures"
-  /pictures/{picture_id}:
-    $ref: "./paths/pictures.yaml#/pictures_{picture_id}"
-  /permissions:
-    $ref: "./paths/permissions.yaml#/permissions"
-  /permissions/{permission_id}:
-    $ref: "./paths/permissions.yaml#/permissions_{permission_id}"
-  /advertisements:
-    $ref: "./paths/advertisements.yaml#/advertisements"
-  /advertisements/{advertisement_id}:
-    $ref: "./paths/advertisements.yaml#/advertisements_{advertisement_id}"
-  /coupons:
-    $ref: "./paths/coupons.yaml#/coupons"
-  /coupons/{coupon_id}:
-    $ref: "./paths/coupons.yaml#/coupons_{coupon_id}"
+    $ref: "./paths/role.yaml#/roles_{role_id}"
+  /chat-rooms:
+    $ref: "./paths/chat-room.yaml#/chat-rooms"
+  /chat-rooms/{chat_room_id}:
+    $ref: "./paths/chat-room.yaml#/chat-rooms_{chat_room_id}"
+  /chat-rooms/{chat_room_id}/chats:
+    $ref: "./paths/chat.yaml#/chats_{chat_room_id}"
+  /chat-rooms/{chat_room_id}/chats/{chat_id}:
+    $ref: "./paths/chat.yaml#/chats_{chat_room_id}_{chat_id}"
+  /chat-rooms/in/{chat_room_id}:
+    $ref: "./paths/room-visit.yaml#/room-in_{chat_room_id}"
+  /chat-rooms/out:
+    $ref: "./paths/room-visit.yaml#/room-out"
+  /chat-rooms/{chat_room_id}/visitors:
+    $ref: "./paths/room-visit.yaml#/visitors_{chat_room_id}"
+  /chat-rooms/{chat_room_id}/users:
+    $ref: "./paths/room-visit.yaml#/users_{chat_room_id}"
+  /chat-rooms/{chat_room_id}/favors:
+    $ref: "./paths/favorite.yaml#/favors_{chat_room_id}"
+  /chat-rooms/{chat_room_id}/favorites:
+    $ref: "./paths/favorite.yaml#/favorites_{chat_room_id}"
 components:
-  schemas:        
-    # EntityDataSuccess:
-    #   $ref: "./components/schemas/entity-data-success.yaml#/EntityDataSuccess"        
+  schemas:   
+    JwtTokenData:
+      $ref: "./components/schemas/auth/jwt-token.yaml#/JwtToken"
+    RedirectUrlData:
+      $ref: "./components/schemas/auth/redirect-url.yaml#/RedirectUrl"   
+    UserData:
+      $ref: "./components/schemas/user/user.yaml#/User"
+    SimpleUserData:
+      $ref: "./components/schemas/user/simple-user.yaml#/SimpleUser"
+    UserCardData:
+      $ref: "./components/schemas/user/user-card.yaml#/UserCard"
+    VisitorData:
+      $ref: "./components/schemas/user/visitor.yaml#/Visitor"
+    ChatRoomData:
+      $ref: "./components/schemas/chat-room/chat-room.yaml#/ChatRoom"
+    SimpleChatRoomData:
+      $ref: "./components/schemas/chat-room/simple-chat-room.yaml#/SimpleChatRoom"
+    ChatRoomCardData:
+      $ref: "./components/schemas/chat-room/chat-room-card.yaml#/ChatRoomCard"
+    VisitedChatRoomData:
+      $ref: "./components/schemas/chat-room/visited-chat-room.yaml#/VisitedChatRoom"
+    RoomCategoryData:
+      $ref: "./components/schemas/room-category/room-category.yaml#/RoomCategory"
+    SimpleRoomCategoryData:
+      $ref: "./components/schemas/room-category/simple-room-category.yaml#/SimpleRoomCategory"
+    ChatData:
+      $ref: "./components/schemas/chat/chat.yaml#/Chat"
+    SimpleChatData:
+      $ref: "./components/schemas/chat/simple-chat.yaml#/SimpleChat"
+    RoleData:
+      $ref: "./components/schemas/role/role.yaml#/Role"
+    SimpleRoleData:
+      $ref: "./components/schemas/role/simple-role.yaml#/SimpleRole"
+    AdminData:
+      $ref: "./components/schemas/admin/admin.yaml#/Admin"
+    SimpleAdminData:
+      $ref: "./components/schemas/admin/simple-admin.yaml#/SimpleAdmin"
     NoDataSuccess:
       $ref: "./components/schemas/no-data-success.yaml#/NoDataSuccess"      
     RequestError:

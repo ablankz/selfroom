@@ -3,8 +3,10 @@ auth:
     post:
       summary: jwtによるログイン
       description: jwtによるログイン
-      security: []
+      # security: []
       tags: ["auth"]
+      parameters:
+        - $ref: "../components/parameters/common-header.yaml#/LangHeader"
       requestBody:
         description: 認証のためのデータ
         required: true
@@ -14,45 +16,11 @@ auth:
               type: object
               required: [loginId, password]
               properties:
-                loginId: { type: string, default: "admin" }
-                password: { type: string, default: "admin" }
+                loginId: { type: string, default: "test_user" }
+                password: { type: string, default: "test_user" }
       responses:
         "200":
-          description: Success Operation
-          content:
-            application/json:
-              schema:
-                $ref: "../components/schemas/auth/jwt-token.yaml#/JwtToken"
-        "4XX":
-          $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
-        "5XX":
-          $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
-  register:
-    post:
-      summary: ユーザーの新規登録
-      description: ユーザーの新規登録
-      security: []
-      tags: ["auth"]
-      requestBody:
-        description: 新規登録データ
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required: [loginId, password, passwordConfirmation, name]
-              properties:
-                loginId: { type: string, default: "admin@admin.admin" }
-                password: { type: string, default: "admintest" }
-                passwordConfirmation: { type: string, default: "admintest" }
-                name: { type: string, default: "管理者 ユーザー" }
-      responses:
-        "200":
-          description: Success Operation
-          content:
-            application/json:
-              schema:
-                $ref: "../components/schemas/auth/jwt-token.yaml#/JwtToken"
+          $ref: "../components/responses/endpoints/auth.yaml#/JwtTokenResponse"
         "4XX":
           $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
         "5XX":
@@ -62,29 +30,27 @@ auth:
       summary: ログアウト
       description: ログアウト
       tags: ["auth"]
+      parameters:
+        - $ref: "../components/parameters/common-header.yaml#/LangHeader"
       responses:
         "200":
-          description: Success Operation
-          content:
-            application/json:
-              schema:
-                $ref: "../components/schemas/no-data-success.yaml#/NoDataSuccess"
+          $ref: "../components/responses/empty-data-response.yaml#/EmptyDataResponse"
         "4XX":
           $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
         "5XX":
           $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
-  user:
+  me:
     post:
       summary: 認証ユーザーの確認
       description: 認証ユーザーの確認
       tags: ["auth"]
+      parameters:
+        - $ref: "../components/parameters/common-header.yaml#/LangHeader"
       responses:
-        "200":
-          description: Success Operation
-          content:
-            application/json:
-              schema:
-                $ref: "../components/schemas/auth/account.yaml#/Account"
+        "200(user)":
+          $ref: "../components/responses/endpoints/auth.yaml#/AuthUserResponse"
+        "200(admin)":
+          $ref: "../components/responses/endpoints/auth.yaml#/AuthAdminResponse"
         "4XX":
           $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
         "5XX":
@@ -93,15 +59,13 @@ auth:
     post:
       summary: リフレッシュトークンの発行
       description: リフレッシュトークンの発行
-      security: []
+      # security: []
       tags: ["auth"]
+      parameters:
+        - $ref: "../components/parameters/common-header.yaml#/LangHeader"
       responses:
         "200":
-          description: Success Operation
-          content:
-            application/json:
-              schema:
-                $ref: "../components/schemas/auth/jwt-token.yaml#/JwtToken"
+          $ref: "../components/responses/endpoints/auth.yaml#/JwtTokenResponse"
         "4XX":
           $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
         "5XX":
@@ -110,11 +74,12 @@ auth:
     get:
       summary: ソーシャルログインのためのリダイレクトurl取得
       description: ソーシャルログインのためのリダイレクトurl取得
-      security: []
+      # security: []
       tags: ["auth"]
-      parameters: 
+      parameters:
+        - $ref: "../components/parameters/common-header.yaml#/LangHeader"
         - name: provider
-          in: path 
+          in: path
           description: プロバイダ名
           required: true
           schema:
@@ -122,11 +87,7 @@ auth:
             enum: [line, google]
       responses:
         "200":
-          description: Success Operation
-          content:
-            application/json:
-              schema:
-                $ref: "../components/schemas/auth/redirect-url.yaml#/RedirectUrl"
+          $ref: "../components/responses/endpoints/auth.yaml#/RedirectUrlResponse"
         "4XX":
           $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
         "5XX":

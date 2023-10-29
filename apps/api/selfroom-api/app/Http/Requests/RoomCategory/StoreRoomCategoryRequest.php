@@ -16,6 +16,13 @@ class StoreRoomCategoryRequest extends ApiRequest
     return Gate::check(CategoryRole::Create->value);
   }
 
+  public function validationData()
+  {
+    return [
+      'roomCategoryName' => $this->get('name')
+    ];
+  }
+
   /**
    * Get the validation rules that apply to the request.
    *
@@ -24,7 +31,7 @@ class StoreRoomCategoryRequest extends ApiRequest
   public function rules(): array
   {
     return [
-      'name' => ['required', 'string'],
+      'roomCategoryName' => ['required', 'string'],
     ];
   }
 }

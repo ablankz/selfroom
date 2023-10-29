@@ -10,7 +10,7 @@ import { RequestHeader } from '@/sections/dashboard/raw-api/view/raw-api-view';
 
 export const DEFAULT_HEADERS: RequestHeader = {
   'X-Sr-Language': 'ja',
-};
+} as const;
 
 export const ENDPOINTS = {
   ...AUTH_ENDPOINTS,

@@ -1,5 +1,5 @@
 5XX-ServerErrorResponse:
-  description: サーバー上のエラーもしくは予期しないエラー
+  description: サーバー上のエラーもしくは予期しないエラーレスポンスデータ
   content:
     application/json:
       schema:

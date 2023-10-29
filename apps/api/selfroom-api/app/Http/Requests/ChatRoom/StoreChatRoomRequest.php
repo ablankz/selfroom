@@ -15,6 +15,41 @@ class StoreChatRoomRequest extends ApiRequest
     return true;
   }
 
+  protected function prepareForValidation()
+  {
+    parent::prepareForValidation();
+
+    $categories = $this->get('categories');
+    $categoriesValue = $categories;
+
+    if (is_string($categories)) {
+      $categoriesArray = explode(",", $categories);
+
+      $isNumeric = true;
+      foreach ($categoriesArray as $category) {
+        if (!is_numeric($category)) {
+          $isNumeric = false;
+          break;
+        }
+      }
+
+      if ($isNumeric) {
+        $categoriesValue = array_map('intval', $categoriesArray);
+      }
+    }
+
+    $this->merge(['categories' => array_unique($categoriesValue)]);
+  }
+
+  public function validationData()
+  {
+    return [
+      'chatRoomName' => $this->get('name'),
+      'chatRoomCategories' => $this->get('categories'),
+    ];
+  }
+
+
   /**
    * Get the validation rules that apply to the request.
    *
@@ -23,9 +58,9 @@ class StoreChatRoomRequest extends ApiRequest
   public function rules(): array
   {
     return [
-      'name' => ['required', 'string'],
-      'categories' => ['required', 'array', 'min:'. RoomTags::ROOM_MIN_TAGS, 'max:' . RoomTags::ROOM_MAX_TAGS ],
-      'categories.*' => ['numeric', 'integer', 'exists:m_room_categories,room_category_id'],
+      'chatRoomName' => ['required', 'string'],
+      'chatRoomCategories' => ['required', 'array', 'min:' . RoomTags::ROOM_MIN_TAGS, 'max:' . RoomTags::ROOM_MAX_TAGS],
+      'chatRoomCategories.*' => ['numeric', 'integer', 'exists:m_room_categories,room_category_id'],
       'coverPhoto' => ['file', 'max:10240', 'mimes:jpg,jpeg,png,gif'],
       'roomKey' => ['string']
     ];

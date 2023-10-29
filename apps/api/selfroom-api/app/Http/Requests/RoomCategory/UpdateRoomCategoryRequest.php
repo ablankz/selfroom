@@ -16,6 +16,13 @@ class UpdateRoomCategoryRequest extends ApiRequest
     return Gate::check(CategoryRole::Edit->value);
   }
 
+  public function validationData()
+  {
+    return [
+      'roomCategoryName' => $this->get('name')
+    ];
+  }
+
   /**
    * Get the validation rules that apply to the request.
    *
@@ -24,7 +31,7 @@ class UpdateRoomCategoryRequest extends ApiRequest
   public function rules(): array
   {
     return [
-      'name' => ['required', 'string'],
+      'roomCategoryName' => ['required', 'string'],
     ];
   }
 }

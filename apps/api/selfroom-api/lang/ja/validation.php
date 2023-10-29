@@ -169,7 +169,17 @@ return [
       'country' => '国名',
       'role' => '役職',
       'email' => 'メールアドレス',
-      'description' => 'プロフィール'
+      'description' => 'プロフィール',
+      'roles' => 'ロール',
+      'content' => '内容',
+      'chatRoomName' => 'ルーム名',
+      'chatRoomCategories' => 'ルームカテゴリー',
+      'coverPhoto' => 'カバー写真',
+      'roomKey' => 'ルームキー',
+      'keyword' => 'ルームキー',
+      'roomCategoryName' => 'カテゴリー名',
+      'roles.*' => ':positionつ目のロール',
+      'chatRoomCategories.*' => ':positionつ目のカテゴリー'
     ],
 
 ];

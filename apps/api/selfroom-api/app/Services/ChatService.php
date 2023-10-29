@@ -17,7 +17,7 @@ class ChatService
 {
   public function find(FindChat $usecase, string $chat_id, string $chat_room_id)
   {
-    return new ChatResource($usecase->handle($chat_id));
+    return new ChatResource($usecase->handle($chat_id, $chat_room_id));
   }
 
   public function get(

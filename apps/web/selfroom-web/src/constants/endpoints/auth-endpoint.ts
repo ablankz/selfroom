@@ -19,7 +19,8 @@ export const AUTH_ENDPOINTS = {
         nickname: 'テストユーザー',
         loginId: 'test_user',
         password: 'test_user',
-        confirmPassword: 'test_user'
+        confirmPassword: 'test_user',
+        profilePhoto: 'This type is not supported'
       },
     },
     me: {
