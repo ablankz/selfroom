@@ -1,3 +1,5 @@
+import { GET_COMMON_PARAMS, GET_OPT_PARAMS } from '../common-params';
+
 export const ROLES_ENDPOINTS = {
   roles: {
     find: {
@@ -11,6 +13,11 @@ export const ROLES_ENDPOINTS = {
       method: 'GET',
       url: '/roles',
       comment: 'Retrieving the role list',
+      defaultParam: {
+        ...GET_COMMON_PARAMS,
+        ...GET_OPT_PARAMS,
+        order: 'name'
+      },
     },
   },
 };
