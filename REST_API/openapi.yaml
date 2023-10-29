@@ -6,7 +6,6 @@ info:
     # selfroomのwebAPI設計
     ## REST API 設計レベル
     - クライアント/サーバー
-      - とりあえずwebSocketなどの使用予定はないのでこれに準拠
     - 階層化システム
       - web, ap, dbは徹底。
       - ただし今回は、リソースの問題上、階層化とまではいえないかも、、
@@ -107,7 +106,7 @@ info:
     name: Hayashi Kenta
     email: hayaken3007@i.softbank.jp
 servers:
-  - url: http://api.selfroom.net:{port}
+  - url: http://api.selfroom.net:{port}/api
     description: "開発環境"
     variables:
       port:
@@ -118,89 +117,60 @@ servers:
 tags:
   - name: "auth"
     description: 認証に関する操作
-  - name: "clients"
-    description: クライアントに関するCRUD
-  - name: "shops"
-    description: ショップに関するCRUD
-  - name: "partners"
-    description: パートナーに関するCRUD
-  - name: "roles"
-    description: ロールに関するCRUD
-  - name: "mileages"
-    description: マイレージに関するCRUD
-  - name: "runnings"
-    description: ランニングに関するCRUD
-  - name: "pictures"
-    description: ピクチャーに関するCRUD
-  - name: "permissions"
-    description: パーミッションに関するCRUD
-  - name: "advertisements"
-    description: 広告に関するCRUD
-  - name: "coupons"
-    description: クーポンに関するCRUD
 paths:
   /auth/login:
     $ref: "./paths/auth.yaml#/auth/login"
-  /auth/register:
-    $ref: "./paths/auth.yaml#/auth/register"
   /auth/logout:
     $ref: "./paths/auth.yaml#/auth/logout"
-  /auth/user:
-    $ref: "./paths/auth.yaml#/auth/user"
-  /auth/refresh:
-    $ref: "./paths/auth.yaml#/auth/refresh"
-  /auth/{provider}:
-    $ref: "./paths/auth.yaml#/auth/providerLogin"
-  /clients:
-    $ref: "./paths/clients.yaml#/clients"
-  /clients/{client_id}:
-    $ref: "./paths/clients.yaml#/clients_{client_id}"
-  /shops:
-    $ref: "./paths/shops.yaml#/shops"
-  /shops/{shop_id}:
-    $ref: "./paths/shops.yaml#/shops_{shop_id}"
-  /partners:
-    $ref: "./paths/partners.yaml#/partners"
-  /partners/{partner_id}:
-    $ref: "./paths/partners.yaml#/partners_{partner_id}"
-  /roles:
-    $ref: "./paths/roles.yaml#/roles"
-  /roles/{role_id}:
-    $ref: "./paths/roles.yaml#/roles_{role_id}"
-  /mileages:
-    $ref: "./paths/mileages.yaml#/mileages"
-  /mileages/{mileage_id}:
-    $ref: "./paths/mileages.yaml#/mileages_{mileage_id}"
-  /runnings:
-    $ref: "./paths/runnings.yaml#/runnings"
-  /runnings/{running_id}:
-    $ref: "./paths/runnings.yaml#/runnings_{running_id}"
-  /pictures:
-    $ref: "./paths/pictures.yaml#/pictures"
-  /pictures/{picture_id}:
-    $ref: "./paths/pictures.yaml#/pictures_{picture_id}"
-  /permissions:
-    $ref: "./paths/permissions.yaml#/permissions"
-  /permissions/{permission_id}:
-    $ref: "./paths/permissions.yaml#/permissions_{permission_id}"
-  /advertisements:
-    $ref: "./paths/advertisements.yaml#/advertisements"
-  /advertisements/{advertisement_id}:
-    $ref: "./paths/advertisements.yaml#/advertisements_{advertisement_id}"
-  /coupons:
-    $ref: "./paths/coupons.yaml#/coupons"
-  /coupons/{coupon_id}:
-    $ref: "./paths/coupons.yaml#/coupons_{coupon_id}"
+  /auth/me:
+    $ref: "./paths/auth.yaml#/auth/me"
+  # /auth/refresh:
+  #   $ref: "./paths/auth.yaml#/auth/refresh"
+  # /auth/{provider}:
+  #   $ref: "./paths/auth.yaml#/auth/providerLogin"
+  /users:
+    $ref: "./paths/users.yaml#/users"
+  # /clients:
+  #   $ref: "./paths/clients.yaml#/clients"
+  # /clients/{client_id}:
+  #   $ref: "./paths/clients.yaml#/clients_{client_id}"
+  # /shops:
+  #   $ref: "./paths/shops.yaml#/shops"
+  # /shops/{shop_id}:
+  #   $ref: "./paths/shops.yaml#/shops_{shop_id}"
+  # /partners:
+  #   $ref: "./paths/partners.yaml#/partners"
+  # /partners/{partner_id}:
+  #   $ref: "./paths/partners.yaml#/partners_{partner_id}"
+  # /roles:
+  #   $ref: "./paths/roles.yaml#/roles"
+  # /roles/{role_id}:
+  #   $ref: "./paths/roles.yaml#/roles_{role_id}"
+  # /mileages:
+  #   $ref: "./paths/mileages.yaml#/mileages"
+  # /mileages/{mileage_id}:
+  #   $ref: "./paths/mileages.yaml#/mileages_{mileage_id}"
+  # /runnings:
+  #   $ref: "./paths/runnings.yaml#/runnings"
+  # /runnings/{running_id}:
+  #   $ref: "./paths/runnings.yaml#/runnings_{running_id}"
+  # /pictures:
+  #   $ref: "./paths/pictures.yaml#/pictures"
+  # /pictures/{picture_id}:
+  #   $ref: "./paths/pictures.yaml#/pictures_{picture_id}"
+  # /permissions:
+  #   $ref: "./paths/permissions.yaml#/permissions"
+  # /permissions/{permission_id}:
+  #   $ref: "./paths/permissions.yaml#/permissions_{permission_id}"
+  # /advertisements:
+  #   $ref: "./paths/advertisements.yaml#/advertisements"
+  # /advertisements/{advertisement_id}:
+  #   $ref: "./paths/advertisements.yaml#/advertisements_{advertisement_id}"
+  # /coupons:
+  #   $ref: "./paths/coupons.yaml#/coupons"
+  # /coupons/{coupon_id}:
+  #   $ref: "./paths/coupons.yaml#/coupons_{coupon_id}"
 components:
-  schemas:        
-    # EntityDataSuccess:
-    #   $ref: "./components/schemas/entity-data-success.yaml#/EntityDataSuccess"        
-    NoDataSuccess:
-      $ref: "./components/schemas/no-data-success.yaml#/NoDataSuccess"      
-    RequestError:
-      $ref: "./components/schemas/request-error.yaml#/RequestError"
-    ServerError:
-      $ref: "./components/schemas/server-error.yaml#/ServerError"
   responses:
     4XX-BadRequestResponse:
       $ref: "./components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"

@@ -1,0 +1,38 @@
+LimitParam: 
+  name: limit
+  in: query
+  description: 取得するデータ数の指定
+  schema:
+    type: integer
+    default: 100
+OffsetParam:
+  name: offset
+  in: query
+  description: 取得するデータのオフセット
+  schema:
+    type: integer
+    default: 0
+OrderOptParam:
+  name: order_opt
+  in: query
+  description: ソートする順序
+  schema:
+    type: string
+    enum: ["asc", "desc"]
+    default: "asc"
+WithTotalCountParam: 
+  name: total_count
+  in: query
+  description: 合計のデータ数付与
+  schema:
+    type: string
+    enum: ["with", "without"]
+    default: "with"
+WithoutTotalCountParam: 
+  name: total_count
+  in: query
+  description: 合計のデータ数付与
+  schema:
+    type: string
+    enum: ["with", "without"]
+    default: "without"

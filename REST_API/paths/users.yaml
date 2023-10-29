@@ -1,0 +1,141 @@
+users:
+  # get:
+  #   summary: 複数ユーザーの取得
+  #   description: 複数ユーザーの取得
+  #   security: []
+  #   tags: ["users"]
+  #   parameters:
+  #     - $ref: '../components/parameters/get-common-parameter.yaml#/LimitParam'
+  #     - $ref: '../components/parameters/get-common-parameter.yaml#/OffsetParam'
+  #     - $ref: '../components/parameters/get-common-parameter.yaml#/OrderOptParam'
+  #     - name: order
+  #       in: query
+  #       description: オーダー項目
+  #       schema:
+  #         type: string
+  #         enum: ["create", "name", "follower"]
+  #         default: "create"
+  #     - $ref: '../components/parameters/get-common-parameter.yaml#/WithTotalCountParam'
+  #   responses:
+  #     "200":
+  #       description: Success Operation
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: "../components/schemas/permissions/permissions.yaml#/Permissions"
+  #     "4XX":
+  #       $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+  #     "5XX":
+  #       $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+  post:
+      summary: ユーザーの新規登録
+      description: ユーザーの新規登録
+      security: []
+      tags: ["users"]
+      requestBody:
+        description: 新規登録データ
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [loginId, password, passwordConfirmation, nickname]
+              properties:
+                loginId: { type: string, default: "admin@admin.admin" }
+                password: { type: string, format: "password", default: "admintest" }
+                passwordConfirmation: { type: string, format: "password", default: "admintest" }
+                nickname: { type: string, default: "管理者 ユーザー" }
+      responses:
+        "200":
+          description: Success Operation
+          content:
+            application/json:
+              schema:
+                $ref: "../components/schemas/auth/jwt-token.yaml#/JwtToken"
+        "4XX":
+          $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+        "5XX":
+          $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+
+# users_{user_id}:
+#   get:
+#     summary: パーミッションの取得
+#     description: パーミッションの取得
+#     schema: { type: integer }
+#     parameters:
+#       - $ref: "#/components/parameters/PermissionId"
+#     security: []
+#     tags: ["permissions"]
+#     responses:
+#       "200":
+#         description: Success Operation
+#         content:
+#           application/json:
+#             schema:
+#               $ref: "../components/schemas/permissions/permission.yaml#/Permission"
+#       "4XX":
+#         $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+#       "5XX":
+#         $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+#   put:
+#     summary: パーミッションの更新
+#     description: パーミッションの更新
+#     schema: { type: integer }
+#     parameters:
+#       - $ref: "#/components/parameters/PermissionId"
+#     requestBody:
+#       description: 更新データ
+#       required: true
+#       content:
+#         application/json:
+#           schema:
+#             $ref: "#/components/schema/Permission"
+#     security: []
+#     tags: ["permissions"]
+#     responses:
+#       "200":
+#         description: Success Operation
+#         content:
+#           application/json:
+#             schema:
+#               $ref: "../components/schemas/no-data-success.yaml#/NoDataSuccess"
+#       "4XX":
+#         $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+#       "5XX":
+#         $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+#   delete:
+#     summary: パーミッションの削除
+#     description: パーミッションの削除
+#     schema: { type: integer }
+#     parameters:
+#       - $ref: "#/components/parameters/PermissionId"
+#     security: []
+#     tags: ["permissions"]
+#     responses:
+#       "200":
+#         description: Success Operation
+#         content:
+#           application/json:
+#             schema:
+#               $ref: "../components/schemas/no-data-success.yaml#/NoDataSuccess"
+#       "4XX":
+#         $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+#       "5XX":
+#         $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+
+# components:
+#   parameters:
+#     PermissionId:
+#       name: permission_id
+#       in: path
+#       description: パーミッションID
+#       required: true
+#       schema:
+#         type: integer
+#   schema:
+#     Permission:
+#       description: パーミッション送信データ
+#       type: object
+#       required: [name]
+#       properties:
+#         name: { type: string, default: "admin" }

@@ -1,0 +1,10 @@
+AuthUser:
+  type: object
+  required: [accountId, userId, loginId, isActive, createdAt, updatedAt]
+  properties:
+    accountId: { type: integer, example: 100, readOnly: true } 
+    userId: { type: integer, example: 200, readOnly: true }
+    loginId: { type: string, example: "admin", nullable: true }
+    isActive: { type: boolean, example: true }
+    createdAt: { type: string, format: date, example: "2023-09-24T17:00:00+09:00" }
+    updatedAt: { type: string, format: date, example: "2023-09-24T17:00:00+09:00" }

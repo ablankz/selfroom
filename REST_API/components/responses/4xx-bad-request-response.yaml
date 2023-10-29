@@ -1,5 +1,5 @@
 4XX-BadRequestResponse:
-  description: リクエストエラー
+  description: リクエストエラーレスポンスデータ
   content:
     application/json:
       schema:
