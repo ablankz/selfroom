@@ -155,6 +155,10 @@ paths:
     $ref: "./paths/room-category.yaml#/room-categories"
   /room-categories/{room_category_id}:
     $ref: "./paths/room-category.yaml#/room-categories_{room_category_id}"
+  /roles:
+    $ref: "./paths/role.yaml#/roles"
+  /roles/{role_id}:
+    $ref: "./paths/role.yaml#/roles_{role_id}"
 components:
   responses:
     4XX-BadRequestResponse:
