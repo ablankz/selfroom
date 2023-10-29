@@ -15,6 +15,15 @@ class StoreChatRoomRequest extends ApiRequest
     return true;
   }
 
+  public function validationData()
+  {
+    return [
+      'chatRoomName' => $this->get('name'),
+      'chatRoomCategories' => $this->get('categories'),
+    ];
+  }
+
+
   /**
    * Get the validation rules that apply to the request.
    *
@@ -23,9 +32,9 @@ class StoreChatRoomRequest extends ApiRequest
   public function rules(): array
   {
     return [
-      'name' => ['required', 'string'],
-      'categories' => ['required', 'array', 'min:'. RoomTags::ROOM_MIN_TAGS, 'max:' . RoomTags::ROOM_MAX_TAGS ],
-      'categories.*' => ['numeric', 'integer', 'exists:m_room_categories,room_category_id'],
+      'chatRoomName' => ['required', 'string'],
+      'chatRoomCategories' => ['required', 'array', 'min:' . RoomTags::ROOM_MIN_TAGS, 'max:' . RoomTags::ROOM_MAX_TAGS],
+      'chatRoomCategories.*' => ['numeric', 'integer', 'exists:m_room_categories,room_category_id'],
       'coverPhoto' => ['file', 'max:10240', 'mimes:jpg,jpeg,png,gif'],
       'roomKey' => ['string']
     ];

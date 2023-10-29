@@ -186,11 +186,19 @@ return [
       'password' => 'Passsword',
       'nickname' => 'Nickname',
       'profilePhoto' => 'Profile photo',
-      'school' => 'schhol',
-      'country' => 'country',
-      'role' => 'role',
-      'email' => 'email',
-      'description' => 'profile'
+      'school' => 'School',
+      'country' => 'Country',
+      'role' => 'Role',
+      'email' => 'Email',
+      'description' => 'Profile',
+      'roles' => 'Roles',
+      'content' => 'Content',
+      'chatRoomName' => 'Room Name',
+      'chatRoomCategories' => 'Room Categories',
+      'coverPhoto' => 'Cover Photo',
+      'roomKey' => 'Room Key',
+      'keyword' => 'Room Key',
+      'roomCategoryName' => 'Category Name'
     ],
 
 ];
