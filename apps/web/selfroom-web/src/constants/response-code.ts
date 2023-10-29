@@ -18,111 +18,111 @@ type MessageType = {
 
 export const API_RESPONSE_HANDLING: MessageType = {
   [API_RESPONSE_TYPES.Success]: {
-    message: 'OK',
+    message: 'success-response',
     level: RESPONSE_LEVEL.None,
   },
   [API_RESPONSE_TYPES.System]: {
-    message: 'システム上の不具合がありました',
+    message: 'system-error-response',
     level: RESPONSE_LEVEL.Toast,
   },
   [API_RESPONSE_TYPES.Validation]: {
-    message: '入力情報に誤りがあります',
+    message: 'validation-error-response',
     level: RESPONSE_LEVEL.None,
   },
   [API_RESPONSE_TYPES.Permission]: {
-    message: '許可されていないアクションです',
+    message: 'permission-error-response',
     level: RESPONSE_LEVEL.None,
   },
   [API_RESPONSE_TYPES.Unauthorized]: {
-    message: '認証されていないユーザーです',
+    message: 'unauthorized-error-response',
     level: RESPONSE_LEVEL.RequestRefreshToken,
   },
   [API_RESPONSE_TYPES.NotFound]: {
-    message: '指定されたエンドポイントが見つかりません',
+    message: 'not-found-error-response',
     level: RESPONSE_LEVEL.None,
   },
   [API_RESPONSE_TYPES.Unauthenticated]: {
-    message: '認証エラーです',
+    message: 'unauthenticated-error-response',
     level: RESPONSE_LEVEL.None,
   },
   [API_RESPONSE_TYPES.PostTooLarge]: {
-    message: '許可される最大サイズを超えたデータが送信されました',
+    message: 'post-too-large-error-response',
     level: RESPONSE_LEVEL.None,
   },
   [API_RESPONSE_TYPES.ThrottleRequests]: {
-    message: '短時間に複数のリクエストを受け付けました',
+    message: 'throttle-requests-error-response',
     level: RESPONSE_LEVEL.Toast,
   },
   [API_RESPONSE_TYPES.InvalidSignature]: {
-    message: '署名の有効期限切れです',
+    message: 'invalid-signature-error-response',
     level: RESPONSE_LEVEL.Toast,
   },
   [API_RESPONSE_TYPES.StreamedResponse]: {
-    message: 'ファイルのダウンロードに失敗しました',
+    message: 'streamed-response-error-response',
     level: RESPONSE_LEVEL.Toast,
   },
   [API_RESPONSE_TYPES.TokenMismatch]: {
-    message: 'csrfトークンが一致しません',
+    message: 'token-mismatch-error-response',
     level: RESPONSE_LEVEL.Modal,
   },
   [API_RESPONSE_TYPES.MethodNotAllowed]: {
-    message: '指定のhttpメソッドはこのエンドポイントでサポートされていません',
+    message: 'method-not-allowed-error-response',
     level: RESPONSE_LEVEL.None,
   },
   [API_RESPONSE_TYPES.NotFoundModel]: {
-    message: '対象のモデルが見つかりません',
+    message: 'not-found-model-error-response',
     level: RESPONSE_LEVEL.None,
   },
   [API_RESPONSE_TYPES.TokenBlacklisted]: {
-    message: 'すでに削除されたトークンです',
+    message: 'token-blacklisted-error-response',
     level: RESPONSE_LEVEL.Transition,
   },
   [API_RESPONSE_TYPES.SocialLoginError]: {
-    message: 'ソーシャルログインに失敗しました',
+    message: 'social-login-error-response',
     level: RESPONSE_LEVEL.Toast,
   },
   [API_RESPONSE_TYPES.ModelConflict]: {
-    message: 'すでに存在するモデルです',
+    message: 'model-conflict-error-response',
     level: RESPONSE_LEVEL.None,
   },
   [API_RESPONSE_TYPES.GuestGuard]: {
-    message: 'すでにログイン済みのユーザーです',
+    message: 'guest-guard-error-response',
     level: RESPONSE_LEVEL.None,
   },
   [API_RESPONSE_TYPES.UserOnly]: {
-    message: '一般ユーザーのみ許可されているアクションです',
+    message: 'user-only-error-response',
     level: RESPONSE_LEVEL.Toast,
   },
   [API_RESPONSE_TYPES.ThrottleLoginRequests]: {
-    message: '複数回ログインの試行に失敗しました',
+    message: 'throttle-login-requests-error-response',
     level: RESPONSE_LEVEL.None,
   },
   [API_RESPONSE_TYPES.FailedUpload]: {
-    message: 'ファイルのアップロードに失敗しました',
+    message: 'failed-upload-error-response',
     level: RESPONSE_LEVEL.Toast,
   },
   [API_RESPONSE_TYPES.AuthNotFound]: {
-    message: '認証ユーザーが見つかりません',
+    message: 'auth-not-found-error-response',
     level: RESPONSE_LEVEL.None,
   },
   [API_RESPONSE_TYPES.RefreshTokenExpired]: {
-    message: 'リフレッシュトークンの有効期限が切れています',
+    message: 'refresh-token-expired-error-response',
     level: RESPONSE_LEVEL.Transition,
   },
   [API_RESPONSE_TYPES.AlreadyLogout]: {
-    message: 'すでにログアウト済みです',
+    message: 'already-logout-error-response',
     level: RESPONSE_LEVEL.Transition,
   },
   [API_RESPONSE_TYPES.SqlQueryError]: {
-    message: 'データベース上でエラーが発生しました',
+    message: 'sql-query-error-response',
     level: RESPONSE_LEVEL.None,
   },
   [API_RESPONSE_TYPES.AlreadyNotExist]: {
-    message: 'すでに削除されているデータです',
+    message: 'already-not-exist-error-response',
     level: RESPONSE_LEVEL.None,
   },
   [API_RESPONSE_TYPES.NotMatchKey]: {
-    message: 'キーに誤りがあります',
+    message: 'not-match-key-error-response',
     level: RESPONSE_LEVEL.Toast,
   },
 } as const;
