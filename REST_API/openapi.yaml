@@ -124,10 +124,10 @@ paths:
     $ref: "./paths/auth.yaml#/auth/logout"
   /auth/me:
     $ref: "./paths/auth.yaml#/auth/me"
-  # /auth/refresh:
-  #   $ref: "./paths/auth.yaml#/auth/refresh"
-  # /auth/{provider}:
-  #   $ref: "./paths/auth.yaml#/auth/providerLogin"
+  /auth/refresh:
+    $ref: "./paths/auth.yaml#/auth/refresh"
+  /auth/{provider}:
+    $ref: "./paths/auth.yaml#/auth/providerLogin"
   /users:
     $ref: "./paths/users.yaml#/users"
   # /clients:

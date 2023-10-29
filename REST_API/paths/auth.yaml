@@ -49,45 +49,37 @@ auth:
           $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
         "5XX":
           $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
-  # refresh:
-  #   post:
-  #     summary: リフレッシュトークンの発行
-  #     description: リフレッシュトークンの発行
-  #     security: []
-  #     tags: ["auth"]
-  #     responses:
-  #       "200":
-  #         description: Success Operation
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: "../components/schemas/auth/jwt-token.yaml#/JwtToken"
-  #       "4XX":
-  #         $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
-  #       "5XX":
-  #         $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
-  # providerLogin:
-  #   get:
-  #     summary: ソーシャルログインのためのリダイレクトurl取得
-  #     description: ソーシャルログインのためのリダイレクトurl取得
-  #     security: []
-  #     tags: ["auth"]
-  #     parameters: 
-  #       - name: provider
-  #         in: path 
-  #         description: プロバイダ名
-  #         required: true
-  #         schema:
-  #           type: string
-  #           enum: [line, google]
-  #     responses:
-  #       "200":
-  #         description: Success Operation
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: "../components/schemas/auth/redirect-url.yaml#/RedirectUrl"
-  #       "4XX":
-  #         $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
-  #       "5XX":
-  #         $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+  refresh:
+    post:
+      summary: リフレッシュトークンの発行
+      description: リフレッシュトークンの発行
+      # security: []
+      tags: ["auth"]
+      responses:
+        "200":
+          $ref: "../components/responses/endpoints/auth.yaml#/JwtTokenResponse"
+        "4XX":
+          $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+        "5XX":
+          $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
+  providerLogin:
+    get:
+      summary: ソーシャルログインのためのリダイレクトurl取得
+      description: ソーシャルログインのためのリダイレクトurl取得
+      # security: []
+      tags: ["auth"]
+      parameters:
+        - name: provider
+          in: path
+          description: プロバイダ名
+          required: true
+          schema:
+            type: string
+            enum: [line, google]
+      responses:
+        "200":
+          $ref: "../components/responses/endpoints/auth.yaml#/RedirectUrlResponse"
+        "4XX":
+          $ref: "../components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
+        "5XX":
+          $ref: "../components/responses/5xx-server-error-response.yaml#/5XX-ServerErrorResponse"
