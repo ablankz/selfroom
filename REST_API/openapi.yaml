@@ -167,6 +167,14 @@ paths:
     $ref: "./paths/chat.yaml#/chats_{chat_room_id}"
   /chat-rooms/{chat_room_id}/chats/{chat_id}:
     $ref: "./paths/chat.yaml#/chats_{chat_room_id}_{chat_id}"
+  /chat-rooms/in/{chat_room_id}:
+    $ref: "./paths/room-visit.yaml#/room-in_{chat_room_id}"
+  /chat-rooms/out:
+    $ref: "./paths/room-visit.yaml#/room-out"
+  /chat-rooms/{chat_room_id}/visitors:
+    $ref: "./paths/room-visit.yaml#/visitors_{chat_room_id}"
+  /chat-rooms/{chat_room_id}/users:
+    $ref: "./paths/room-visit.yaml#/users_{chat_room_id}"
 components:
   responses:
     4XX-BadRequestResponse:
