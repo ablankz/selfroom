@@ -86,7 +86,6 @@ info:
       - 基本的には200を返す
       - ヘッダーのLocationに新しいリソースへのurlを含める201(Created)は多分使用しない。
       - 非同期ジョブを受け付けたことを示す202(Accepted)は機会があればジョブをキューに流したときなどに返す。
-      - 204(No Content)は通常、deleteやputなど返すデータがないとき、これを
     - 3xx
       - apiサーバーなので定義しない
     - 4xx
@@ -97,7 +96,7 @@ info:
       - サーバー上のエラーもしくは予期しないエラー
       - 基本的には定義するというよりphpの標準エラーや予期しないエラーで返る
     ## 規定ヘッダー
-    - アプリケーション独自のヘッダーは今の所考えてない
+    - `X-Sr-Language`により言語を指定。現在は日本語(ja)と英語(en)のみサポート
     ## 認証
     - 基本的にはjwtによる認証
     - lineとgoogleによるソーシャル認証もあるが、どちらにせよapi側は、認証方法に依らずjwtのトークンを返却
@@ -117,6 +116,8 @@ servers:
 tags:
   - name: "auth"
     description: 認証に関する操作
+  - name: "users"
+    description: ユーザー周りのCRUD
 paths:
   /auth/login:
     $ref: "./paths/auth.yaml#/auth/login"
@@ -132,46 +133,14 @@ paths:
     $ref: "./paths/users.yaml#/users"
   /users/{user_id}:
     $ref: "./paths/users.yaml#/users_{user_id}"
-  # /clients:
-  #   $ref: "./paths/clients.yaml#/clients"
-  # /clients/{client_id}:
-  #   $ref: "./paths/clients.yaml#/clients_{client_id}"
-  # /shops:
-  #   $ref: "./paths/shops.yaml#/shops"
-  # /shops/{shop_id}:
-  #   $ref: "./paths/shops.yaml#/shops_{shop_id}"
-  # /partners:
-  #   $ref: "./paths/partners.yaml#/partners"
-  # /partners/{partner_id}:
-  #   $ref: "./paths/partners.yaml#/partners_{partner_id}"
-  # /roles:
-  #   $ref: "./paths/roles.yaml#/roles"
-  # /roles/{role_id}:
-  #   $ref: "./paths/roles.yaml#/roles_{role_id}"
-  # /mileages:
-  #   $ref: "./paths/mileages.yaml#/mileages"
-  # /mileages/{mileage_id}:
-  #   $ref: "./paths/mileages.yaml#/mileages_{mileage_id}"
-  # /runnings:
-  #   $ref: "./paths/runnings.yaml#/runnings"
-  # /runnings/{running_id}:
-  #   $ref: "./paths/runnings.yaml#/runnings_{running_id}"
-  # /pictures:
-  #   $ref: "./paths/pictures.yaml#/pictures"
-  # /pictures/{picture_id}:
-  #   $ref: "./paths/pictures.yaml#/pictures_{picture_id}"
-  # /permissions:
-  #   $ref: "./paths/permissions.yaml#/permissions"
-  # /permissions/{permission_id}:
-  #   $ref: "./paths/permissions.yaml#/permissions_{permission_id}"
-  # /advertisements:
-  #   $ref: "./paths/advertisements.yaml#/advertisements"
-  # /advertisements/{advertisement_id}:
-  #   $ref: "./paths/advertisements.yaml#/advertisements_{advertisement_id}"
-  # /coupons:
-  #   $ref: "./paths/coupons.yaml#/coupons"
-  # /coupons/{coupon_id}:
-  #   $ref: "./paths/coupons.yaml#/coupons_{coupon_id}"
+  /users/{user_id}/visited-rooms:
+    $ref: "./paths/room-visit.yaml#/visited-rooms_{user_id}"
+  /users/{user_id}/favorites:
+    $ref: "./paths/favorite.yaml#/favorites_{user_id}"
+  /users/{user_id}/followees:
+    $ref: "./paths/follow.yaml#/followees_{user_id}"
+  /users/{user_id}/followers:
+    $ref: "./paths/follow.yaml#/followers_{user_id}"
 components:
   responses:
     4XX-BadRequestResponse:
