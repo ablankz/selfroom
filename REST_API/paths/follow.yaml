@@ -2,7 +2,6 @@ followees_{user_id}:
   get:
     summary: ユーザーのフォロー取得
     description: ユーザーのフォロー取得
-    # security: []
     tags: ["follows"]
     parameters:
       - $ref: "../components/parameters/common-header.yaml#/LangHeader"
@@ -32,7 +31,6 @@ followers_{user_id}:
   get:
     summary: ユーザーのフォロワー取得
     description: ユーザーのフォロワー取得
-    # security: []
     tags: ["follows"]
     parameters:
       - $ref: "../components/parameters/common-header.yaml#/LangHeader"
@@ -61,7 +59,6 @@ follows_{user_id}:
   post:
     summary: ユーザーのフォロー
     description: ユーザーのフォロー
-    # security: []
     tags: ["follows"]
     parameters:
       - $ref: "../components/parameters/common-header.yaml#/LangHeader"
@@ -76,7 +73,6 @@ follows_{user_id}:
   delete:
     summary: ユーザーのフォロー解除
     description: ユーザーのフォロー解除
-    # security: []
     tags: ["follows"]
     parameters:
       - $ref: "../components/parameters/common-header.yaml#/LangHeader"

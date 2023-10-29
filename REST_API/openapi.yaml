@@ -175,6 +175,10 @@ paths:
     $ref: "./paths/room-visit.yaml#/visitors_{chat_room_id}"
   /chat-rooms/{chat_room_id}/users:
     $ref: "./paths/room-visit.yaml#/users_{chat_room_id}"
+  /chat-rooms/{chat_room_id}/favors:
+    $ref: "./paths/favorite.yaml#/favors_{chat_room_id}"
+  /chat-rooms/{chat_room_id}/favorites:
+    $ref: "./paths/favorite.yaml#/favorites_{chat_room_id}"
 components:
   responses:
     4XX-BadRequestResponse:
