@@ -177,7 +177,9 @@ return [
       'coverPhoto' => 'カバー写真',
       'roomKey' => 'ルームキー',
       'keyword' => 'ルームキー',
-      'roomCategoryName' => 'カテゴリー名'
+      'roomCategoryName' => 'カテゴリー名',
+      'roles.*' => ':positionつ目のロール',
+      'chatRoomCategories.*' => ':positionつ目のカテゴリー'
     ],
 
 ];

@@ -198,7 +198,9 @@ return [
       'coverPhoto' => 'Cover Photo',
       'roomKey' => 'Room Key',
       'keyword' => 'Room Key',
-      'roomCategoryName' => 'Category Name'
+      'roomCategoryName' => 'Category Name',
+      'roles.*' => "Role :position",
+      'chatRoomCategories.*' => "Category :position"
     ],
 
 ];

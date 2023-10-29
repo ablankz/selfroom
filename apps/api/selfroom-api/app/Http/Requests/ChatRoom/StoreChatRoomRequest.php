@@ -15,6 +15,32 @@ class StoreChatRoomRequest extends ApiRequest
     return true;
   }
 
+  protected function prepareForValidation()
+  {
+    parent::prepareForValidation();
+
+    $categories = $this->get('categories');
+    $categoriesValue = $categories;
+
+    if (is_string($categories)) {
+      $categoriesArray = explode(",", $categories);
+
+      $isNumeric = true;
+      foreach ($categoriesArray as $category) {
+        if (!is_numeric($category)) {
+          $isNumeric = false;
+          break;
+        }
+      }
+
+      if ($isNumeric) {
+        $categoriesValue = array_map('intval', $categoriesArray);
+      }
+    }
+
+    $this->merge(['categories' => array_unique($categoriesValue)]);
+  }
+
   public function validationData()
   {
     return [
