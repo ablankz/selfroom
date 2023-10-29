@@ -92,5 +92,3 @@ Route::prefix('chat-rooms')->group(function () {
     Route::get('favors', [\App\Http\Controllers\FavoriteController::class, 'getFavors'])->middleware(['auth:jwt']);
   });
 });
-
-// websocket

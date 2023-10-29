@@ -1,3 +1,5 @@
+import { GET_COMMON_PARAMS, GET_OPT_PARAMS } from '../common-params';
+
 export const ADMINS_ENDPOINTS = {
   admins: {
     find: {
@@ -11,6 +13,10 @@ export const ADMINS_ENDPOINTS = {
       method: 'GET',
       url: '/admins',
       comment: 'Retrieving the administrator list',
+      defaultParam: {
+        ...GET_COMMON_PARAMS,
+        ...GET_OPT_PARAMS,
+      },
     },
     create: {
       urlKey: '/admins',
@@ -22,6 +28,7 @@ export const ADMINS_ENDPOINTS = {
         loginId: 'admin_user',
         password: 'admin_user',
         confirmPassword: 'admin_user',
+        profilePhoto: 'This type is not supported'
       },
     },
     update: {
