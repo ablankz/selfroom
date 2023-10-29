@@ -151,6 +151,10 @@ paths:
     $ref: "./paths/admin-role.yaml#/permissions_{admin_id}"
   /admins/{admin_id}/permissions/all:
     $ref: "./paths/admin-role.yaml#/permissions_{admin_id}_all"
+  /room-categories:
+    $ref: "./paths/room-category.yaml#/room-categories"
+  /room-categories/{room_category_id}:
+    $ref: "./paths/room-category.yaml#/room-categories_{room_category_id}"
 components:
   responses:
     4XX-BadRequestResponse:
