@@ -141,6 +141,8 @@ paths:
     $ref: "./paths/follow.yaml#/followees_{user_id}"
   /users/{user_id}/followers:
     $ref: "./paths/follow.yaml#/followers_{user_id}"
+  /users/{user_id}/follows:
+    $ref: "./paths/follow.yaml#/follows_{user_id}"
   /admins:
     $ref: "./paths/admin.yaml#/admins"
   /admins/{admin_id}:
