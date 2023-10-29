@@ -159,6 +159,10 @@ paths:
     $ref: "./paths/role.yaml#/roles"
   /roles/{role_id}:
     $ref: "./paths/role.yaml#/roles_{role_id}"
+  /chat-rooms:
+    $ref: "./paths/chat-room.yaml#/chat-rooms"
+  /chat-rooms/{chat_room_id}:
+    $ref: "./paths/chat-room.yaml#/chat-rooms_{chat_room_id}"
 components:
   responses:
     4XX-BadRequestResponse:
