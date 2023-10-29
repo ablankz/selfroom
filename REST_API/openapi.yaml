@@ -118,6 +118,24 @@ tags:
     description: 認証に関する操作
   - name: "users"
     description: ユーザー周りのCRUD
+  - name: "chat-rooms"
+    description: チャットルームに関するCRUD
+  - name: "room-visits"
+    description: ルーム訪問に関するCRUD
+  - name: "room-categories"
+    description: ルームカテゴリーに関するCRUD 
+  - name: "favorites"
+    description: お気に入りに関するCRUD 
+  - name: "follows"
+    description: フォローに関するCRUD 
+  - name: "chats"
+    description: チャットに関するCRUD 
+  - name: "admins"
+    description: 管理者ユーザーに関するCRUD
+  - name: "admin-roles"
+    description: 管理者権限に関するCRUD 
+  - name: "roles"
+    description: 管理者ロールに関するCRUD 
 paths:
   /auth/login:
     $ref: "./paths/auth.yaml#/auth/login"
@@ -180,6 +198,49 @@ paths:
   /chat-rooms/{chat_room_id}/favorites:
     $ref: "./paths/favorite.yaml#/favorites_{chat_room_id}"
 components:
+  schemas:   
+    JwtTokenData:
+      $ref: "./components/schemas/auth/jwt-token.yaml#/JwtToken"
+    RedirectUrlData:
+      $ref: "./components/schemas/auth/redirect-url.yaml#/RedirectUrl"   
+    UserData:
+      $ref: "./components/schemas/user/user.yaml#/User"
+    SimpleUserData:
+      $ref: "./components/schemas/user/simple-user.yaml#/SimpleUser"
+    UserCardData:
+      $ref: "./components/schemas/user/user-card.yaml#/UserCard"
+    VisitorData:
+      $ref: "./components/schemas/user/visitor.yaml#/Visitor"
+    ChatRoomData:
+      $ref: "./components/schemas/chat-room/chat-room.yaml#/ChatRoom"
+    SimpleChatRoomData:
+      $ref: "./components/schemas/chat-room/simple-chat-room.yaml#/SimpleChatRoom"
+    ChatRoomCardData:
+      $ref: "./components/schemas/chat-room/chat-room-card.yaml#/ChatRoomCard"
+    VisitedChatRoomData:
+      $ref: "./components/schemas/chat-room/visited-chat-room.yaml#/VisitedChatRoom"
+    RoomCategoryData:
+      $ref: "./components/schemas/room-category/room-category.yaml#/RoomCategory"
+    SimpleRoomCategoryData:
+      $ref: "./components/schemas/room-category/simple-room-category.yaml#/SimpleRoomCategory"
+    ChatData:
+      $ref: "./components/schemas/chat/chat.yaml#/Chat"
+    SimpleChatData:
+      $ref: "./components/schemas/chat/simple-chat.yaml#/SimpleChat"
+    RoleData:
+      $ref: "./components/schemas/role/role.yaml#/Role"
+    SimpleRoleData:
+      $ref: "./components/schemas/role/simple-role.yaml#/SimpleRole"
+    AdminData:
+      $ref: "./components/schemas/admin/admin.yaml#/Admin"
+    SimpleAdminData:
+      $ref: "./components/schemas/admin/simple-admin.yaml#/SimpleAdmin"
+    NoDataSuccess:
+      $ref: "./components/schemas/no-data-success.yaml#/NoDataSuccess"      
+    RequestError:
+      $ref: "./components/schemas/request-error.yaml#/RequestError"
+    ServerError:
+      $ref: "./components/schemas/server-error.yaml#/ServerError"
   responses:
     4XX-BadRequestResponse:
       $ref: "./components/responses/4xx-bad-request-response.yaml#/4XX-BadRequestResponse"
