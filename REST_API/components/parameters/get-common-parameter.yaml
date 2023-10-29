@@ -36,3 +36,11 @@ WithoutTotalCountParam:
     type: string
     enum: ["with", "without"]
     default: "without"
+CursorPagination:
+  name: pagination
+  in: query
+  description: カーソルページネーション用の取得(limitは無視)
+  schema:
+    type: string
+    enum: ["cursor", "none"]
+    default: "cursor"
