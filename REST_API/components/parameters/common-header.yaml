@@ -1,0 +1,8 @@
+LangHeader: 
+  name: X-Sr-Language
+  in: header
+  description: 使用言語
+  schema:
+    type: string
+    enum: ["ja", "en"]
+    default: "en"
