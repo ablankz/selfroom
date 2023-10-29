@@ -54,7 +54,7 @@ cd selfroom && sudo chmod u+x init-project.sh && ./init-project.sh
 - dbadminとredisは必要に応じて
 
 ```hosts
-127.0.0.1        selfroom.com
+127.0.0.1        me.selfroom.com
 127.0.0.1        api.selfroom.com
 127.0.0.1        dbadmin.selfroom.com
 127.0.0.1        redis.selfroom.com
