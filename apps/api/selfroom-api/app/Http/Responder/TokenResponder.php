@@ -15,7 +15,7 @@ class TokenResponder
 
     return response()->success([
       'accessToken' => $token,
-      // 'tokenType' => 'bearer',
+      'tokenType' => 'bearer',
       'expiresIn' => $ttl
     ])->cookie(Cookie::make(
       'token',
