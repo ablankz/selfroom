@@ -5,7 +5,7 @@ import { paths } from '@/routes/paths';
 import { useLocales } from '@/locales';
 // components
 import SvgColor from '@/components/svg-color';
-import { HOST_OPENAPI } from '@/config-global';
+import { GITHUB_LINK, HOST_OPENAPI } from '@/config-global';
 
 // ----------------------------------------------------------------------
 
@@ -31,6 +31,7 @@ const ICONS = {
   api: icon('ic_api'),
   chat: icon('ic_chat'),
   openapi: icon('ic_openapi'),
+  github: icon('ic_github')
 };
 
 // ----------------------------------------------------------------------
@@ -107,6 +108,11 @@ export function useNavData() {
             title: t('APIDesignDocument'),
             path: HOST_OPENAPI,
             icon: ICONS.openapi,
+          },
+          {
+            title: 'Git Hub',
+            path: GITHUB_LINK,
+            icon: ICONS.github,
           },
         ],
       },
