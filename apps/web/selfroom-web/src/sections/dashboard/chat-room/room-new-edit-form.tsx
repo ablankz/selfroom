@@ -93,6 +93,7 @@ export default function RoomNewEditForm() {
       formData.append('roomKey', data.roomKey || '');
     }
     (data.categories || []).forEach((v: RoomCategory) => {
+      // @ts-ignore
       formData.append('categories[]', v.roomCategoryId);
     });
     mutate(formData);

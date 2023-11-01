@@ -39,8 +39,10 @@ export default function FileThumbnail({
         component="img"
         src={preview}
         onError={e => {
+          // @ts-ignore
           e.target.onError = null; // 下記画像が取得できない場合の無限ループを防ぐため、nullを代入
           const index = uuid ? uuidHash(uuid, 0, 39) : 0;
+          // @ts-ignore
           e.target.src = `${HOST_ASSET}/images/cover/cover_${index}.jpg`;
         }}
         sx={{
