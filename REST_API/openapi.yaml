@@ -112,7 +112,7 @@ servers:
         enum:
           - "80"
           - "443"
-        default: "80"
+        default: "443"
 tags:
   - name: "auth"
     description: 認証に関する操作
