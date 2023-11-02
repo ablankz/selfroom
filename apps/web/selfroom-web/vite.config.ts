@@ -29,11 +29,11 @@ export default ({ mode }) => {
     plugins: [
       react(),
       removeConsole(),
-      strip({
-        // remove all console.log calls
-        include: ['**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx'],
-        functions: ['console.log', 'console.error', 'console.warn'],
-      }),
+      // strip({
+      //   // remove all console.log calls
+      //   include: ['**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx'],
+      //   functions: ['console.log', 'console.error', 'console.warn'],
+      // }),
     ],
     resolve: {
       alias: {
