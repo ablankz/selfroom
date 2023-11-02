@@ -8,7 +8,6 @@ export type ApplicationResponse<T> = {
   errorAttributes: ApplicationErrorAttributes; // バリデーションでエラーがあったときのみ
 };
 
-
 type ApiResponseType =
   (typeof API_RESPONSE_TYPES)[keyof typeof API_RESPONSE_TYPES];
 

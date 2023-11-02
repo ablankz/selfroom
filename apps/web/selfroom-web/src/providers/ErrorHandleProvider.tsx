@@ -4,7 +4,7 @@ import axios from '@/utils/axios';
 import { handleError } from '@/utils/api/handleError';
 import { useSnackbar } from '@/components/snackbar';
 import { useAuthContext } from '@/auth/hooks';
-import { ErrorResponse } from '@/types/response/error-response';
+import { isApplicationErrorResponse } from '@/types/response/error-response';
 import { LoadingScreen } from '@/components/loading-screen';
 import { useLocales } from '@/locales';
 import Echo from 'laravel-echo';
@@ -86,7 +86,12 @@ export const ErrorHandleProvider = ({ children }: Props) => {
         // 成功時(200代)のレスポンスハンドリング
         return response;
       },
-      async (error: AxiosError<ErrorResponse>) => {
+      async (error: AxiosError<any>) => {
+        if(!isApplicationErrorResponse(error)){
+          const message = 'An unexpected error has occurred';
+          displayErrorToast(message);
+          return Promise.reject(error);
+        }
         // エラーハンドリング
         const message = await handleError(error.response?.data, {
           logoutForcibly,
