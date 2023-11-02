@@ -234,7 +234,7 @@ export default function RoomNewEditForm() {
           loading={isSubmitting}
           sx={{ ml: 2 }}
         >
-          {'Create Post'}
+          {t('Create Room')}
         </LoadingButton>
       </Grid>
     </>
