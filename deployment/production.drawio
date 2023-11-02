@@ -1,9 +1,9 @@
-<mxfile host="app.diagrams.net" modified="2023-11-02T16:57:49.261Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" etag="B11PKL2FvBb0RamUPsYJ" version="22.0.8" type="github">
+<mxfile host="app.diagrams.net" modified="2023-11-02T17:03:33.106Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" etag="vB3yrfrFz7IcRkPeKJiC" version="22.0.8" type="github">
   <diagram name="ページ1" id="VxB_GVobbM8i8LAS6BF4">
     <mxGraphModel dx="1364" dy="803" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
-        <mxCell id="1" parent="0" />
+        <mxCell id="1" style="locked=1;" parent="0" />
         <mxCell id="681i_KaweEwo4j3Ua619-20" value="" style="fillColor=#dae8fc;strokeColor=#6c8ebf;dashed=1;verticalAlign=top;fontStyle=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="140" y="500" width="430" height="60" as="geometry" />
         </mxCell>
@@ -40,12 +40,18 @@
         <mxCell id="681i_KaweEwo4j3Ua619-23" value="Amazon RDS(Primary)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="681i_KaweEwo4j3Ua619-8">
           <mxGeometry x="100" y="155" width="130" height="30" as="geometry" />
         </mxCell>
+        <mxCell id="681i_KaweEwo4j3Ua619-24" value="Amazon ElastiCache(Primary)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="681i_KaweEwo4j3Ua619-8">
+          <mxGeometry x="325" y="155" width="120" height="30" as="geometry" />
+        </mxCell>
         <mxCell id="681i_KaweEwo4j3Ua619-21" value="" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#C925D1;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.rds;" vertex="1" parent="1">
           <mxGeometry x="150" y="500" width="56" height="56" as="geometry" />
         </mxCell>
         <mxCell id="681i_KaweEwo4j3Ua619-22" value="" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#C925D1;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.elasticache;" vertex="1" parent="1">
           <mxGeometry x="358" y="502" width="56" height="56" as="geometry" />
         </mxCell>
+        <object label="vpc" id="681i_KaweEwo4j3Ua619-25">
+          <mxCell parent="0" />
+        </object>
       </root>
     </mxGraphModel>
   </diagram>
