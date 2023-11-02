@@ -51,8 +51,6 @@ RUN php artisan key:generate
 RUN php artisan jwt:secret
 
 # データベースクエリ実行
-RUN php artisan migrate:fresh --seed
+# RUN php artisan migrate:fresh --seed
 
 CMD ["bash", "start.sh"]
-
-EXPOSE 9000

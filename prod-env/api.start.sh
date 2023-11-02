@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-php artisan migrate --force
+php artisan migrate --force --seed
 chmod -R 777 bootstrap 
 chmod -R 777 storage
 
