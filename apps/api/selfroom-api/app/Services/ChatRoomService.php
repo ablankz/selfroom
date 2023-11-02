@@ -65,7 +65,7 @@ class ChatRoomService
   ) {
     if ($cover_photo_url) {
       try {
-        $imgPath = Storage::url($cover_photo_url->store(StorageSettings::ROOM_COVER_STORAGE));
+        $imgPath = get_file_full_path($cover_photo_url->store(StorageSettings::ROOM_COVER_STORAGE));
       } catch (\Throwable) {
         throw new ApplicationLoggerException(ApplicationCode::FailedUpload, LogLevel::ALERT, "ファイルのアップロードに失敗");
       }

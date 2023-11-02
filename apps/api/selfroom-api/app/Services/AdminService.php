@@ -49,7 +49,7 @@ class AdminService
   ) {
     if ($profile_photo_url) {
       try {
-        $imgPath = Storage::url($profile_photo_url->store(StorageSettings::ADMIN_PROFILE_STORAGE));
+        $imgPath = get_file_full_path($profile_photo_url->store(StorageSettings::ADMIN_PROFILE_STORAGE));
       } catch (\Throwable) {
         throw new ApplicationLoggerException(ApplicationCode::FailedUpload, LogLevel::ALERT, "ファイルのアップロードに失敗");
       }
@@ -75,7 +75,7 @@ class AdminService
 
     if ($profile_photo_url) {
       try {
-        $imgPath = Storage::url($profile_photo_url->store(StorageSettings::ADMIN_PROFILE_STORAGE));
+        $imgPath = get_file_full_path($profile_photo_url->store(StorageSettings::ADMIN_PROFILE_STORAGE));
       } catch (\Throwable) {
         throw new ApplicationLoggerException(ApplicationCode::System, LogLevel::ALERT, "ファイルのアップロードに失敗");
       }

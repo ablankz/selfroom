@@ -40,7 +40,8 @@
         "files": [
             "app/Helpers/role.php",
             "app/Helpers/language.php",
-            "app/Helpers/camelcase.php"
+            "app/Helpers/camelcase.php",
+            "app/Helpers/filepath.php"
         ]
     },
     "autoload-dev": {
