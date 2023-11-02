@@ -3,7 +3,8 @@
   // エディタ全体のUIに関する設定
   // ====================================
   // テーマカラー
-  "workbench.colorTheme": "GitHub Dark Default",
+  "workbench.colorTheme": "Solarized Dark",
+  // "workbench.colorTheme": "GitHub Dark Default",
   // ミニマップを表示する
   // "editor.minimap.enabled": false,
   // ファイルのパンくずリストを表示する
