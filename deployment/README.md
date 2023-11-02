@@ -3,7 +3,7 @@
 ## AWS にて構築
 
 以下のようなインフラ構成となった。
-![](./production.drawio)
+![](./production.drawio.svg)
 
 ## Docker コンテナ
 
