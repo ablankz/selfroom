@@ -105,12 +105,11 @@ info:
     name: Hayashi Kenta
     email: hayaken3007@i.softbank.jp
 servers:
-  - url: http://api.selfroom.net:{port}/api
+  - url: https://api.selfroom.net:{port}/api
     description: "本番環境"
     variables:
       port:
         enum:
-          - "80"
           - "443"
         default: "443"
   - url: http://api.selfroom.local:{port}/api
@@ -119,8 +118,7 @@ servers:
       port:
         enum:
           - "80"
-          - "443"
-        default: "443"
+        default: "80"
 tags:
   - name: "auth"
     description: 認証に関する操作
