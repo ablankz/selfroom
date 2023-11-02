@@ -106,6 +106,14 @@ info:
     email: hayaken3007@i.softbank.jp
 servers:
   - url: http://api.selfroom.net:{port}/api
+    description: "本番環境"
+    variables:
+      port:
+        enum:
+          - "80"
+          - "443"
+        default: "443"
+  - url: http://api.selfroom.local:{port}/api
     description: "開発環境"
     variables:
       port:
