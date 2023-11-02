@@ -346,5 +346,6 @@
   "already-not-exist-error-response": "すでに削除されているデータです",
   "not-match-key-error-response": "キーに誤りがあります",
   "Infrastructure Configuration": "インフラ構成",
-  "Create Room": "ルーム作成"
+  "Create Room": "ルーム作成",
+  "This information will be made available to all users": "これらの情報はすべてのユーザーに公開されます"
 }

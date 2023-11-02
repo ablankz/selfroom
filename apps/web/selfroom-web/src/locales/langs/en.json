@@ -346,5 +346,6 @@
   "already-not-exist-error-response": "The data has already been deleted",
   "not-match-key-error-response": "There is an error in the key",
   "Infrastructure Configuration": "Infrastructure Configuration",
-  "Create Room": "Create Room"
+  "Create Room": "Create Room",
+  "This information will be made available to all users": "This information will be made available to all users"
 }

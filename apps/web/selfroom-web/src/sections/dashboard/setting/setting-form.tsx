@@ -28,6 +28,7 @@ import { AxiosError } from 'axios';
 import { useUserDeleteQuery } from '@/api/users/useUserDeleteQuery';
 import { useBoolean } from '@/hooks/use-boolean';
 import {
+  Alert,
   Dialog,
   DialogActions,
   DialogContent,
@@ -187,7 +188,10 @@ export default function SettingForm() {
 
           <Grid xs={12} md={8} item>
             <Card sx={{ p: 3, height: 1, mx: 2 }}>
-              <Grid container columnGap={2} rowGap={3} justifyContent="center">
+              <Alert severity="error">
+                {t('This information will be made available to all users')}
+              </Alert>
+              <Grid container columnGap={2} rowGap={3} justifyContent="center" sx={{mt: 4}}>
                 <Grid item xs={12} md={5.5}>
                   <RHFTextField name="nickname" label={t('Nickname')} />
                 </Grid>
