@@ -13,6 +13,7 @@ use App\Usecases\ChatRoom\CreateChatRoom;
 use App\Usecases\ChatRoom\FindChatRoom;
 use App\Usecases\ChatRoom\GetChatRooms;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Psr\Log\LogLevel;
 
 class ChatRoomService
@@ -64,7 +65,7 @@ class ChatRoomService
   ) {
     if ($cover_photo_url) {
       try {
-        $imgPath = $cover_photo_url->store(StorageSettings::ROOM_COVER_STORAGE);
+        $imgPath = Storage::url($cover_photo_url->store(StorageSettings::ROOM_COVER_STORAGE));
       } catch (\Throwable) {
         throw new ApplicationLoggerException(ApplicationCode::FailedUpload, LogLevel::ALERT, "ファイルのアップロードに失敗");
       }

@@ -48,7 +48,7 @@ class UserService
   ) {
     if ($profile_photo_url) {
       try {
-        $imgPath = $profile_photo_url->store(StorageSettings::USER_PROFILE_STORAGE);
+        $imgPath = Storage::url($profile_photo_url->store(StorageSettings::USER_PROFILE_STORAGE));
       } catch (\Throwable) {
         throw new ApplicationLoggerException(ApplicationCode::FailedUpload, LogLevel::ALERT, "ファイルのアップロードに失敗");
       }
@@ -79,7 +79,7 @@ class UserService
 
     if ($profile_photo_url) {
       try {
-        $imgPath = $profile_photo_url->store(StorageSettings::USER_PROFILE_STORAGE);
+        $imgPath = Storage::url($profile_photo_url->store(StorageSettings::USER_PROFILE_STORAGE));
       } catch (\Throwable) {
         throw new ApplicationLoggerException(ApplicationCode::System, LogLevel::ALERT, "ファイルのアップロードに失敗");
       }
