@@ -344,5 +344,6 @@
   "already-logout-error-response": "すでにログアウト済みです",
   "sql-query-error-response": "データベース上でエラーが発生しました",
   "already-not-exist-error-response": "すでに削除されているデータです",
-  "not-match-key-error-response": "キーに誤りがあります"
+  "not-match-key-error-response": "キーに誤りがあります",
+  "Infrastructure Configuration": "インフラ構成"
 }

@@ -5,7 +5,7 @@ import { paths } from '@/routes/paths';
 import { useLocales } from '@/locales';
 // components
 import SvgColor from '@/components/svg-color';
-import { GITHUB_LINK, HOST_OPENAPI } from '@/config-global';
+import { GITHUB_LINK, HOST_OPENAPI, PROD_INFRA_LINK } from '@/config-global';
 
 // ----------------------------------------------------------------------
 
@@ -31,7 +31,8 @@ const ICONS = {
   api: icon('ic_api'),
   chat: icon('ic_chat'),
   openapi: icon('ic_openapi'),
-  github: icon('ic_github')
+  github: icon('ic_github'),
+  drawio: icon('ic_drawio')
 };
 
 // ----------------------------------------------------------------------
@@ -113,6 +114,11 @@ export function useNavData() {
             title: 'Git Hub',
             path: GITHUB_LINK,
             icon: ICONS.github,
+          },
+          {
+            title: t('Infrastructure Configuration'),
+            path: PROD_INFRA_LINK,
+            icon: ICONS.drawio,
           },
         ],
       },
