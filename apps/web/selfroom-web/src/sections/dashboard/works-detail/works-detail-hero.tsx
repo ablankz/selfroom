@@ -35,7 +35,7 @@ export default function WorksDetailHero({ work }: Props) {
   const smUp = useResponsive('up', 'sm');
   const { t } = useLocales();
   const sendMsg = {
-    url: `${HOST}/${paths.dashboard.work(work.id)}`,
+    url: `${HOST}${paths.dashboard.work(work.id)}`,
     mailtitle: t('mail-title'),
     title: `${t('works-share-1', {
       title: work.title,

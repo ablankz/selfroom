@@ -46,7 +46,7 @@ export default function RoomShareModal({
   const { user } = useAuthContext();
   const sendMsg = useMemo(
     () => ({
-      url: `${HOST}/${paths.dashboard.chatroom.profile(roomId)}`,
+      url: `${HOST}${paths.dashboard.chatroom.profile(roomId)}`,
       mailtitle: t('invite-mail-title'),
       title: `${t('invite-room-key-1', {
         userName: user?.nickname || 'unknown',
