@@ -159,7 +159,7 @@ function Searchbar() {
           />
         </Box>
 
-        <Scrollbar sx={{ p: 3, pt: 2, height: 400 }}>
+        <Scrollbar sx={{ p: 3, pt: 2, height: 400, overflowX: 'hidden' }}>
           {notFound ? <SearchNotFound query={searchQuery} sx={{ py: 10 }} /> : renderItems()}
         </Scrollbar>
       </Dialog>

@@ -25,7 +25,9 @@ export default function ResultItem({ title, path, groupLabel, onClickItem }: Pro
   return (
     <ListItemButton
       onClick={onClickItem}
+      className='scrollbar-none'
       sx={{
+        overflowX: 'scroll',
         borderWidth: 1,
         borderStyle: 'dashed',
         borderColor: 'transparent',
