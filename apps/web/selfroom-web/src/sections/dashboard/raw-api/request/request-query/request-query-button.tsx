@@ -5,6 +5,8 @@ import { RequestQuery } from '../../view/raw-api-view';
 import { RequestFilter } from '../request';
 import { useResponsive } from '@/hooks/use-responsive';
 import { useLocales } from '@/locales';
+import { endpointMatch } from '@/utils/rawAxios';
+import { useSnackbar } from '@/components/snackbar';
 
 type Props = {
   loading: boolean;
@@ -19,7 +21,19 @@ export const RequestQueryButton = ({
 }: Props) => {
   const smUp = useResponsive('up', 'sm');
   const { t } = useLocales();
+  const { enqueueSnackbar } = useSnackbar();
   const handleClick = () => {
+    //　prod用
+    // -------------------------------------------------------------------------
+    const matchPoint = endpointMatch(filters.method, filters.name);
+    if (!matchPoint) {
+      enqueueSnackbar({
+        variant: 'error',
+        message: t('No endpoint matching pattern found'),
+      });
+      return;
+    }
+    // -------------------------------------------------------------------------
     setRequestQuery({
       endpoint: filters.name,
       method: filters.method,
