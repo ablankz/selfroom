@@ -55,6 +55,8 @@ export default function ChatRoomSearchView() {
   const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState<number>(0);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handlePageChange = useCallback(
     (_: ChangeEvent<unknown>, page: number) => {
       setPage(page);
@@ -117,6 +119,7 @@ export default function ChatRoomSearchView() {
         onSearch={handleSearch}
         filters={filters}
         setDispatch={setDispatch}
+        isLoading={isLoading}
       />
 
       <Stack direction="row" spacing={1} flexShrink={0}>
@@ -201,6 +204,7 @@ export default function ChatRoomSearchView() {
           setDispatch={setDispatch}
           setTotalCount={setTotalCount}
           resetPage={resetPage}
+          setIsLoading={setIsLoading}
         />
         {!!totalCount && (
           <Pagination

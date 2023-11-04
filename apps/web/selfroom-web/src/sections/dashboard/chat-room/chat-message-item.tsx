@@ -1,7 +1,6 @@
 // @mui
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 // components
 import Iconify from '@/components/iconify';
@@ -15,6 +14,7 @@ import { useRouter } from '@/routes/hooks';
 import { paths } from '@/routes/paths';
 import { useChatDeleteQuery } from '@/api/chats/useChatDeleteQuery';
 import { useSnackbar } from '@/components/snackbar';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 // ----------------------------------------------------------------------
 
@@ -112,9 +112,9 @@ export default function ChatMessageItem({
       <IconButton size="small">
         <Iconify icon="eva:smiling-face-fill" width={16} />
       </IconButton> */}
-      <IconButton size="small" onClick={() => mutate(chatId)}>
+      <LoadingButton  loading={status === 'loading'} size="small" onClick={() => mutate(chatId)}>
         <Iconify icon="solar:trash-bin-trash-bold" width={16} />
-      </IconButton>
+      </LoadingButton>
     </Stack>
   );
 

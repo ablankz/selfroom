@@ -10,7 +10,15 @@ import { paths } from '@/routes/paths';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSnackbar } from '@/components/snackbar';
 import { useLocales } from '@/locales';
-import { Button, Chip, Divider, IconButton, Link, Stack } from '@mui/material';
+import {
+  Button,
+  Chip,
+  CircularProgress,
+  Divider,
+  IconButton,
+  Link,
+  Stack,
+} from '@mui/material';
 import { useRoomFavoriteQuery } from '@/api/favorites/useRoomFavoriteQuery';
 import { useRoomFavoriteCancelQuery } from '@/api/favorites/useRoomFavoriteCancelQuery';
 import { uuidHash } from '@/utils/uuid-hash';
@@ -22,6 +30,7 @@ import RoomShareModal from '@/sections/_common/room-share-modal';
 import { useChatRoomInQuery } from '@/api/room-visits/useChatRoomInQuery';
 import RoomKeyModal from '@/sections/_common/room-key-modal';
 import { useAuthContext } from '@/auth/hooks';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 type RoomCardProps = {
   chatRoom: ChatRoomCard;
@@ -134,13 +143,17 @@ export function RoomCard({ chatRoom, handleSuccess }: RoomCardProps) {
   return (
     <>
       <Card>
-        <IconButton
-          onClick={handleFavorite}
-          sx={{ position: 'absolute', top: 8, right: 8 }}
-          color={isFavorite ? 'warning' : 'inherit'}
-        >
-          <Iconify icon="ant-design:star-filled" />
-        </IconButton>
+        {favoriteStatus === 'loading' || cancelStatus === 'loading' ? (
+          <CircularProgress sx={{ position: 'absolute', top: 16, right: 16 }} size={20}/>
+        ) : (
+          <IconButton
+            onClick={handleFavorite}
+            sx={{ position: 'absolute', top: 8, right: 8 }}
+            color={isFavorite ? 'warning' : 'inherit'}
+          >
+            <Iconify icon="ant-design:star-filled" />
+          </IconButton>
+        )}
         {hasKey && (
           <IconButton
             sx={{ position: 'absolute', top: 8, right: 40 }}
@@ -168,10 +181,12 @@ export function RoomCard({ chatRoom, handleSuccess }: RoomCardProps) {
             sx={{ mb: 1 }}
             primary={
               <Link
-                onClick={() => router.push(paths.dashboard.chatroom.profile(chatRoomId))}
+                onClick={() =>
+                  router.push(paths.dashboard.chatroom.profile(chatRoomId))
+                }
                 color="inherit"
                 sx={{
-                  cursor: 'pointer'
+                  cursor: 'pointer',
                 }}
               >
                 {name}
@@ -223,16 +238,18 @@ export function RoomCard({ chatRoom, handleSuccess }: RoomCardProps) {
             <Button
               variant="contained"
               color="primary"
-              onClick={() =>
-                router.push(paths.dashboard.chatroom.talk)
-              }
+              onClick={() => router.push(paths.dashboard.chatroom.talk)}
             >
               {t('Go to talk screen')}
             </Button>
           ) : (
-            <Button variant="contained" onClick={handleEnter}>
+            <LoadingButton
+              loading={roomInStatus === 'loading'}
+              variant="contained"
+              onClick={handleEnter}
+            >
               {t('Entering the room')}
-            </Button>
+            </LoadingButton>
           )}
         </Box>
       </Card>
@@ -246,6 +263,7 @@ export function RoomCard({ chatRoom, handleSuccess }: RoomCardProps) {
         open={keyOpen}
         handleClose={handleKeyClose}
         mutate={roomInWithKey}
+        isLoading={roomInStatus === 'loading'}
       />
     </>
   );

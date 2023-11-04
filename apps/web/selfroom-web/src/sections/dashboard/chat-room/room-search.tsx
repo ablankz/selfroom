@@ -1,16 +1,18 @@
-import { Divider, IconButton, InputBase, Paper } from '@mui/material';
+import { Divider, InputBase, Paper } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { RoomFilter } from '@/api/chat-rooms/useGetChatRoomsQuery';
 import { useLocales } from '@/locales';
 import { Dispatch, SetStateAction, useState } from 'react';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 type Props = {
   filters: RoomFilter;
   onSearch: (inputValue: string) => void;
   setDispatch: Dispatch<SetStateAction<boolean>>;
+  isLoading: boolean;
 };
 
-export const RoomSearch = ({ filters, onSearch, setDispatch }: Props) => {
+export const RoomSearch = ({ filters, onSearch, setDispatch, isLoading }: Props) => {
   const { t } = useLocales();
   const [query, setQuery] = useState(filters.query);
 
@@ -44,9 +46,9 @@ export const RoomSearch = ({ filters, onSearch, setDispatch }: Props) => {
         onChange={(e) => setQuery(e.target.value)}
       />
       <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-      <IconButton sx={{ p: '10px' }} aria-label="search" onClick={handleClick}>
+      <LoadingButton loading={isLoading} sx={{ p: '10px' }} aria-label="search" onClick={handleClick}>
         <SearchIcon />
-      </IconButton>
+      </LoadingButton>
     </Paper>
   );
 };

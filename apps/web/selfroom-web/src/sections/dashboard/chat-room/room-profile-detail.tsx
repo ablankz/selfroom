@@ -21,6 +21,7 @@ import { useRouter } from '@/routes/hooks';
 import { useChatRoomInQuery } from '@/api/room-visits/useChatRoomInQuery';
 import RoomKeyModal from '@/sections/_common/room-key-modal';
 import { fNumber } from '@/utils/format-number';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 type Props = {
   data: ChatRoomCard;
@@ -208,9 +209,9 @@ export const RoomProfileDetail = ({ data, handleSuccess, setVisitDispatch }: Pro
               {t('Go to talk screen')}
             </Button>
           ) : (
-            <Button variant="contained" onClick={handleEnter}>
+            <LoadingButton loading={roomInStatus === 'loading'} variant="contained" onClick={handleEnter}>
               {t('Entering the room')}
-            </Button>
+            </LoadingButton>
           )}
         </Box>
       </Stack>
@@ -218,6 +219,7 @@ export const RoomProfileDetail = ({ data, handleSuccess, setVisitDispatch }: Pro
         open={keyOpen}
         handleClose={handleKeyClose}
         mutate={roomInWithKey}
+        isLoading={roomInStatus === 'loading'}
       />
     </>
   );

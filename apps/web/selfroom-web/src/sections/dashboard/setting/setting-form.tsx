@@ -80,7 +80,6 @@ export default function SettingForm() {
     setValue,
     setError,
     handleSubmit,
-    formState: { isSubmitting },
   } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
@@ -251,7 +250,7 @@ export default function SettingForm() {
                 <LoadingButton
                   type="submit"
                   variant="contained"
-                  loading={isSubmitting}
+                  loading={status === 'loading'}
                 >
                   {t('Save')}
                 </LoadingButton>
@@ -271,9 +270,9 @@ export default function SettingForm() {
           <Button variant="outlined" onClick={dialog.onFalse}>
             {t('Cancel')}
           </Button>
-          <Button variant="contained" onClick={handleDelete} autoFocus>
+          <LoadingButton loading={deleteStatus === 'loading'} variant="contained" onClick={handleDelete} autoFocus>
             {t('Confirm')}
-          </Button>
+          </LoadingButton>
         </DialogActions>
       </Dialog>
     </>

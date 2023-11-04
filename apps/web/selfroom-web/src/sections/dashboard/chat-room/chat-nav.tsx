@@ -35,6 +35,7 @@ import { fNumber } from '@/utils/format-number';
 import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard';
 import { useSnackbar } from '@/components/snackbar';
 import { useChatRoomOutQuery } from '@/api/room-visits/useChatRoomOutQuery';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 // ----------------------------------------------------------------------
 
@@ -478,9 +479,9 @@ const ChatNavInfo = ({ chatRoomId, collapseDesktop }: InfoProps) => {
           >
             <Iconify icon="mingcute:profile-fill" width={30} height={30} />
           </IconButton>
-          <IconButton onClick={() => mutate()}>
+          <LoadingButton loading={status === 'loading'} onClick={() => mutate()}>
             <Iconify icon="iconamoon:exit-bold" width={30} height={30} />
-          </IconButton>
+          </LoadingButton>
         </Stack>
       </Box>
     </>

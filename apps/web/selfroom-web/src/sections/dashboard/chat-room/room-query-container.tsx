@@ -19,6 +19,7 @@ type Props = {
   setDispatch: Dispatch<SetStateAction<boolean>>;
   setTotalCount: Dispatch<SetStateAction<number>>;
   resetPage: () => void;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
 };
 
 export const RoomQueryContainer = ({
@@ -31,8 +32,9 @@ export const RoomQueryContainer = ({
   setDispatch,
   setTotalCount,
   resetPage,
+  setIsLoading
 }: Props) => {
-  const { data, refetch } = useGetChatRoomsQuery(filters, sort, page, perPage);
+  const { data, refetch, status } = useGetChatRoomsQuery(filters, sort, page, perPage);
   const { t } = useLocales();
 
   useEffect(() => {
@@ -42,6 +44,10 @@ export const RoomQueryContainer = ({
       setTotalCount(0);
     }
   }, [data]);
+
+  useEffect(() => {
+      setIsLoading(status === 'loading');
+  }, [status]);
 
   const handleSuccess = useCallback(() => {
     refetch();

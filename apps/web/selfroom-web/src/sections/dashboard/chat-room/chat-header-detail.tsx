@@ -7,7 +7,7 @@ import AvatarGroup, { avatarGroupClasses } from '@mui/material/AvatarGroup';
 import Iconify from '@/components/iconify';
 import { useGetInUsersQuery } from '@/api/room-visits/useGetInUsersQuery';
 import { SimpleChatRoom } from '@/types/entity';
-import { ListItemText, Skeleton } from '@mui/material';
+import { CircularProgress, ListItemText, Skeleton } from '@mui/material';
 import { useLocales } from '@/locales';
 import { paths } from '@/routes/paths';
 import { Navigate } from 'react-router-dom';
@@ -96,13 +96,21 @@ export default function ChatHeaderDetail({ chatRoom }: Props) {
       </Suspense>
       <Stack flexGrow={1} />
 
-      <IconButton
-        onClick={handleFavorite}
-        sx={{ position: 'absolute', top: 8, right: 8 }}
-        color={data.data.isFavorite ? 'warning' : 'inherit'}
-      >
-        <Iconify icon="ant-design:star-filled" />
-      </IconButton>
+      {favoriteStatus === 'loading' || cancelStatus === 'loading' ? (
+        <CircularProgress
+          sx={{ position: 'absolute', top: 16, right: 16 }}
+          size={20}
+        />
+      ) : (
+        <IconButton
+          onClick={handleFavorite}
+          sx={{ position: 'absolute', top: 8, right: 8 }}
+          color={data.data.isFavorite ? 'warning' : 'inherit'}
+        >
+          <Iconify icon="ant-design:star-filled" />
+        </IconButton>
+      )}
+
       {data.data.hasKey && (
         <IconButton
           sx={{ position: 'absolute', top: 8, right: 40 }}

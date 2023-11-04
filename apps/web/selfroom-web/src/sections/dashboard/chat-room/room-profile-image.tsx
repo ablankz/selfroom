@@ -5,7 +5,7 @@ import { HOST_ASSET } from '@/config-global';
 import { ChatRoomCard } from '@/types/entity';
 import { uuidHash } from '@/utils/uuid-hash';
 import { bgGradient } from '@/theme/css';
-import { Box, IconButton, alpha, useTheme } from '@mui/material';
+import { Box, CircularProgress, IconButton, alpha, useTheme } from '@mui/material';
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
 import { useSnackbar } from '@/components/snackbar';
 import { useLocales } from '@/locales';
@@ -17,7 +17,11 @@ type Props = {
   setFavorDispatch: Dispatch<SetStateAction<boolean>>;
 };
 
-export const RoomProfileImage = ({ data, handleSuccess, setFavorDispatch }: Props) => {
+export const RoomProfileImage = ({
+  data,
+  handleSuccess,
+  setFavorDispatch,
+}: Props) => {
   const theme = useTheme();
   const { coverPhotoUrl, chatRoomId, isFavorite, hasKey, name } = data;
   const [open, setOpen] = useState(false);
@@ -86,7 +90,7 @@ export const RoomProfileImage = ({ data, handleSuccess, setFavorDispatch }: Prop
         }),
         width: {
           xs: '95%',
-          md: '80%'
+          md: '80%',
         },
         height: {
           xs: '75%',
@@ -100,18 +104,26 @@ export const RoomProfileImage = ({ data, handleSuccess, setFavorDispatch }: Prop
         borderRadius: 3,
       }}
     >
-      <IconButton
-        onClick={handleFavorite}
-        sx={{
-          position: 'absolute',
-          top: 8,
-          right: 8,
-          bgcolor: (t) => alpha(t.palette.background.default, 0.6),
-        }}
-        color={isFavorite ? 'warning' : 'inherit'}
-      >
-        <Iconify icon="ant-design:star-filled" />
-      </IconButton>
+      {favoriteStatus === 'loading' || cancelStatus === 'loading' ? (
+        <CircularProgress
+          sx={{ position: 'absolute', top: 16, right: 16 }}
+          size={20}
+        />
+      ) : (
+        <IconButton
+          onClick={handleFavorite}
+          sx={{
+            position: 'absolute',
+            top: 8,
+            right: 8,
+            bgcolor: (t) => alpha(t.palette.background.default, 0.6),
+          }}
+          color={isFavorite ? 'warning' : 'inherit'}
+        >
+          <Iconify icon="ant-design:star-filled" />
+        </IconButton>
+      )}
+
       {hasKey && (
         <IconButton
           sx={{
@@ -140,7 +152,7 @@ export const RoomProfileImage = ({ data, handleSuccess, setFavorDispatch }: Prop
   );
 
   return (
-    <Box display='flex' justifyContent='center'>
+    <Box display="flex" justifyContent="center">
       {renderLargeImg}
       <RoomShareModal
         open={open}

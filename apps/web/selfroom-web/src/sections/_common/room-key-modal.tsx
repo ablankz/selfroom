@@ -12,6 +12,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import FormProvider from '@/components/hook-form/form-provider';
 import { RHFTextField } from '@/components/hook-form';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 // ----------------------------------------------------------------------
 
@@ -19,13 +20,14 @@ type Props = {
   open: boolean;
   handleClose: () => void;
   mutate: (key: string) => void;
+  isLoading: boolean;
 };
 
 type Param = {
   roomKey: string;
 };
 
-export default function RoomKeyModal({ open, handleClose, mutate }: Props) {
+export default function RoomKeyModal({ open, handleClose, mutate, isLoading }: Props) {
   const { t } = useLocales();
   const ParamSchema = Yup.object().shape({
     roomKey: Yup.string().required(t('Room key is required')),
@@ -72,9 +74,9 @@ export default function RoomKeyModal({ open, handleClose, mutate }: Props) {
           <Button onClick={handleClose} variant="outlined" color="inherit">
             {t('Cancel')}
           </Button>
-          <Button type="submit" variant="contained">
+          <LoadingButton loading={isLoading} type="submit" variant="contained">
             {t('Confirm')}
-          </Button>
+          </LoadingButton>
         </DialogActions>
       </FormProvider>
     </Dialog>
