@@ -13,6 +13,7 @@ server {
     index index.php;
 
     charset utf-8;
+    client_max_body_size 128M;
 
     # location / {
     #     # すべてのurlにapiを付与して自サーバーへ流す

@@ -11,6 +11,8 @@ server {
     listen ${NGINX_PORT};
     server_name ~${HOST_DOMAIN};
 
+    client_max_body_size 128M;
+
     location /_vite/ws-hmr {
         resolver 127.0.0.11;
 

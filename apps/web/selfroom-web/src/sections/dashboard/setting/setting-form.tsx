@@ -156,7 +156,7 @@ export default function SettingForm() {
             <Card sx={{ pt: 10, pb: 5, px: 3, textAlign: 'center' }}>
               <RHFUploadAvatar
                 name="profilePhoto"
-                maxSize={3145728}
+                maxSize={10485760}
                 onDrop={handleDrop}
                 helperText={
                   <Typography
@@ -170,7 +170,7 @@ export default function SettingForm() {
                     }}
                   >
                     Allowed *.jpeg, *.jpg, *.png, *.gif
-                    <br /> max size of {fData(3145728)}
+                    <br /> max size of {fData(10485760)}
                   </Typography>
                 }
               />

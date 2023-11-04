@@ -161,7 +161,7 @@ export default function RoomNewEditForm() {
               <Typography variant="subtitle2">{t('Cover Photo')}</Typography>
               <RHFUpload
                 name="coverPhoto"
-                maxSize={3145728}
+                maxSize={10485760}
                 onDrop={handleDrop}
                 onDelete={handleRemoveFile}
               />
