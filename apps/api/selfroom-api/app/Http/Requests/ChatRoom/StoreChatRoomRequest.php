@@ -36,6 +36,8 @@ class StoreChatRoomRequest extends ApiRequest
       if ($isNumeric) {
         $categoriesValue = array_map('intval', $categoriesArray);
       }
+    }else if(is_null($categoriesValue)){
+      $categoriesValue = [];
     }
 
     $this->merge(['categories' => array_unique($categoriesValue)]);
