@@ -161,7 +161,7 @@ export const Canvas = memo(({ canvasTop, canvasLeft }: Props) => {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
     // Geometry
-    const geometry = new THREE.PlaneGeometry(10, 10, 512, 512);
+    const geometry = new THREE.PlaneGeometry(10, 10, 256, 256);
 
     // color
     const colorObject: ColorType = {
@@ -261,10 +261,10 @@ export const Canvas = memo(({ canvasTop, canvasLeft }: Props) => {
     const camera = new THREE.PerspectiveCamera(
       35,
       sizes.width / sizes.height,
-      0.1,
-      100
+      1,
+      10
     );
-    camera.position.set(0, 1.0, 10);
+    camera.position.set(0, 0.5, 6);
     scene.add(camera);
 
     window.addEventListener('resize', () => {
@@ -277,26 +277,6 @@ export const Canvas = memo(({ canvasTop, canvasLeft }: Props) => {
       renderer.setSize(sizes.width, sizes.height);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     });
-
-    const sphereGeometry = new THREE.SphereGeometry(2, 100);
-    const sphereMaterial = new THREE.MeshPhongMaterial({ color: 0xEAF4FC });
-    const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-    sphere.position.set(4, 5, -10);
-
-    scene.add(sphere);
-
-    // 平行光源
-    // const directionalLight = new THREE.DirectionalLight(0xffffff, 8.0);
-    // directionalLight.position.set(1, 1, 0);
-    // シーンに追加
-    // scene.add(directionalLight);
-
-    const light = new THREE.AmbientLight(0xffffff, 0.4);
-    scene.add(light);
-
-    const pointLight = new THREE.PointLight(0xffffff, 4);
-    pointLight.position.set(2.5, 3, -8)
-    scene.add(pointLight);
 
     const clock = new THREE.Clock();
 
