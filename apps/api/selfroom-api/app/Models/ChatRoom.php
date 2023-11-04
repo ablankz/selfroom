@@ -61,7 +61,9 @@ class ChatRoom extends Model
   protected $fillable = [
     'name',
     'cover_photo_url',
-    'room_key'
+    'room_key',
+    'user_num',
+    'favor_num',
   ];
 
   protected $casts = [

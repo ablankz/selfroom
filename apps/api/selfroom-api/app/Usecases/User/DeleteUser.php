@@ -18,12 +18,12 @@ class DeleteUser extends Usecase
     $ret = DB::transaction(function() use($user) {   
       $user->followers->each(function($follower){
         $follower->update([
-          'followees' => $follower->follow_num - 1
+          'follow_num' => $follower->follow_num - 1
         ]);
       });
       $user->followees->each(function($followee){
         $followee->update([
-          'followers' => $followee->follower_num - 1
+          'follower_num' => $followee->follower_num - 1
         ]);
       });
       $user->favoriteRooms->each(function($room){

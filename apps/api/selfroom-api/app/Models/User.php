@@ -83,7 +83,10 @@ class User extends Model
     'email',
     'company',
     'role',
-    'school'
+    'school',
+    'follow_num',
+    'follower_num',
+    'favorite_room_num'
   ];
 
   /**
