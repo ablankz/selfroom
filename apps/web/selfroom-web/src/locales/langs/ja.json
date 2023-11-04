@@ -347,5 +347,6 @@
   "not-match-key-error-response": "キーに誤りがあります",
   "Infrastructure Configuration": "インフラ構成",
   "Create Room": "ルーム作成",
-  "This information will be made available to all users": "これらの情報はすべてのユーザーに公開されます"
+  "This information will be made available to all users": "これらの情報はすべてのユーザーに公開されます",
+  "Must match 'password' field value": "パスワードと一致しません"
 }

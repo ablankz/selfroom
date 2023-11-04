@@ -49,10 +49,10 @@ export const RegisterForm = () => {
     loginId: Yup.string().required(t('Login ID is required')),
     password: Yup.string()
       .required(t('Password is required'))
-      .min(6, 'Password must have at least 6 characters'),
+      .min(6, t('Password must have at least 6 characters')),
     confirmPassword: Yup.string()
       .required(t('Password Confirm is required'))
-      .oneOf([Yup.ref('password')], 'Must match "password" field value'),
+      .oneOf([Yup.ref('password')], t("Must match 'password' field value")),
   });
 
   const defaultValues: FormValues = {
