@@ -89,7 +89,11 @@ export default function ChatNav({ auth, chatRoom }: Props) {
             <Avatar
               src={auth?.profilePhotoUrl || undefined}
               alt={auth?.nickname}
-              sx={{ cursor: 'pointer', width: 48, height: 48 }}
+              sx={{
+                cursor: 'pointer',
+                width: { xs: 36, md: 48 },
+                height: { xs: 36, md: 48 },
+              }}
             />
             <Box sx={{ flexGrow: 1 }} />
           </>
@@ -367,7 +371,13 @@ const ChatNavInfo = ({ chatRoomId, collapseDesktop }: InfoProps) => {
         <FileThumbnail
           imageView
           file={imgUrl}
-          imgSx={{ borderRadius: 1 }}
+          imgSx={{ 
+            borderRadius: 1, 
+            height: {
+              xs: 200,
+              md: 1
+            }
+          }}
           uuid={chatRoomId}
         />
         {!collapseDesktop ? (
