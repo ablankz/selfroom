@@ -29,6 +29,12 @@ const axiosInstance = axios.create({
 
 export default axiosInstance;
 
+export const rawAxiosInstance = axios.create({
+  baseURL: `${HOST_API}`,
+  withCredentials: true,
+  headers,
+});
+
 // ----------------------------------------------------------------------
 
 export const fetcher = async (args: string | [string, AxiosRequestConfig]) => {

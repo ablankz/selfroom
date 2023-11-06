@@ -34,6 +34,7 @@ export type JWTContextType = {
   authenticated: boolean;
   unauthenticated: boolean;
   initialize: () => Promise<AxiosResponse<AuthUserResponse>>;
+  rawInitialize: () => Promise<AxiosResponse<AuthUserResponse>>;
   login: (
     loginId: string,
     password: string

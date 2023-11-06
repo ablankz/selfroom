@@ -24,7 +24,7 @@ export const QueryContainer = ({
   setRes,
 }: Props) => {
   const { enqueueSnackbar } = useSnackbar();
-  const { initialize } = useAuthContext();
+  const { rawInitialize } = useAuthContext();
   const { t } = useLocales();
   useEffect(() => {
     if (requestQuery.dispatch) {
@@ -98,7 +98,7 @@ export const QueryContainer = ({
         }));
         setLoading(false);
 
-        await initialize();
+        await rawInitialize();
       })();
     }
   }, [requestQuery.dispatch]);

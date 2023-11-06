@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useCallback, useMemo } from 'react';
 // utils
-import axios from '@/utils/axios';
+import axios, { rawAxiosInstance as axiosRaw } from '@/utils/axios';
 //
 import { AuthContext } from './auth-context';
 import { ActionMapType, AuthStateType, AuthUserType } from '../types';
@@ -17,6 +17,7 @@ import { EmptySuccessResponse } from '@/types/response/empty-success-reponse';
 
 enum Types {
   INITIAL = 'INITIAL',
+  RAW_INITIAL = 'RAW_INITIAL',
   LOGIN = 'LOGIN',
   REGISTER = 'REGISTER',
   LOGOUT = 'LOGOUT',
@@ -24,6 +25,9 @@ enum Types {
 
 type Payload = {
   [Types.INITIAL]: {
+    user: AuthUserType;
+  };
+  [Types.RAW_INITIAL]: {
     user: AuthUserType;
   };
   [Types.LOGIN]: {
@@ -45,7 +49,7 @@ const initialState: AuthStateType = {
 };
 
 const reducer = (state: AuthStateType, action: ActionsType) => {
-  if (action.type === Types.INITIAL) {
+  if (action.type === Types.INITIAL || action.type === Types.RAW_INITIAL) {
     return {
       loading: false,
       user: action.payload.user,
@@ -102,6 +106,35 @@ export function AuthProvider({ children }: Props) {
     } catch (error) {
       dispatch({
         type: Types.INITIAL,
+        payload: {
+          user: null,
+        },
+      });
+      return Promise.reject(error);
+    }
+  }, []);
+
+  const rawInitialize = useCallback(async (): Promise<
+    AxiosResponse<AuthUserResponse>
+  > => {
+    try {
+      const res = await axiosRaw.post<AuthUserResponse>(
+        AUTH_ENDPOINTS.auth.me.url
+      );
+
+      const { data } = res.data;
+
+      dispatch({
+        type: Types.RAW_INITIAL,
+        payload: {
+          user: data,
+        },
+      });
+
+      return res;
+    } catch (error) {
+      dispatch({
+        type: Types.RAW_INITIAL,
         payload: {
           user: null,
         },
@@ -230,6 +263,7 @@ export function AuthProvider({ children }: Props) {
       unauthenticated: status === 'unauthenticated',
       //
       initialize,
+      rawInitialize,
       login,
       register,
       logout,
@@ -239,6 +273,7 @@ export function AuthProvider({ children }: Props) {
     }),
     [
       initialize,
+      rawInitialize,
       login,
       logout,
       register,
