@@ -1,8 +1,21 @@
 FROM php:8.2-fpm
 
-# php
+# nginx
 RUN apt-get update \
-  && apt-get install -y zlib1g-dev libzip-dev iputils-ping net-tools dnsutils libpq-dev supervisor\
+  && apt-get install -y nginx \
+  && mkdir -p /var/www/html/
+
+RUN groupadd nginx \
+  && useradd -g nginx nginx \
+  && usermod -s /bin/false nginx
+
+COPY ../../prod-env/back-nginx.default.conf /etc/nginx/conf.d/default.conf
+COPY ../../prod-env/back-nginx.fastcgi_params /etc/nginx/fastcgi_params
+COPY ../../prod-env/back-nginx.mime.types /etc/nginx/mime.types
+COPY ../../prod-env/back-nginx.nginx.conf /etc/nginx/nginx.conf
+
+# php
+RUN apt-get install -y zlib1g-dev libzip-dev iputils-ping net-tools dnsutils libpq-dev supervisor\
   && docker-php-ext-install zip pdo pgsql pdo_pgsql
 
 RUN apt-get update && apt-get install -y \
@@ -54,3 +67,5 @@ RUN php artisan jwt:secret
 # RUN php artisan migrate:fresh --seed
 
 CMD ["bash", "start.sh"]
+
+EXPOSE 80
