@@ -25,7 +25,7 @@ const LINK_ITEMS: Link[] = [
     id: 2,
     title: 'LinkedIn',
     description: 'ビジネス用SNS LinkedIn',
-    link: 'https://www.linkedin.com/in/%E5%81%A5%E5%A4%AA-%E6%9E%97-58399b293/',
+    link: 'https://www.linkedin.com/in/selfroom/',
     svg: 'ic_linked_in',
   },
   {
